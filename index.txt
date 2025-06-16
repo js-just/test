@@ -1,14 +1,14 @@
 <p><h1 id="This%20is%20a%20test%20page">This is a test page</h1>
 Generated using <a href="https://just.is-a.dev/" target="_blank">Just an Ultimate Site Tool</a>.
 
-Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <span class="DTEK">underlined</span>, <em class="DTEK"><strong>very important</strong></em> text.
-Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <span class="DTEK"><code>underlined</code></span>, <em class="DTEK"><strong><code>very important</code></strong></em> code.
+Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <span class="CAoq">underlined</span>, <em class="CAoq"><strong>very important</strong></em> text.
+Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <span class="CAoq"><code>underlined</code></span>, <em class="CAoq"><strong><code>very important</code></strong></em> code.
 
 <ol><li>List</li><li>(with numbers)</li></ol>
 
 <ul><li>List</li><li>(no numbers)</li></ul>
 
-A line:<div class="DTEK1"></div><br><code class="fUSiA">Some code here
+A line:<div class="CAoqK"></div><br><code class="VJsu5">Some code here
 </code>
 
 <h1 id="Blockquotes%20test">Blockquotes test</h1>
@@ -18,10 +18,10 @@ A line:<div class="DTEK1"></div><br><code class="fUSiA">Some code here
 <blockquote><blockquote><br>> Many nested blockquotes.</blockquote></blockquote>
 <blockquote><blockquote><br>> > This line should not be another nested blockquote. (Limit: 4 nested blockqutes)</blockquote></blockquote>
 <blockquote><_just element="blockquote separator"></_just>[!NOTE] A note!</blockquote>
-<blockquote class="DTEKJ">A tip!</blockquote>
-<blockquote class="DTEKP">Something important.</blockquote>
-<blockquote class="DTEKG">A warning!</blockquote>
-<blockquote class="DTEKM">Another warning?</blockquote>
+<blockquote class="CAoqU">A tip!</blockquote>
+<blockquote class="CAoqR">Something important.</blockquote>
+<blockquote class="CAoqL">A warning!</blockquote>
+<blockquote class="CAoqO">Another warning?</blockquote>
 <blockquote><_just element="blockquote separator"></_just>[!NOTE] <code>[!NOTE]</code>, <code>[!TIP]</code>, <code>[!IMPORTANT]</code>, <code>[!WARNING]</code> and <code>[!CAUTION]</code> are should be in one line. You can add &#60;br> tags to break the line for HTML. <br> > <code>[!NOTE]</code>, <code>[!TIP]</code>, <code>[!IMPORTANT]</code>, <code>[!WARNING]</code> and <code>[!CAUTION]</code> cannot have nested blockquotes.</blockquote>
 <h1 id="Headers%20test%20(h1)">Headers test (h1)</h1>
 <h2 id="h2">h2</h2>
@@ -29,7 +29,7 @@ A line:<div class="DTEK1"></div><br><code class="fUSiA">Some code here
 <h4>h4</h4>
 <h5>h5</h5>
 <h6>h6</h6>
-<blockquote class="DTEKP">Only h1, h2 and h3 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.</blockquote>
+<blockquote class="CAoqR">Only h1, h2 and h3 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.</blockquote>
 <h1 id="Escape%20test">Escape test</h1>
 Not a line:
 &#45;--
