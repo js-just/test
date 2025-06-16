@@ -1,0 +1,123 @@
+Mon Jun 16 2025 12:05:46 GMT+0000 (Coordinated Universal Time) (1750075546867)
+
+_JUST FILES:
+    CSS: H2c0U7J6
+    JS: G5r9P8v1
+
+PAGE LIST:
+    FILE #1 "website/docs.md":
+        EXTNAME: .md
+        PAGEPATH (before): /docs
+        PAGEPATH (after): /docs
+        TITLE (before): docs
+        TITLE (after): docs
+    FILE #2 "website/index.html":
+        EXTNAME: .html
+        PAGEPATH (before): /index
+        PAGEPATH (after): /
+        TITLE (before): Home
+        TITLE (after): Just an Ultimate Site Tool
+    FILE #3 "website/test.md":
+        EXTNAME: .md
+        PAGEPATH (before): /test
+        PAGEPATH (after): /test
+        TITLE (before): test
+        TITLE (after): test
+
+MARKDOWN FILES:
+    FILE #1 "_just/_just/_just/README.md":
+        INPUT: 36B
+        OUTPUT: _just/_just/_just/README.html (5.14KB)
+    FILE #2 "_just/_just/_just/tests/docs.md":
+        INPUT: 15B
+        OUTPUT: _just/_just/_just/tests/docs.html (5.07KB)
+    FILE #3 "_just/_just/_just/website/docs.md":
+        INPUT: 181B
+        OUTPUT: _just/_just/_just/website/docs.html (5.48KB)
+    FILE #4 "_just/_just/_just/website/test.md":
+        INPUT: 1.33KB
+        OUTPUT: _just/_just/_just/website/test.html (8.31KB)
+
+LINKS:
+    #0:
+        NAME:a link
+        FILTERED NAME:a link
+        HREF:https://juststudio.is-a.dev/
+        TARGET:_blank
+    #1:
+        NAME:another link
+        FILTERED NAME:another link
+        HREF:https://justdeveloper.is-a.dev/
+        TARGET:_blank
+    #0:
+        NAME:a link
+        FILTERED NAME:a link
+        HREF:https://juststudio.is-a.dev/
+        TARGET:_blank
+    #1:
+        NAME:another link
+        FILTERED NAME:another link
+        HREF:https://justdeveloper.is-a.dev/
+        TARGET:_blank
+    #0:
+        NAME:a link
+        FILTERED NAME:a link
+        HREF:https://juststudio.is-a.dev/
+        TARGET:_blank
+    #1:
+        NAME:another link
+        FILTERED NAME:another link
+        HREF:https://justdeveloper.is-a.dev/
+        TARGET:_blank
+    #0:
+        NAME:a link
+        FILTERED NAME:a link
+        HREF:https://juststudio.is-a.dev/
+        TARGET:_blank
+    #1:
+        NAME:another link
+        FILTERED NAME:another link
+        HREF:https://justdeveloper.is-a.dev/
+        TARGET:_blank
+
+BUTTONS:
+    #0:
+        NAME:a button
+        FILTERED NAME:a button
+        LINK:https://just.is-a.dev/
+        TARGET:_blank
+        ID:h_W40
+    #0:
+        NAME:a button
+        FILTERED NAME:a button
+        LINK:https://just.is-a.dev/
+        TARGET:_blank
+        ID:h_W40
+    #0:
+        NAME:a button
+        FILTERED NAME:a button
+        LINK:https://just.is-a.dev/
+        TARGET:_blank
+        ID:h_W40
+    #0:
+        NAME:a button
+        FILTERED NAME:a button
+        LINK:https://just.is-a.dev/
+        TARGET:_blank
+        ID:h_W40
+
+USED NAMES:
+    "h_W", "h_W4", "l-F3", "nzRb", "ajLy", "pieD", "TwsS", "dQfY", "kgEt", "NKoC", "uZxB", "OXqA", "VMIm", "", "nzRb0", "nzRbM", "nzRbR", "ajLy3", "ajLyD", "ajLyV", "ajLyY", "ajLy4", "ajLyZ", "l-F38", "l-F3G", "l-F32", "l-F3N", "l-F3L", "pieDC", "pieDX", "pieD9", "pieDS", "TwsSH", "TwsSQ", "TwsSF", "TwsSB", "TwsSU", "Just%20an%20Ultimate%20Site%20Tool", "h_W40", "Hello%2C%20World!", "h_W40", "_just%20Docs", "What%20is%20_just%3F", "h_W40", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "h2", "h3", "h_W40"
+
+DATA NAMES:
+    "h_W4", "l-F3", "nzRb", "ajLy", "pieD", "TwsS", "dQfY", "kgEt", "NKoC", "uZxB", "OXqA", "VMIm"
+
+COMPRESSED:
+    FILE #1 "_just/_just/_just/README.html":
+        SIZE: 5.14KB (html output)
+    FILE #2 "_just/_just/_just/tests/docs.html":
+        SIZE: 5.07KB (html output)
+    FILE #3 "_just/_just/_just/website/docs.html":
+        SIZE: 3.81KB (html output)
+    FILE #4 "_just/_just/_just/website/test.html":
+        SIZE: 6.2KB (html output)
