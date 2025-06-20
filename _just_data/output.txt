@@ -1,8 +1,8 @@
-Fri Jun 20 2025 05:52:48 GMT+0000 (Coordinated Universal Time) (1750398768711)
+Fri Jun 20 2025 05:58:12 GMT+0000 (Coordinated Universal Time) (1750399092935)
 
 _JUST FILES:
-    CSS: x7G4e2s9
-    JS: u5t0j6A1
+    CSS: R4V-t1b9
+    JS: n8a7h3O0
 
 PAGE LIST:
     FILE #1 "website/docs.md":
@@ -30,7 +30,7 @@ MARKDOWN FILES:
         OUTPUT: _just/_just/_just/website/docs.html (5.42KB)
     FILE #4 "_just/_just/_just/website/index.md":
         INPUT: 1.53KB
-        OUTPUT: _just/_just/_just/website/index.html (8.69KB)
+        OUTPUT: _just/_just/_just/website/index.html (8.73KB)
 
 LINKS:
     #0:
@@ -80,31 +80,31 @@ BUTTONS:
         FILTERED NAME:a button
         LINK:https://just.is-a.dev/
         TARGET:_blank
-        ID:H8Z-0
+        ID:e6y50
     #0:
         NAME:a button
         FILTERED NAME:a button
         LINK:https://just.is-a.dev/
         TARGET:_blank
-        ID:H8Z-0
+        ID:e6y50
     #0:
         NAME:a button
         FILTERED NAME:a button
         LINK:https://just.is-a.dev/
         TARGET:_blank
-        ID:H8Z-0
+        ID:e6y50
     #0:
         NAME:a button
         FILTERED NAME:a button
         LINK:https://just.is-a.dev/
         TARGET:_blank
-        ID:H8Z-0
+        ID:e6y50
 
 USED NAMES:
-    "H8Z", "H8Z-", "O3M_", "CryQ", "UlFX", "gfKS", "RYcp", "dTBJ", "PwID", "Ekib", "avoh", "LzNW", "nmqV", "", "CryQ2", "CryQT", "CryQ9", "UlFXA", "UlFXG", "UlFXL", "UlFXJ", "UlFXZ", "UlFXP", "O3M_1", "O3M_S", "O3M_W", "O3M_Y", "O3M_7", "gfKSN", "gfKSD", "gfKSO", "gfKSU", "RYcp4", "RYcpC", "RYcpM", "RYcpB", "RYcpV", "Just%20an%20Ultimate%20Site%20Tool", "H8Z-0", "Hello%2C%20World!", "H8Z-0", "_just%20Docs", "What%20is%20_just%3F", "H8Z-0", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "h2", "h3", "H8Z-0"
+    "e6y", "e6y5", "s2W_", "cQjv", "PLIK", "Mulo", "ZfNw", "TqBF", "CHSp", "zmDi", "JkGg", "YXrU", "xEAd", "", "cQjvY", "cQjv2", "cQjv6", "PLIK0", "PLIKX", "PLIKN", "PLIKS", "PLIKF", "PLIKC", "s2W_B", "s2W_E", "s2W_J", "s2W_9", "s2W_I", "MuloG", "MuloH", "Mulo8", "Mulo5", "ZfNw1", "ZfNwA", "ZfNwU", "ZfNw7", "ZfNwZ", "Just%20an%20Ultimate%20Site%20Tool", "e6y50", "Hello%2C%20World!", "e6y50", "_just%20Docs", "What%20is%20_just%3F", "e6y50", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "h2", "h3", "e6y50"
 
 DATA NAMES:
-    "H8Z-", "O3M_", "CryQ", "UlFX", "gfKS", "RYcp", "dTBJ", "PwID", "Ekib", "avoh", "LzNW", "nmqV"
+    "e6y5", "s2W_", "cQjv", "PLIK", "Mulo", "ZfNw", "TqBF", "CHSp", "zmDi", "JkGg", "YXrU", "xEAd"
 
 COMPRESSED:
     FILE #1 "_just/_just/_just/README.html":
@@ -114,4 +114,4 @@ COMPRESSED:
     FILE #3 "_just/_just/_just/website/docs.html":
         SIZE: 3.75KB (html output)
     FILE #4 "_just/_just/_just/website/index.html":
-        SIZE: 6.58KB (html output)
+        SIZE: 6.62KB (html output)
