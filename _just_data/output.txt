@@ -1,8 +1,8 @@
-Fri Jun 20 2025 18:44:10 GMT+0000 (Coordinated Universal Time) (1750445050879)
+Sat Jun 21 2025 14:22:12 GMT+0000 (Coordinated Universal Time) (1750515732032)
 
 _JUST FILES:
-    CSS: i-q6r2C9
-    JS: D3g8h4Y7
+    CSS: G5p3m4c8
+    JS: l6g_V2Y-
 
 PAGE LIST:
     FILE #1 "website/docs.md":
@@ -42,94 +42,50 @@ MARKDOWN FILES:
         OUTPUT: _just/_just/_just/website/mattcone.html (13.01KB)
 
 LINKS:
-    #0:
-        NAME:a link
-        FILTERED NAME:a link
-        HREF:https://juststudio.is-a.dev/
-        TARGET:_blank
     #1:
-        NAME:another link
-        FILTERED NAME:another link
-        HREF:https://justdeveloper.is-a.dev/
-        TARGET:_blank
-    #0:
-        NAME:a link
-        FILTERED NAME:a link
-        HREF:https://juststudio.is-a.dev/
-        TARGET:_blank
-    #1:
-        NAME:another link
-        FILTERED NAME:another link
-        HREF:https://justdeveloper.is-a.dev/
-        TARGET:_blank
-    #0:
-        NAME:a link
-        FILTERED NAME:a link
-        HREF:https://juststudio.is-a.dev/
-        TARGET:_blank
-    #1:
-        NAME:another link
-        FILTERED NAME:another link
-        HREF:https://justdeveloper.is-a.dev/
-        TARGET:_blank
-    #0:
-        NAME:a link
-        FILTERED NAME:a link
-        HREF:https://juststudio.is-a.dev/
-        TARGET:_blank
-    #1:
-        NAME:another link
-        FILTERED NAME:another link
-        HREF:https://justdeveloper.is-a.dev/
-        TARGET:_blank
-    #0:
-        NAME:a link
-        FILTERED NAME:a link
-        HREF:https://juststudio.is-a.dev/
-        TARGET:_blank
-    #1:
-        NAME:another link
-        FILTERED NAME:another link
-        HREF:https://justdeveloper.is-a.dev/
-        TARGET:_blank
+        NAME: a link
+        FILTERED NAME: a link
+        HREF: https://juststudio.is-a.dev/
+        TARGET: _blank
+    #2:
+        NAME: another link
+        FILTERED NAME: another link
+        HREF: https://justdeveloper.is-a.dev/
+        TARGET: _blank
 
 BUTTONS:
-    #0:
-        NAME:a button
-        FILTERED NAME:a button
-        LINK:https://just.is-a.dev/
-        TARGET:_blank
-        ID:Z1c50
-    #0:
-        NAME:a button
-        FILTERED NAME:a button
-        LINK:https://just.is-a.dev/
-        TARGET:_blank
-        ID:Z1c50
-    #0:
-        NAME:a button
-        FILTERED NAME:a button
-        LINK:https://just.is-a.dev/
-        TARGET:_blank
-        ID:Z1c50
-    #0:
-        NAME:a button
-        FILTERED NAME:a button
-        LINK:https://just.is-a.dev/
-        TARGET:_blank
-        ID:Z1c50
-    #0:
-        NAME:a button
-        FILTERED NAME:a button
-        LINK:https://just.is-a.dev/
-        TARGET:_blank
-        ID:Z1c50
 
 USED NAMES:
-    "Z1c", "Z1c5", "I0O_", "fTnK", "oNkd", "euEs", "SBvH", "zmla", "XpVj", "tWAJ", "RxUF", "GywL", "QbPM", "", "fTnKM", "fTnK6", "fTnK8", "oNkdN", "oNkdZ", "oNkd5", "oNkd2", "oNkdE", "oNkdD", "I0O_X", "I0O_W", "I0O_G", "I0O_3", "I0O_4", "euEsT", "euEsQ", "euEsU", "euEsS", "SBvHR", "SBvHF", "SBvHA", "SBvHY", "SBvHO", "Just%20an%20Ultimate%20Site%20Tool", "Z1c50", "Hello%2C%20World!", "Z1c50", "_just%20Docs", "What%20is%20_just%3F", "Z1c50", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "Links%20test", "h2", "h3", "Z1c50", "Markdown%20test", "One", "Two", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML", "Three", "My%20Great%20Heading%20%7B%23custom-id%7D", "Z1c50"
+    "v7k", "v7k0", "X1W9", "UQeu", "ELFh", "AHbx", "NrBs", "zPyi", "tjaf", "OdJR", "MTIw", "nSDq", "oCKZ", "", "UQeu5", "UQeuW", "UQeu3", "ELFhT", "ELFh4", "ELFhL", "ELFh1", "ELFh0", "ELFh2", "X1W9F", "X1W9E", "X1W9Z", "X1W9P", "X1W9R", "AHbxX", "AHbxK", "AHbx8", "AHbxV", "NrBsQ", "NrBsO", "NrBs9", "NrBsY", "NrBsM", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "Links%20test", "h2", "h3", "Markdown%20test", "One", "Two", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML", "Three", "My%20Great%20Heading%20%7B%23custom-id%7D"
 
 DATA NAMES:
-    "Z1c5", "I0O_", "fTnK", "oNkd", "euEs", "SBvH", "zmla", "XpVj", "tWAJ", "RxUF", "GywL", "QbPM"
+    "v7k0", "X1W9", "UQeu", "ELFh", "AHbx", "NrBs", "zPyi", "tjaf", "OdJR", "MTIw", "nSDq", "oCKZ"
+
+CAUGHT ERRORS:
+    AT LINE 1529: Error: 
+
+
+
+
+ Just an Ultimate Site Tool: Error 0122: "somewhere.com">me@somewhere.com</a" is not a domain name.
+    AT LINE 1529: Error: 
+
+
+
+
+ Just an Ultimate Site Tool: Error 0122: "somewhere.com">me@somewhere.com</a" is not a domain name.
+    AT LINE 1529: Error: 
+
+
+
+
+ Just an Ultimate Site Tool: Error 0122: "somewhere.com">me@somewhere.com</a" is not a domain name.
+    AT LINE 1613: Error: 
+
+
+
+
+ Just an Ultimate Site Tool: Error 0122: "somewhere.com">me@somewhere.com</a" is not a domain name.
 
 COMPRESSED:
     FILE #1 "_just/_just/_just/README.html":

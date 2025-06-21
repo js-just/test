@@ -1,5 +1,5 @@
 <p><h1 id="Markdown%20test">Markdown test</h1>
-This is a Markdown test for the Markdown Guide tools directory.<div class="oNkdD"></div><br>headings
+This is a Markdown test for the Markdown Guide tools directory.<div class="ELFh2"></div><br>headings
 
 <h1 id="One">One</h1>
 <h2 id="Two">Two</h2>
@@ -10,13 +10,13 @@ This is a Markdown test for the Markdown Guide tools directory.<div class="oNkdD
 Alternate One
 <mark><mark><mark>=</mark></mark></mark>
 
-Alternate Two<div class="oNkdD"></div><br>---
+Alternate Two<div class="ELFh2"></div><br>---
 
 paragraphs
 
 first paragraph
 
-second para<div class="oNkdD"></div><br>line breaks
+second para<div class="ELFh2"></div><br>line breaks
 
 line one with trailing whitespace  
 line two right under
@@ -25,79 +25,79 @@ line one with no trailing whitespace, just hard return
 line two right under
 
 line one with no trailing backslash 
-line two right under<div class="oNkdD"></div><br>bold
+line two right under<div class="ELFh2"></div><br>bold
 
 <strong>asterisks</strong>
 
-<span class="oNkd">underscores</span>
+<span class="ELFh">underscores</span>
 
-in**middle**here<div class="oNkdD"></div><br>italic
+in**middle**here<div class="ELFh2"></div><br>italic
 
 <em>asterisk</em>
 
 <em>underscore</em>
 
-in*middle*here<div class="oNkdD"></div><br>bold and italic
+in*middle*here<div class="ELFh2"></div><br>bold and italic
 
 <em><strong>asterisks</strong></em>
 
-<em class="oNkd">underscores</em>
+<em class="ELFh">underscores</em>
 
-<em class="oNkd">combo</em>
+<em class="ELFh">combo</em>
 
-<em><strong>second combo</strong></em><div class="oNkdD"></div><br>blockquotes
+<em><strong>second combo</strong></em><div class="ELFh2"></div><br>blockquotes
 
 <blockquote>single</blockquote>
 <blockquote><_just element="blockquote separator"></_just>multi</blockquote>
 <blockquote>> line</blockquote>
 <blockquote><_just element="blockquote separator"></_just>nested</blockquote>
-<blockquote>>> blockquotes</blockquote><div class="oNkdD"></div><br>ordered lists
+<blockquote>>> blockquotes</blockquote><div class="ELFh2"></div><br>ordered lists
 
 <ol><li>first</li><li>second</li><li>third</li></ol>
 
 <ol><li>this</li><li>is</li></ol>
     1. nested
-<ol><li>now</li></ol><div class="oNkdD"></div><br>unordered lists
+<ol><li>now</li></ol><div class="ELFh2"></div><br>unordered lists
 
 <ul><li>dashes</li><li>here</li></ul>
   - nested
 
 <ul><li>asterisks</li><li>here</li></ul>
 
-<ul><li>plus</li><li>signs</li></ul><div class="oNkdD"></div><br>code
+<ul><li>plus</li><li>signs</li></ul><div class="ELFh2"></div><br>code
 
 <code>one tick mark</code>
 
     <one tab>
-      <indented><div class="oNkdD"></div><br>horizontal rules
+      <indented><div class="ELFh2"></div><br>horizontal rules
 
-throughout this :)<div class="oNkdD"></div><br>links
+throughout this :)<div class="ELFh2"></div><br>links
 
-normal link => <a href="https://cnn.com" target="_blank" id="SBvHO">cnn</a>
+normal link => <a href="https://cnn.com" target="_blank" id="NrBsM">cnn</a>
 
-brackets => <a href="https://cnn.com" target="_blank" id="SBvHO">https://cnn.com</a>
+brackets => <a href="https://cnn.com" target="_blank" id="NrBsM">https://cnn.com</a>
 
 brackets => <a href="mailto:me@somewhere.com">me@somewhere.com</a>
 
-naked url (test auto link) => <a href="https://cnn.com" target="_blank" id="SBvHO">https://cnn.com</a><div class="oNkdD"></div><br>images
+naked url (test auto link) => <a href="https://cnn.com" target="_blank" id="NrBsM">https://cnn.com</a><div class="ELFh2"></div><br>images
 
-<img src="https://www.markdownguide.org/assets/images/tools/joplin.png" alt="test image" loading="lazy"><div class="oNkdD"></div><br><h2 id="Tables">Tables</h2>
+<img src="https://www.markdownguide.org/assets/images/tools/joplin.png" alt="test image" loading="lazy"><div class="ELFh2"></div><br><h2 id="Tables">Tables</h2>
 | Syntax      | Description |
 | ----------- | ----------- |
 | Header      | Title       |
-| Paragraph   | Text        |<div class="oNkdD"></div><br><h2 id="Fenced%20code%20blocks">Fenced code blocks</h2>
-<code class="fTnK8">{
+| Paragraph   | Text        |<div class="ELFh2"></div><br><h2 id="Fenced%20code%20blocks">Fenced code blocks</h2>
+<code class="UQeu3">{
   "firstName": "John",
   "lastName": "Smith",
   "age": 25
 }
-</code><div class="oNkdD"></div><br><h2 id="Syntax%20highlighting">Syntax highlighting</h2>
-<code class="fTnK8">{
+</code><div class="ELFh2"></div><br><h2 id="Syntax%20highlighting">Syntax highlighting</h2>
+<code class="UQeu3">{
   "firstName": "John",
   "lastName": "Smith",
   "age": 25
 }
-</code><div class="oNkdD"></div><br><h2 id="Footnotes">Footnotes</h2>
+</code><div class="ELFh2"></div><br><h2 id="Footnotes">Footnotes</h2>
 Here's a simple footnote,[<sup>1] and here's a longer one.[</sup>bignote]
 
 [^1]: This is the first footnote.
@@ -108,28 +108,28 @@ Here's a simple footnote,[<sup>1] and here's a longer one.[</sup>bignote]
 
     <code>{ my code }</code>
 
-    Add as many paragraphs as you like.<div class="oNkdD"></div><br><h2 id="Heading%20IDs">Heading IDs</h2>
-<h3 id="My%20Great%20Heading%20%7B%23custom-id%7D">My Great Heading {#custom-id}</h3><div class="oNkdD"></div><br><h2 id="Definition%20lists">Definition lists</h2>
+    Add as many paragraphs as you like.<div class="ELFh2"></div><br><h2 id="Heading%20IDs">Heading IDs</h2>
+<h3 id="My%20Great%20Heading%20%7B%23custom-id%7D">My Great Heading {#custom-id}</h3><div class="ELFh2"></div><br><h2 id="Definition%20lists">Definition lists</h2>
 First Term
 : This is the definition of the first term.
 
 Second Term
 : This is one definition of the second term.
-: This is another definition of the second term.<div class="oNkdD"></div><br><h2 id="Strikethrough">Strikethrough</h2>
-<span class="euEs">two tilde</span>
+: This is another definition of the second term.<div class="ELFh2"></div><br><h2 id="Strikethrough">Strikethrough</h2>
+<span class="AHbx">two tilde</span>
 
-<sub>one tilde</sub><div class="oNkdD"></div><br><h2 id="Task%20lists">Task lists</h2>
-<ul><li>[x] Write the press release</li><li>[ ] Update the website</li><li>[ ] Contact the media</li></ul><div class="oNkdD"></div><br><h2 id="Emoji">Emoji</h2>
+<sub>one tilde</sub><div class="ELFh2"></div><br><h2 id="Task%20lists">Task lists</h2>
+<ul><li>[x] Write the press release</li><li>[ ] Update the website</li><li>[ ] Contact the media</li></ul><div class="ELFh2"></div><br><h2 id="Emoji">Emoji</h2>
 copy and paste: ☕
-shortcodes: :joy:<div class="oNkdD"></div><br><h2 id="Highlight">Highlight</h2>
+shortcodes: :joy:<div class="ELFh2"></div><br><h2 id="Highlight">Highlight</h2>
 <mark>twoequals</mark>
 
-::twohypens::<div class="oNkdD"></div><br><h2 id="Subscript">Subscript</h2>
-H<sub>2</sub>O<div class="oNkdD"></div><br><h2 id="Superscript">Superscript</h2>
-X<sup>2</sup><div class="oNkdD"></div><br><h2 id="Abbreviation">Abbreviation</h2>
+::twohypens::<div class="ELFh2"></div><br><h2 id="Subscript">Subscript</h2>
+H<sub>2</sub>O<div class="ELFh2"></div><br><h2 id="Superscript">Superscript</h2>
+X<sup>2</sup><div class="ELFh2"></div><br><h2 id="Abbreviation">Abbreviation</h2>
 *[HTML]: Hyper Text Markup Language
 
-The HTML specification is maintained by the W3C.<div class="oNkdD"></div><br><h2 id="HTML">HTML</h2>
+The HTML specification is maintained by the W3C.<div class="ELFh2"></div><br><h2 id="HTML">HTML</h2>
 <em>italic test</em>
 
 <strong>bold test</strong></p>

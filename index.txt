@@ -1,14 +1,14 @@
 <p><h1 id="This%20is%20a%20test%20page">This is a test page</h1>
 Generated using <a href="https://just.is-a.dev/" target="_blank">Just an Ultimate Site Tool</a>.
 
-Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <span class="oNkd">underlined</span>, <span class="euEs">idk</span>, <sub>sub</sub>, <sup>super</sup>, <mark>marked</mark>, <em class="oNkd"><strong>very important</strong></em>, <mark><em class="oNkd"><strong>extreme important</strong></em></mark>, <em class="euEs"><strong>not important</strong></em> text.
-Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <span class="oNkd"><code>underlined</code></span>, <span class="euEs"><code>idk</code></span>, <sub><code>sub</code></sub>, <sup><code>super</code></sup>, <mark><code>marked</code></mark>, <em class="oNkd"><strong><code>very important</code></strong></em>, <mark><em class="oNkd"><strong><code>extreme important</code></strong></em></mark>, <em class="euEs"><strong><code>not important</code></strong></em> code.
+Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <span class="ELFh">underlined</span>, <span class="AHbx">idk</span>, <sub>sub</sub>, <sup>super</sup>, <mark>marked</mark>, <em class="ELFh"><strong>very important</strong></em>, <mark><em class="ELFh"><strong>extreme important</strong></em></mark>, <em class="AHbx"><strong>not important</strong></em> text.
+Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <span class="ELFh"><code>underlined</code></span>, <span class="AHbx"><code>idk</code></span>, <sub><code>sub</code></sub>, <sup><code>super</code></sup>, <mark><code>marked</code></mark>, <em class="ELFh"><strong><code>very important</code></strong></em>, <mark><em class="ELFh"><strong><code>extreme important</code></strong></em></mark>, <em class="AHbx"><strong><code>not important</code></strong></em> code.
 
 <ol><li>List</li><li>(with numbers)</li></ol>
 
 <ul><li>List</li><li>(no numbers)</li></ul>
 
-A line:<div class="oNkdD"></div><br><code class="fTnK8">Some code here
+A line:<div class="ELFh2"></div><br><code class="UQeu3">Some code here
 </code>
 
 <h1 id="Blockquotes%20test">Blockquotes test</h1>
@@ -18,10 +18,10 @@ A line:<div class="oNkdD"></div><br><code class="fTnK8">Some code here
 <blockquote><blockquote><br>> Many nested blockquotes.</blockquote></blockquote>
 <blockquote><blockquote><br>> > This line should not be another nested blockquote. (Limit: 4 nested blockqutes)</blockquote></blockquote>
 <blockquote><_just element="blockquote separator"></_just>[!NOTE] A note!</blockquote>
-<blockquote class="oNkdZ">A tip!</blockquote>
-<blockquote class="oNkd5">Something important.</blockquote>
-<blockquote class="oNkd2">A warning!</blockquote>
-<blockquote class="oNkdE">Another warning?</blockquote>
+<blockquote class="ELFh4">A tip!</blockquote>
+<blockquote class="ELFhL">Something important.</blockquote>
+<blockquote class="ELFh1">A warning!</blockquote>
+<blockquote class="ELFh0">Another warning?</blockquote>
 <blockquote><_just element="blockquote separator"></_just>[!NOTE] <code>[!NOTE]</code>, <code>[!TIP]</code>, <code>[!IMPORTANT]</code>, <code>[!WARNING]</code> and <code>[!CAUTION]</code> are should be in one line. You can add &#60;br> tags to break the line for HTML. <br> > <code>[!NOTE]</code>, <code>[!TIP]</code>, <code>[!IMPORTANT]</code>, <code>[!WARNING]</code> and <code>[!CAUTION]</code> cannot have nested blockquotes.</blockquote>
 <h1 id="Headers%20test%20(h1)">Headers test (h1)</h1>
 <h2 id="h2">h2</h2>
@@ -29,7 +29,7 @@ A line:<div class="oNkdD"></div><br><code class="fTnK8">Some code here
 <h4>h4</h4>
 <h5>h5</h5>
 <h6>h6</h6>
-<blockquote class="oNkd5">Only h1, h2 and h3 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.</blockquote>
+<blockquote class="ELFhL">Only h1, h2 and h3 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.</blockquote>
 <h1 id="Escape%20test">Escape test</h1>
 Not a line:
 &#45;--
