@@ -1,8 +1,8 @@
-Sat Jun 21 2025 16:05:31 GMT+0000 (Coordinated Universal Time) (1750521931237)
+Sat Jun 21 2025 16:15:02 GMT+0000 (Coordinated Universal Time) (1750522502736)
 
 _JUST FILES:
-    CSS: Z3F9W1P0
-    JS: N4S-L_u5
+    CSS: T8J2B0a4
+    JS: L-z6k1Q7
 
 PAGE LIST:
     FILE #1 "website/docs.md":
@@ -36,7 +36,7 @@ MARKDOWN FILES:
         OUTPUT: _just/_just/_just/website/docs.html (5.48KB)
     FILE #4 "_just/_just/_just/website/index.md":
         INPUT: 1.63KB
-        OUTPUT: _just/_just/_just/website/index.html (9.23KB)
+        OUTPUT: _just/_just/_just/website/index.html (9.28KB)
     FILE #5 "_just/_just/_just/website/mattcone.md":
         INPUT: 2.62KB
         OUTPUT: _just/_just/_just/website/mattcone.html (13.01KB)
@@ -61,14 +61,14 @@ BUTTONS:
         FILTERED NAME: a button
         LINK: https://just.is-a.dev/
         TARGET: _blank
-        EXTERNAL: NO
-        ID: T7J80
+        EXTERNAL: YES
+        ID: o_l30
 
 USED NAMES:
-    "T7J", "T7J8", "D2z6", "rCle", "IaBb", "kydg", "QvAc", "VMYt", "qxnE", "RGKU", "mhHp", "Xwfj", "iosO", "", "rCleF", "rCleY", "rCle1", "IaBbG", "IaBbT", "IaBbD", "IaBbZ", "IaBbX", "IaBbS", "D2z63", "D2z6O", "D2z69", "D2z6P", "D2z62", "kydgA", "kydgL", "kydgN", "kydgU", "QvAc4", "QvAcV", "QvAcE", "QvAcC", "QvAcW", "T7J80", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "Links%20test", "h2", "h3", "Markdown%20test", "One", "Two", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML", "Three", "My%20Great%20Heading%20%7B%23custom-id%7D"
+    "o_l", "o_l3", "K9E5", "fSgW", "upHn", "qdUI", "ZFiv", "NmCt", "OhYx", "VyMR", "XecD", "ArjP", "Gbws", "", "fSgWB", "fSgWW", "fSgW1", "upHn7", "upHnP", "upHnY", "upHnV", "upHnM", "upHnZ", "K9E5A", "K9E5X", "K9E5G", "K9E5C", "K9E5H", "qdUIS", "qdUI5", "qdUIQ", "qdUIU", "ZFivE", "ZFivR", "ZFivD", "ZFivI", "ZFiv4", "o_l30", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "Links%20test", "h2", "h3", "Markdown%20test", "One", "Two", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML", "Three", "My%20Great%20Heading%20%7B%23custom-id%7D"
 
 DATA NAMES:
-    "T7J8", "D2z6", "rCle", "IaBb", "kydg", "QvAc", "VMYt", "qxnE", "RGKU", "mhHp", "Xwfj", "iosO"
+    "o_l3", "K9E5", "fSgW", "upHn", "qdUI", "ZFiv", "NmCt", "OhYx", "VyMR", "XecD", "ArjP", "Gbws"
 
 CAUGHT ERRORS:
     AT LINE 1529 (417): Just an Ultimate Site Tool: Error 0122: "somewhere.com">me@somewhere.com</a" is not a domain name.
@@ -76,7 +76,7 @@ CAUGHT ERRORS:
     AT LINE 1529 (417): Just an Ultimate Site Tool: Error 0122: "somewhere.com">me@somewhere.com</a" is not a domain name.
     AT LINE 1613 (417): Just an Ultimate Site Tool: Error 0122: "somewhere.com">me@somewhere.com</a" is not a domain name.
 
-DOMAIN: just.is-a.dev
+DOMAIN: test.just.is-a.dev
 
 CONFIG TO HTML:
     DOCSCONFIG:
@@ -101,12 +101,7 @@ CONFIG TO HTML:
         LOGO: undefined
         LOGO (HTML): 
         FOOTER: Made with <a href="https://just.is-a.dev/" target="_blank">_just</a>.
-        HTML: 
-    
-    
-    <meta property="og:title" content="Just an Ultimate Site Tool"/>
-    
-    <meta property="og:type" content="website"/><meta property="twitter:card" content="summary_large_image"/>
+        HTML: <meta property="og:title" content="Just an Ultimate Site Tool"/>        <meta property="og:type" content="website"/><meta property="twitter:card" content="summary_large_image"/>
 
 COMPRESSED:
     FILE #1 "_just/_just/_just/README.html":
@@ -116,6 +111,6 @@ COMPRESSED:
     FILE #3 "_just/_just/_just/website/docs.html":
         SIZE: 3.82KB (html output)
     FILE #4 "_just/_just/_just/website/index.html":
-        SIZE: 7.02KB (html output)
+        SIZE: 7.06KB (html output)
     FILE #5 "_just/_just/_just/website/mattcone.html":
         SIZE: 9.43KB (html output)
