@@ -1,8 +1,8 @@
-Sun Jun 22 2025 13:56:10 GMT+0000 (Coordinated Universal Time) (1750600570384)
+Sun Jun 22 2025 15:42:35 GMT+0000 (Coordinated Universal Time) (1750606955628)
 
 _JUST FILES:
-    CSS: q_W5f3S7
-    JS: m0i8c2t4
+    CSS: O-R7L0Z8
+    JS: u3N1q4G6
 
 PAGE LIST:
     FILE #1 "website/docs.md":
@@ -27,19 +27,19 @@ PAGE LIST:
 MARKDOWN FILES:
     FILE #1 "_just/_just/_just/README.md":
         INPUT: 36B
-        OUTPUT: _just/_just/_just/README.html (5.14KB)
+        OUTPUT: _just/_just/_just/README.html (5.18KB)
     FILE #2 "_just/_just/_just/tests/docs.md":
         INPUT: 15B
-        OUTPUT: _just/_just/_just/tests/docs.html (5.08KB)
+        OUTPUT: _just/_just/_just/tests/docs.html (5.11KB)
     FILE #3 "_just/_just/_just/website/docs.md":
         INPUT: 181B
-        OUTPUT: _just/_just/_just/website/docs.html (5.48KB)
+        OUTPUT: _just/_just/_just/website/docs.html (5.54KB)
     FILE #4 "_just/_just/_just/website/index.md":
         INPUT: 1.63KB
-        OUTPUT: _just/_just/_just/website/index.html (9.25KB)
+        OUTPUT: _just/_just/_just/website/index.html (9.38KB)
     FILE #5 "_just/_just/_just/website/mattcone.md":
         INPUT: 2.62KB
-        OUTPUT: _just/_just/_just/website/mattcone.html (13.04KB)
+        OUTPUT: _just/_just/_just/website/mattcone.html (13.35KB)
 
 LINKS:
     #1:
@@ -62,52 +62,52 @@ BUTTONS:
         LINK: https://just.is-a.dev/
         TARGET: _blank
         EXTERNAL: YES
-        ID: G-w90
+        ID: W2X90
 
 USED NAMES:
-    "G-w", "G-w9", "u6K1", "rnLz", "UVRI", "beOp", "dPEZ", "NHBT", "sDXJ", "Fhko", "jAly", "xaYg", "MQvC", "", "rnLzT", "rnLzR", "rnLzW", "UVRIP", "UVRI3", "UVRIB", "UVRIH", "UVRIS", "UVRI2", "u6K1F", "u6K14", "u6K18", "u6K1X", "u6K1L", "beOpZ", "beOpC", "beOp6", "beOpQ", "dPEZ1", "dPEZD", "dPEZ5", "dPEZE", "dPEZ9", "G-w90", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "Links%20test", "h2", "h3", "Markdown%20test", "One", "Two", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML", "Three", "My%20Great%20Heading%20%7B%23custom-id%7D"
+    "W2X", "W2X9", "z5B_", "owHP", "EICD", "FjKl", "QhiA", "mvYy", "tcMU", "egTx", "bVdn", "kpJr", "fsaS", "", "owHPG", "owHP4", "owHPX", "EICDQ", "EICD7", "EICDC", "EICDV", "EICD9", "EICD2", "z5B_K", "z5B_8", "z5B_F", "z5B_N", "z5B_5", "FjKlY", "FjKlW", "FjKlH", "FjKlB", "QhiAU", "QhiA0", "QhiAM", "QhiAA", "QhiA6", "W2X90", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "Links%20test", "h2", "h3", "Markdown%20test", "One", "Two", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML", "Three", "My%20Great%20Heading%20%7B%23custom-id%7D"
 
 DATA NAMES:
-    "G-w9", "u6K1", "rnLz", "UVRI", "beOp", "dPEZ", "NHBT", "sDXJ", "Fhko", "jAly", "xaYg", "MQvC"
+    "W2X9", "z5B_", "owHP", "EICD", "FjKl", "QhiA", "mvYy", "tcMU", "egTx", "bVdn", "kpJr", "fsaS"
 
 CAUGHT ERRORS:
-    AT LINE 1529 (423): [object Object]
-    AT LINE 1529 (423): [object Object]
-    AT LINE 1529 (423): [object Object]
-    AT LINE 1613 (423): [object Object]
+    AT LINE 95 (447): [object Object]
+    AT LINE 95 (447): [object Object]
+    AT LINE 95 (447): [object Object]
+    AT LINE 95 (447): [object Object]
 
 DOMAIN: test.just.is-a.dev
 
 CONFIG TO HTML:
     DOCSCONFIG:
-        TITLE: Documentation
+            TITLE: Documentation
         TITLE (HTML): <span>Documentation</span>
         METATITLE: Just an Ultimate Site Tool
         OGTITLE: Just an Ultimate Site Tool
-        OGTITLE (HTML): <meta property="og:title" content="Just an Ultimate Site Tool"/>
+            OGTITLE (HTML): <meta property="og:title" content="Just an Ultimate Site Tool"/>
         DESCRIPTION: undefined
         DESCRIPTION (HTML): 
         OGDESCRIPTION: undefined
-        OGDESCRIPTION (HTML): 
+            OGDESCRIPTION (HTML): 
         VIEWPORT: width=device-width, initial-scale=1.0
         TWITTER CARD: summary_large_image
         KEYWORDS: undefined
-        KEYWORDS (HTML): 
+            KEYWORDS (HTML): 
         LANG: en
         LANG (HTML):  lang="en"
         GOOGLE ANALYTICS: undefined
-        GOOGLE SITE VERIFICATION: undefined
+            GOOGLE SITE VERIFICATION: undefined
         YANDEX SITE VERIFICATION: undefined
         LOGO: undefined
-        LOGO (HTML): 
+            LOGO (HTML): 
         FOOTER: Made with <a href="https://just.is-a.dev/" target="_blank">_just</a>.
-        HTML: <meta property="og:title" content="Just an Ultimate Site Tool"/>        <meta property="og:type" content="website"/><meta property="twitter:card" content="summary_large_image"/>
+        HTML: <meta property="og:title" content="Just an Ultimate Site Tool"/>                <meta property="og:type" content="website"/><meta property="twitter:card" content="summary_large_image"/>
 
 COMPRESSED:
     FILE #1 "_just/_just/_just/README.html":
-        SIZE: 5.14KB (html output)
+        SIZE: 5.18KB (html output)
     FILE #2 "_just/_just/_just/tests/docs.html":
-        SIZE: 5.08KB (html output)
+        SIZE: 5.11KB (html output)
     FILE #3 "_just/_just/_just/website/docs.html":
         SIZE: 3.82KB (html output)
     FILE #4 "_just/_just/_just/website/index.html":
