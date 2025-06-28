@@ -1,8 +1,8 @@
-Sat Jun 28 2025 18:57:26 GMT+0000 (Coordinated Universal Time) (1751137046217)
+Sat Jun 28 2025 19:44:12 GMT+0000 (Coordinated Universal Time) (1751139852994)
 
 _JUST FILES:
-    CSS: M9m5d4g0
-    JS: S2D8n_q7
+    CSS: g1d0E7D4
+    JS: K6R9T8I-
 
 PAGE LIST:
     FILE #1 "website/docs.md":
@@ -27,19 +27,19 @@ PAGE LIST:
 MARKDOWN FILES:
     FILE #1 "_just/_just/_just/README.md":
         INPUT: 36B
-        OUTPUT: _just/_just/_just/README.html (5.18KB)
+        OUTPUT: _just/_just/_just/README.html (5.15KB)
     FILE #2 "_just/_just/_just/tests/docs.md":
         INPUT: 15B
-        OUTPUT: _just/_just/_just/tests/docs.html (5.11KB)
+        OUTPUT: _just/_just/_just/tests/docs.html (5.1KB)
     FILE #3 "_just/_just/_just/website/docs.md":
         INPUT: 181B
-        OUTPUT: _just/_just/_just/website/docs.html (5.54KB)
+        OUTPUT: _just/_just/_just/website/docs.html (5.51KB)
     FILE #4 "_just/_just/_just/website/index.md":
         INPUT: 1.63KB
-        OUTPUT: _just/_just/_just/website/index.html (9.38KB)
+        OUTPUT: _just/_just/_just/website/index.html (9.5KB)
     FILE #5 "_just/_just/_just/website/mattcone.md":
         INPUT: 2.62KB
-        OUTPUT: _just/_just/_just/website/mattcone.html (14.41KB)
+        OUTPUT: _just/_just/_just/website/mattcone.html (14.21KB)
 
 LINKS:
     #1:
@@ -62,13 +62,13 @@ BUTTONS:
         LINK: https://just.is-a.dev/
         TARGET: _blank
         EXTERNAL: YES
-        ID: P-Y10
+        ID: z3y20
 
 USED NAMES:
-    "P-Y", "P-Y1", "r6J3", "yoVA", "isBW", "uaNF", "jGKZ", "XexT", "vwIO", "tELQ", "cUfh", "kHlz", "CRbp", "", "yoVA4", "yoVAK", "yoVAG", "isBWW", "isBW9", "isBWP", "isBWB", "isBWN", "isBWM", "r6J3X", "r6J3D", "r6J3V", "r6J3S", "r6J36", "uaNFR", "uaNFL", "uaNFE", "uaNFY", "jGKZ7", "jGKZ3", "jGKZH", "jGKZJ", "jGKZA", "P-Y10", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "Escape%20test", "Links%20test", "h2", "h3", "Markdown%20test", "One", "Two", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML", "Three", "My%20Great%20Heading%20%7B%23custom-id%7D"
+    "z3y", "z3y2", "k_V5", "reaP", "nOis", "ZQbW", "YXxq", "lSUu", "jFBw", "AfGJ", "CmLN", "hMtp", "ocvH", "", "reaPI", "reaPZ", "reaPR", "nOisA", "nOisQ", "nOisM", "nOisV", "nOisB", "nOisS", "k_V5L", "k_V5Y", "k_V5G", "k_V5E", "k_V5N", "ZQbW4", "ZQbWK", "ZQbWW", "ZQbWP", "YXxqJ", "YXxqC", "YXxqD", "YXxqF", "YXxqT", "z3y20", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "h2", "h3", "h4", "Escape%20test", "Links%20test", "Markdown%20test", "One", "Two", "Three", "Four", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "My%20Great%20Heading%20%7B%23custom-id%7D", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML"
 
 DATA NAMES:
-    "P-Y1", "r6J3", "yoVA", "isBW", "uaNF", "jGKZ", "XexT", "vwIO", "tELQ", "cUfh", "kHlz", "CRbp"
+    "z3y2", "k_V5", "reaP", "nOis", "ZQbW", "YXxq", "lSUu", "jFBw", "AfGJ", "CmLN", "hMtp", "ocvH"
 
 CAUGHT ERRORS:
 
@@ -101,12 +101,12 @@ CONFIG TO HTML:
 
 COMPRESSED:
     FILE #1 "_just/_just/_just/README.html":
-        SIZE: 5.18KB (html output)
+        SIZE: 5.15KB (html output)
     FILE #2 "_just/_just/_just/tests/docs.html":
-        SIZE: 5.11KB (html output)
+        SIZE: 5.1KB (html output)
     FILE #3 "_just/_just/_just/website/docs.html":
-        SIZE: 3.82KB (html output)
+        SIZE: 3.79KB (html output)
     FILE #4 "_just/_just/_just/website/index.html":
-        SIZE: 7.04KB (html output)
+        SIZE: 7.03KB (html output)
     FILE #5 "_just/_just/_just/website/mattcone.html":
-        SIZE: 10.53KB (html output)
+        SIZE: 10.21KB (html output)
