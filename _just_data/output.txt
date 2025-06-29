@@ -1,8 +1,8 @@
-Sun Jun 29 2025 15:16:16 GMT+0000 (Coordinated Universal Time) (1751210176081)
+Sun Jun 29 2025 15:23:51 GMT+0000 (Coordinated Universal Time) (1751210631458)
 
 _JUST FILES:
-    CSS: v0s6F8H4
-    JS: k_w7l5t3
+    CSS: T7o1W_r4
+    JS: d-j2c0l5
 
 PAGE LIST:
     FILE #1 "website/docs.md":
@@ -47,8 +47,8 @@ MARKDOWN FILES:
         OUTPUT: _just/_just/_just/tests/docs.html (5.18KB)
         OUTPUT: _just/_just/_just/website/docs.html (5.6KB)
         OUTPUT: _just/_just/_just/website/index.html (9.71KB)
-        OUTPUT: _just/_just/_just/website/langs.html (9.92KB)
-        OUTPUT: _just/_just/_just/website/mattcone.html (13.99KB)
+        OUTPUT: _just/_just/_just/website/langs.html (10.65KB)
+        OUTPUT: _just/_just/_just/website/mattcone.html (14.04KB)
 
 LINKS:
     #1:
@@ -71,13 +71,13 @@ BUTTONS:
         LINK: https://just.is-a.dev/
         TARGET: _blank
         EXTERNAL: YES
-        ID: a9A20
+        ID: S3L80
 
 USED NAMES:
-    "a9A", "a9A2", "h1K-", "YOun", "jBbV", "PfpS", "ZGmq", "JodX", "MyTr", "gLiE", "zeIc", "xCQD", "UNWR", "", "xCQD0", "YOunX", "YOunO", "YOunR", "jBbV2", "jBbVE", "jBbVZ", "jBbVP", "jBbV6", "jBbVT", "h1K-B", "h1K-U", "h1K-Y", "h1K-3", "h1K-Q", "PfpSC", "PfpSI", "PfpSH", "PfpSS", "ZGmqM", "ZGmqK", "ZGmqN", "ZGmqG", "ZGmqD", "a9A20", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "h2", "h3", "h4", "Escape%20test", "Links%20test", "Syntax%20highlighting", "Markdown%20test", "One", "Two", "Three", "Four", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting2", "Footnotes", "Heading%20IDs", "My%20Great%20Heading%20%7B%23custom-id%7D", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML"
+    "S3L", "S3L8", "a6f9", "hxRZ", "qNFV", "BPzg", "tinD", "KkOv", "uEes", "MAIQ", "bmwJ", "UXyG", "HYpC", "", "UXyG0", "hxRZR", "hxRZH", "hxRZP", "qNFVA", "qNFV0", "qNFV5", "qNFVF", "qNFV7", "qNFVK", "a6f9X", "a6f9T", "a6f9I", "a6f9E", "a6f9Z", "BPzgL", "BPzgQ", "BPzgU", "BPzgO", "tinD6", "tinDS", "tinD2", "tinDJ", "tinD1", "S3L80", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "h2", "h3", "h4", "Escape%20test", "Links%20test", "Syntax%20highlighting", "Markdown%20test", "One", "Two", "Three", "Four", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting2", "Footnotes", "Heading%20IDs", "My%20Great%20Heading%20%7B%23custom-id%7D", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML"
 
 DATA NAMES:
-    "a9A2", "h1K-", "YOun", "jBbV", "PfpS", "ZGmq", "JodX", "MyTr", "gLiE", "zeIc", "xCQD", "UNWR"
+    "S3L8", "a6f9", "hxRZ", "qNFV", "BPzg", "tinD", "KkOv", "uEes", "MAIQ", "bmwJ", "UXyG", "HYpC"
 
 CAUGHT ERRORS:
 
@@ -118,6 +118,6 @@ COMPRESSED:
     FILE #4 "_just/_just/_just/website/index.html":
         SIZE: 7.24KB (html output)
     FILE #5 "_just/_just/_just/website/langs.html":
-        SIZE: 8.32KB (html output)
+        SIZE: 9.06KB (html output)
     FILE #6 "_just/_just/_just/website/mattcone.html":
-        SIZE: 9.99KB (html output)
+        SIZE: 10.04KB (html output)
