@@ -1,0 +1,58 @@
+<p><h1 id="Syntax%20highlighting">Syntax highlighting</h1>
+<code class="arOHA"><code>json</code><span class="hljs-punctuation">{</span>
+
+&nbsp;<span class="hljs-attr">&quot;hello&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;world&quot;</span><span class="hljs-punctuation">,</span>
+
+&nbsp;<span class="hljs-attr">&quot;number&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1234567890</span><span class="hljs-punctuation">,</span>
+
+&nbsp;<span class="hljs-attr">&quot;array&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code>
+<code class="arOHA"><code>json</code><span class="hljs-punctuation">[</span>
+
+&nbsp;<span class="hljs-string">&quot;hello&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;world&quot;</span>
+<span class="hljs-punctuation">]</span>
+</code>
+<code class="arOHA">console.log('hello world');
+console.warn(1 + 1);
+alert(false);
+const abc = true;
+for (i = 1; i <= 4; i++) {
+
+&nbsp;// do something
+}
+</code>
+<code class="arOHA"><!DOCTYPE html>
+<span class="hw" id="abc">Hello World!</span>
+</code>
+<code class="arOHA"><code>css</code>* {
+
+&nbsp;<span class="hljs-attribute">background-color</span>: black;
+}
+<span class="hljs-selector-tag">span</span> {
+
+&nbsp;<span class="hljs-attribute">color</span>: white;
+}
+<span class="hljs-selector-class">.hw</span> {
+
+&nbsp;<span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#6e3bf3</span>;
+}
+</code>
+<code class="arOHA">#!/bin/bash
+echo "Hello World!"
+</code>
+<code class="arOHA">#!/usr/bin/env python3
+import time
+out = int(time.time() * 1000)
+print(out)
+</code>
+<code class="arOHA"><code>lua</code><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;hiii&quot;</span>)
+warn(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>)
+<span class="hljs-keyword">local</span> abc = <span class="hljs-literal">true</span>
+<span class="hljs-keyword">while</span> wait(<span class="hljs-number">1</span>) <span class="hljs-keyword">do</span>
+
+&nbsp;<span class="hljs-comment">-- do something</span>
+<span class="hljs-keyword">end</span>
+</code>
+<code class="arOHA"><h1 id="markdown%20inside%20markdown">markdown inside markdown</h1>
+</code></p>

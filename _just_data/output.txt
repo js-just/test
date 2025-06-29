@@ -1,8 +1,8 @@
-Sun Jun 29 2025 11:55:10 GMT+0000 (Coordinated Universal Time) (1751198110275)
+Sun Jun 29 2025 12:15:19 GMT+0000 (Coordinated Universal Time) (1751199319290)
 
 _JUST FILES:
-    CSS: q5J0n8f9
-    JS: M_e2l4g1
+    CSS: b1D9o8u3
+    JS: k0h_z-m2
 
 PAGE LIST:
     FILE #1 "website/docs.md":
@@ -17,7 +17,13 @@ PAGE LIST:
         PAGEPATH (after): /
         TITLE (before): Home
         TITLE (after): Home
-    FILE #3 "website/mattcone.md":
+    FILE #3 "website/langs.md":
+        EXTNAME: .md
+        PAGEPATH (before): /langs
+        PAGEPATH (after): /langs
+        TITLE (before): langs
+        TITLE (after): Syntax highlighting test
+    FILE #4 "website/mattcone.md":
         EXTNAME: .md
         PAGEPATH (before): /mattcone
         PAGEPATH (after): /mattcone
@@ -27,19 +33,22 @@ PAGE LIST:
 MARKDOWN FILES:
     FILE #1 "_just/_just/_just/README.md":
         INPUT: 36B
-        OUTPUT: _just/_just/_just/README.html (5.18KB)
+        OUTPUT: _just/_just/_just/README.html (5.24KB)
     FILE #2 "_just/_just/_just/tests/docs.md":
         INPUT: 15B
-        OUTPUT: _just/_just/_just/tests/docs.html (5.11KB)
+        OUTPUT: _just/_just/_just/tests/docs.html (5.18KB)
     FILE #3 "_just/_just/_just/website/docs.md":
         INPUT: 181B
-        OUTPUT: _just/_just/_just/website/docs.html (5.54KB)
+        OUTPUT: _just/_just/_just/website/docs.html (5.6KB)
     FILE #4 "_just/_just/_just/website/index.md":
         INPUT: 1.63KB
-        OUTPUT: _just/_just/_just/website/index.html (9.56KB)
-    FILE #5 "_just/_just/_just/website/mattcone.md":
+        OUTPUT: _just/_just/_just/website/index.html (9.63KB)
+    FILE #5 "_just/_just/_just/website/langs.md":
+        INPUT: 763B
+        OUTPUT: _just/_just/_just/website/langs.html (7.88KB)
+    FILE #6 "_just/_just/_just/website/mattcone.md":
         INPUT: 2.62KB
-        OUTPUT: _just/_just/_just/website/mattcone.html (13.94KB)
+        OUTPUT: _just/_just/_just/website/mattcone.html (14KB)
 
 LINKS:
     #1:
@@ -62,15 +71,20 @@ BUTTONS:
         LINK: https://just.is-a.dev/
         TARGET: _blank
         EXTERNAL: YES
-        ID: s3W60
+        ID: X4T70
 
 USED NAMES:
-    "s3W", "s3W6", "F-k7", "CbVy", "YZHi", "RdwX", "BuPO", "oUrG", "zapv", "ILKQ", "NmxT", "AhED", "tjcS", "", "AhED0", "CbVy6", "CbVy3", "CbVyI", "YZHiS", "YZHiR", "YZHiV", "YZHiE", "YZHiD", "YZHiO", "F-k72", "F-k74", "F-k7C", "F-k7Z", "F-k7B", "RdwX7", "RdwXH", "RdwXN", "RdwXJ", "BuPOK", "BuPOP", "BuPOY", "BuPOQ", "BuPOL", "s3W60", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "h2", "h3", "h4", "Escape%20test", "Links%20test", "Markdown%20test", "One", "Two", "Three", "Four", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting", "Footnotes", "Heading%20IDs", "My%20Great%20Heading%20%7B%23custom-id%7D", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML"
+    "X4T", "X4T7", "Q5L6", "arOH", "sBZn", "iKdq", "eSCM", "vVYF", "lWpP", "tUNc", "jyfJ", "GRAE", "xwgI", "", "GRAE0", "arOHB", "arOH9", "arOHA", "sBZnR", "sBZnG", "sBZn8", "sBZnH", "sBZnC", "sBZnU", "Q5L6S", "Q5L6X", "Q5L60", "Q5L65", "Q5L6T", "iKdqL", "iKdqW", "iKdqM", "iKdq1", "eSCME", "eSCMO", "eSCM6", "eSCMZ", "eSCMP", "X4T70", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "h2", "h3", "h4", "Escape%20test", "Links%20test", "Syntax%20highlighting", "markdown%20inside%20markdown", "Markdown%20test", "One", "Two", "Three", "Four", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting2", "Footnotes", "Heading%20IDs", "My%20Great%20Heading%20%7B%23custom-id%7D", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML"
 
 DATA NAMES:
-    "s3W6", "F-k7", "CbVy", "YZHi", "RdwX", "BuPO", "oUrG", "zapv", "ILKQ", "NmxT", "AhED", "tjcS"
+    "X4T7", "Q5L6", "arOH", "sBZn", "iKdq", "eSCM", "vVYF", "lWpP", "tUNc", "jyfJ", "GRAE", "xwgI"
 
 CAUGHT ERRORS:
+    AT LINE 95 (440): [2;45m[1;30m_just[0m: [0;33mWarning 0209[0m: [0;33mUnsuppotred language: hljs: [0mjs
+    AT LINE 95 (440): [2;45m[1;30m_just[0m: [0;33mWarning 0209[0m: [0;33mUnsuppotred language: hljs: [0mhtml
+    AT LINE 95 (440): [2;45m[1;30m_just[0m: [0;33mWarning 0209[0m: [0;33mUnsuppotred language: hljs: [0msh
+    AT LINE 95 (440): [2;45m[1;30m_just[0m: [0;33mWarning 0209[0m: [0;33mUnsuppotred language: hljs: [0mpy
+    AT LINE 95 (440): [2;45m[1;30m_just[0m: [0;33mWarning 0209[0m: [0;33mUnsuppotred language: hljs: [0mmd
 
 DOMAIN: test.just.is-a.dev
 
@@ -101,12 +115,14 @@ CONFIG TO HTML:
 
 COMPRESSED:
     FILE #1 "_just/_just/_just/README.html":
-        SIZE: 5.18KB (html output)
+        SIZE: 5.24KB (html output)
     FILE #2 "_just/_just/_just/tests/docs.html":
-        SIZE: 5.11KB (html output)
+        SIZE: 5.18KB (html output)
     FILE #3 "_just/_just/_just/website/docs.html":
-        SIZE: 3.82KB (html output)
+        SIZE: 3.88KB (html output)
     FILE #4 "_just/_just/_just/website/index.html":
-        SIZE: 7.09KB (html output)
-    FILE #5 "_just/_just/_just/website/mattcone.html":
-        SIZE: 9.94KB (html output)
+        SIZE: 7.16KB (html output)
+    FILE #5 "_just/_just/_just/website/langs.html":
+        SIZE: 6.17KB (html output)
+    FILE #6 "_just/_just/_just/website/mattcone.html":
+        SIZE: 10.01KB (html output)
