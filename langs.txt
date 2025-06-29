@@ -1,5 +1,5 @@
 <p><h1 id="Syntax%20highlighting">Syntax highlighting</h1>
-<code class="RfNPU"><code>json</code><span class="hljs-punctuation">{</span>
+<code class="IJXN3"><code>json</code><span class="hljs-punctuation">{</span>
 
 &nbsp;<span class="hljs-attr">&quot;hello&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;world&quot;</span><span class="hljs-punctuation">,</span>
 
@@ -8,12 +8,12 @@
 &nbsp;<span class="hljs-attr">&quot;array&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
 <span class="hljs-punctuation">}</span>
 </code>
-<code class="RfNPU"><code>json</code><span class="hljs-punctuation">[</span>
+<code class="IJXN3"><code>json</code><span class="hljs-punctuation">[</span>
 
 &nbsp;<span class="hljs-string">&quot;hello&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;world&quot;</span>
 <span class="hljs-punctuation">]</span>
 </code>
-<code class="RfNPU"><code>javascript</code><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello world&#x27;</span>);
+<code class="IJXN3"><code>javascript</code><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello world&#x27;</span>);
 <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>);
 <span class="hljs-title function_">alert</span>(<span class="hljs-literal">false</span>);
 <span class="hljs-keyword">const</span> abc = <span class="hljs-literal">true</span>;
@@ -22,10 +22,10 @@
 &nbsp;<span class="hljs-comment">// do something</span>
 }
 </code>
-<code class="RfNPU"><code>xml</code><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+<code class="IJXN3"><code>xml</code><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hw&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;abc&quot;</span>&gt;</span>Hello World!<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
 </code>
-<code class="RfNPU"><code>css</code>* {
+<code class="IJXN3"><code>css</code>* {
 
 &nbsp;<span class="hljs-attribute">background-color</span>: black;
 }
@@ -62,15 +62,15 @@
 &nbsp;<span class="hljs-attribute">height</span>: <span class="hljs-number">7px</span>
 }
 </code>
-<code class="RfNPU"><code>shell</code><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span>
+<code class="IJXN3"><code>shell</code><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span>
 echo &quot;Hello World!&quot;
 </code>
-<code class="RfNPU"><code>python</code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<code class="IJXN3"><code>python</code><span class="hljs-comment">#!/usr/bin/env python3</span>
 <span class="hljs-keyword">import</span> time
 out = <span class="hljs-built_in">int</span>(time.time() * <span class="hljs-number">1000</span>)
 <span class="hljs-built_in">print</span>(out)
 </code>
-<code class="RfNPU"><code>lua</code><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;hiii&quot;</span>)
+<code class="IJXN3"><code>lua</code><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;hiii&quot;</span>)
 warn(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>)
 <span class="hljs-keyword">local</span> abc = <span class="hljs-literal">true</span>
 <span class="hljs-keyword">while</span> wait(<span class="hljs-number">1</span>) <span class="hljs-keyword">do</span>
@@ -78,5 +78,5 @@ warn(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>)
 &nbsp;<span class="hljs-comment">-- do something</span>
 <span class="hljs-keyword">end</span>
 </code>
-<code class="RfNPU"><code>markdown</code><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>markdown inside markdown<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+<code class="IJXN3"><code>markdown</code><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>markdown inside markdown<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
 </code></p>
