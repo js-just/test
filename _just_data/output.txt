@@ -1,8 +1,8 @@
-Sun Jun 29 2025 12:38:49 GMT+0000 (Coordinated Universal Time) (1751200729018)
+Sun Jun 29 2025 12:45:02 GMT+0000 (Coordinated Universal Time) (1751201102436)
 
 _JUST FILES:
-    CSS: z-k7U3W9
-    JS: F_y6c0o8
+    CSS: q8w3M4j1
+    JS: o2Y5P-U7
 
 PAGE LIST:
     FILE #1 "website/docs.md":
@@ -45,10 +45,10 @@ MARKDOWN FILES:
         OUTPUT: _just/_just/_just/website/index.html (9.71KB)
     FILE #5 "_just/_just/_just/website/langs.md":
         INPUT: 763B
-        OUTPUT: _just/_just/_just/website/langs.html (6.17KB)
+        OUTPUT: _just/_just/_just/website/langs.html (7.85KB)
     FILE #6 "_just/_just/_just/website/mattcone.md":
         INPUT: 2.62KB
-        OUTPUT: _just/_just/_just/website/mattcone.html (13.41KB)
+        OUTPUT: _just/_just/_just/website/mattcone.html (14KB)
 
 LINKS:
     #1:
@@ -71,13 +71,13 @@ BUTTONS:
         LINK: https://just.is-a.dev/
         TARGET: _blank
         EXTERNAL: YES
-        ID: n1x50
+        ID: k_A00
 
 USED NAMES:
-    "n1x", "n1x5", "h2D4", "sdba", "LuPM", "jYOe", "NBwt", "iRmG", "qrKH", "fQZV", "TgEJ", "pCAv", "lXIS", "", "pCAv0", "sdba7", "sdbaR", "sdbaE", "LuPMJ", "LuPMP", "LuPM3", "LuPMD", "LuPMN", "LuPMI", "h2D4Z", "h2D41", "h2D4O", "h2D42", "h2D46", "jYOeM", "jYOeF", "jYOeX", "jYOe9", "NBwtC", "NBwtU", "NBwtT", "NBwt8", "NBwtS", "n1x50", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "h2", "h3", "h4", "Escape%20test", "Links%20test", "Syntax%20highlighting", "markdown%20inside%20markdown", "Markdown%20test", "One", "Two", "Three", "Four", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting2", "Footnotes", "Heading%20IDs", "My%20Great%20Heading%20%7B%23custom-id%7D", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML"
+    "k_A", "k_A0", "O6h9", "JZxu", "HyFG", "TRpr", "tEsm", "zelB", "QWXi", "VgDn", "NcLv", "fCKb", "SdaI", "", "fCKb0", "JZxu8", "JZxuK", "JZxuC", "HyFGE", "HyFGA", "HyFGD", "HyFGW", "HyFGI", "HyFG6", "O6h9T", "O6h90", "O6h93", "O6h94", "O6h9F", "TRprG", "TRpr5", "TRprU", "TRprY", "tEsmX", "tEsmN", "tEsmJ", "tEsmO", "tEsmM", "k_A00", "Just%20an%20Ultimate%20Site%20Tool", "Hello%2C%20World!", "_just%20Docs", "What%20is%20_just%3F", "This%20is%20a%20test%20page", "Blockquotes%20test", "Headers%20test%20(h1)", "h2", "h3", "h4", "Escape%20test", "Links%20test", "Syntax%20highlighting", "markdown%20inside%20markdown", "Markdown%20test", "One", "Two", "Three", "Four", "Tables", "Fenced%20code%20blocks", "Syntax%20highlighting2", "Footnotes", "Heading%20IDs", "My%20Great%20Heading%20%7B%23custom-id%7D", "Definition%20lists", "Strikethrough", "Task%20lists", "Emoji", "Highlight", "Subscript", "Superscript", "Abbreviation", "HTML"
 
 DATA NAMES:
-    "n1x5", "h2D4", "sdba", "LuPM", "jYOe", "NBwt", "iRmG", "qrKH", "fQZV", "TgEJ", "pCAv", "lXIS"
+    "k_A0", "O6h9", "JZxu", "HyFG", "TRpr", "tEsm", "zelB", "QWXi", "VgDn", "NcLv", "fCKb", "SdaI"
 
 CAUGHT ERRORS:
     AT LINE 95 (443): [2;45m[1;30m_just[0m: [0;33mWarning 0209[0m: [0;33mUnsuppotred language: hljs: [0mjs
@@ -123,6 +123,6 @@ COMPRESSED:
     FILE #4 "_just/_just/_just/website/index.html":
         SIZE: 7.24KB (html output)
     FILE #5 "_just/_just/_just/website/langs.html":
-        SIZE: 4.45KB (html output)
+        SIZE: 6.13KB (html output)
     FILE #6 "_just/_just/_just/website/mattcone.html":
-        SIZE: 9.41KB (html output)
+        SIZE: 10.01KB (html output)
