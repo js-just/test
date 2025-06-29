@@ -1,5 +1,5 @@
 <p><h1 id="Syntax%20highlighting">Syntax highlighting</h1>
-<code class="JZxuC"><code>json</code><span class="hljs-punctuation">{</span>
+<code class="HZLYI"><code>json</code><span class="hljs-punctuation">{</span>
 
 &nbsp;<span class="hljs-attr">&quot;hello&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;world&quot;</span><span class="hljs-punctuation">,</span>
 
@@ -8,24 +8,24 @@
 &nbsp;<span class="hljs-attr">&quot;array&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
 <span class="hljs-punctuation">}</span>
 </code>
-<code class="JZxuC"><code>json</code><span class="hljs-punctuation">[</span>
+<code class="HZLYI"><code>json</code><span class="hljs-punctuation">[</span>
 
 &nbsp;<span class="hljs-string">&quot;hello&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;world&quot;</span>
 <span class="hljs-punctuation">]</span>
 </code>
-<code class="JZxuC">console.log('hello world');
-console.warn(1 + 1);
-alert(false);
-const abc = true;
-for (i = 1; i <= 4; i++) {
+<code class="HZLYI"><code>javascript</code><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello world&#x27;</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>);
+<span class="hljs-title function_">alert</span>(<span class="hljs-literal">false</span>);
+<span class="hljs-keyword">const</span> abc = <span class="hljs-literal">true</span>;
+<span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">4</span>; i++) {
 
-&nbsp;// do something
+&nbsp;<span class="hljs-comment">// do something</span>
 }
 </code>
-<code class="JZxuC"><!DOCTYPE html>
+<code class="HZLYI"><!DOCTYPE html>
 <span class="hw" id="abc">Hello World!</span>
 </code>
-<code class="JZxuC"><code>css</code>* {
+<code class="HZLYI"><code>css</code>* {
 
 &nbsp;<span class="hljs-attribute">background-color</span>: black;
 }
@@ -38,15 +38,15 @@ for (i = 1; i <= 4; i++) {
 &nbsp;<span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#6e3bf3</span>;
 }
 </code>
-<code class="JZxuC">#!/bin/bash
-echo "Hello World!"
+<code class="HZLYI"><code>shell</code><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span>
+echo &quot;Hello World!&quot;
 </code>
-<code class="JZxuC">#!/usr/bin/env python3
-import time
-out = int(time.time() * 1000)
-print(out)
+<code class="HZLYI"><code>python</code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> time
+out = <span class="hljs-built_in">int</span>(time.time() * <span class="hljs-number">1000</span>)
+<span class="hljs-built_in">print</span>(out)
 </code>
-<code class="JZxuC"><code>lua</code><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;hiii&quot;</span>)
+<code class="HZLYI"><code>lua</code><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;hiii&quot;</span>)
 warn(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>)
 <span class="hljs-keyword">local</span> abc = <span class="hljs-literal">true</span>
 <span class="hljs-keyword">while</span> wait(<span class="hljs-number">1</span>) <span class="hljs-keyword">do</span>
@@ -54,5 +54,5 @@ warn(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>)
 &nbsp;<span class="hljs-comment">-- do something</span>
 <span class="hljs-keyword">end</span>
 </code>
-<code class="JZxuC"><h1 id="markdown%20inside%20markdown">markdown inside markdown</h1>
+<code class="HZLYI"><code>markdown</code><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>markdown inside markdown<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
 </code></p>

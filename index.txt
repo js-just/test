@@ -1,14 +1,14 @@
 <p><h1 id="This%20is%20a%20test%20page">This is a test page</h1>
-Generated using <a href="https://just.is-a.dev/" target="_blank" id="tEsmM">Just an Ultimate Site Tool</a>.
+Generated using <a href="https://just.is-a.dev/" target="_blank" id="nUNbW">Just an Ultimate Site Tool</a>.
 
-Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <span class="HyFG">underlined</span>, <span class="TRpr">idk</span>, <sub>sub</sub>, <sup>super</sup>, <mark>marked</mark>, <em class="HyFG"><strong>very important</strong></em>, <mark><em class="HyFG"><strong>extreme important</strong></em></mark>, <em class="TRpr"><strong>not important</strong></em> text.
-Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <span class="HyFG"><code>underlined</code></span>, <span class="TRpr"><code>idk</code></span>, <sub><code>sub</code></sub>, <sup><code>super</code></sup>, <mark><code>marked</code></mark>, <em class="HyFG"><strong><code>very important</code></strong></em>, <mark><em class="HyFG"><strong><code>extreme important</code></strong></em></mark>, <em class="TRpr"><strong><code>not important</code></strong></em> code.
+Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <span class="OEFP">underlined</span>, <span class="IJoz">idk</span>, <sub>sub</sub>, <sup>super</sup>, <mark>marked</mark>, <em class="OEFP"><strong>very important</strong></em>, <mark><em class="OEFP"><strong>extreme important</strong></em></mark>, <em class="IJoz"><strong>not important</strong></em> text.
+Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <span class="OEFP"><code>underlined</code></span>, <span class="IJoz"><code>idk</code></span>, <sub><code>sub</code></sub>, <sup><code>super</code></sup>, <mark><code>marked</code></mark>, <em class="OEFP"><strong><code>very important</code></strong></em>, <mark><em class="OEFP"><strong><code>extreme important</code></strong></em></mark>, <em class="IJoz"><strong><code>not important</code></strong></em> code.
 
 <ol><li>List</li><li>(with numbers)</li></ol>
 
 <ul><li>List</li><li>(no numbers)</li></ul>
 
-A line:<div class="HyFG6"></div><br><code class="JZxuC">Some code here
+A line:<div class="OEFPY"></div><br><code class="HZLYI">Some code here
 </code>
 
 <h1 id="Blockquotes%20test">Blockquotes test</h1>
@@ -17,19 +17,19 @@ A line:<div class="HyFG6"></div><br><code class="JZxuC">Some code here
 <blockquote><blockquote><br>And another blockquote!</blockquote></blockquote>
 <blockquote><blockquote><br>> Many nested blockquotes.</blockquote></blockquote>
 <blockquote><blockquote><br>> > This line should not be another nested blockquote. (Limit: 4 nested blockqutes)</blockquote></blockquote>
-<blockquote><_just element="QWXi"></_just>[!NOTE] A note!</blockquote>
-<blockquote class="HyFGA">A tip!</blockquote>
-<blockquote class="HyFGD">Something important.</blockquote>
-<blockquote class="HyFGW">A warning!</blockquote>
-<blockquote class="HyFGI">Another warning?</blockquote>
-<blockquote><_just element="QWXi"></_just>[!NOTE] <code>&#91;!NOTE&#93;</code>, <code>&#91;!TIP&#93;</code>, <code>&#91;!IMPORTANT&#93;</code>, <code>&#91;!WARNING&#93;</code> and <code>&#91;!CAUTION&#93;</code> are should be in one line. You can add &#60;br> tags to break the line for HTML. <br> > <code>&#91;!NOTE&#93;</code>, <code>&#91;!TIP&#93;</code>, <code>&#91;!IMPORTANT&#93;</code>, <code>&#91;!WARNING&#93;</code> and <code>&#91;!CAUTION&#93;</code> cannot have nested blockquotes.</blockquote>
+<blockquote><_just element="Vhie"></_just>[!NOTE] A note!</blockquote>
+<blockquote class="OEFPF">A tip!</blockquote>
+<blockquote class="OEFPS">Something important.</blockquote>
+<blockquote class="OEFPK">A warning!</blockquote>
+<blockquote class="OEFP2">Another warning?</blockquote>
+<blockquote><_just element="Vhie"></_just>[!NOTE] <code>&#91;!NOTE&#93;</code>, <code>&#91;!TIP&#93;</code>, <code>&#91;!IMPORTANT&#93;</code>, <code>&#91;!WARNING&#93;</code> and <code>&#91;!CAUTION&#93;</code> are should be in one line. You can add &#60;br> tags to break the line for HTML. <br> > <code>&#91;!NOTE&#93;</code>, <code>&#91;!TIP&#93;</code>, <code>&#91;!IMPORTANT&#93;</code>, <code>&#91;!WARNING&#93;</code> and <code>&#91;!CAUTION&#93;</code> cannot have nested blockquotes.</blockquote>
 <h1 id="Headers%20test%20(h1)">Headers test (h1)</h1>
 <h2 id="h2">h2</h2>
 <h3 id="h3">h3</h3>
 <h4 id="h4">h4</h4>
 <h5>h5</h5>
 <h6>h6</h6>
-<blockquote class="HyFGD">Only h1, h2, h3 and h4 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.</blockquote>
+<blockquote class="OEFPS">Only h1, h2, h3 and h4 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.</blockquote>
 <h1 id="Escape%20test">Escape test</h1>
 Not a line:
 &#45;--
@@ -46,8 +46,8 @@ No code here
 
 &#62; Not a blockquote.
 
-<blockquote><_just element="QWXi"></_just>&#91;&#33;&#78;&#79;&#84;&#69;&#93; A blockquote, but not a note.</blockquote>
+<blockquote><_just element="Vhie"></_just>&#91;&#33;&#78;&#79;&#84;&#69;&#93; A blockquote, but not a note.</blockquote>
 <h1 id="Links%20test">Links test</h1>
-<a href="https://just.is-a.dev/" target="_blank" id="tEsmM" title="link title">a link</a>
-<a href="https://just.is-a.dev/" target="_blank" id="tEsmM">https://just.is-a.dev/</a>
-<a href="https://just.is-a.dev" target="_blank" id="tEsmM">https://just.is-a.dev</a></p>
+<a href="https://just.is-a.dev/" target="_blank" id="nUNbW" title="link title">a link</a>
+<a href="https://just.is-a.dev/" target="_blank" id="nUNbW">https://just.is-a.dev/</a>
+<a href="https://just.is-a.dev" target="_blank" id="nUNbW">https://just.is-a.dev</a></p>
