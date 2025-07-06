@@ -1,9 +1,9 @@
 <p><h1 id="_just%20Docs">_just Docs</h1>
 Welcome to Just an Ultimate Site Tool documentation!
-<span class="mJGc9">"<strong><code>&&#35;95;just</code></strong>" is an abbreviation of <strong>Just an Ultimate Site Tool</strong>.</span><div class="IzysT"></div><br><h1 id="What%20is%20_just%3F">What is _just?</h1>
+<span class="lDGc9">"<strong><code>&&#35;95;just</code></strong>" is an abbreviation of <strong>Just an Ultimate Site Tool</strong>.</span><div class="sBTQP"></div><br><h1 id="What%20is%20_just%3F">What is _just?</h1>
 Just an Ultimate Site Tool is a GitHub Action. 
 Currently it have 4 modes: 
 <ul><li><code>Postprocessor</code>: Modify and add your own files to generated Next.js website.</li><li><code>Redirector</code>: Client-side redirect using JavaScript.</li><li><code>Compressor</code>: Compresses your website.</li><li><code>Generator</code>: Generates documentation website using Markdown.</li></ul>
 
-<blockquote class="IzysE">Just an Ultimate Site Tool is in <strong>beta</strong>. Expect regular updates, possible bugs, and changes. If you have found a bug, please <a href="https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md" target="_blank" id="pNLCM">report it here</a>.</blockquote>
-<blockquote class="IzysL">Do not use <code>Redirector</code> if you can make server-side <code>HTTP 3XX</code> redirect(s).</blockquote></p>
+<blockquote class="sBTQX">Just an Ultimate Site Tool is in <strong>beta</strong>. Expect regular updates, possible bugs, and changes. If you have found a bug, please <a href="https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md" target="_blank" id="RkdA2">report it here</a>.</blockquote>
+<blockquote class="sBTQ5">Do not use <code>Redirector</code> if you can make server-side <code>HTTP 3XX</code> redirect(s).</blockquote></p>
