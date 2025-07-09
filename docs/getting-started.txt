@@ -1,2 +1,119 @@
 <p><h1 id="Getting%20Started">Getting Started</h1>
-To install Just an Ultimate Site Tool</p>
+<h2 id="Installation">Installation</h2>
+<h4 id="Making%20your%20first%20project">Making your first project</h4>
+<ol><li>Create new repository, and create <code>/&#46;github/workflows/publish&#46;yml</code> file, template:</li></ol>
+<code class="MAmWD">name: Website
+on:
+&nbsp;&nbsp;push:
+&nbsp;branches: ["main"]
+&nbsp;&nbsp;workflow_dispatch:
+permissions:
+&nbsp;&nbsp;contents: read
+&nbsp;&nbsp;pages: write
+&nbsp;&nbsp;id-token: write
+concurrency:
+&nbsp;&nbsp;group: "pages"
+&nbsp;&nbsp;cancel-in-progress: false
+jobs:
+&nbsp;&nbsp;build:
+&nbsp;runs-on: ubuntu-latest
+&nbsp;steps:
+&nbsp;&nbsp;- name: Checkout
+&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/checkout@v4
+&nbsp;&nbsp;- name: Setup Pages
+&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/configure-pages@v5
+&nbsp;&nbsp;- name: Generate with _just
+&nbsp;&nbsp;&nbsp;&nbsp;uses: js-just/_just@v0.0.29
+&nbsp;&nbsp;&nbsp;&nbsp;with:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: .
+&nbsp;&nbsp;- name: Upload artifact
+&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/upload-pages-artifact@v3
+&nbsp;&nbsp;&nbsp;&nbsp;with:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: .
+&nbsp;&nbsp;deploy:
+&nbsp;environment:
+&nbsp;&nbsp;name: github-pages
+&nbsp;&nbsp;url: ${{ steps.deployment.outputs.page_url }}
+&nbsp;runs-on: ubuntu-latest
+&nbsp;needs: build
+&nbsp;steps:
+&nbsp;&nbsp;- name: Deploy to GitHub Pages
+&nbsp;&nbsp;&nbsp;&nbsp;id: deployment
+&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/deploy-pages@v4
+</code>
+You can change name of workflow file and workflow name:
+<code class="MAmWD">name: Workflow name
+</code>
+You can also choose _just version:
+<code class="MAmWD">    uses: js-just/_just@(put version name here)
+</code>
+<strong>If you know what exactly you are doing, you may change anything.</strong>
+<ol><li>Create <code>just&#46;config&#46;js</code> file in the root directory:</li></ol>
+Choose what mode you want to use.
+<code>Postprocessor</code> mode:
+<code class="MAmWD"><code>JavaScript</code><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+&nbsp;&nbsp;<span class="hljs-attr">type</span>: <span class="hljs-string">&quot;postprocessor&quot;</span>
+}
+</code>
+<code>Redirector</code> mode: 
+<code class="MAmWD"><code>JavaScript</code><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+&nbsp;<span class="hljs-attr">type</span>: <span class="hljs-string">&quot;redirect&quot;</span>, 
+&nbsp;<span class="hljs-attr">redirect_config</span>: {
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">url</span>: <span class="hljs-string">&quot;<a href="https://justdeveloper.is-a.dev/&quot" target="_blank" id="qPEoG">https://justdeveloper.is-a.dev/&quot</a>;</span>, <span class="hljs-comment">// Required. Replace with destination URL.</span>
+&nbsp;}
+}
+</code>
+<code>Compressor</code> mode:
+<code class="MAmWD"><code>JavaScript</code><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+&nbsp;<span class="hljs-attr">type</span>: <span class="hljs-string">&quot;compress&quot;</span>
+}
+</code>
+<code>Generator</code> mode:
+<code class="MAmWD"><code>JavaScript</code><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+&nbsp;<span class="hljs-attr">type</span>: <span class="hljs-string">&quot;docs&quot;</span>,
+&nbsp;<span class="hljs-attr">docs_config</span>: {
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">metatitle</span>: <span class="hljs-string">&quot;Documentation title&quot;</span>, <span class="hljs-comment">// Required. Replace with your documentation title.</span>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">domain</span>: <span class="hljs-string">&quot;example.com&quot;</span> <span class="hljs-comment">// Required. Replace with your domain name. Domain name should be valid.</span>
+&nbsp;}
+}
+</code>
+<ol><li>Read the documentation for the mode that you've chosen.</li></ol>
+<h4 id="Pro%20installation">Pro installation</h4>
+<ol><li>Create or modify your <code>&#46;github/workflows/github&&#35;95;pages&&#35;95;workflow&&#35;95;name&#46;yml</code>:</li></ol>
+Make sure that permissions are allowing to write pages and id-token, and does not allowing to write contents.
+<code class="MAmWD">permissions:
+&nbsp;&nbsp;contents: read
+&nbsp;&nbsp;pages: write
+&nbsp;&nbsp;id-token: write
+</code>
+Make a job for building your website using _just:
+<code class="MAmWD">jobs:
+&nbsp;&nbsp;build:
+&nbsp;runs-on: ubuntu-latest
+&nbsp;steps:
+&nbsp;&nbsp;- name: Checkout
+&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/checkout@v4
+&nbsp;&nbsp;- name: Setup Pages
+&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/configure-pages@v5
+&nbsp;&nbsp;- name: Generate with _just
+&nbsp;&nbsp;&nbsp;&nbsp;uses: js-just/_just@(version name (recommended) / main branch (latest commit) (unstable, not recommended) / commit SHA (not recommended))
+&nbsp;&nbsp;&nbsp;&nbsp;with:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: (path to your website directory) (for compressor or generator modes only)
+&nbsp;&nbsp;- name: Upload artifact
+&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/upload-pages-artifact@v3
+&nbsp;&nbsp;&nbsp;&nbsp;with:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: .
+</code>
+<ol><li>Create <code>just&#46;config&#46;js</code> file:</li></ol>
+Basic usage:
+<code class="MAmWD"><code>JavaScript</code><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+&nbsp;&nbsp;<span class="hljs-attr">type</span>: <span class="hljs-string">&quot;(postprocessor/redirect/compress/docs)&quot;</span>
+}
+</code>
+Using multiple modes:
+<span class="QjKF8G7">Currently available only combining generator and compressor.</span>
+<code class="MAmWD"><code>JavaScript</code><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+&nbsp;&nbsp;<span class="hljs-attr">type</span>: [<span class="hljs-string">&quot;docs&quot;</span>, <span class="hljs-string">&quot;compress&quot;</span>]
+}
+</code>
+<ol><li>Read the documentation for the mode/modes that you've chosen.</li></ol></p>
