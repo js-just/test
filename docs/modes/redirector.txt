@@ -1,16 +1,16 @@
 <p><h1 id="Redirector%20mode">Redirector mode</h1>
 This mode requires only the just.config.js file, <sub>except for the workflow file</sub>.
 <code>just&#46;config&#46;js</code>
-<code class="HkUuM"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="AKCUN"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;redirect&quot;</span>, 
 &nbsp;<span class="hljs-attr">redirect_config</span>&#58; {
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">url</span>&#58; <span class="hljs-string">&quot;https&#58;//example&#46;com/&quot;</span> <span class="hljs-comment">// Required&#46; Replace with destination URL&#46;</span>
 &nbsp;}
 }
 </code>
-<blockquote class="GzveK">Do not use this mode if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
+<blockquote class="bQSqD">Do not use this mode if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
 You can add <code>params{}</code>:
-<code class="HkUuM"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="AKCUN"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;redirect&quot;</span>, 
 &nbsp;<span class="hljs-attr">redirect_config</span>&#58; {
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">url</span>&#58; <span class="hljs-string">&quot;https&#58;//example&#46;com/&quot;</span>, <span class="hljs-comment">// Required&#46; Replace with destination URL&#46;</span>
@@ -30,7 +30,7 @@ You can add <code>params{}</code>:
 }
 </code>
 You can also add <code>content{}</code> in <code>params{}</code> if you want to modify HTML content.
-<code class="HkUuM"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="AKCUN"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;redirect&quot;</span>, 
 &nbsp;<span class="hljs-attr">redirect_config</span>&#58; {
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">url</span>&#58; <span class="hljs-string">&quot;https&#58;//example&#46;com/&quot;</span>, <span class="hljs-comment">// Required&#46; Replace with destination URL&#46;</span>
@@ -44,10 +44,10 @@ You can also add <code>content{}</code> in <code>params{}</code> if you want to 
 &nbsp;}
 }
 </code>
-<blockquote class="GzveI"><code>&&#35;92;n</code> and tabs/4 spaces will be removed. Use <code>&#60;br&#62;</code> instead of <code>&&#35;92;n</code>.</blockquote>
+<blockquote class="bQSqP"><code>&&#35;92;n</code> and tabs/4 spaces will be removed. Use <code>&#60;br&#62;</code> instead of <code>&&#35;92;n</code>.</blockquote>
 <h3 id="Redirect%20paths">Redirect paths</h3>
 You may add <code>paths&#91;&#93;</code> in <code>redirect&&#35;95;config{}</code> to create custom redirect paths.
-<code class="HkUuM"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="AKCUN"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;redirect&quot;</span>, 
 &nbsp;<span class="hljs-attr">redirect_config</span>&#58; {
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">url</span>&#58; <span class="hljs-string">&quot;https&#58;//example&#46;com/&quot;</span>, <span class="hljs-comment">// Required&#46; Replace with destination URL&#46;</span>
@@ -71,8 +71,8 @@ You may add <code>paths&#91;&#93;</code> in <code>redirect&&#35;95;config{}</cod
 &nbsp;&nbsp;&nbsp;&nbsp;&#93;
 &nbsp;}
 }
-</code><div class="Gzve7"></div><br><h2 id="%3Ccode%3Emodule%26%2346%3Bexports%3C%2Fcode%3E%20JSON%20Schema"><code>module&#46;exports</code> JSON Schema</h2>
-<code class="HkUuM"><code>JSON</code><span class="hljs-punctuation">{</span>
+</code><div class="bQSqH"></div><br><h2 id="%3Ccode%3Emodule%26%2346%3Bexports%3C%2Fcode%3E%20JSON%20Schema"><code>module&#46;exports</code> JSON Schema</h2>
+<code class="AKCUN"><code>JSON</code><span class="hljs-punctuation">{</span>
 &nbsp;<span class="hljs-attr">&quot;$schema&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;http&#58;//json-schema&#46;org/draft-04/schema#&quot;</span><span class="hljs-punctuation">,</span>
 &nbsp;<span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;object&quot;</span><span class="hljs-punctuation">,</span>
 &nbsp;<span class="hljs-attr">&quot;properties&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-punctuation">{</span>
