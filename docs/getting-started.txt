@@ -7,7 +7,7 @@ And some familiarity with these languages
 <h2 id="Installation">Installation</h2>
 <h3 id="Making%20your%20first%20project">Making your first project</h3>
 <ul><li>Create new repository, and create <code>/&#46;github/workflows/publish&#46;yml</code> file, template:</li></ul>
-<code class="sMwUR"><code>YAML</code><span class="hljs-attr">name&#58;</span> <span class="hljs-string">Website</span>
+<code class="mvPOR"><code>YAML</code><span class="hljs-attr">name&#58;</span> <span class="hljs-string">Website</span>
 <span class="hljs-attr">on&#58;</span>
 &nbsp;&nbsp;<span class="hljs-attr">push&#58;</span>
 &nbsp;<span class="hljs-attr">branches&#58;</span> &#91;<span class="hljs-string">&quot;main&quot;</span>&#93;
@@ -47,22 +47,22 @@ And some familiarity with these languages
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">uses&#58;</span> <span class="hljs-string">actions/deploy-pages@v4</span>
 </code>
 You can change name of workflow file and workflow name:
-<code class="sMwUR"><code>YAML</code><span class="hljs-attr">name&#58;</span> <span class="hljs-string">Workflow</span> <span class="hljs-string">name</span>
+<code class="mvPOR"><code>YAML</code><span class="hljs-attr">name&#58;</span> <span class="hljs-string">Workflow</span> <span class="hljs-string">name</span>
 </code>
 You can also choose _just version:
-<code class="sMwUR"><code>YAML</code>    <span class="hljs-attr">uses&#58;</span> <span class="hljs-string">js-just/_just@&#40;put</span> <span class="hljs-string">version</span> <span class="hljs-string">name</span> <span class="hljs-string">here&#41;</span>
+<code class="mvPOR"><code>YAML</code>    <span class="hljs-attr">uses&#58;</span> <span class="hljs-string">js-just/_just@&#40;put</span> <span class="hljs-string">version</span> <span class="hljs-string">name</span> <span class="hljs-string">here&#41;</span>
 </code>
 <strong>If you know what exactly you are doing, you may change anything.</strong>
 <ul><li>Create <code>just&#46;config&#46;js</code> file in the root directory:</li></ul>
 Choose what mode you want to use.
  
 Using <code>Postprocessor</code> mode:
-<code class="sMwUR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="mvPOR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;&nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;postprocessor&quot;</span>
 }
 </code>
 Using <code>Redirector</code> mode: 
-<code class="sMwUR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="mvPOR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;redirect&quot;</span>, 
 &nbsp;<span class="hljs-attr">redirect_config</span>&#58; {
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">url</span>&#58; <span class="hljs-string">&quot;https&#58;//example&#46;com/&quot;</span>, <span class="hljs-comment">// Required&#46; Replace with destination URL&#46;</span>
@@ -70,12 +70,12 @@ Using <code>Redirector</code> mode:
 }
 </code>
 Using <code>Compressor</code> mode:
-<code class="sMwUR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="mvPOR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;compress&quot;</span>
 }
 </code>
 Using <code>Generator</code> mode:
-<code class="sMwUR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="mvPOR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;docs&quot;</span>,
 &nbsp;<span class="hljs-attr">docs_config</span>&#58; {
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">metatitle</span>&#58; <span class="hljs-string">&quot;Documentation title&quot;</span>, <span class="hljs-comment">// Required&#46; Replace with your documentation title&#46;</span>
@@ -83,16 +83,16 @@ Using <code>Generator</code> mode:
 &nbsp;}
 }
 </code>
-<ul><li>Read the documentation for the mode that you've chosen.</li></ul><div class="KktLY"></div><br><h3 id="Pro%20installation">Pro installation</h3>
+<ul><li>Read the documentation for the mode that you've chosen.</li></ul><div class="RduII"></div><br><h3 id="Pro%20installation">Pro installation</h3>
 <ul><li>Create or modify your <code>&#46;github/workflows/github&&#35;95;pages&&#35;95;workflow&&#35;95;name&#46;yml</code>:</li></ul>
 Make sure that permissions allow writing <code>pages</code> and <code>id&#45;token</code>, but do not allow writing <code>contents</code>, only read.
-<code class="sMwUR"><code>YAML</code><span class="hljs-attr">permissions&#58;</span>
+<code class="mvPOR"><code>YAML</code><span class="hljs-attr">permissions&#58;</span>
 &nbsp;&nbsp;<span class="hljs-attr">contents&#58;</span> <span class="hljs-string">read</span>
 &nbsp;&nbsp;<span class="hljs-attr">pages&#58;</span> <span class="hljs-string">write</span>
 &nbsp;&nbsp;<span class="hljs-attr">id-token&#58;</span> <span class="hljs-string">write</span>
 </code>
 Make a job for building your website using _just:
-<code class="sMwUR"><code>YAML</code><span class="hljs-attr">jobs&#58;</span>
+<code class="mvPOR"><code>YAML</code><span class="hljs-attr">jobs&#58;</span>
 &nbsp;&nbsp;<span class="hljs-attr">build&#58;</span>
 &nbsp;<span class="hljs-attr">runs-on&#58;</span> <span class="hljs-string">ubuntu-latest</span>
 &nbsp;<span class="hljs-attr">steps&#58;</span>
@@ -105,19 +105,19 @@ Make a job for building your website using _just:
 </code>
 <ul><li>Create <code>just&#46;config&#46;js</code> file:</li></ul>
 Basic usage:
-<code class="sMwUR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<code class="mvPOR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;&nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;&#40;postprocessor/redirect/compress/docs&#41;&quot;</span>
 }
 </code>
 Using multiple modes:
-<span class="mujE0wV">Currently available only combining generator and compressor.</span>
-<code class="sMwUR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+<span class="hqGpHu">Currently available only combining generator and compressor.</span>
+<code class="mvPOR"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
 &nbsp;&nbsp;<span class="hljs-attr">type</span>&#58; &#91;<span class="hljs-string">&quot;docs&quot;</span>, <span class="hljs-string">&quot;compress&quot;</span>&#93;
 }
 </code>
 <ul><li>Read the documentation for the mode/modes that you've chosen.</li></ul>
 
 <h2 id="Modes%20documentation">Modes documentation</h2>
-<ul><li><a href="modes/postprocessor" target="_blank" id="STRB8">Postprocessor</a></li><li><a href="modes/redirector" target="_blank" id="STRB8">Redirector</a></li><li><a href="modes/compressor" target="_blank" id="STRB8">Compressor</a></li><li><a href="modes/generator" target="_blank" id="STRB8">Generator</a></li></ul>
+<ul><li><a href="modes/postprocessor" target="_blank" id="gESc5">Postprocessor</a></li><li><a href="modes/redirector" target="_blank" id="gESc5">Redirector</a></li><li><a href="modes/compressor" target="_blank" id="gESc5">Compressor</a></li><li><a href="modes/generator" target="_blank" id="gESc5">Generator</a></li></ul>
 
 </p>
