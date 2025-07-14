@@ -1,2 +1,1 @@
-<p><h1 id="Postprocessor%20mode">Postprocessor mode</h1>
-</p>
+<p>[object Promise]</p>

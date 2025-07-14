@@ -1,2 +1,1 @@
-<p><h1 id="Generator%20mode">Generator mode</h1>
-</p>
+<p>[object Promise]</p>
