@@ -1,15 +1,15 @@
 <p><h1 id="Syntax%20highlighting">Syntax highlighting</h1>
-<code class="JBoK4"><code>JSON</code><span class="hljs-punctuation">{</span>
+<code class="YsPQE"><code>JSON</code><span class="hljs-punctuation">{</span>
 &nbsp;<span class="hljs-attr">&quot;hello&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;world&quot;</span><span class="hljs-punctuation">,</span>
 &nbsp;<span class="hljs-attr">&quot;number&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-number">1234567890</span><span class="hljs-punctuation">,</span>
 &nbsp;<span class="hljs-attr">&quot;array&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-punctuation">&#91;</span><span class="hljs-punctuation">&#93;</span>
 <span class="hljs-punctuation">}</span>
 </code>
-<code class="JBoK4"><code>JSON</code><span class="hljs-punctuation">&#91;</span>
+<code class="YsPQE"><code>JSON</code><span class="hljs-punctuation">&#91;</span>
 &nbsp;<span class="hljs-string">&quot;hello&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;world&quot;</span>
 <span class="hljs-punctuation">&#93;</span>
 </code>
-<code class="JBoK4"><code>JavaScript</code><span class="hljs-variable language_">console</span>&#46;<span class="hljs-title function_">log</span>&#40;<span class="hljs-string">&#x27;hello world&#x27;</span>&#41;;
+<code class="YsPQE"><code>JavaScript</code><span class="hljs-variable language_">console</span>&#46;<span class="hljs-title function_">log</span>&#40;<span class="hljs-string">&#x27;hello world&#x27;</span>&#41;;
 <span class="hljs-variable language_">console</span>&#46;<span class="hljs-title function_">warn</span>&#40;<span class="hljs-number">1</span> + <span class="hljs-number">1</span>&#41;;
 <span class="hljs-title function_">alert</span>&#40;<span class="hljs-literal">false</span>&#41;;
 <span class="hljs-keyword">const</span> abc = <span class="hljs-literal">true</span>;
@@ -17,10 +17,10 @@
 &nbsp;<span class="hljs-comment">// do something</span>
 }
 </code>
-<code class="JBoK4"><code>XML</code><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+<code class="YsPQE"><code>XML</code><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hw&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;abc&quot;</span>&gt;</span>Hello World!<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
 </code>
-<code class="JBoK4"><code>CSS</code>&#42; {
+<code class="YsPQE"><code>CSS</code>&#42; {
 &nbsp;<span class="hljs-attribute">background-color</span>&#58; black;
 }
 <span class="hljs-selector-tag">span</span> {
@@ -46,30 +46,30 @@
 &nbsp;<span class="hljs-attribute">height</span>&#58; <span class="hljs-number">7px</span>
 }
 </code>
-<code class="JBoK4"><code>Bash</code><span class="hljs-meta">#!/bin/bash</span>
+<code class="YsPQE"><code>Bash</code><span class="hljs-meta">#!/bin/bash</span>
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Hello World!&quot;</span>
 </code>
-<code class="JBoK4"><code>Python</code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<code class="YsPQE"><code>Python</code><span class="hljs-comment">#!/usr/bin/env python3</span>
 <span class="hljs-keyword">import</span> time
 out = <span class="hljs-built_in">int</span>&#40;time&#46;time&#40;&#41; &#42; <span class="hljs-number">1000</span>&#41;
 <span class="hljs-built_in">print</span>&#40;out&#41;
 </code>
-<code class="JBoK4"><code>Lua</code><span class="hljs-built_in">print</span>&#40;<span class="hljs-string">&quot;hiii&quot;</span>&#41;
+<code class="YsPQE"><code>Lua</code><span class="hljs-built_in">print</span>&#40;<span class="hljs-string">&quot;hiii&quot;</span>&#41;
 warn&#40;<span class="hljs-number">1</span> + <span class="hljs-number">1</span>&#41;
 <span class="hljs-keyword">local</span> abc = <span class="hljs-literal">true</span>
 <span class="hljs-keyword">while</span> wait&#40;<span class="hljs-number">1</span>&#41; <span class="hljs-keyword">do</span>
 &nbsp;<span class="hljs-comment">-- do something</span>
 <span class="hljs-keyword">end</span>
 </code>
-<code class="JBoK4"><code>Markdown</code><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>markdown inside markdown<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+<code class="YsPQE"><code>Markdown</code><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>markdown inside markdown<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
 </code>
-<code class="JBoK4"><code>Go</code><span class="hljs-comment">// go</span>
+<code class="YsPQE"><code>Go</code><span class="hljs-comment">// go</span>
 </code>
-<code class="JBoK4"><code>Go</code><span class="hljs-comment">// golang</span>
+<code class="YsPQE"><code>Go</code><span class="hljs-comment">// golang</span>
 </code>
-<code class="JBoK4"><code>Golo</code></code>
-<code class="JBoK4"><code>Golo</code></code>
-<code class="JBoK4"><code>Diff</code>  text
+<code class="YsPQE"><code>Golo</code></code>
+<code class="YsPQE"><code>Golo</code></code>
+<code class="YsPQE"><code>Diff</code>  text
 <span class="hljs-addition">+ added</span>
 <span class="hljs-deletion">- removed</span>
 </code></p>
