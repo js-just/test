@@ -1,0 +1,163 @@
+<p><code class="FplMG">just&#46;is-a&#46;dev</code>
+
+<code class="FplMG">MIT License
+Copyright &#40;c&#41; 2025 JustStudio&#46; <https&#58;//juststudio&#46;is-a&#46;dev/>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files &#40;the "Software"&#41;, to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions&#58;
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software&#46;
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT&#46; IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE&#46;
+</code>
+
+<code class="FplMG"><code>YAML</code><span class="hljs-string">&lt;h1&gt;MIT</span> <span class="hljs-string">License&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">Copyright</span> <span class="hljs-string">&#40;c&#41;</span> <span class="hljs-number">2025 </span><span class="hljs-string">JustStudio&#46;</span> <span class="hljs-string">&lt;a</span> <span class="hljs-string">href=&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> <span class="hljs-string">target=&quot;_blank&quot;</span> <span class="hljs-string">id=&quot;rYjOZ&quot;&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">Permission</span> <span class="hljs-string">is</span> <span class="hljs-string">hereby</span> <span class="hljs-string">granted,</span> <span class="hljs-string">free</span> <span class="hljs-string">of</span> <span class="hljs-string">charge,</span> <span class="hljs-string">to</span> <span class="hljs-string">any</span> <span class="hljs-string">person</span> <span class="hljs-string">obtaining</span> <span class="hljs-string">a</span> <span class="hljs-string">copy&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;of</span> <span class="hljs-string">this</span> <span class="hljs-string">software</span> <span class="hljs-string">and</span> <span class="hljs-string">associated</span> <span class="hljs-string">documentation</span> <span class="hljs-string">files</span> <span class="hljs-string">&#40;the</span> <span class="hljs-string">&quot;Software&quot;</span><span class="hljs-string">&#41;,</span> <span class="hljs-string">to</span> <span class="hljs-string">deal&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;in</span> <span class="hljs-string">the</span> <span class="hljs-string">Software</span> <span class="hljs-string">without</span> <span class="hljs-string">restriction,</span> <span class="hljs-string">including</span> <span class="hljs-string">without</span> <span class="hljs-string">limitation</span> <span class="hljs-string">the</span> <span class="hljs-string">rights&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;to</span> <span class="hljs-string">use,</span> <span class="hljs-string">copy,</span> <span class="hljs-string">modify,</span> <span class="hljs-string">merge,</span> <span class="hljs-string">publish,</span> <span class="hljs-string">distribute,</span> <span class="hljs-string">sublicense,</span> <span class="hljs-string">and/or</span> <span class="hljs-string">sell&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;copies</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">Software,</span> <span class="hljs-string">and</span> <span class="hljs-string">to</span> <span class="hljs-string">permit</span> <span class="hljs-string">persons</span> <span class="hljs-string">to</span> <span class="hljs-string">whom</span> <span class="hljs-string">the</span> <span class="hljs-string">Software</span> <span class="hljs-string">is&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;furnished</span> <span class="hljs-string">to</span> <span class="hljs-string">do</span> <span class="hljs-string">so,</span> <span class="hljs-string">subject</span> <span class="hljs-string">to</span> <span class="hljs-string">the</span> <span class="hljs-string">following</span> <span class="hljs-string">conditions&#58;&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">The</span> <span class="hljs-string">above</span> <span class="hljs-string">copyright</span> <span class="hljs-string">notice</span> <span class="hljs-string">and</span> <span class="hljs-string">this</span> <span class="hljs-string">permission</span> <span class="hljs-string">notice</span> <span class="hljs-string">shall</span> <span class="hljs-string">be</span> <span class="hljs-string">included</span> <span class="hljs-string">in</span> <span class="hljs-string">all&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;copies</span> <span class="hljs-string">or</span> <span class="hljs-string">substantial</span> <span class="hljs-string">portions</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">Software&#46;&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">THE</span> <span class="hljs-string">SOFTWARE</span> <span class="hljs-string">IS</span> <span class="hljs-string">PROVIDED</span> <span class="hljs-string">&quot;AS IS&quot;</span><span class="hljs-string">,</span> <span class="hljs-string">WITHOUT</span> <span class="hljs-string">WARRANTY</span> <span class="hljs-string">OF</span> <span class="hljs-string">ANY</span> <span class="hljs-string">KIND,</span> <span class="hljs-string">EXPRESS</span> <span class="hljs-string">OR&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;IMPLIED,</span> <span class="hljs-string">INCLUDING</span> <span class="hljs-string">BUT</span> <span class="hljs-string">NOT</span> <span class="hljs-string">LIMITED</span> <span class="hljs-string">TO</span> <span class="hljs-string">THE</span> <span class="hljs-string">WARRANTIES</span> <span class="hljs-string">OF</span> <span class="hljs-string">MERCHANTABILITY,&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;FITNESS</span> <span class="hljs-string">FOR</span> <span class="hljs-string">A</span> <span class="hljs-string">PARTICULAR</span> <span class="hljs-string">PURPOSE</span> <span class="hljs-string">AND</span> <span class="hljs-string">NONINFRINGEMENT&#46;</span> <span class="hljs-string">IN</span> <span class="hljs-literal">NO</span> <span class="hljs-string">EVENT</span> <span class="hljs-string">SHALL</span> <span class="hljs-string">THE&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;AUTHORS</span> <span class="hljs-string">OR</span> <span class="hljs-string">COPYRIGHT</span> <span class="hljs-string">HOLDERS</span> <span class="hljs-string">BE</span> <span class="hljs-string">LIABLE</span> <span class="hljs-string">FOR</span> <span class="hljs-string">ANY</span> <span class="hljs-string">CLAIM,</span> <span class="hljs-string">DAMAGES</span> <span class="hljs-string">OR</span> <span class="hljs-string">OTHER&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;LIABILITY,</span> <span class="hljs-string">WHETHER</span> <span class="hljs-string">IN</span> <span class="hljs-string">AN</span> <span class="hljs-string">ACTION</span> <span class="hljs-string">OF</span> <span class="hljs-string">CONTRACT,</span> <span class="hljs-string">TORT</span> <span class="hljs-string">OR</span> <span class="hljs-string">OTHERWISE,</span> <span class="hljs-string">ARISING</span> <span class="hljs-string">FROM,&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;OUT</span> <span class="hljs-string">OF</span> <span class="hljs-string">OR</span> <span class="hljs-string">IN</span> <span class="hljs-string">CONNECTION</span> <span class="hljs-string">WITH</span> <span class="hljs-string">THE</span> <span class="hljs-string">SOFTWARE</span> <span class="hljs-string">OR</span> <span class="hljs-string">THE</span> <span class="hljs-string">USE</span> <span class="hljs-string">OR</span> <span class="hljs-string">OTHER</span> <span class="hljs-string">DEALINGS</span> <span class="hljs-string">IN</span> <span class="hljs-string">THE&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;SOFTWARE&#46;&lt;/h1&gt;</span>
+<span class="hljs-attr">name&#58;</span> <span class="hljs-string">&#x27;_just&#x27;</span>
+<span class="hljs-attr">description&#58;</span> <span class="hljs-string">&#x27;Just an Ultimate Site Tool&#46;&#x27;</span>
+<span class="hljs-attr">author&#58;</span> <span class="hljs-string">&#x27;JustStudio&#46;&#x27;</span>
+<span class="hljs-attr">branding&#58;</span>
+&nbsp;&nbsp;<span class="hljs-attr">icon&#58;</span> <span class="hljs-string">&#x27;edit-3&#x27;</span>
+&nbsp;&nbsp;<span class="hljs-attr">color&#58;</span> <span class="hljs-string">&#x27;purple&#x27;</span>
+<span class="hljs-attr">inputs&#58;</span>
+&nbsp;&nbsp;<span class="hljs-attr">path&#58;</span>
+&nbsp;<span class="hljs-attr">description&#58;</span> <span class="hljs-string">&#x27;Website directory &#40;compress/generate&#41;&#x27;</span>
+&nbsp;<span class="hljs-attr">required&#58;</span> <span class="hljs-literal">false</span>
+<span class="hljs-attr">runs&#58;</span>
+&nbsp;&nbsp;<span class="hljs-attr">using&#58;</span> <span class="hljs-string">&#x27;composite&#x27;</span>
+&nbsp;&nbsp;<span class="hljs-attr">steps&#58;</span>
+&nbsp;<span class="hljs-bullet">-</span> <span class="hljs-attr">name&#58;</span> <span class="hljs-string">Run</span> <span class="hljs-string">_just</span>
+&nbsp;&nbsp;<span class="hljs-attr">run&#58;</span> <span class="hljs-string">bash</span> <span class="hljs-string">$GITHUB_ACTION_PATH/src/run&#46;sh</span>
+&nbsp;&nbsp;<span class="hljs-attr">shell&#58;</span> <span class="hljs-string">bash</span>
+&nbsp;&nbsp;<span class="hljs-attr">env&#58;</span> 
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">INPUT_PATH&#58;</span> <span class="hljs-string">${{</span> <span class="hljs-string">inputs&#46;path</span> <span class="hljs-string">}}</span>
+</code>
+
+<code class="FplMG"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rYjOZ&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+&lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
+&lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
+&lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
+&lt;h1&gt;to use, copy, modify, merge, publish, distribute, sublicense, and/or sell&lt;/h1&gt;
+&lt;h1&gt;copies of the Software, and to permit persons to whom the Software is&lt;/h1&gt;
+&lt;h1&gt;furnished to <span class="hljs-keyword">do</span> so, subject to the following conditions&#58;&lt;/h1&gt;
+&lt;h1&gt;# The above copyright notice and this permission notice shall be included <span class="hljs-keyword">in</span> all&lt;/h1&gt;
+&lt;h1&gt;copies or substantial portions of the Software&#46;&lt;/h1&gt;
+&lt;h1&gt;# THE SOFTWARE IS PROVIDED <span class="hljs-string">&quot;AS IS&quot;</span>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR&lt;/h1&gt;
+&lt;h1&gt;IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&lt;/h1&gt;
+&lt;h1&gt;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT&#46; IN NO EVENT SHALL THE&lt;/h1&gt;
+&lt;h1&gt;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER&lt;/h1&gt;
+&lt;h1&gt;LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,&lt;/h1&gt;
+&lt;h1&gt;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE&lt;/h1&gt;
+&lt;h1&gt;SOFTWARE&#46;&lt;/h1&gt;
+&lt;h1&gt;DO NOT USE THIS&#46; READ THE DOCS &#40;coming soon&#41;&#46; USE ACTION&#46;YML&#46;&lt;/h1&gt;
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Warning&#58; Attempt to use the &amp;#34;Just an Ultimate Site Tool&amp;#34; as a postprocessor in the wrond way&#46; This may not work correctly&#46; Please read the documentation &#40;coming soon&#41;&#46;&quot;</span>
+bash <span class="hljs-variable">$GITHUB_ACTION_PATH</span>/src/postprocessor&#46;sh</code>
+
+<code class="FplMG"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
+&nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;docs&quot;</span>,
+&nbsp;<span class="hljs-attr">docs_config</span>&#58; {
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">metatitle</span>&#58; <span class="hljs-string">&quot;Just an Ultimate Site Tool&quot;</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">domain</span>&#58; <span class="hljs-string">&quot;test&#46;just&#46;is-a&#46;dev&quot;</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">links</span>&#58; &#91;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#91;<span class="hljs-string">&quot;a link&quot;</span>, <span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span>, <span class="hljs-string">&quot;_blank&quot;</span>&#93;,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#91;<span class="hljs-string">&quot;another link&quot;</span>, <span class="hljs-string">&quot;https&#58;//justdeveloper&#46;is-a&#46;dev/&quot;</span>, <span class="hljs-string">&quot;_blank&quot;</span>&#93;
+&nbsp;&nbsp;&nbsp;&nbsp;&#93;,
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">buttons</span>&#58; &#91;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#91;<span class="hljs-string">&quot;a button&quot;</span>, <span class="hljs-string">&quot;https&#58;//just&#46;is-a&#46;dev/&quot;</span>, <span class="hljs-string">&quot;_blank&quot;</span>&#93;,
+&nbsp;&nbsp;&nbsp;&nbsp;&#93;
+&nbsp;},
+&nbsp;<span class="hljs-attr">debug</span>&#58; <span class="hljs-literal">true</span>
+}</code>
+
+<code class="FplMG"><code>JSON</code><span class="hljs-punctuation">{</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;just&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;0&#46;0&#46;28&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;lockfileVersion&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;requires&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;packages&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-punctuation">{</span>
+&nbsp;<span class="hljs-attr">&quot;&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-punctuation">{</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;just&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;0&#46;0&#46;28&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;license&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;MIT&quot;</span>
+&nbsp;<span class="hljs-punctuation">}</span>
+&nbsp;&nbsp;<span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code>
+
+<code class="FplMG"><code>JSON</code><span class="hljs-punctuation">{</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;just&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;0&#46;0&#46;28&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;Just an Ultimate Site Tool &#40;W&#46;I&#46;P&#46;&#41;&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;main&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;index&#46;sh&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-punctuation">{</span>
+&nbsp;<span class="hljs-attr">&quot;test&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;echo &amp;#34;https&#58;//github&#46;com/js-just/_just#readme&amp;#34; &amp;&amp; exit 1&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-attr">&quot;about&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;echo &amp;#34;https&#58;//github&#46;com/js-just/_just#readme&amp;#34; &amp;&amp; exit 1&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-attr">&quot;info&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;echo &amp;#34;https&#58;//github&#46;com/js-just/_just#readme&amp;#34; &amp;&amp; exit 1&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-attr">&quot;repo&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;echo &amp;#34;https&#58;//github&#46;com/js-just/_just#readme&amp;#34; &amp;&amp; exit 1&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-attr">&quot;help&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;echo &amp;#34;https&#58;//github&#46;com/js-just/_just#readme&amp;#34; &amp;&amp; exit 1&quot;</span>
+&nbsp;&nbsp;<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;repository&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-punctuation">{</span>
+&nbsp;<span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;git&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;git+https&#58;//github&#46;com/js-just/_just&#46;git&quot;</span>
+&nbsp;&nbsp;<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;keywords&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-punctuation">&#91;</span>
+&nbsp;<span class="hljs-string">&quot;postprocessor&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;_just&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;justdeveloper&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;web&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;backend&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;back-end&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;frontend&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;front-end&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;fullstack&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;full-stack&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;nodejs&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;github&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;pages&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;just&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;ultimate&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;site&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;tool&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;node&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;js&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;javascript&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;next&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;nextjs&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;react&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;reactjs&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;redirect&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;compress&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;<span class="hljs-string">&quot;minify&quot;</span>
+&nbsp;&nbsp;<span class="hljs-punctuation">&#93;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;JustStudio&#46;&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;license&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;MIT&quot;</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;bugs&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-punctuation">{</span>
+&nbsp;<span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;https&#58;//github&#46;com/js-just/_just/issues&quot;</span>
+&nbsp;&nbsp;<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+&nbsp;&nbsp;<span class="hljs-attr">&quot;homepage&quot;</span><span class="hljs-punctuation">&#58;</span> <span class="hljs-string">&quot;https&#58;//github&#46;com/js-just/_just#readme&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></p>
