@@ -7,117 +7,50 @@ And some familiarity with these languages
 <h2 id="Installation">Installation</h2>
 <h3 id="Making%20your%20first%20project">Making your first project</h3>
 <ul><li>Create new repository, and create <code>/&#46;github/workflows/publish&#46;yml</code> file, template:</li></ul>
-<code class="UTvi6"><code>YAML</code><span class="hljs-attr">name&#58;</span> <span class="hljs-string">Website</span>
-<span class="hljs-attr">on&#58;</span>
-&nbsp;&nbsp;<span class="hljs-attr">push&#58;</span>
-&nbsp;<span class="hljs-attr">branches&#58;</span> &#91;<span class="hljs-string">&quot;main&quot;</span>&#93;
-&nbsp;&nbsp;<span class="hljs-attr">workflow_dispatch&#58;</span>
-<span class="hljs-attr">permissions&#58;</span>
-&nbsp;&nbsp;<span class="hljs-attr">contents&#58;</span> <span class="hljs-string">read</span>
-&nbsp;&nbsp;<span class="hljs-attr">pages&#58;</span> <span class="hljs-string">write</span>
-&nbsp;&nbsp;<span class="hljs-attr">id-token&#58;</span> <span class="hljs-string">write</span>
-<span class="hljs-attr">concurrency&#58;</span>
-&nbsp;&nbsp;<span class="hljs-attr">group&#58;</span> <span class="hljs-string">&quot;pages&quot;</span>
-&nbsp;&nbsp;<span class="hljs-attr">cancel-in-progress&#58;</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">jobs&#58;</span>
-&nbsp;&nbsp;<span class="hljs-attr">build&#58;</span>
-&nbsp;<span class="hljs-attr">runs-on&#58;</span> <span class="hljs-string">ubuntu-latest</span>
-&nbsp;<span class="hljs-attr">steps&#58;</span>
-&nbsp;&nbsp;<span class="hljs-bullet">-</span> <span class="hljs-attr">name&#58;</span> <span class="hljs-string">Checkout</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">uses&#58;</span> <span class="hljs-string">actions/checkout@v4</span>
-&nbsp;&nbsp;<span class="hljs-bullet">-</span> <span class="hljs-attr">name&#58;</span> <span class="hljs-string">Setup</span> <span class="hljs-string">Pages</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">uses&#58;</span> <span class="hljs-string">actions/configure-pages@v5</span>
-&nbsp;&nbsp;<span class="hljs-bullet">-</span> <span class="hljs-attr">name&#58;</span> <span class="hljs-string">Generate</span> <span class="hljs-string">with</span> <span class="hljs-string">_just</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">uses&#58;</span> <span class="hljs-string">js-just/latest@main</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">with&#58;</span> <span class="hljs-comment"># Remove &quot;with&quot; and &quot;path&quot; here if you are not using compressor or generator modes!</span>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">path&#58;</span> <span class="hljs-string">&#46;</span> <span class="hljs-comment"># Root directory, or you can replace the dot with the path to your website/docs directory to be generated/compressed&#46; &#40;Only for compressor and generator modes&#41;</span>
-&nbsp;&nbsp;<span class="hljs-bullet">-</span> <span class="hljs-attr">name&#58;</span> <span class="hljs-string">Upload</span> <span class="hljs-string">artifact</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">uses&#58;</span> <span class="hljs-string">actions/upload-pages-artifact@v3</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">with&#58;</span>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">path&#58;</span> <span class="hljs-string">&#46;</span> <span class="hljs-comment"># Root directory, or you can replace the dot with the path to your entire website to be deployed to GitHub Pages&#46;</span>
-&nbsp;&nbsp;<span class="hljs-attr">deploy&#58;</span>
-&nbsp;<span class="hljs-attr">environment&#58;</span>
-&nbsp;&nbsp;<span class="hljs-attr">name&#58;</span> <span class="hljs-string">github-pages</span>
-&nbsp;&nbsp;<span class="hljs-attr">url&#58;</span> <span class="hljs-string">${{</span> <span class="hljs-string">steps&#46;deployment&#46;outputs&#46;page_url</span> <span class="hljs-string">}}</span>
-&nbsp;<span class="hljs-attr">runs-on&#58;</span> <span class="hljs-string">ubuntu-latest</span>
-&nbsp;<span class="hljs-attr">needs&#58;</span> <span class="hljs-string">build</span>
-&nbsp;<span class="hljs-attr">steps&#58;</span>
-&nbsp;&nbsp;<span class="hljs-bullet">-</span> <span class="hljs-attr">name&#58;</span> <span class="hljs-string">Deploy</span> <span class="hljs-string">to</span> <span class="hljs-string">GitHub</span> <span class="hljs-string">Pages</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">id&#58;</span> <span class="hljs-string">deployment</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">uses&#58;</span> <span class="hljs-string">actions/deploy-pages@v4</span>
-</code>
-You can change name of workflow file and workflow name:
-<code class="UTvi6"><code>YAML</code><span class="hljs-attr">name&#58;</span> <span class="hljs-string">Workflow</span> <span class="hljs-string">name</span>
-</code>
-You can also choose _just version:
-<code class="UTvi6"><code>YAML</code>    <span class="hljs-attr">uses&#58;</span> <span class="hljs-string">js-just/_just@&#40;put</span> <span class="hljs-string">version</span> <span class="hljs-string">name</span> <span class="hljs-string">here&#41;</span>
-</code>
-<strong>If you know what exactly you are doing, you may change anything.</strong>
-<ul><li>Create <code>just&#46;config&#46;js</code> file in the root directory:</li></ul>
-Choose what mode you want to use.
- 
-Using <code>Postprocessor</code> mode:
-<code class="UTvi6"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
-&nbsp;&nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;postprocessor&quot;</span>
-}
-</code>
-Using <code>Redirector</code> mode: 
-<code class="UTvi6"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
-&nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;redirect&quot;</span>, 
-&nbsp;<span class="hljs-attr">redirect_config</span>&#58; {
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">url</span>&#58; <span class="hljs-string">&quot;https&#58;//example&#46;com/&quot;</span>, <span class="hljs-comment">// Required&#46; Replace with destination URL&#46;</span>
-&nbsp;}
-}
-</code>
-Using <code>Compressor</code> mode:
-<code class="UTvi6"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
-&nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;compress&quot;</span>
-}
-</code>
-Using <code>Generator</code> mode:
-<code class="UTvi6"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
-&nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;docs&quot;</span>,
-&nbsp;<span class="hljs-attr">docs_config</span>&#58; {
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">metatitle</span>&#58; <span class="hljs-string">&quot;Documentation title&quot;</span>, <span class="hljs-comment">// Required&#46; Replace with your documentation title&#46;</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">domain</span>&#58; <span class="hljs-string">&quot;example&#46;com&quot;</span> <span class="hljs-comment">// Required&#46; Replace with your domain name&#46; Domain name should be valid&#46;</span>
-&nbsp;}
-}
-</code>
-<ul><li>Read the documentation for the mode that you've chosen.</li></ul><div class="hyjM2"></div><br><h3 id="Pro%20installation">Pro installation</h3>
-<ul><li>Create or modify your <code>&#46;github/workflows/github&&#35;95;pages&&#35;95;workflow&&#35;95;name&#46;yml</code>:</li></ul>
-Make sure that permissions allow writing <code>pages</code> and <code>id&#45;token</code>, but do not allow writing <code>contents</code>, only read.
-<code class="UTvi6"><code>YAML</code><span class="hljs-attr">permissions&#58;</span>
-&nbsp;&nbsp;<span class="hljs-attr">contents&#58;</span> <span class="hljs-string">read</span>
-&nbsp;&nbsp;<span class="hljs-attr">pages&#58;</span> <span class="hljs-string">write</span>
-&nbsp;&nbsp;<span class="hljs-attr">id-token&#58;</span> <span class="hljs-string">write</span>
-</code>
-Make a job for building your website using _just:
-<code class="UTvi6"><code>YAML</code><span class="hljs-attr">jobs&#58;</span>
-&nbsp;&nbsp;<span class="hljs-attr">build&#58;</span>
-&nbsp;<span class="hljs-attr">runs-on&#58;</span> <span class="hljs-string">ubuntu-latest</span>
-&nbsp;<span class="hljs-attr">steps&#58;</span>
-&nbsp;&nbsp;<span class="hljs-bullet">-</span> <span class="hljs-attr">name&#58;</span> <span class="hljs-string">Checkout</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">uses&#58;</span> <span class="hljs-string">actions/checkout@v4</span>
-&nbsp;&nbsp;<span class="hljs-bullet">-</span> <span class="hljs-attr">name&#58;</span> <span class="hljs-string">Generate</span> <span class="hljs-string">with</span> <span class="hljs-string">_just</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">uses&#58;</span> <span class="hljs-string">js-just/_just@</span> <span class="hljs-comment"># version name &#40;recommended&#41; &#40;example&#58; v0&#46;0&#46;29&#41; / main branch &#40;latest commit&#41; &#40;unstable, not recommended&#41; / commit SHA &#40;not recommended&#41;</span>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">with&#58;</span>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">path&#58;</span> <span class="hljs-comment"># Path to your website directory to be generated/compressed&#46; &#40;Only for compressor and generator modes&#41;</span>
-</code>
-<ul><li>Create <code>just&#46;config&#46;js</code> file:</li></ul>
-Basic usage:
-<code class="UTvi6"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
-&nbsp;&nbsp;<span class="hljs-attr">type</span>&#58; <span class="hljs-string">&quot;&#40;postprocessor/redirect/compress/docs&#41;&quot;</span>
-}
-</code>
-Using multiple modes:
-<span class="mAXI51O">Currently available only combining generator and compressor.</span>
-<code class="UTvi6"><code>JavaScript</code><span class="hljs-variable language_">module</span>&#46;<span class="hljs-property">exports</span> = {
-&nbsp;&nbsp;<span class="hljs-attr">type</span>&#58; &#91;<span class="hljs-string">&quot;docs&quot;</span>, <span class="hljs-string">&quot;compress&quot;</span>&#93;
-}
-</code>
+<code>`</code>_just.codeid
+0
+<code class="hgaBO">You can change name of workflow file and workflow name&#58;
+</code>_just.codeid
+1
+<code class="hgaBO">You can also choose _just version&#58;
+</code>_just.codeid
+2
+<code class="hgaBO">&#42;&#42;If you know what exactly you are doing, you may change anything&#46;&#42;&#42;
+<ul><li>Create <code>just&&#35;46;config&&#35;46;js</code> file in the root directory&#58;</li></ul>
+Choose what mode you want to use&#46;
+&nbsp;
+Using <code>Postprocessor</code> mode&#58;
+</code>_just.codeid
+3
+<code class="hgaBO">Using <code>Redirector</code> mode&#58; 
+</code>_just.codeid
+4
+<code class="hgaBO">Using <code>Compressor</code> mode&#58;
+</code>_just.codeid
+5
+<code class="hgaBO">Using <code>Generator</code> mode&#58;
+</code>_just.codeid
+6
+<code class="hgaBO">- Read the documentation for the mode that you&#39;ve chosen&#46;<div class="kURXI"></div><br><h3 id="Pro%20installation">Pro installation</h3>
+<ul><li>Create or modify your `&#46;github/workflows/github_pages_workflow_name&#46;yml`&#58;</li></ul>
+Make sure that permissions allow writing <code>pages</code> and <code>id&#45;token</code>, but do not allow writing <code>contents</code>, only read&#46;
+</code>_just.codeid
+7
+<code class="hgaBO">Make a job for building your website using _just&#58;
+</code>_just.codeid
+8
+<code class="hgaBO">- Create <code>just&&#35;46;config&&#35;46;js</code> file&#58;
+Basic usage&#58;
+</code>_just.codeid
+9
+<code class="hgaBO">Using multiple modes&#58;
+<span class="SOmJZkP">Currently available only combining generator and compressor&#46;</span>
+</code>_just.codeid
+10
+<code>`</code>
 <ul><li>Read the documentation for the mode/modes that you've chosen.</li></ul>
 
 <h2 id="Modes%20documentation">Modes documentation</h2>
-<ul><li><a href="modes/postprocessor" target="_blank" id="rxkt0">Postprocessor</a></li><li><a href="modes/redirector" target="_blank" id="rxkt0">Redirector</a></li><li><a href="modes/compressor" target="_blank" id="rxkt0">Compressor</a></li><li><a href="modes/generator" target="_blank" id="rxkt0">Generator</a></li></ul>
+<ul><li><a href="modes/postprocessor" target="_blank" id="xKYtH">Postprocessor</a></li><li><a href="modes/redirector" target="_blank" id="xKYtH">Redirector</a></li><li><a href="modes/compressor" target="_blank" id="xKYtH">Compressor</a></li><li><a href="modes/generator" target="_blank" id="xKYtH">Generator</a></li></ul>
 
 </p>
