@@ -1,1 +1,8193 @@
-<p>[object Promise]</p>
+<p>[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+<a href="[&#119;]<em>)&#115;</em>[&#114;&#110;]+([&#115;&#83;]*?)```/g, async (match, lang_, code_" target="_blank" id="KBSv0">object Promise</a> => {
+
+                    let nocode = false;
+
+                    if (false && text.length > 10<em></em>5) { // disabled
+
+                        nocode = true;
+
+                    }
+
+                    const filter_ = (inpt) => inpt.replace(/&#110;( {1,})/g, (match, spaces) => {
+
+                        return <code>&&#35;110;${&#39;&nbsp;&#39;&#46;repeat&#40;spaces&#46;length&#41;}</code>;
+
+                    }).replaceAll('&#110;&#110;', '&#110;');
+
+                    if (nocode) {
+
+                        return <code>&#60;code class&#61;&#34;${cssclass&#46;code}&#34;&#62;${filter&&#35;95;&#40;MDcode&#40;code&&#35;95;, false, true&#41;&#41;}&#60;/code&#62;</code>
+
+                    } else {
+
+                        const inputlang = lang_;
+
+                        const highlightcode = lang_ && lang_ != '';
+
+                        if (highlightcode && !supportedlangs.includes(lang_) && !langaliases[lang_]) {
+
+                            const warningg = <code>${&&#35;95;just&#46;error&#46;prefix}${esc}&#91;0;33mWarning 0209${esc}&#91;0m&#58; ${esc}&#91;0;33mUnsuppotred language&#58; hljs&#58; ${esc}&#91;0m${lang&&#35;95;}</code>;
+
+                            errorlogs += <code>${l&#91;1&#93;}AT LINE ${&&#35;95;just&#46;line&#46;line&#40;&#41; &#124;&#124; &#39;&#45;1&#39;} &#40;&&#35;95;&&#35;95;REPLACE&&#35;95;LINE&&#35;95;&&#35;95;&#41;&#58; ${&&#35;95;just&#46;line&#46;err&#40;warningg&#41;}</code>;
+
+                            console.warn(warningg);
+
+                        }
+
+                        if (highlightcode && !supportedlangs.includes(lang_) && langaliases[lang_]) {
+
+                            lang_ = langaliases[lang_]
+
+                        }
+
+                        debuglog(`   CL: ${inputlang} => ${lang_}`);
+
+                        const hljshighlight = highlightcode && supportedlangs.includes(lang_)
+
+                        const output_ = hljshighlight ? await hljs.highlight(code_, {language: lang_}).value : undefined;
+
+                        insertedcode = true;
+
+                        return `<code class="${cssclass.code}">${
+
+                            hljshighlight ? 
+
+                            `<code>${langstext[lang_]}</code>${
+
+                                filter_(MDcode(
+
+                                    <code>${lang&&#35;95; &#61;&#61; &#39;css&#39; ? &&#35;95;just&#46;highlight&#46;css&#40;output&&#35;95;&#41; &#58; output&&#35;95;}</code>, 
+
+                                    false, 
+
+                                    true
+
+                                ))
+
+                            }` : 
+
+                            filter_(MDcode(code_, false, true))
+
+                        }</code>`;
+
+                    }
+
+                })
+
+            .replace(/(?<=&#115;|<sup>|[.,!?;:<em><em></sup><sub>=])`(.</em>?)`(?=&#115;|[.,!?;:*</em>^</sub>=]|$)/g, (match, code) => {return `<code>${MDcode(code)}</code>`})
+
+            .replace(/(?<=&#115;|<sup>|[.,!?;:<em><em></sup><sub>=])!&#91;(.</em>?)&#93;&#40;(.<em>?) ("|')(.</em>?)&#51;&#41;(?=&#115;|[.,!?;:*</em>^</sub>=]|$)/g, (match, text, link_, q, imgtitle) => {return `<img src="${link_}" alt="${text}" title="${imgtitle}" loading="lazy">`})
+
+            .replace(/(?<=&#115;|<sup>|[.,!?;:<em><em></sup><sub>=])!&#91;(.</em>?)&#93;&#40;(.<em>?)&#41;(?=&#115;|[.,!?;:</em></em>^</sub>=]|$)/g, (match, text, link_) => {return `<img src="${link_}" alt="${text}" loading="lazy">`})
+
+            .replace(/(?<=&#115;|<sup>|[.,!?;:<em><em></sup><sub>=])&#91;(.</em>?)&#93;&#40;(.<em>?) ("|')(.</em>?)&#51;&#41;(?=&#115;|[.,!?;:*</em>^</sub>=]|$)/g, (match, text, link_, q, linktitle) => {return link(text, link_, extlink(link_), cssid.ext, "_blank", linktitle)})
+
+            .replace(linkregex, (match, text, link_) => {return link(text, link_, extlink(link_), cssid.ext)})
+
+            .replace(/(?<=&#115;|<sup>|[.,!?;:<em><em></sup><sub>=])(http:&#47;&#47;|https:&#47;&#47;|data:)(.</em>?)(?=&#115;|[,!;:*^</sub>`<>]|[.?=#%&+] |$)/g, (match, protocol</em>, link_) => {
+
+                    const link__ = <code>${protocol&&#35;95;&#46;trim&#40;&#41;}${link&&#35;95;&#46;trim&#40;&#41;}</code>;
+
+                    if (protocol_.trim() === 'data:') {
+
+                        return link(link_<em>, link</em>_, true, cssid.ext);
+
+                    } else if (checklink(link__)) {
+
+                        try {
+
+                            const linkurl = new URL(link__);
+
+                            if (linkurl.hostname.includes('xn--')) {
+
+                                return link(link__, linkurl.href, extlink(linkurl.href), cssid.ext);
+
+                            }
+
+                        } catch (e__) {
+
+                            caughterrors.push(e__);
+
+                            errorlogs += <code>${l&#91;1&#93;}AT LINE ${&&#35;95;just&#46;line&#46;line&#40;&#41; &#124;&#124; &#39;&#45;1&#39;} &#40;&&#35;95;&&#35;95;REPLACE&&#35;95;LINE&&#35;95;&&#35;95;&#41;&#58; ${&&#35;95;just&#46;line&#46;err&#40;e&&#35;95;&&#35;95;&#41;}</code>;
+
+                        }
+
+                        return <code>&#60;${link&&#35;95;&&#35;95;}&#62;</code>;
+
+                    } else return <code>${protocol&&#35;95;}${link&&#35;95;}</code>;
+
+                })
+
+            .replace(/(?<=&#115;|<sup>|[.,!?;:<em><em></sup><sub>=])<(http:&#47;&#47;|https:&#47;&#47;)(.</em>?)>(?=&#115;|[.,!?;:*</em>^</sub>=]|$)/g, (match, protocol_, link_) => {const link_<em>=<code>${protocol&&#35;95;&#46;trim&#40;&#41;}${link&&#35;95;&#46;trim&#40;&#41;}</code>;return link(link</em><em>, link</em><em>, extlink(link</em>_), cssid.ext)})
+
+            .replace(/(?<=&#115;|<sup>|[.,!?;:<em><em></sup><sub>=])<(.</em>?)@(.<em>?)>(?=&#115;|[.,!?;:</em></em>^</sub>=]|$)/g, (match, address, domain__) => {
+
+                    if (checkdomain(domain__, false)) {
+
+                        const mail = <code>${address&#46;trim&#40;&#41;}@${domain&&#35;95;&&#35;95;&#46;trim&#40;&#41;}</code>;
+
+                        return <code>&#60;a href&#61;&#34;mailto&#58;${mail}&#34;&#62;${mail}&#60;/a&#62;</code>;
+
+                    } else return <code>&#60;${address}@${domain&&#35;95;&&#35;95;}&#62;</code>;
+
+                })
+
+            .replace(/(?<=&#115;|^)([-+<em>])&#115;&#91;( {0,}x {0,}| {0,}X {0,}| {1,})&#93;&#115;(.</em>?)(?=&#115;|&#110;|$)/g, (match, prefix, type_, text_) => {
+
+                const isChecked = type_.trim().toLowerCase() === 'x';
+
+                const checkedAttr = isChecked ? ' checked' : '';
+
+                return <code>&#60;input type&#61;&#34;checkbox&#34; id&#61;&#34;${dataname&#91;10&#93;}${taskid++}&#34; ${checkedAttr} title&#61;&#34;${MDcode&#40;text&&#35;95;&#46;trim&#40;&#41;, true&#41;}&#34;&#62; ${text&&#35;95;&#46;trim&#40;&#41;}</code>;
+
+            });
+
+    return _just.MDtoHTML.MDtoHTML(text, cssclass).replace(/<sub>(.<em>?)</sub>/g, '<sub>$1</sub>').replace(/&#94;(.</em>?)&#94;/g, '<sup>$1</sup>').replace(/&#42;&#42;(.<em>?)&#42;&#42;/g, '<strong>$1</strong>').replace(/&#42;(.</em>?)&#42;/g, '<em>$1</em>');
+
+ }
+
+ const dividerRegex = /(&#110;&#115;<em>[</em>_-]{3,}&#115;*&#110;)+/g;
+
+ async function hbuoclpMDtoHTML(text, filepath, maxBlockquoteLevel = mbl) {
+
+    for (let i = 6; i >= 1; i--) {
+
+        const regex = new RegExp(`^#{${i}}&#92;s+(.<em>?)&#92;s</em>$`, 'gm');
+
+        text = await text.replace(regex, async (match, header) => `<h${i}>${await MDtoHTML(header)}</h${i}>`);
+
+    }
+
+    const smlregex = new RegExp(`^-#&#92;s+(.<em>?)&#92;s</em>$`, 'gm');
+
+    text = await text.replace(smlregex, async (match, smol) => `<span class="${cssclass.small}">${await MDtoHTML(smol)}</span>`);
+
+    /<em>alternate headers currently disabled. they cause some bugs</em>///text = text.replace(/(?<=&#115;|<sup>)(.<em>?)&#110;={3,}(?=&#115;|&#110;|$)/, MDtoHTML(`${_just.element(dataname[5])}<h1 id="%241">$1</h1>`)).replace(/(?<=&#115;|</sup>)(.</em>?)&#110;-{3,}(?=&#115;|&#110;|$)/, MDtoHTML(`${_just.element(dataname[6])}<h2 id="%2412">$1</h2>`));
+
+
+    async function processBlockquotes(inputText, level) {
+
+        const regex = new RegExp(`^(>&#92;s+){${level}}(.<em>?)&#92;s</em>$`, 'gm');
+
+        return await MDtoHTML(inputText.replace(regex, async (match, p1, p2) => {
+
+            const classAttr = (num) =>
+
+                p2.startsWith('[!NOTE]') ? (num ? 7 : ` class="${cssclass.note}"`) :
+
+                p2.startsWith('[!TIP]') ? (num ? 6 : ` class="${cssclass.ntip}"`) :
+
+                p2.startsWith('[!IMPORTANT]') ? (num ? 12 : ` class="${cssclass.impr}"`) :
+
+                p2.startsWith('[!WARNING]') ? (num ? 10 : ` class="${cssclass.warn}"`) :
+
+                p2.startsWith('[!CAUTION]') ? (num ? 10 : ` class="${cssclass.caut}"`) :
+
+                num ? 0 : '';
+
+            const innerBlockquote = await processBlockquotes(
+
+                p2.trim().slice(classAttr(true)).trim(), 
+
+                level + 1
+
+            );
+
+            return <code>&#60;blockquote${classAttr&#40;&#41;}&#62;${&#40;level &#62; 1 ? &#39;&#60;br&#62;&#39; &#58; &#39;&#39;&#41;}${innerBlockquote}&#60;/blockquote&#62;</code>;
+
+        }));
+
+    }
+
+
+    for (let i = 1; i <= maxBlockquoteLevel; i++) {
+
+        text = await processBlockquotes(text, i);
+
+    }
+
+
+    const ulRegex = /^(?:-&#115;+|&#42;&#115;+|&#43;&#115;+)(.<em>?)(?:&#110;(?:-&#115;+|&#42;&#115;+|&#43;&#115;+)(.</em>?))*$/gm;
+
+    const olRegex = /^(?:&#100;+&#46;&#115;+)(.<em>?)(?:&#110;(?:&#100;+&#46;&#115;+)(.</em>?))*$/gm;
+
+
+    text = await text.replace(ulRegex, async (match) => {
+
+        const items = match.split('&#110;').map(item => item.replace(/<sup>- &#115;<em>/, '').replace(/</sup>&#42; &#115;</em>/, '').replace(/^&#43; &#115;*/, ''));
+
+        return await <code>&#60;ul&#62;${items&#46;map&#40;async item &#61;&#62; `&#60;li&#62;${await MDtoHTML&#40;item&#46;trim&#40;&#41;&#41;}&#60;/li&#62;`&#41;&#46;join&#40;&#39;&#39;&#41;}&#60;/ul&#62;</code>;
+
+    });
+
+
+    text = await text.replace(olRegex, async (match) => {
+
+        const items = match.split('&#110;').map(item => item.replace(/^&#100;+&#46;&#115;*/, ''));
+
+        return await <code>&#60;ol&#62;${items&#46;map&#40;async item &#61;&#62; `&#60;li&#62;${await MDtoHTML&#40;item&#46;trim&#40;&#41;&#41;}&#60;/li&#62;`&#41;&#46;join&#40;&#39;&#39;&#41;}&#60;/ol&#62;</code>;
+
+    });
+
+
+    text = text.replace(dividerRegex, `<div class="${cssclass.line}"></div><br>`);
+
+
+    const paragraphsRegex = /([^&#110;]+(?:&#110;(?![&#42;_-]{3}).<em>)</em>)/g;
+
+    
+
+    let resultTextArray = [];
+
+    
+
+    let match;
+
+    
+
+    while ((match = paragraphsRegex.exec(text)) !== null) {
+
+        let paragraphContent = match[0].trim();
+
+        
+
+        if (paragraphContent) {
+
+            resultTextArray.push(`<p>${await MDtoHTML(paragraphContent)}</p>`);
+
+        }
+
+        
+
+        text = text.slice(match.index + match[0].length);
+
+        
+
+        if (/^&#110;&#115;*$/.test(text)) {
+
+            resultTextArray.push('<p></p>');
+
+            break;
+
+        }
+
+        
+
+        if (/^[*_]{3}/.test(text)) {
+
+            break;
+
+        }
+
+        
+
+        if (text.length > 0) {
+
+            resultTextArray.push(`<p>${await MDtoHTML(text.trim())}</p>`);
+
+            break;
+
+        }
+
+        
+
+        paragraphsRegex.lastIndex -= match[0].length;
+
+        
+
+    }
+
+
+    return resultTextArray.join('');
+
+ }
+
+
+ const usePathInput = config.usePathInput ? config.usePathInput : true;
+
+ function findMarkdownFiles(dir) {
+
+    let results = [];
+
+    const list = fs.readdirSync(dir);
+
+    list.forEach(file => {
+
+        file = path.join(dir, file);
+
+        const stat = fs.statSync(file);
+
+        if (stat && stat.isDirectory()) {
+
+            results = results.concat(findMarkdownFiles(file));
+
+            debuglog('   DF: '+_just.string.runnerPath(file));
+
+        } else if (file.endsWith('.md') || file.endsWith('.mdx')) {
+
+            results.push(file);
+
+            debuglog('   FF: '+_just.string.runnerPath(file));
+
+        }
+
+    });
+
+    return usePathInput ? results.filter(f => pathtourl[f] || pathtourl[f] == '') : results;
+
+ }
+
+
+ const rootDirB = process.cwd();
+
+ const markdownFiles = findMarkdownFiles(rootDirB);
+
+ debuglog('P2URL: '+JSON.stringify(pathtourl));
+
+ debuglog('  MDF: '+JSON.stringify(markdownFiles));
+
+
+ const title = docsConfig ? docsConfig.title || template.title : template.title;
+
+ const metatitle = docsConfig ? docsConfig.metatitle || title : title;
+
+ const ogtitle = docsConfig && docsConfig.og ? docsConfig.og.title || metatitle : metatitle;
+
+ const description = docsConfig ? docsConfig.description || undefined : undefined;
+
+ const ogdescription = docsConfig && docsConfig.og ? docsConfig.og.description || description : description;
+
+ const viewport = docsConfig ? docsConfig.viewport || template.viewport : template.viewport;
+
+ const twitter = docsConfig && docsConfig.twitter ? docsConfig.twitter.card || template.twitter : template.twitter;
+
+ const metaKeywords = docsConfig ? docsConfig.keywords || undefined : undefined;
+
+ const lang = docsConfig ? docsConfig.htmlLang || template.lang : template.lang;
+
+ const yandexVerification = docsConfig ? docsConfig.yandex || undefined : undefined;
+
+ const googleAnalytics = docsConfig ? docsConfig.googleAnalytics || undefined : undefined;
+
+ const googleVerification = docsConfig ? docsConfig.google || undefined : undefined;
+
+ const logoPath = docsConfig ? docsConfig.logo || undefined : undefined;
+
+ const footer = docsConfig ? docsConfig.footer || template.footer : template.footer;
+
+ const publicOutput = config.publicOutput || false;
+
+ const hideOutput = config.hideOutput || false;
+
+ const watermark = config.watermark || false;
+
+ const noWebarchive = config.noWebarchive ? config.noWebarchive : true;
+
+ const searchkey = docsConfig ? docsConfig.searchKey || template.searchkey : template.searchkey;
+
+ JS = JS.replace("&&'REPLACE_NOWEBARCHIVE'", `&&${noWebarchive}`).replace("'REPLACE_DATAARRAY'", dataname2[11]).replace('REPLACE_SEARCHKEY', searchkey);
+
+ HTML = HTML.replace('REPLACE_SEARCHKEY', searchkey);
+
+
+ const links = docsConfig ? docsConfig.links || [] : [];
+
+ const buttons = docsConfig ? docsConfig.buttons || [] : [];
+
+
+ const insertHTMLinHead = docsConfig ? docsConfig.insertInHTMLHead || '' : '';
+
+
+ const docsUsePathInput = docsConfig ? docsConfig.usePathInput || false : false;
+
+ const HTMLUsePathInput = docsConfig ? docsConfig.usePathInputInHTML || false : false;
+
+
+ const keywords = metaKeywords ? <code>&#60;meta name&#61;&#34;keywords&#34; content&#61;&#34;${metaKeywords}&#34;&#62;</code> : '';
+
+ const desc = description ? <code>&#60;meta name&#61;&#34;description&#34; content&#61;&#34;${description}&#34;&#62;</code> : '';
+
+ const ogdesc = ogdescription ? <code>&#60;meta property&#61;&#34;og&#58;description&#34; content&#61;&#34;${ogdescription}&#34;&#62;</code> : '';
+
+ const ogtitl = ogtitle ? <code>&#60;meta property&#61;&#34;og&#58;title&#34; content&#61;&#34;${ogtitle}&#34;&#62;</code> : '';
+
+ const logo = logoPath ? <code>&#60;img src&#61;&#34;${logoPath}&#34; width&#61;&#34;35px&#34; height&#61;&#34;auto&#34; alt&#61;&#34;Logo&#34;&#62;</code> : '';
+
+ const name = docsConfig && docsConfig.title ? span(title) : logoPath ? '' : span(title);
+
+ const htmlLang = lang ? <code> lang&#61;&#34;${`${lang}</code>.toLowerCase()}"` : '';
+
+ const htmlhead = (filelink = undefined, fixpath = '') => {
+
+    const start = filelink == "" ? '' : '/';
+
+    let prefetch = '';
+
+    debuglog(` PIDs: ${pageList.length + 1}`);
+
+    for (let i = 0; i <= pageList.length; i++) {
+
+        prefetch += pageList[i] && pageList[i].path && ((filelink && pageList[i].path != filelink) || !filelink) ? <code>&#60;link rel&#61;&#34;prefetch&#34; href&#61;&#34;${fixpath}${pageList&#91;i&#93;&#46;path&#46;endsWith&#40;&#39;/&#39;&#41; ? pageList&#91;i&#93;&#46;path + &#39;index&#39; &#58; pageList&#91;i&#93;&#46;path}&#46;html&#34;&#62;</code> : '';
+
+        debuglog(`  PID: ${i}`);
+
+    }
+
+    let output = `
+
+    ${keywords}
+
+    ${desc}
+
+    ${ogtitl}
+
+    ${ogdesc}
+
+    ${prefetch}
+
+    <link rel="preload" href="${start}${fixpath}_just/${dataname[9]}.json" as="fetch" type="application/json" crossorigin="anonymous">
+
+    <meta property="og:type" content="website">`;
+
+    if (twitter) {
+
+        output += <code>&#60;meta property&#61;&#34;twitter&#58;card&#34; content&#61;&#34;${twitter}&#34;&#62;</code>
+
+    }
+
+    if (yandexVerification) {
+
+        output += <code>&&#35;110;&#60;meta name&#61;&#34;yandex&#45;verification&#34; content&#61;&#34;${yandexVerification}&#34;&#62;</code>;
+
+    }
+
+    if (googleVerification) {
+
+        output += <code>&&#35;110;&#60;meta name&#61;&#34;google&#45;site&#45;verification&#34; content&#61;&#34;${googleVerification}&#34;&#62;</code>;
+
+    }
+
+    if (googleAnalytics) {
+
+        output += `&#110;<script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalytics}"></script>
+
+                    <script>
+
+                        window.dataLayer = window.dataLayer || [];
+
+                        function gtag() {
+
+                            dataLayer.push(arguments);
+
+                        }
+
+                        gtag('js', new Date());
+
+                        gtag('config', '${googleAnalytics}');
+
+                    </script>`
+
+    }
+
+    return output;
+
+ }
+
+
+ const configlogs = <code>${l&#91;0&#93;}DOMAIN&#58; ${domain}${l&#91;0&#93;}CONFIG TO HTML&#58;${l&#91;1&#93;}DOCSCONFIG&#58;${l&#91;2&#93;}TITLE&#58; ${title}${l&#91;2&#93;}TITLE &#40;HTML&#41;&#58; ${name}${l&#91;2&#93;}METATITLE&#58; ${metatitle}${l&#91;2&#93;}OGTITLE&#58; ${ogtitle}${l&#91;2&#93;}OGTITLE &#40;HTML&#41;&#58; ${ogtitl}${l&#91;2&#93;}DESCRIPTION&#58; ${description}${l&#91;2&#93;}DESCRIPTION &#40;HTML&#41;&#58; ${desc}${l&#91;2&#93;}OGDESCRIPTION&#58; ${ogdescription}${l&#91;2&#93;}OGDESCRIPTION &#40;HTML&#41;&#58; ${ogdesc}${l&#91;2&#93;}VIEWPORT&#58; ${viewport}${l&#91;2&#93;}TWITTER CARD&#58; ${twitter}${l&#91;2&#93;}KEYWORDS&#58; ${metaKeywords}${l&#91;2&#93;}KEYWORDS &#40;HTML&#41;&#58; ${keywords}${l&#91;2&#93;}LANG&#58; ${lang}${l&#91;2&#93;}LANG &#40;HTML&#41;&#58; ${htmlLang}${l&#91;2&#93;}GOOGLE ANALYTICS&#58; ${googleAnalytics}${l&#91;2&#93;}GOOGLE SITE VERIFICATION&#58; ${googleVerification}${l&#91;2&#93;}YANDEX SITE VERIFICATION&#58; ${yandexVerification}${l&#91;2&#93;}LOGO&#58; ${logoPath}${l&#91;2&#93;}LOGO &#40;HTML&#41;&#58; ${logo}${l&#91;2&#93;}FOOTER&#58; ${footer}${l&#91;2&#93;}HTML&#58; ${htmlhead&#40;&#41;&#46;replaceAll&#40;&#39;&&#35;110;&#39;, &#39;&#39;&#41;&#46;trim&#40;&#41;&#46;replace&#40;/ {2,}/g, &#39; &#39;&#41;}</code>
+
+
+ const filterText = (text) => text
+
+    .replaceAll('<em>', `&#${'</em>'.charCodeAt(0)};`)
+
+    .replaceAll('<script', `&#${'<'.charCodeAt(0)};script`)
+
+    .replaceAll('</script>', `&#${'<'.charCodeAt(0)};&#${'/'.charCodeAt(0)};script&#${'>'.charCodeAt(0)};`)
+
+    .replaceAll('<style', `&#${'<'.charCodeAt(0)};style`)
+
+    .replaceAll('</style>', `&#${'<'.charCodeAt(0)};&#${'/'.charCodeAt(0)};style&#${'>'.charCodeAt(0)};`)
+
+    .replaceAll('<link', `&#${'<'.charCodeAt(0)};link`)
+
+    .replaceAll('</link>', `&#${'<'.charCodeAt(0)};&#${'/'.charCodeAt(0)};link&#${'>'.charCodeAt(0)};`);
+
+ const addEnd = (text, end) => {
+
+    if (!text.endsWith(end)) {
+
+        text += end
+
+    }
+
+    return text
+
+ }
+
+
+ let linklogs = <code>${l&#91;0&#93;}LINKS&#58;</code>;
+
+ let buttonlogs = <code>${l&#91;0&#93;}BUTTONS&#58;</code>;
+
+ let uniqueNames = {};
+
+ let uniqueNames_= [dataname[0].slice(0,-1), jstrimmedstrvar];
+
+ uniqueNames[dataname[0].slice(0,-1)] = 1;
+
+ uniqueNames[jstrimmedstrvar] = 1;
+
+ for (i = 0; i <= dataname.length; i++) {
+
+    uniqueNames[dataname[i]] = 1;
+
+    uniqueNames_.push(dataname[i]);
+
+ }
+
+ for (let i = 1; i <= dataname2limit; i++) {
+
+    uniqueNames[dataname2[i-1]] = 1;
+
+    uniqueNames_.push(dataname2[i-1]);
+
+ }
+
+ for (i = 0; i <= taskid; i++) {
+
+    uniqueNames[`${dataname[10]}${i}`] = 1;
+
+    uniqueNames_.push(`${dataname[10]}${i}`);
+
+ }
+
+ uniqueNames[`${dataname[10]}`] = taskid + 1;
+
+ for (i = 0; i <= CSSHIGHLIGHTtemplate.length; i++) {
+
+    uniqueNames[`${dataname[8]}${i}`] = 1;
+
+    uniqueNames[`${dataname[8]}`] = i;
+
+    uniqueNames_.push(`${dataname[8]}${i}`);
+
+ }
+
+ 
+
+ const csstouniquenames = (cssclassorcssid) => Object.entries(cssclassorcssid).forEach(([key, dataname_]) => {
+
+    if (!uniqueNames_.includes(dataname_)) {
+
+        uniqueNames[dataname_] = 1;
+
+        uniqueNames_.push(dataname_);
+
+    }
+
+ });
+
+ csstouniquenames(cssclass);
+
+ csstouniquenames(cssid);
+
+ let htmlnavrunid = 0;
+
+ const htmlnav = (type = 0) => {
+
+    let output = '';
+
+    let addcss = '';
+
+    let bid = 0;
+
+    let pageid = 0;
+
+    pageid++;
+
+    for (const [idk, linkdata] of Object.entries(type <mark> 0 ? links : type </mark> 1 ? buttons : undefined)) {
+
+        let ext = extlink(linkdata[1]);
+
+        linklogs += type == 0 && htmlnavrunid <= 1 ? <code>${l&#91;1&#93;}&#35;${bid+1}&#58;${l&#91;2&#93;}NAME&#58; ${linkdata&#91;0&#93;}${l&#91;2&#93;}FILTERED NAME&#58; ${filterText&#40;linkdata&#91;0&#93;&#41;}${l&#91;2&#93;}HREF&#58; ${linkdata&#91;1&#93;}${l&#91;2&#93;}TARGET&#58; ${linkdata&#91;2&#93;}${l&#91;2&#93;}EXTERNAL&#58; ${ext ? &#39;YES&#39; &#58; &#39;NO&#39;}</code> : '';
+
+        buttonlogs += type == 1&& htmlnavrunid <= 1? <code>${l&#91;1&#93;}&#35;${bid+1}&#58;${l&#91;2&#93;}NAME&#58; ${linkdata&#91;0&#93;}${l&#91;2&#93;}FILTERED NAME&#58; ${filterText&#40;linkdata&#91;0&#93;&#41;}${l&#91;2&#93;}LINK&#58; ${linkdata&#91;1&#93;}${l&#91;2&#93;}TARGET&#58; ${linkdata&#91;2&#93;}${l&#91;2&#93;}EXTERNAL&#58; ${ext ? &#39;YES&#39; &#58; &#39;NO&#39;}${l&#91;2&#93;}ID&#58; ${dataname&#91;0&#93;}${bid}</code> : '';
+
+        output += type <mark> 0 ? <code>&#60;a${linkdata&#91;1&#93; ? </code> href="${linkdata[1]}"` : ''}${linkdata[1] ? <code> target&#61;&#34;${linkdata&#91;2&#93; ? linkdata&#91;2&#93; &#58; ext ? &#39;&&#35;95;blank&#39; &#58; &#39;&&#35;95;self&#39;}&#34;</code> : ''}${ext ? <code> id&#61;&#34;${cssid&#46;ext}&#34;</code> : ''}>${filterText(linkdata[0])}</a>` : type </mark> 1 ? <code>&#60;button id&#61;&#34;${dataname&#91;0&#93;}${bid}&#34; type&#61;&#34;button&#34; title&#61;&#34;${MDcode&#40;filterText&#40;linkdata&#91;0&#93;&#41;, false&#41;}&#34;&#62;${filterText&#40;linkdata&#91;0&#93;&#41;}&#60;/button&#62;</code> : '';
+
+        JS = pageid <mark> 1 && type </mark> 1 && linkdata[1] && htmlnavrunid <= 1 ? _just.string.removeLast(JS, '});') + <code>&&#35;110;document&#46;getElementById&#40;&#39;${dataname&#91;0&#93;}${bid}&#39;&#41;&#46;addEventListener&#40;&#34;click&#34;,&#40;&#41;&#61;&#62;{const link&#61;document&#46;createElement&#40;&#39;a&#39;&#41;;link&#46;href&#61;&#39;${linkdata&#91;1&#93;}&#39;;link&#46;target&#61;&#39;${linkdata&#91;2&#93; ? linkdata&#91;2&#93; &#58; ext ? &#39;&&#35;95;blank&#39; &#58; &#39;&&#35;95;self&#39;}&#39;;link&#46;classList&#46;add&#40;&#39;${dataname&#91;0&#93;}${bid}&#39;&#41;;document&#46;body&#46;appendChild&#40;link&#41;;link&#46;click&#40;&#41;;document&#46;body&#46;removeChild&#40;link&#41;;}&#41;;</code> + '&#110;});' : JS;
+
+        addcss += pageid <mark> 1 && type </mark> 1 && linkdata[1] ? <code>&#46;${dataname&#91;0&#93;}${bid},</code> : '';
+
+        if (type == 1 && linkdata[1] && htmlnavrunid <= 1) {
+
+            uniqueNames[`${dataname[0]}${bid}`] = 1;
+
+            uniqueNames_.push(`${dataname[0]}${bid}`);
+
+        }
+
+        bid++;
+
+    }
+
+    CSS += addcss != '' && htmlnavrunid <= 1 ? <code>&&#35;110;${&&#35;95;just&#46;string&#46;removeLast&#40;addcss, &#39;,&#39;&#41;}{display&#58;none}</code> : '';
+
+    htmlnavrunid++;
+
+    return output;
+
+ }
+
+ htmlnav();htmlnav(1);
+
+ /*
+
+    "links": [
+
+        ["name", "link", "target"],
+
+        ["link2", "https://just.is-a.dev/"]
+
+    ]
+
+
+    "buttons": [
+
+        ["name", "link", "target"],
+
+        ["button2", "https://just.is-a.dev/"]
+
+    ]
+
+ */
+
+
+ function uniqueName(input) {
+
+    if (!uniqueNames[input]) {
+
+        uniqueNames[input] = 1;
+
+        uniqueNames_.push(input);
+
+        return input;
+
+    } else {
+
+        uniqueNames[input]++;
+
+        uniqueNames_.push(input + uniqueNames[input]);
+
+        return input + uniqueNames[input];
+
+    }
+
+ }
+
+
+ const blockquoteToCSSclass = {
+
+    "NOTE": cssclass.note,
+
+    "TIP": cssclass.ntip,
+
+    "IMPORTANT": cssclass.impr,
+
+    "WARNING": cssclass.warn,
+
+    "CAUTION": cssclass.caut
+
+ }
+
+
+ logs += <code>${l&#91;0&#93;}MARKDOWN FILES&#58;</code>;
+
+ let fileID = 0;
+
+ const mdjson = {}
+
+ function toText(input) {
+
+    input = input.trim().replaceAll('&#92;', '')
+
+        .replace(dividerRegex, '')
+
+        .replaceAll('`', '')
+
+        .replaceAll('*', '')
+
+        .replaceAll('_', '')
+
+        .replaceAll('> ','')
+
+        .replaceAll('>', charCodes('>'))
+
+        .replaceAll('<', charCodes('<'))
+
+        .replaceAll('-# ','')
+
+        .replaceAll('~', '')
+
+        .replaceAll('=', charCodes('='))
+
+        .replaceAll('<sup>', charCodes('</sup>'))
+
+    for (let i = 6; i >= 1; i--) {
+
+        input = input.replace(new RegExp(`^#{${i}}&#92;s+(.<em>?)&#92;s</em>$`, 'gm'), '$1')
+
+    }
+
+    return input
+
+        .replace(/&#91;!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)&#93;/g, '$1:')
+
+        .replace(linkregex, '$1');
+
+ }
+
+ function getlangs() {
+
+    let outputt = '';
+
+    supportedlangs.forEach(lang => {
+
+        outputt += <code>${lang}&#124;</code>;
+
+    });
+
+    return _just.string.removeLast(outputt, '|');
+
+ }
+
+ const htmlfiles = {};
+
+ const mdlogs = {};
+
+ await new Promise ((resolve) => {
+
+    let mdid = 0;
+
+    markdownFiles.forEach(async file => {mdid++;
+
+        let content = fs.readFileSync(file, charset);
+
+        if (getTitleFromMd(file)) {
+
+            content = content.split('&#110;').slice(1).join('&#110;');
+
+        }
+
+        const fileNameWithoutExt = path.basename(file, path.extname(file));
+
+        const outFilePath = (ext) => path.join(path.dirname(file), `${fileNameWithoutExt}.${ext}`);
+
+        fileID++;
+
+        mdlogs[outFilePath('html')] = <code>${l&#91;1&#93;}FILE &#35;${fileID} &#34;${&&#35;95;just&#46;string&#46;runnerPath&#40;file&#41;}&#34;&#58;${l&#91;2&#93;}INPUT&#58; ${&&#35;95;just&#46;string&#46;fileSize&#40;fs&#46;statSync&#40;file&#41;&#46;size&#41;}</code>;
+
+
+        if (pathtourl[file] || pathtourl[file] == '') {
+
+            mdjson[`${JSUsePathInput && docsUsePathInput ? <code>${PATH}/</code>.repeat(2) : JSUsePathInput ? PATH+'/' : ''}${pathtourl[file]}`] = toText(content);
+
+        }
+
+
+        const headers = [];
+
+        let toHTML;
+
+        toHTML = hbuoclpMDtoHTML(
+
+            addEnd(content, '&#110;')
+
+                .replace(/> (.<em>?)&#110;&#110;> (.</em>?)&#110;/g, `> $1&#110;&#110;> ${_just.element(dataname[7])}$2&#110;`)
+
+                .replaceAll('&#110;>&#110;> ', '&#110;> ')
+
+                .replace(new RegExp(`(?<=^|&#110;)([>|> ]{2,${mbl}}) `, 'g'), (match, bqs) => `&#110;${bqs.replaceAll(' ', '').split('').join(' ').trim()} `),
+
+            _just.string.runnerPath(file)
+
+        ).then((tohttmll) => {
+
+            toHTML = tohttmll.replace(/<(h1|h2|h3|h4)>(.*?)<&#47;&#49;>/g, (match, p1, p2) => {
+
+                return <code>&#60;${p1} id&#61;&#34;${uniqueName&#40;encodeURIComponent&#40;p2&#41;&#41;}&#34;&#62;${p2}&#60;/${p1}&#62;</code>;
+
+            }).replace(/<(h1|h2|h3|h4) id="([^"]+)">(.*?)<&#47;&#49;>/g, (match, p1, p2, p3) => {headers.push(p2);return`<${p1} id="${p2}">${p3}</${p1}>`});
+
+
+            const H1 = [...toHTML.matchAll(/<(h1|h2) id="([^"]+)">(.*?)<&#47;&#49;>/g)];
+
+            const HT = [...toHTML.matchAll(/<(h3|h4) id="([^"]+)">(.*?)<&#47;&#49;>/g)];
+
+
+            const h1 = H1.map(match => [match[3], match[2]]);
+
+            const hT = HT.map(match => [match[3], match[2]]);
+
+
+            const headermap = new Map(headers.map((id, index) => [id, index]));
+
+            const contents = [
+
+                ...h1.map(item => ([ ...item, false ])),
+
+                ...hT.map(item => ([ ...item, true ]))
+
+            ];
+
+            contents.sort((a, b) => {
+
+                const indexA = headermap.get(a[1]) ?? Infinity;
+
+                const indexB = headermap.get(b[1]) ?? Infinity;
+
+                return indexA - indexB;
+
+            });
+
+            let pageHeaders = '';
+
+            for (const [idk, headerdata] of Object.entries(contents)) {
+
+                pageHeaders += `<li${ headerdata[2] ? ' class="secondary"' : '' }>
+
+                                    <a href="#${headerdata[1]}">
+
+                                        ${span(_just.string.toText(headerdata[0]))}
+
+                                    </a>
+
+                                </li>`;
+
+            }
+
+
+            const idk_ = toHTML.endsWith('</p>');
+
+            const prevnext = <em>just.prevnext.get(idk</em> ? _just.string.removeLast(toHTML, '</p>') : toHTML);
+
+            toHTML = idk_ ? prevnext[0].replace(_just.prevnext.regex, '') + '</p>' : prevnext[0].replace(_just.prevnext.regex, '');
+
+            let pagejs = '';
+
+            const btnjs = (id, href) => <code>document&#46;getElementById&#40;&#39;${id}&#39;&#41;&#46;addEventListener&#40;&#34;click&#34;,&#40;&#41;&#61;&#62;{const ${id&#46;replace&#40;&#39;&#45;&#39;,&#39;&&#35;95;&#39;&#41;}&#61;document&#46;createElement&#40;&#39;a&#39;&#41;;${id&#46;replace&#40;&#39;&#45;&#39;,&#39;&&#35;95;&#39;&#41;}&#46;href&#61;&#39;/${href}&#39;;${id&#46;replace&#40;&#39;&#45;&#39;,&#39;&&#35;95;&#39;&#41;}&#46;target&#61;&#39;&&#35;95;self&#39;;${id&#46;replace&#40;&#39;&#45;&#39;,&#39;&&#35;95;&#39;&#41;}&#46;style&#46;display&#61;&#39;none&#39;;document&#46;body&#46;appendChild&#40;${id&#46;replace&#40;&#39;&#45;&#39;,&#39;&&#35;95;&#39;&#41;}&#41;;${id&#46;replace&#40;&#39;&#45;&#39;,&#39;&&#35;95;&#39;&#41;}&#46;click&#40;&#41;;document&#46;body&#46;removeChild&#40;${id&#46;replace&#40;&#39;&#45;&#39;,&#39;&&#35;95;&#39;&#41;}&#41;}&#41;;</code>;
+
+            if (prevnext[1].prev) {
+
+                pagejs = btnjs(filename.js, prevnext[1].prev)
+
+            }
+
+            if (prevnext[1].next) {
+
+                pagejs += btnjs(filename.css, prevnext[1].next)
+
+            }
+
+
+            const pages = generateListItems(addFolderToPageList(pageList).sort((a, b) => a.title.localeCompare(b.title)));
+
+            const start = pathtourl[file] == "" ? '' : '/';
+
+            const fixpath = HTMLUsePathInput && docsUsePathInput ? <code>${PATH}/</code>.repeat(2) : HTMLUsePathInput ? PATH+'/' : '';
+
+            let outHTML = HTML
+
+                .replace('<html>', `<html${htmlLang}>`)
+
+                .replaceAll('="/_just/', `="${start}${fixpath}_just/`)
+
+                .replace("content: '_just';", `content: '_just ${_just.version}';`)
+
+                .replace('REPLACE_SCRIPT', <code>const ${dataname2&#91;11&#93;}&#61;${JSON&#46;stringify&#40;pages&#91;1&#93;&#41;};${pagejs ? `document&#46;addEventListener&#40;&#39;DOMContentLoaded&#39;,&#40;&#41;&#61;&#62;{${pagejs}}&#41;;</code> : ''}`)
+
+                .replaceAll('REPLACE_CSS', filename.css)
+
+                .replaceAll('REPLACE_JS', filename.js)
+
+                .replace('REPLACE_CHARSET', charset)
+
+                .replace('REPLACE_VIEWPORT', viewport)
+
+                .replace('REPLACE_TITLE', metatitle)
+
+                .replace('REPLACE_DATA', htmlhead(pathtourl[file], fixpath))
+
+                .replace('REPLACE_CUSTOM', insertHTMLinHead)
+
+                .replace('REPLACE_LOGO', logo)
+
+                .replace('REPLACE_NAME', filterText(name))
+
+                .replace('REPLACE_PAGES', filterText(pages[0]))
+
+                .replace('REPLACE_CONTENTS', filterText(pageHeaders))
+
+                .replace('REPLACE_FOOTER', docsConfig && docsConfig.footer ? span(filterText(footer)) : '')
+
+                .replace('REPLACE_LINKS', htmlnav())
+
+                .replace('REPLACE_BUTTONS', htmlnav(1));
+
+
+            fs.writeFileSync(outFilePath('txt'), toHTML, charset);
+
+            htmlfiles[outFilePath('html')] = outHTML.replace('REPLACE_PREVNEXT', _just.prevnext.html(prevnext[1], cssclass.next, cssclass.next1, cssclass.next2, filename.js, filename.css, pages[1])).replace(
+
+                    'REPLACE_CONTENT',
+
+                    _just.string.removeLast(
+
+                        addEnd(
+
+                            toHTML
+
+                                .replaceAll('&#110;', '<br>')
+
+                                .replaceAll('</h1><br>', '</h1>')
+
+                                .replaceAll('</h2><br>', '</h2>')
+
+                                .replaceAll('</h3><br>', '</h3>')
+
+                                .replaceAll('</h4><br>', '</h4>')
+
+                                .replaceAll('</h5><br>', '</h5>')
+
+                                .replaceAll('</h6><br>', '</h6>')
+
+                                .replaceAll('</ol><br>', '</ol>')
+
+                                .replaceAll('</ul><br>', '</ul>')
+
+                                .replace(/<blockquote><br>((?:(?!<h[1-6][^>]<em>>.</em>?<&#47;h[1-6]>).)*?)<&#47;blockquote>/g, '<blockquote><blockquote>$1</blockquote></blockquote>')
+
+                                .replace(/<blockquote><br>> ((?:(?!<h[1-6][^>]<em>>.</em>?<&#47;h[1-6]>).)*?)<&#47;blockquote>/g, '<blockquote><blockquote><blockquote>$1</blockquote></blockquote></blockquote>')
+
+                                .replaceAll('</blockquote><br>', '</blockquote>')
+
+                                .replaceAll('<br><blockquote', '<blockquote')
+
+                                .replaceAll('</blockquote><blockquote>', '<br>')
+
+                                .replaceAll('<br><blockquote><br>', '<blockquote>')
+
+                                .replace(/<blockquote>> ((?:(?!<h[1-6][^>]<em>>.</em>?<&#47;h[1-6]>).)*?)<&#47;blockquote>/g, '<blockquote><blockquote>$1</blockquote></blockquote>')
+
+                                .replaceAll('</blockquote></blockquote><blockquote><blockquote>', '<br>')
+
+                                .replaceAll('</blockquote><blockquote>', '<br>')
+
+                                .replace(/<blockquote>((?:(?!<h[1-6][<sup>>]<em>>.</em>?<&#47;h[1-6]>).)<em>?)<br>> ((?:(?!<h[1-6][</sup>>]</em>>.<em>?<&#47;h[1-6]>).)</em>?)<br>((?:(?!<h[1-6][^>]<em>>.</em>?<&#47;h[1-6]>).)*?)<&#47;blockquote>/g, '<blockquote>$1<blockquote>$2</blockquote><br>$3</blockquote>')
+
+                                .replaceAll('</blockquote><br>', '</blockquote>')
+
+                                .replace(/<&#47;blockquote>> ((?:(?!<h[1-6][^>]<em>>.</em>?<&#47;h[1-6]>).)*?)<blockquote>/g, '</blockquote><blockquote>$1</blockquote><blockquote>')
+
+                                .replaceAll('</blockquote><blockquote>', '<br>')
+
+                                .replaceAll(_just.element(dataname[7]), '</blockquote><blockquote>')
+
+                                .replaceAll('</blockquote><br><blockquote>', '<br>')
+
+                                .replaceAll('<blockquote></blockquote>', '')
+
+                                .replace(/<blockquote>&#91;!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)&#93;/g, (match, blockquote) => `<blockquote class="${blockquoteToCSSclass[blockquote]}">`),
+
+                            '<br>'
+
+                        ),
+
+                        '<br>'
+
+                    ).replace(/<blockquote>((?:(?!<h[1-6][^>]<em>>.</em>?<&#47;h[1-6]>).)*?)<br><br><blockquote>/, '<blockquote>$1<blockquote>')
+
+                    .replaceAll('</blockquote><br><blockquote>', '<br>')
+
+                    .replace(/<br><blockquote><blockquote>((?:(?!<h[1-6][^>]<em>>.</em>?<&#47;h[1-6]>).)*?)<&#47;blockquote><&#47;blockquote>/g, '<blockquote>$1</blockquote>')
+
+                    //.replaceAll(`${_just.element(dataname[5])}<h1 id=`, `<h1 class="${dataname[5]}" id=`)
+
+                    //.replaceAll(`${_just.element(dataname[6])}<h2 id=`, `<h2 class="${dataname[6]}" id=`)
+
+                    .replace(new RegExp(`(?<=<code class="${cssclass.code}"><code>(${getlangs()})</code>)(.*?)(?=</code>)`, 'g'), (match, lng, cde) => cde.replace(/<br><br>/g, '<br>')),
+
+                )
+
+            if (markdownFiles.length == mdid) {
+
+                resolve()
+
+            }
+
+        });
+
+    })
+
+ });
+
+
+ const CSSdata = _just.customCSS.customcss(CSS, customCSS == 'false' ? undefined : customCSS, CSSHIGHLIGHT, insertedcode, CSSBUTTONS, CSSSEARCH);
+
+ CSS = CSSdata[0];
+
+ for (const [pathh, htmlcontent] of Object.entries(htmlfiles)) {
+
+    const updated = _just.customCSS.highlightclasses(CSSHIGHLIGHTtemplate, CSS, htmlcontent, dataname[8]);
+
+    CSS = updated[0];
+
+    const fixlinkregex = (char) => new RegExp(`<a href="(.<em>?)" target="_blank" id="${cssid.ext}"(.</em>?)>(.*?)</a>${char}`, 'g');
+
+    let htmloutput = updated[1]
+
+        .replace(fixlinkregex(' '), (match, href_, title_, text_) => `<a href="${href_}" target="_blank" id="${cssid.ext}"${title_} class="${cssclass.linkspace}">${text_}</a>`)
+
+        .replace(fixlinkregex('(.|,|<em>)'), (match, href</em>, title_, text_, char_) => `<a href="${href_}" target="_blank" id="${cssid.ext}"${title_} class="${cssclass.linkdot}">${text_}</a>${char_}`)
+
+        .replace(fixlinkregex('( {1,}.)'), (match, href_, title_, text_) => `<a href="${href_}" target="_blank" id="${cssid.ext}"${title_} class="${cssclass.linkdot}">${text_}</a>.`)
+
+        .replace(fixlinkregex('( {1,},)'), (match, href_, title_, text_) => `<a href="${href_}" target="_blank" id="${cssid.ext}"${title_} class="${cssclass.linkdot}">${text_}</a>,`);
+
+    const charss=["!", "?", ":", ";", "#", "$", "%", "^", "&", "*", "&#92;(", "&#92;)", "-", "=", "+", '"', "'", '`', "&#92;[", "&#92;]", "&#92;{", "&#92;}", "&#92;&#92;", "&#92;|", "/", "~", "@", "№"];
+
+    charss.forEach(charrr => {
+
+        htmloutput = htmloutput
+
+            .replace(fixlinkregex(charrr), (match, href_, title_, text_) => `<a href="${href_}" target="_blank" id="${cssid.ext}"${title_} class="${cssclass.linkmark}">${text_}</a>${charrr == "&#92;&#92;" ? '&#92;' : charrr.replaceAll('&#92;', '')}`);
+
+    });
+
+    fs.writeFileSync(
+
+        pathh, 
+
+        htmloutput.replace(/<a href="(.<em>?)" target="_blank" id="(.</em>?)"(.<em>?)>(.</em>?)<&#47;a>&#43;&#42;&#63;/g, (match, hreff, idd, titleclass, textt) => {
+
+            if (idd == cssid.ext) {
+
+                return <code>&#60;a href&#61;&#34;${hreff}&#34; target&#61;&#34;&&#35;95;blank&#34; id&#61;&#34;${idd}&#34;${titleclass}&#62;${textt}&#60;/a&#62;</code>;
+
+            } else {
+
+                return <code>&#60;a href&#61;&#34;${hreff}&#34; target&#61;&#34;&&#35;95;blank&#34; id&#61;&#34;${idd}&#34;${titleclass}&#62;${textt}&#60;/a&#62;+&&#35;42;?</code>;
+
+            }
+
+        }).replace(/(?<=<code>)(.<em>?)(?=<&#47;code>)/g, (match, cde) => cde.replace(/&&#35;(.</em>?);/g, (match, num_) => {
+
+                if (/&#100;/.test(num_)) {
+
+                    return <code>&&#35;${num&&#35;95;};</code>;
+
+                } else {
+
+                    return <code>&&&#35;35;${num&&#35;95;};</code>;
+
+                }
+
+            })), 
+
+        charset
+
+    );
+
+    const outputlogs = <code>OUTPUT&#58; ${&&#35;95;just&#46;string&#46;runnerPath&#40;pathh&#41;} &#40;${&&#35;95;just&#46;string&#46;fileSize&#40;fs&#46;statSync&#40;pathh&#41;&#46;size&#41;}&#41;</code>;
+
+    logs += mdlogs[pathh] ? <code>${mdlogs&#91;pathh&#93;}${l&#91;2&#93;}${outputlogs}</code> : <code>${l&#91;1&#93;}ERROR&#58;${l&#91;2&#93;}MESSAGE&#58; NO LOGS FOUND FOR FILE ${&&#35;95;just&#46;string&#46;runnerPath&#40;pathh&#41;}${l&#91;2&#93;}FILE ${outputlogs}</code>;
+
+ }
+
+ CSS = CSS.replace(new RegExp(`.${dataname[8]}3ibute`, 'g'), `.${dataname[8]}14`).replace("content: '_just';", `content: '_just ${_just.version}';`);
+
+ 
+
+ const websitepath = rootDirA !== '.' ? rootDirA : rootDirB;
+
+ const _justdir = docsUsePathInput ? <code>${PATH}/&&#35;95;just</code>: '_just';
+
+ const _just_datadir = docsUsePathInput ? <code>${PATH}/&&#35;95;just&&#35;95;data</code>: '_just_data';
+
+ if(docsUsePathInput && !fs.existsSync(path.join(websitepath, PATH))) {
+
+    new Promise ((resolve, reject) => {
+
+        fs.mkdirSync(path.join(websitepath, PATH));
+
+        resolve();
+
+    }).catch();
+
+ }
+
+ new Promise ((resolve, reject) => {
+
+    if (!fs.existsSync(path.join(websitepath, _justdir))) {fs.mkdirSync(path.join(websitepath, _justdir))};
+
+    if (!fs.existsSync(path.join(websitepath, _just_datadir))) {fs.mkdirSync(path.join(websitepath, _just_datadir))};
+
+    resolve();
+
+ }).catch();
+
+
+ logs += linklogs; logs += buttonlogs;
+
+ logs += <code>${l&#91;0&#93;}USED NAMES&#58;${l&#91;1&#93;}&#34;${uniqueNames&&#35;95;&#46;join&#40;&#39;&#34;, &#34;&#39;&#41;}&#34;${l&#91;0&#93;}DATA NAMES&#58;${l&#91;1&#93;}&#34;${dataname&#46;join&#40;&#39;&#34;, &#34;&#39;&#41;}&#34;${l&#91;0&#93;}OTHER&#58;${l&#91;1&#93;}JSTRIMMEDVAR&#58;${l&#91;2&#93;}NAME&#58; ${jstrimmedstrvar &#61;&#61; null ? &#39;&#40;FAILED&#46; WILL BE REPLACED WITH ID&#41;&#39; &#58; `&#34;${jstrimmedstrvar}&#34;`}${l&#91;2&#93;}CUSTOM BASE&#58; ${jstrimmedstrvarbasestr&#46;length}${l&#91;2&#93;}CUSTOM BASE STRING&#58; &#34;${jstrimmedstrvarbasestr}&#34;</code>;
+
+ console.log(logs);
+
+ fs.writeFileSync(path.join(websitepath, _justdir, `${filename.css}.css`), CSS, template.charset);
+
+
+ const JSdata = _just.js.get(JS);
+
+ const JSerr = <code>document&#46;body&#46;classList&#46;add&#40;&#39;${cssclass&#46;error}&#39;&#41;;document&#46;documentElement&#46;style&#46;setProperty&#40;&#39;&#45;&#45;${cssvar&#46;edata}&#39;, &&#35;96;&#39;&&#35;36;{e&&#35;95;} &#40;0300&#41;&#39;&&#35;96;&#41;</code>;
+
+ fs.writeFileSync(
+
+    path.join(websitepath, _justdir, `${filename.js}.js`),
+
+    "try{"+_just.js.set(
+
+        JS.replace('&#39;REPLACE_PUBLICOUTPUT&#39;', hideOutput?false:publicOutput)
+
+        .replace('&#39;REPLACE_SEARCHV2&#39;', CSSdata[1] || false)
+
+        .replace('&#39;REPLACE_OUTPUT&#39;', hideOutput?false:watermark)
+
+        .replace('let searchurl = "/_just/search";', <code>let searchurl&#61;&#34;${JSUsePathInput && docsUsePathInput ? `/${PATH}</code>.repeat(2) : JSUsePathInput ? '/'+PATH : ''}/_just/${dataname[9]}.json";`), 
+
+        JSdata.names.filter(n => n !== jstrimmedstrvar), 
+
+        dataname2.reverse().slice(0, JSdata.total-1),
+
+        jstrimmedstrvarbasestr
+
+    ).replace("/<sup>[!&#34;#$%&'()*+,-./:;<=>?@[&#92;]</sup>_<code>{&#124;}&#126;&#93;+$/&#46;test&#40;null&#41;&#34;, `/&#94;&#91;!&#34;&#35;$%&&#39;&#40;&#41;&&#35;42;+,&#45;&#46;/&#58;;&#60;&#61;&#62;?@&#91;&&#35;92;&#93;&#94;&&#35;95;&&#35;96;{&#124;}&#126;&#93;+$/&#46;test&#40;${jstrimmedstrvar}&#41;`&#41;+`}catch&#40;e&&#35;95;&#41;{document&#46;addEventListener&#40;&#39;DOMContentLoaded&#39;,&#40;&#41;&#61;&#62;{${JSerr}}&#41;;${JSerr}}</code>,
+
+    template.charset
+
+ );
+
+
+
+ const fetchjson = async (protocol) => {
+
+    const response1 = await fetch(`${protocol}://${domain}/_just/`).catch() || undefined;
+
+    const data1 = response1 ? await response1.json() || undefined : undefined;
+
+    const response2 = await fetch(`${protocol}://${domain}/_just/${data1.json}.json`).catch() || undefined;
+
+    const data2 = response2 ? await response2.json() || undefined : undefined;
+
+    if (data1 && data2) fs.writeFileSync(path.join(websitepath, _justdir, `${data1.json}.json`), JSON.stringify(data2));
+
+ }
+
+ if (domain) {
+
+    fetchjson('http').catch((ee)=>{
+
+        caughterrors.push(ee);
+
+        errorlogs += <code>${l&#91;1&#93;}AT LINE ${&&#35;95;just&#46;line&#46;line&#40;&#41; &#124;&#124; &#39;&#45;1&#39;} &#40;&&#35;95;&&#35;95;REPLACE&&#35;95;LINE&&#35;95;&&#35;95;&#41;&#58; ${&&#35;95;just&#46;line&#46;err&#40;ee&#41;}</code>;
+
+        fetchjson('https').catch((e_e)=>{
+
+            caughterrors.push(e_e);
+
+            errorlogs += <code>${l&#91;1&#93;}AT LINE ${&&#35;95;just&#46;line&#46;line&#40;&#41; &#124;&#124; &#39;&#45;1&#39;} &#40;&&#35;95;&&#35;95;REPLACE&&#35;95;LINE&&#35;95;&&#35;95;&#41;&#58; ${&&#35;95;just&#46;line&#46;err&#40;ee&#41;}</code>;
+
+        });
+
+    })
+
+ }
+
+ if (debug_) console.log(errorlogs + configlogs);
+
+ const outlogs = hideOutput?'':logs+errorlogs+configlogs;
+
+ if (debug_) fs.writeFileSync(path.join(websitepath, _just_datadir, 'output.txt'), outlogs, template.charset);
+
+ fs.writeFileSync(path.join(websitepath, _justdir, `${dataname[9]}.json`), JSON.stringify(mdjson), template.charset);
+
+ fs.writeFileSync(path.join(websitepath, _justdir, 'index.json'), JSON.stringify({
+
+    "js": filename.js,
+
+    "css": filename.css,
+
+    "json": dataname[9]
+
+ }), template.charset);
+
+ fs.writeFileSync(path.join(websitepath, '.', '.nojekyll'), '', template.charset);
+}, tldinvalid => {});
+
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const _just = {};
+const [PATH] = process.argv.slice(2);
+_just.string = require('../modules/string.js');
+
+const charset = "utf-8";
+const fs = require('fs');
+const path = require('path');
+const rootDirA = PATH || '.';
+const rootDirB = process.cwd();
+try {
+
+ const logs = fs.readFileSync(path.join(rootDirA !== '.' ? rootDirA : rootDirB, '_just_data', 'output.txt'), charset);
+
+ let logsstr = logs;
+
+ const outputlogs = logsstr !== '';
+
+ const l = ['&#110;&#110;','&#110;    ','&#110;        '];
+
+ logsstr += outputlogs? l[0] : '';
+
+ let newlogs = <code>COMPRESSED&#58;</code>;
+
+
+ function findMarkdownFiles(dir) {
+
+    let results = [];
+
+    const list = fs.readdirSync(dir);
+
+    list.forEach(file => {
+
+        file = path.join(dir, file);
+
+        const stat = fs.statSync(file);
+
+        if (stat && stat.isDirectory()) {
+
+            results = results.concat(findMarkdownFiles(file));
+
+        } else if (file.endsWith('.md') || file.endsWith('.mdx')) {
+
+            results.push(file);
+
+        }
+
+    });
+
+    return results;
+
+ }
+
+ let fileID = 0;
+
+ findMarkdownFiles(rootDirB).forEach(file => {
+
+    fileID++;
+
+    newlogs += <code>${l&#91;1&#93;}FILE &#35;${fileID} &#34;${&&#35;95;just&#46;string&#46;removeLast&#40;&&#35;95;just&#46;string&#46;runnerPath&#40;file&#41;, &#39;md&#39;&#41;}html&#34;&#58;</code>;
+
+    try {
+
+        const fileNameWithoutExt = path.basename(file, path.extname(file));
+
+        const outFilePath = (ext) => path.join(path.dirname(file), `${fileNameWithoutExt}.${ext}`);
+
+        const htmlsize = _just.string.fileSize(fs.statSync(outFilePath('html')).size);
+
+        newlogs += <code>${l&#91;2&#93;}SIZE&#58; ${htmlsize} &#40;html output&#41;</code>;
+
+    } catch (err) {
+
+        newlogs += <code>${l&#91;2&#93;}ERROR&#58; ${err}</code>;
+
+    }
+
+    let sl = false;
+
+    let fd = false;
+
+    try {
+
+        fs.unlink(file, function(err) {
+
+            newlogs += err ? <code>${l&#91;2&#93;}MARKDOWN FILE DELETED&#58; NO&#46; &#40;${err}&#41; &#40;fs&#41;</code> : newlogs += <code>${l&#91;2&#93;}MARKDOWN FILE DELETED&#58; YES&#46;</code>;
+
+            sl = true;
+
+            fd = true;
+
+        })
+
+    } catch (err) {
+
+        newlogs += sl ? '' : <code>${l&#91;2&#93;}MARKDOWN FILE DELETED&#58; NO&#46; &#40;${err}&#41; &#40;tc&#41;</code>; // tc here means try{}catch(){}
+
+        fd = true;
+
+    }
+
+ });
+
+
+ console.log(newlogs);
+
+ logsstr += outputlogs? newlogs : '';
+
+ fs.writeFileSync(path.join(rootDirA !== '.' ? rootDirA : rootDirB, '_just_data', 'output.txt'), logsstr, charset);
+} catch (eee) {
+
+ // debug disabled
+}
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const regex = /(?<=^|&#110;)_just: (prev|next): &#47;(.*?)(?=&#110;|$)/g;
+exports.regex = regex;
+
+/<em></em>
+ * @param {string} text 
+ * @returns {[
+ *     string, 
+ *     {
+ *         "prev"?: string,
+ *         "next"?: string
+ *     }
+ * ]}
+ */
+exports.get = (text) => {
+
+ const data = {};
+
+ text.replace(regex, (a, b, c) => {
+
+    data[b] = c;
+
+    return '';
+
+ })
+
+ return [
+
+    text, 
+
+    data
+
+ ]
+}
+
+/<em></em>
+ * 
+ * @param {{
+ *     "prev"?: string,
+ *     "next"?: string
+ * }} data 
+ * @param {string} n0 
+ * @param {string} n1 
+ * @param {string} n2 
+ * @param {string} pid 
+ * @param {string} nid 
+ * @param {[string[]]} pl
+ * @returns {string}
+ */
+exports.html = (data, n0, n1, n2, pid, nid, pl) => {
+
+ if (!data.prev && !data.next) {
+
+    return '';
+
+ } else {
+
+    const dataprev = '/' + data.prev;
+
+    const datanext = '/' + data.next;
+
+    const pl1 = [], pl2 = {};
+
+    for (const [id, p] of Object.entries(pl)) {
+
+        pl1.push(p[0]);
+
+        pl2[p[0]] = p[1];
+
+    }
+
+    return <code>&#60;div class&#61;&#34;${n0}&#34;${data&#46;next && !data&#46;prev ? &#39; style&#61;&#34;display&#58;flex;flex&#45;direction&#58;column;&#34;&#39; &#58;&#39;&#39;}&#62;${data&#46;prev && pl1&#46;includes&#40;dataprev&#41; ? <code>&&#35;60;button class&&#35;61;&&#35;34;${n1}&&#35;34; id&&#35;61;&&#35;34;${pid}&&#35;34;&&#35;62;&&#35;60;small&&#35;62;Previous page&&#35;60;/small&&#35;62;&&#35;60;span&&#35;62;${pl2&&#35;91;dataprev&&#35;93; &&#35;124;&&#35;124; data&&#35;46;prev}&&#35;60;/span&&#35;62;&&#35;60;/button&&#35;62;&#60;/code&#62; &#58; &#39;&#39;}${data&#46;next && pl1&#46;includes&#40;datanext&#41; ? &#60;code&#62;&&#35;60;button class&&#35;61;&&#35;34;${n2}&&#35;34; id&&#35;61;&&#35;34;${nid}&&#35;34;${data&&#35;46;next && !data&&#35;46;prev ? &&#35;39; style&&#35;61;&&#35;34;align&&#35;45;self&&#35;58;flex&&#35;45;end;&&#35;34;&&#35;39; &&#35;58; &&#35;39;&&#35;39;}&&#35;62;&&#35;60;small&&#35;62;Next page&&#35;60;/small&&#35;62;&&#35;60;span&&#35;62;${pl2&&#35;91;datanext&&#35;93; &&#35;124;&&#35;124; data&&#35;46;next}&&#35;60;/span&&#35;62;&&#35;60;/button&&#35;62;&#60;/code&#62; &#58; &#39;&#39;}&#60;/div&#62;</code>;
+
+ }
+}
+[object Promise]css
+:root {
+
+ --bg: #121212;
+
+ --cl: #f0f0f0;
+
+ --kb: #2196F3;
+
+ --tf: 'Rubik', sans-serif;
+
+ --bh: 32px;
+
+ --bp: 0.5em;
+
+ --br: 6px;
+
+ --mp: 170px;
+
+ --mn: 10px;
+
+ --nh: center;
+
+ --ft: 10px;
+
+ --fr: 10px;
+
+ --md: #ffffff26;
+
+ --nt: #4964ff80;
+
+ --nb: #4964ff2b;
+
+ --tt: #4992ff80;
+
+ --tb: #4992ff2b;
+
+ --it: #6d49ff80;
+
+ --ib: #6d49ff2b;
+
+ --wt: #ffd84980;
+
+ --wb: #ffd8492b;
+
+ --ct: #ff624980;
+
+ --cb: #ff62492b;
+
+ --sb: 62px;
+
+ @media(min-width: 1250px) {
+
+    --mn: 50px;
+
+    --mp: 250px;
+
+    --nh: left;
+
+    --ft: 0px;
+
+    --fr: 50px;
+
+ }
+
+ @media(min-width: 1500px) {
+
+    --mn: 200px;
+
+    --mp: 400px;
+
+    --fr: calc(100% + 15px);
+
+ }
+}
+.l {
+
+ --bg: #f0f0f0;
+
+ --cl: #121212;
+
+ --md: #00000026;
+
+ --wt: #ffb00080;
+
+ --wb: #ffb0002b;
+}
+.stb {
+
+ --sb: 0px;
+}
+
+[object Promise]
+
+ transition: 300ms;
+
+ color: var(--cl);
+
+ border-color: var(--cl);
+
+ font-family: var(--tf);
+
+ outline-color: transparent;
+
+ outline-width: 3px;
+
+ outline-offset: 3px;
+
+ outline-style: solid;
+}
+
+html {
+
+ width: 100%;
+
+ overflow-wrap: break-word;
+
+ scroll-behavior: smooth;
+}
+body {
+
+ background-color: var(--bg);
+
+ display: flex;
+
+ margin: 0px;
+
+ max-width: 100%;
+
+ gap: 5px;
+
+ flex-direction: column;
+
+ flex-wrap: nowrap;
+
+ align-content: center;
+
+ justify-content: center;
+
+ align-items: center;
+}
+
+::-webkit-scrollbar {
+
+ width: 7px;
+
+ height: 7px;
+}
+::-webkit-scrollbar-button {
+
+ width: 0;
+
+ height: 0
+}
+::-webkit-scrollbar-track {
+
+ background: rgba(0, 0, 0, 0)
+}
+::-webkit-scrollbar-thumb {
+
+ background: var(--cl);
+
+ border: 2px solid var(--bg);
+
+ border-radius: 10px;
+}
+
+a, button {
+
+ cursor: pointer;
+
+ text-decoration: underline;
+
+ text-decoration-color: transparent;
+}
+button {
+
+ text-decoration-thickness: 3px;
+
+ opacity: 0.75;
+}
+a, button, input {
+
+ font-family: var(--tf);
+
+ border-radius: var(--br);
+}
+button, input {
+
+ height: var(--bh);
+
+ background-color: var(--cl);
+
+ color: var(--bg);
+
+ border: none;
+
+ margin: 0;
+
+ padding: 0;
+
+ padding-left: var(--bp);
+
+ padding-right: var(--bp);
+
+ font-family: var(--tf);
+
+ font-size: 14px;
+
+ font-weight: 400;
+}
+.l button, .l input {
+
+ background-color: var(--md);
+
+ color: var(--cl);
+}
+button:hover, input:hover {
+
+ opacity: 0.85;
+}
+button:active {
+
+ opacity: 0.75 !important;
+
+ transition: 50ms;
+}
+a:focus-visible {
+
+ text-decoration-color: var(--cl);
+
+ outline-color: var(--kb);
+}
+button:focus-visible {
+
+ opacity: 1;
+
+ text-decoration-color: var(--bg);
+
+ outline-color: var(--kb);
+}
+input:placeholder-shown {
+
+ color: var(--md);
+
+ opacity: 0.9;
+}
+::placeholder { /<em> Fix Firefox </em>/
+  color: #838383;
+  opacity: 1;
+}
+
+@keyframes line {
+
+ 0%, 0.1% {
+
+    width: 0%;
+
+    left: 0%;
+
+ }
+
+ 2% {
+
+    width: 75%;
+
+ }
+
+ 3.5%, 98% {
+
+    width: 100%;
+
+    left: 0%;
+
+ }
+
+ 100% {
+
+    width: 0%;
+
+    left: 100%;
+
+ }
+}
+@keyframes noline {
+
+ from {
+
+    width: 100%;
+
+ }
+
+ to {
+
+    width: 0%;
+
+ }
+}
+
+a#ext {
+
+ padding-right: 10px;
+}
+a#ext:after {
+
+ content: '↗';
+
+ position: fixed;
+
+ top: 0%;
+
+ font-family: 'Murecho', var(--tf), monospace, sans-serif;
+
+ font-weight: 900;
+
+ font-size: 11px;
+
+ translate: 2px -20%;
+
+ opacity: 0.5;
+
+ transition: 200ms;
+}
+a#ext:hover:not(:focus):after {
+
+ translate: 2px -25%;
+}
+.navbar {
+
+ background-color: var(--bg);
+
+ position: fixed;
+
+ top: 0%;
+
+ left: 0%;
+
+ width: calc(100% - 30px);
+
+ height: 50px;
+
+ padding: 5px;
+
+ padding-left: 15px;
+
+ padding-right: 15px;
+
+ display: flex;
+
+ flex-direction: row;
+
+ flex-wrap: nowrap;
+
+ align-content: center;
+
+ align-items: center;
+
+ border-style: solid;
+
+ border-width: 0px;
+
+ border-bottom-width: 2px;
+
+ gap: 15px;
+
+ max-width: 100%;
+
+ overflow: hidden;
+
+ overflow-x: auto;
+
+ justify-content: space-between;
+
+ cursor: default;
+
+ user-select: none;
+
+ z-index: 2;
+
+ @media(max-width: 700px) {
+
+    padding-left: 30px;
+
+    padding-right: 30px;
+
+    width: calc(100% - 60px);
+
+ }
+
+ .heading {
+
+    display: flex;
+
+    flex-direction: row;
+
+    flex-wrap: nowrap;
+
+    align-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background-color: var(--bg);
+
+    z-index: 1;
+
+    filter: drop-shadow(20px 0px 5px var(--bg));
+
+    -webkit-filter: drop-shadow(20px 0px 5px var(--bg));
+
+    img {
+
+        width: 35px;
+
+    }
+
+ }
+
+ .links {
+
+    position: fixed;
+
+    left: 50%;
+
+    translate: -50%;
+
+    display: flex;
+
+    flex-direction: row;
+
+    flex-wrap: nowrap;
+
+    align-items: center;
+
+    gap: 10px;
+
+    a {
+
+        opacity: 0.6;
+
+        transition: 300ms;
+
+        filter: hue-rotate(1deg);
+
+        -webkit-filter: hue-rotate(1deg);
+
+    }
+
+    a:before {
+
+        content: '';
+
+        position: fixed;
+
+        width: 0%;
+
+        height: 1px;
+
+        left: 0%;
+
+        top: calc(100% + 2px);
+
+        background-color: var(--cl);
+
+        transition: 150ms;
+
+        z-index: -1;
+
+        animation: 300ms noline ease-out 1;
+
+    }
+
+    a:hover:not(:focus) {
+
+        opacity: 1;
+
+        filter: drop-shadow(0px 0px 2px);
+
+        -webkit-filter: drop-shadow(0px 0px 2px);
+
+        transition: 150ms;
+
+    }
+
+    a:hover:not(:focus):before {
+
+        width: 100%;
+
+        left: 0%;
+
+        animation: 6s line linear infinite;
+
+    }
+
+    a:focus {
+
+        opacity: 1;
+
+    }
+
+ }
+
+ .buttons {
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-content: center;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    position: fixed;
+
+    right: 15px;
+
+    z-index: 1;
+
+    @media(max-width: 700px) {
+
+        display: none;
+
+    }
+
+    input {
+
+        position: absolute;
+
+        right: calc(100% + 10px);
+
+        display: none;
+
+        pointer-events: none;
+
+        user-select: none;
+
+        z-index: -1;
+
+        @media(min-width: 1000px) {
+
+            display: inline-block;
+
+            pointer-events: all;
+
+            user-select: all;
+
+            z-index: 0;
+
+        }
+
+    }
+
+ }
+}
+.navbar:has(.buttons button) .links {
+
+ @media(max-width: 700px) {
+
+    left: initial;
+
+    right: 30px;
+
+    translate: 0%;
+
+ }
+
+ @media(min-width: 1000px) {
+
+    left: 33%;
+
+    translate: 0%;
+
+ }
+
+ @media(min-width: 1200px) {
+
+    left: 33%;
+
+    translate: 0%;
+
+ }
+
+ @media(min-width: 1600px) {
+
+    left: 50%;
+
+    translate: -50%;
+
+ }
+}
+.navbar:not(:has(.buttons button)) {
+
+ @media(max-width: 1000px) {
+
+    padding-left: 30px;
+
+    padding-right: 30px;
+
+    width: calc(100% - 60px);
+
+ }
+
+ .links {
+
+    @media(max-width: 1000px) {
+
+        left: initial;
+
+        right: 30px;
+
+        translate: 0;
+
+    }
+
+    @media(min-width: 1000px) {
+
+        left: 50%;
+
+        translate: -50%;
+
+    }
+
+ }
+}
+.navbar.scroll {
+
+ border-bottom-right-radius: var(--br);
+}
+body.navbar-invert .navbar.scroll {
+
+ filter: invert();
+
+ -webkit-filter: invert();
+
+ border-block-width: 0px;
+
+ .links a:hover {
+
+    filter: hue-rotate(1deg);
+
+    -webkit-filter: hue-rotate(1deg);
+
+ }
+}
+body.navbar-invert:not(.navbar-noimginvert) .navbar.scroll .heading img {
+
+ filter: invert();
+
+ -webkit-filter: invert();
+}
+body.navbar-invert .navbar.scroll, .l .navbar {
+
+ .links {
+
+    a#ext:after {
+
+        opacity: 1
+
+    }
+
+ }
+
+ .links a:hover {
+
+    filter: hue-rotate(1deg);
+
+    -webkit-filter: hue-rotate(1deg);
+
+ }
+}
+.navbar .heading:not(:has(span)) {
+
+ width: auto;
+
+ height: auto;
+
+ min-height: 20px;
+
+ max-height: 35px;
+
+ img {
+
+    width: auto;
+
+    height: auto;
+
+    max-height: 32px;
+
+    min-height: 20px;
+
+ }
+}
+header {
+
+ height: 62px;
+
+ position: sticky;
+
+ z-index: 10;
+}
+
+main {
+
+ position: relative;
+
+ width: 100%;
+
+ z-index: 0;
+}
+main nav {
+
+ position: sticky;
+
+ top: 64px;
+
+ height: 0;
+
+ width: var(--mp);
+
+ z-index: 3;
+
+ padding-top: 10px;
+
+ padding-left: 10px;
+
+ padding-right: 10px;
+
+ user-select: none;
+}
+nav.left {
+
+ padding-left: var(--mn);
+
+ width: calc(var(--mp) - 5px);
+
+ @media(max-width: 555px) {
+
+    translate: -100%;
+
+ }
+}
+.navleft nav.left {
+
+ translate: 0%;
+}
+nav.right {
+
+ padding-right: var(--mn);
+
+ left: 100%;
+
+ z-index: 2;
+
+ @media(max-width: 700px) {
+
+    display: none;
+
+ }
+
+ div {
+
+    width: calc(100% - 15px - var(--mn));
+
+    padding-top: 50px;
+
+    translate: calc(var(--fr) + 15px);
+
+    span {
+
+        display: block;
+
+        position: relative;
+
+        height: 19px;
+
+        z-index: 3;
+
+    }
+
+    > span {
+
+        pointer-events: none;
+
+    }
+
+    ul {
+
+        padding-left: 10px;
+
+        z-index: 2;
+
+        position: relative;
+
+        background-color: var(--md);
+
+        li {
+
+            height: 20px;
+
+            margin-top: 10px;
+
+            background-color: var(--bg);
+
+        }
+
+        li.secondary {
+
+            translate: 10px;
+
+            width: calc(100% - 10px);
+
+        }
+
+        li:after, li:before {
+
+            content: '';
+
+            background-color: var(--bg);
+
+            width: 4px;
+
+            position: fixed;
+
+            height: 32px;
+
+            z-index: -1;
+
+            transition: 300ms;
+
+        }
+
+        li:after {
+
+            right: 100%;
+
+            width: calc(100% + 4px);
+
+            translate: calc(100% - 3.8px) calc(-100% + 1px);
+
+        }
+
+        li:not(.secondary):after {
+
+            left: 0%;
+
+            right: initial;
+
+            translate: 6px calc(-100% + 2px);
+
+        }
+
+        li:before {
+
+            translate: -10px -10px;
+
+        }
+
+        li.secondary:before {
+
+            height: 29px;
+
+            translate: -26px -7px;
+
+            width: 20px;
+
+        }
+
+        li.secondary:after {
+
+            height: 38px;
+
+            translate: calc(100% - 3.8px) calc(-100% + 7px);
+
+        }
+
+        li.secondary:has(+ .secondary):before {
+
+            height: 40px;
+
+        }
+
+        li.secondary + li:not(.secondary):after {
+
+            height: 27px;
+
+        }
+
+        span {
+
+            padding-left: 5px;
+
+            overflow: hidden;
+
+        }
+
+    }
+
+    ul:after {
+
+        content: '';
+
+        position: fixed;
+
+        width: 5px;
+
+        height: 100%;
+
+        top: 0%;
+
+        left: 0%;
+
+        background-color: var(--bg);
+
+        translate: -1px;
+
+        transition: 300ms;
+
+    }
+
+    .slider {
+
+        position: fixed;
+
+        z-index: 1;
+
+        top: 79px;
+
+        height: 20px;
+
+        width: 100%;
+
+        left: 0%;
+
+        background-color: var(--cl);
+
+        translate: 0px calc(var(--hc) * 30px);
+
+        padding: 0;
+
+    }
+
+ }
+}
+#main {
+
+ position: relative;
+
+ margin-top: -20px;
+
+ z-index: 1;
+}
+.main {
+
+ position: relative;
+
+ top: 4px;
+
+ padding-left: var(--mp);
+
+ padding-right: calc(var(--mp) - 10px);
+
+ z-index: 1;
+
+ translate: -5px;
+
+ padding-bottom: 50px;
+
+ @media (max-width: 700px) {
+
+    padding-right: 5px;
+
+ }
+
+ @media (max-width: 555px) {
+
+    padding-left: 5px;
+
+    translate: 0px;
+
+ }
+}
+.navleft .main {
+
+ padding-left: var(--mp);
+
+ translate: -5px;
+}
+main nav ul:has(ul) {
+
+ width: calc(100% - 10px - var(--mn));
+
+ gap: 30px;
+
+ display: flex;
+
+ flex-direction: column;
+
+ padding-top: 50px;
+
+ overflow-y: auto;
+
+ max-height: calc(100vh - 189px + var(--sb));
+}
+main nav ul {
+
+ margin: 0;
+
+ padding: 0;
+
+ span strong {
+
+    display: block;
+
+    width: 100%;
+
+    text-align: var(--nh);
+
+    margin-bottom: 15px;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    padding-right: var(--ft);
+
+    margin-left: calc(0px - var(--ft));
+
+ }
+
+ a span {
+
+    opacity: 0.75;
+
+ }
+
+ a span:hover {
+
+    opacity: 1;
+
+ }
+}
+main nav ul ul {
+
+ display: flex;
+
+ flex-direction: column;
+
+ gap: 10px;
+}
+main nav li {
+
+ display: block;
+}
+.ios .navbar .heading {
+
+ -webkit-filter: none;
+
+ filter: none;
+}
+nav.left > ul > li > span {
+
+ margin-bottom: 15px;
+}
+.ios nav.right {
+
+ display: none;
+}
+.ios .main {
+
+ padding-right: 5px;
+}
+
+.main:before {
+
+ content: '';
+
+ position: fixed;
+
+ top: -28px;
+
+ width: 1px;
+
+ height: calc(100% + 28px);
+
+ background-color: var(--md);
+
+ translate: -10px;
+
+ opacity: 0.5;
+
+ @media(max-width: 555px) {
+
+    opacity: 0;
+
+ }
+}
+.navleft .main:before {
+
+ opacity: 0.5;
+}
+blockquote {
+
+ display: block;
+
+ margin: 0;
+
+ margin-top: 10px;
+
+ border-color: var(--md);
+
+ border-style: solid;
+
+ border-width: 0;
+
+ border-left-width: 5px;
+
+ padding-left: 10px;
+
+ margin-bottom: 10px;
+
+ margin-left: 10px;
+
+ padding-top: 10px;
+
+ padding-bottom: 10px;
+
+ blockquote {
+
+    opacity: 0.75;
+
+ }
+}
+blockquote:hover {
+
+ border-color: var(--cl);
+
+ opacity: 1;
+}
+code {
+
+ background-color: var(--md);
+
+ padding-left: 5px;
+
+ padding-right: 5px;
+
+ border-radius: 5px;
+}
+code, code span {
+
+ font-family: monospace;
+
+ cursor: text;
+}
+.line {
+
+ position: relative;
+
+ z-index: 1;
+
+ width: 100%;
+
+ height: 5px;
+
+ background-color: var(--md);
+
+ margin-top: 20px;
+
+ margin-bottom: 1px;
+
+ overflow: hidden;
+}
+.line:after {
+
+ content: '';
+
+ position: relative;
+
+ display: block;
+
+ top: 0%;
+
+ left: -120%;
+
+ width: 100%;
+
+ height: 100%;
+
+ background-color: var(--cl);
+
+ transition: 1s;
+
+ transition-delay: 400ms;
+
+ transition-timing-function: ease-in-out;
+}
+.line, .line:after {
+
+ border-radius: 10px;
+}
+.line:hover:after {
+
+ left: 120%;
+
+ transition-delay: 0ms;
+}
+.code {
+
+ display: block;
+
+ width: calc(100% - 10px);
+
+ padding: 5px;
+
+ line-height: 18px;
+
+ margin-top: 10px;
+
+ margin-bottom: 10px;
+}
+.code:has(code) {
+
+ margin-top: 28px;
+
+ border-top-left-radius: 0px;
+}
+.code code {
+
+ position: relative;
+
+ display: block;
+
+ translate: -5px -23px;
+
+ margin-bottom: -20px;
+
+ width: max-content;
+
+ border-bottom-left-radius: 0px;
+
+ border-bottom-right-radius: 0px;
+
+ pointer-events: none;
+
+ white-space: nowrap;
+
+ user-select: none;
+}
+.note, .ntip, .impr, .warn, .caut {
+
+ border-top-right-radius: 10px;
+
+ border-bottom-right-radius: 10px;
+
+ padding-top: 35px;
+
+ line-height: 20px;
+
+ padding-right: 10px;
+}
+.note:before, .ntip:before, .impr:before, .warn:before, .caut:before {
+
+ position: fixed;
+
+ translate: 0px -25px;
+
+ font-weight: 500;
+
+ height: 20px;
+}
+.note {
+
+ background-color: var(--nb);
+
+ border-color: var(--nt) !important;
+}
+.note:before {
+
+ content: 'Note';
+
+ color: var(--nt);
+}
+.ntip {
+
+ background-color: var(--tb);
+
+ border-color: var(--tt) !important;
+}
+.ntip:before {
+
+ content: 'Tip';
+
+ color: var(--tt);
+}
+.impr {
+
+ background-color: var(--ib);
+
+ border-color: var(--it) !important;
+}
+.impr:before {
+
+ content: 'Important';
+
+ color: var(--it);
+}
+.warn {
+
+ background-color: var(--wb);
+
+ border-color: var(--wt) !important;
+}
+.warn:before {
+
+ content: 'Warning';
+
+ color: var(--wt);
+}
+.caut {
+
+ background-color: var(--cb);
+
+ border-color: var(--ct) !important;
+}
+.caut:before {
+
+ content: 'Caution';
+
+ color: var(--ct);
+}
+
+footer {
+
+ position: relative;
+
+ background-color: var(--bg);
+
+ z-index: 2;
+
+ padding: 20px;
+
+ display: flex;
+
+ flex-direction: row;
+
+ flex-wrap: nowrap;
+
+ align-content: center;
+
+ justify-content: space-between;
+
+ align-items: center;
+
+ * {
+
+    height: 20px;
+
+ }
+
+ div {
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    gap: 5px;
+
+    button {
+
+        aspect-ratio: 1;
+
+        border-radius: 50%;
+
+        background-color: var(--md);
+
+        padding: 0;
+
+        width: 20px;
+
+        max-width: 20px;
+
+        color: var(--cl);
+
+        font-family: var(--tf);
+
+        font-weight: 600;
+
+        overflow: hidden;
+
+        svg {
+
+            position: relative;
+
+            width: 20px;
+
+            top: 50%;
+
+            left: 50%;
+
+            translate: -50% -50%;
+
+            -webkit-translate: -50% -50%;
+
+            scale: 0.75;
+
+            opacity: 0.75;
+
+            fill: var(--cl);
+
+            transition: 700ms;
+
+        }
+
+    }
+
+    button:hover svg {
+
+        transform: rotate(10deg);
+
+        -webkit-transform: rotate(10deg);
+
+    }
+
+    button:focus-visible {
+
+        outline-offset: 0;
+
+        background-color: var(--kb);
+
+    }
+
+ }
+
+ div:has(button:focus-visible) {
+
+    outline-style: solid;
+
+    outline-width: 5px;
+
+    outline-offset: 5px;
+
+    outline-color: var(--cl);
+
+ }
+
+ div, button {
+
+    border: 1px solid var(--md);
+
+ }
+}
+footer:before {
+
+ content: '';
+
+ position: absolute;
+
+ bottom: 59px;
+
+ right: 0px;
+
+ width: 100%;
+
+ height: 1px;
+
+ background-color: var(--md);
+
+ opacity: 0.5;
+}
+html.l:not(.a) #l, html:not(.l):not(.a) #d, html.a #a{
+
+ border-color: var(--cl)
+}
+#l svg circle {
+
+ fill: var(--cl);
+
+ scale: 0.9;
+
+ translate: 5% 5%;
+}
+#d {
+
+ transform: rotate(5deg);
+
+ -webkit-transform: rotate(5deg);
+}
+#d svg {
+
+ scale: 0.7;
+}
+#a {
+
+ text-align: center;
+
+ vertical-align: middle;
+
+ align-content: center;
+
+ align-items: center;
+}
+.ios footer div:has(button) {
+
+ display: none;
+}
+#main small {
+
+ display: none;
+
+ opacity: 0.25;
+
+ width: 100%;
+
+ text-align: center;
+
+ @media(max-width: 555px) {
+
+    display: block;
+
+ }
+}
+.navleft #main small {
+
+ display: none;
+}
+
+
+h1 {
+
+ display: block;
+
+ font-size: 2em;
+
+ margin-block-start: 0.67em;
+
+ margin-block-end: 0.67em;
+
+ margin-inline-start: 0px;
+
+ margin-inline-end: 0px;
+
+ font-weight: bold;
+
+ unicode-bidi: isolate;
+}
+h2 {
+
+ display: block;
+
+ font-size: 1.5em;
+
+ margin-block-start: 0.83em;
+
+ margin-block-end: 0.83em;
+
+ margin-inline-start: 0px;
+
+ margin-inline-end: 0px;
+
+ font-weight: bold;
+
+ unicode-bidi: isolate;
+}
+h3 {
+
+ display: block;
+
+ font-size: 1.17em;
+
+ margin-block-start: 1em;
+
+ margin-block-end: 1em;
+
+ margin-inline-start: 0px;
+
+ margin-inline-end: 0px;
+
+ font-weight: bold;
+
+ unicode-bidi: isolate;
+}
+h4 {
+
+ display: block;
+
+ margin-block-start: 1.33em;
+
+ margin-block-end: 1.33em;
+
+ margin-inline-start: 0px;
+
+ margin-inline-end: 0px;
+
+ font-weight: bold;
+
+ unicode-bidi: isolate;
+}
+h5 {
+
+ display: block;
+
+ font-size: 0.83em;
+
+ margin-block-start: 1.67em;
+
+ margin-block-end: 1.67em;
+
+ margin-inline-start: 0px;
+
+ margin-inline-end: 0px;
+
+ font-weight: bold;
+
+ unicode-bidi: isolate;
+}
+h6 {
+
+ display: block;
+
+ font-size: 0.67em;
+
+ margin-block-start: 2.33em;
+
+ margin-block-end: 2.33em;
+
+ margin-inline-start: 0px;
+
+ margin-inline-end: 0px;
+
+ font-weight: bold;
+
+ unicode-bidi: isolate;
+}
+p {
+
+ display: block;
+
+ margin-block-start: 0.5em;
+
+ margin-block-end: 0.5em;
+
+ margin-inline-start: 0px;
+
+ margin-inline-end: 0px;
+
+ unicode-bidi: isolate;
+}
+
+.debug {
+
+ * {
+
+    outline-color: #888888;
+
+    outline-offset: 0;
+
+    outline-width: 1px;
+
+    outline-style: dashed;
+
+ }
+
+ .main {
+
+    z-index: 2;
+
+ }
+
+ .main span {
+
+    background-color: blue;
+
+    width: 100%;
+
+    display: block;
+
+ }
+
+ .left, .right {
+
+    background-color: #ff000080;
+
+ }
+
+ .left ul, .right div {
+
+    background-color: red;
+
+ }
+
+ .navbar {
+
+    background-color: green;
+
+ }
+
+ nav.right div <em>:not(.slider), nav.right div </em>:after, nav.right div *:before {
+
+    background-color: transparent;
+
+    color: black;
+
+ }
+}
+
+h1, h2, h3 {
+
+ padding-top: 62px; margin-top: -62px;
+}
+.underline, .main a {
+
+ text-decoration: underline;
+}
+.main a {
+
+ color: var(--kb);
+}
+
+.search {
+
+ position: fixed;
+
+ padding-top: 16px;
+
+ padding-left: 7px;
+
+ padding-right: 7px;
+
+ padding-bottom: 6px;
+
+ translate: 0px -6px;
+
+ display: flex;
+
+ flex-direction: column;
+
+ flex-wrap: nowrap;
+
+ align-content: flex-start;
+
+ align-items: flex-start;
+
+ justify-content: flex-start;
+
+ gap: 10px;
+
+ background-color: var(--md);
+
+ backdrop-filter: blur(4px) url("#glass") brightness(0.3);
+
+ -webkit-backdrop-filter: blur(4px) url("#glass") brightness(0.3);
+
+ z-index: -1;
+
+ border-bottom-left-radius: 10px;
+
+ border-bottom-right-radius: 10px;
+
+ overflow: hidden;
+
+ border: 1px solid var(--md);
+
+ a {
+
+    height: 19px;
+
+    overflow: hidden;
+
+ }
+
+ span {
+
+    opacity: 0.75;
+
+    width: 100%;
+
+    text-align: center;
+
+ }
+}
+.firefox .search, .ios .search {
+
+ backdrop-filter: blur(4px) brightness(0.3) !important;
+
+ -wenkit-backdrop-filter: blur(4px) brightness(0.3) !important;
+}
+.ios .search {
+
+ background-color: var(--bg);
+}
+
+.line-through {
+
+ text-decoration: line-through;
+}
+mark {
+
+ background-color: var(--wt);
+
+ padding-left: 2px;
+
+ padding-right: 2px;
+
+ border-radius: 5px;
+}
+
+.main a#ext:after {
+
+ position: relative !important;
+
+ display: inline-block;
+}
+.main img {
+
+ max-width: 100%;
+}
+
+input[type="checkbox"] {
+
+ pointer-events: none;
+
+ accent-color: var(--kb) !important;
+
+ height: auto;
+
+ display: inline;
+}
+
+.code:has(code) span:has(div) {
+
+ padding-left: 15px;
+}
+.code:has(code) span div {
+
+ display: inline;
+
+ position: absolute;
+
+ width: 10px;
+
+ height: 10px;
+
+ translate: -12.5px 3.5px;
+
+ border-radius: 50%;
+}
+.code, .code code, .code * {
+
+ background: #3c3c3c;
+
+ color: #ffffff;
+}
+
+html:before, html:after, body:before, body:after {
+
+ content: none !important;
+}
+header, main {
+
+ display: block !important;
+}
+
+.error:before {
+
+ content: 'Uh oh!' !important;
+
+ font-size: 2em;
+
+ position: fixed;
+
+ top: 50%;
+
+ translate: 0 calc(-100% - 6px);
+
+ width: 50%;
+
+ text-align: center;
+
+ border-bottom: 1px solid white;
+
+ white-space: nowrap;
+}
+.error:after {
+
+ content: 'Something went wrong.' !important;
+
+ position: fixed;
+
+ top: 50%;
+}
+html:has(.error):before {
+
+ content: '_just' !important;
+
+ font-size: 13px;
+
+ position: fixed;
+
+ bottom: 5px;
+
+ left: 5px;
+
+ line-break: anywhere;
+
+ margin-right: 5px;
+}
+html:has(.error):after {
+
+ content: var(--edata) !important;
+
+ position: fixed;
+
+ top: calc(50% + 24px);
+
+ width: 100%;
+
+ text-align: center;
+
+ font-size: 12px;
+
+ opacity: 0.5;
+}
+.error * {
+
+ display: none !important;
+}
+
+#search {
+
+ display: none;
+}
+
+.small {
+
+ opacity: 0.5;
+
+ font-size: 12px;
+}
+
+html:has(.navleft) {
+
+ overflow: hidden;
+
+ touch-action: pan-y;
+}
+html:has(.navleft) .main {
+
+ pointer-events: none;
+
+ user-select: none;
+
+ filter: blur(3px) brightness(0.8);
+
+ -webkit-filter: blur(3px) brightness(0.8);
+}
+.navleft .navbar .links {
+
+ translate: calc(0px - calc(var(--mp) - 10px)) !important;
+}
+
+.main .linkspace {
+
+ margin-right: -12px;
+}
+.main .linkspace:after {
+
+ translate: 0px -20%;
+}
+.main .linkspace:hover:not(:focus):after {
+
+ translate: 0px -25%;
+}
+
+.main .linkmark {
+
+ margin-right: -17px;
+}
+.main .linkmark:after {
+
+ translate: -1px -70%;
+}
+.main .linkmark:hover:not(:focus) {
+
+ margin-right: -10px;
+}
+.main .linkmark:hover:not(:focus):after {
+
+ translate: 0px -25%;
+}
+
+.main #ext {
+
+ white-space: nowrap;
+}
+
+.main .linkdot {
+
+ margin-right: -17px;
+}
+.main .linkdot:after {
+
+ translate: 2px -40%;
+}
+.main .linkdot:hover:not(:focus):after {
+
+ translate: 2px -45%;
+}
+
+main nav li ul {
+
+ padding-top: 0px;
+
+ width: 100%;
+}
+main nav li ul li:has(strong) {
+
+ padding-top: 10px;
+}
+@media(min-width: 1250px) {
+
+ main nav li ul li:has(strong) {
+
+    padding-left: 10px;
+
+ }
+
+ main nav li ul li:has(strong):before {
+
+    content: '';
+
+    height: var(--liheight);
+
+    width: 3px;
+
+    background-color: var(--md);
+
+    display: block;
+
+    position: relative;
+
+    translate: -10px 0px;
+
+    border-radius: 50px;
+
+    opacity: 0.5;
+
+    margin-bottom: calc(0px - var(--liheight));
+
+ }
+}
+
+nav.left:not(:has(strong)) > ul {
+
+ padding-top: 50px;
+
+ display: flex;
+
+ flex-direction: column;
+
+ gap: 10px;
+}
+[object Promise]css
+#search {
+
+ background-color: var(--bg);
+
+ border: 2px solid var(--cl);
+
+ font-family: Monospace;
+
+ position: fixed;
+
+ z-index: 23;
+
+ display: block !important;
+
+ width: 20px;
+
+ height: 16px;
+
+ padding-bottom: 1px;
+
+ translate: calc(-100% - 5px) -50%;
+
+ text-align: center;
+
+ border-radius: 50px;
+
+ cursor: pointer;
+
+ user-select: none;
+
+ transition: none;
+}
+.ios #search {
+
+ display: none !important;
+}
+
+.next {
+
+ padding: 10px;
+
+ margin-top: 45px;
+
+ border: 2px solid var(--md);
+
+ border-radius: 20px;
+
+ max-width: 769px;
+
+ position: relative;
+
+ translate: -50% 0px;
+
+ left: 50%;
+}
+.next:before {
+
+ content: '';
+
+ background-color: var(--md);
+
+ opacity: 0.5;
+
+ width: calc(100% + 20px);
+
+ height: 1px;
+
+ display: block;
+
+ top: -30px;
+
+ position: relative;
+
+ left: -10px;
+}
+.next button {
+
+ width: 50%;
+
+ background-color: transparent;
+
+ color: var(--cl);
+
+ font-weight: bold;
+
+ opacity: 1;
+
+ border-radius: 20px;
+
+ overflow: hidden;
+}
+.next .next1 {
+
+ border-right: 1px solid var(--md);
+
+ border-top-right-radius: 0px;
+
+ border-bottom-right-radius: 0px;
+}
+.next .next2 {
+
+ border-left: 1px solid var(--md);
+
+ border-top-left-radius: 0px;
+
+ border-bottom-left-radius: 0px;
+}
+.next button:hover {
+
+ scale: 101%;
+
+ background-color: #ffffff20;
+}
+.l .next button:hover {
+
+ background-color: #00000020;
+}
+.next button small, .next button span {
+
+ display: block !important;
+
+ white-space: nowrap;
+}
+.next button small {
+
+ font-weight: normal;
+}
+.next button:hover small, .next button:hover span {
+
+ translate: 0px -50%;
+}
+.next button:hover small {
+
+ scale: 103%;
+
+ opacity: 0 !important;
+
+ filter: blur(2px);
+
+ -webkit-filter: blur(2px);
+}
+@media (max-width: 450px) {
+
+ .next {
+
+    display: none;
+
+ }
+}
+
+.code {
+
+ cursor: default;
+
+ white-space: nowrap;
+
+ overflow-x: scroll;
+}
+.code::-webkit-scrollbar {
+
+ width: 5px;
+
+ height: 5px
+}
+.code::-webkit-scrollbar-thumb {
+
+ border: 1px solid var(--bg);
+}
+.code code {
+
+ position: absolute;
+}
+
+[object Promise]css
+.hljs-number {
+
+ color: #eda31b;
+}
+.hljs-meta, .hljs-variable.language_, .language_ {
+
+ color: #d0d1ff;
+}
+.hljs-meta.prompt_, .hljs-selector-id, .prompt_ {
+
+ color: #29d3a9;
+}
+.hljs-comment {
+
+ color: #a2a2a2;
+}
+.hljs-keyword, .hljs-attr, .hljs-selector-class {
+
+ color: #c3acff;
+}
+.hljs-name, .hljs-selector-tag, .hljs-title.function_, .function_, .hljs-property {
+
+ color: #89a8f9;
+}
+.hljs-string {
+
+ color: #afffaf;
+}
+.hljs-literal, .hljs-selector-pseudo {
+
+ color: #faadf9;
+}
+.hljs-built_in, .hljs-attribute {
+
+ color: #aad7ff;
+}
+
+[object Promise]html
+<!DOCTYPE html>
+<html>
+
+ <head>
+
+    <meta charset="REPLACE_CHARSET">
+
+    <meta name="viewport" content="REPLACE_VIEWPORT">
+
+    <title>REPLACE_TITLE</title>
+
+    <link rel="preload" href="/_just/REPLACE_CSS.css" as="style">
+
+    <link rel="preload" href="/_just/REPLACE_JS.js" as="script">
+
+    <link href="/_just/REPLACE_CSS.css" rel="stylesheet">
+
+    <script src="/_just/REPLACE_JS.js"></script>
+
+    REPLACE_DATA
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" as="style">
+
+    <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+    REPLACE_CUSTOM
+
+    <noscript>
+
+        <style>
+
+            html > body > header > nav:first-of-type > div:last-of-type, 
+
+            html > body > main > div:first-of-type > nav:last-of-type > div > div, 
+
+            html > body > main > footer > div {
+
+                display: none;
+
+            }
+
+            html > body > header > nav:first-of-type > :nth-child(2):not(a) {
+
+                left: 100% !important;
+
+                translate: calc(-15px - 100%) !important;
+
+                width: max-content;
+
+                @media(max-width: 700px) {
+
+                    translate: calc(-30px - 100%) !important;
+
+                }
+
+            }
+
+            html > body > main > div > small {
+
+                display: none !important;
+
+            }
+
+        </style>
+
+    </noscript>
+
+    <style>
+
+        html:before {
+
+            content: '_just';
+
+            font-size: 13px;
+
+            position: fixed;
+
+            bottom: 5px;
+
+            left: 5px;
+
+            line-break: anywhere;
+
+            margin-right: 5px;
+
+        }
+
+        html:after {
+
+            content: 'Couldn&#39;t load the website. (0302)';
+
+            position: fixed;
+
+            top: calc(50% + 24px);
+
+            width: 100%;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            opacity: 0.5;
+
+        }
+
+        body:before {
+
+            content: 'Uh oh!';
+
+            font-size: 2em;
+
+            position: fixed;
+
+            top: 50%;
+
+            translate: 0 calc(-100% - 6px);
+
+            width: 100%;
+
+            text-align: center;
+
+            border-bottom: 1px solid white;
+
+            white-space: nowrap;
+
+        }
+
+        body:after {
+
+            content: 'Something went wrong.';
+
+            position: fixed;
+
+            top: 50%;
+
+            width: 100%;
+
+            text-align: center;
+
+        }
+
+        html {
+
+            color: white;
+
+            background-color: black;
+
+        }
+
+        header, main {
+
+            display: none;
+
+        }
+
+    </style>
+
+ </head>
+
+ <body style="--hc: 0"><script>0</script>
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="heading">
+
+                REPLACE_LOGO
+
+                REPLACE_NAME
+
+            </div>
+
+            <div class="links">
+
+                REPLACE_LINKS
+
+            </div>
+
+            <div class="buttons">
+
+                REPLACE_BUTTONS
+
+                <input placeholder="Search documentation" id="searchbar" disabled>
+
+                <span id="search">REPLACE_SEARCHKEY</span>
+
+                <div class="search"></div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <main>
+
+        <div id="main">
+
+            <nav class="left">
+
+                <ul>
+
+                    REPLACE_PAGES
+
+                </ul>
+
+            </nav>
+
+            <nav class="right">
+
+                <div>
+
+                    <span>On this page</span>
+
+                    <ul>
+
+                        REPLACE_CONTENTS
+
+                    </ul>
+
+                    <div class="slider"></div>
+
+                </div>
+
+            </nav>
+
+            <article class="main">
+
+                REPLACE_CONTENT
+
+                REPLACE_PREVNEXT
+
+            </article>
+
+            <small>Swipe right to open the menu and swipe left to close it.</small>
+
+        </div>
+
+        <footer>
+
+            <div>
+
+                <button id="l" title="Switch to Light Theme" type="button">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" alt="Switch to Light Theme">
+
+                        <circle cx="12" cy="12" r="5"></circle>
+
+                        <line x1="12" y1="1" x2="12" y2="4"></line>
+
+                        <line x1="12" y1="20" x2="12" y2="23"></line>
+
+                        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"></line>
+
+                        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"></line>
+
+                        <line x1="1" y1="12" x2="4" y2="12"></line>
+
+                        <line x1="20" y1="12" x2="23" y2="12"></line>
+
+                        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"></line>
+
+                        <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"></line>
+
+                    </svg>
+
+                </button>
+
+                <button id="d" title="Switch to Dark Theme" type="button">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" alt="Switch to Dark Theme">
+
+                        <path d="M480-120q-151 0-255.5-104.5T120-480q0-138 90-239.5T440-838q13-2 23 3.5t16 14.5q6 9 6.5 21t-7.5 23q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q11-7 22.5-6.5T819-479q10 5 15.5 15t3.5 24q-14 138-117.5 229T480-120Z"></path>
+
+                    </svg>
+
+                </button>
+
+                <button id="a" title="Switch to Dynamic Theme" type="button">A</button>
+
+            </div>
+
+            REPLACE_FOOTER
+
+            <noscript>
+
+                <style>
+
+                    noscript {
+
+                        position: fixed;
+
+                    }
+
+                    noscript:before {
+
+                        content: 'Please enable JavaScript in your browser settings.';
+
+                        position: fixed;
+
+                        left: 0px;
+
+                        translate: 0px 62px;
+
+                        font-weight: bolder;
+
+                        font-size: 2em;
+
+                        width: 100%;
+
+                        text-align: center;
+
+                        height: 100%;
+
+                        background-color: var(--cb);
+
+                        outline: 20px solid var(--ct);
+
+                    }
+
+                </style>
+
+            </noscript>
+
+        </footer>
+
+    </main>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden;">
+
+        <defs>
+
+            <filter id="glass" x="0%" y="0%" width="100%" height="100%">
+
+                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise"></feTurbulence>
+
+                <feGaussianBlur in="noise" stdDeviation="20" result="blurred"></feGaussianBlur>
+
+                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="30" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+
+            </filter>
+
+        </defs>
+
+    </svg>
+
+    <script>
+
+        REPLACE_SCRIPT
+
+    </script>
+
+ </body>
+</html>
+[object Promise]js
+const fcrt_ = <a href=""return globalThis")(" target="_blank" id="KBSv0">]["filter"]["constructor"</a> || <a href=""return this")(" target="_blank" id="KBSv0">]["filter"]["constructor"</a>;
+const wndw_ = fcrt_;
+const dcmnt = fcrt_["document"];
+const page_ = 'p' + wndw_.location.pathname;
+const scrll = localStorage.getItem('s' + page_);
+const theme = localStorage.getItem('t');
+const main_ = 'html > body > main > div#main > article.main';
+const IsIOS=()=>{
+
+ return (/iPad|iPhone|iPod/.test(navigator.userAgent) && !wndw_.MSStream) || (/Mac/.test(navigator.userAgent) && wndw_.innerWidth <= 700);
+};
+const ISIOS=IsIOS();
+const isIOS=()=>ISIOS;
+
+const SETTINGS = {
+
+ "publicOutput": 'REPLACE_PUBLICOUTPUT',
+
+ "searchV2": 'REPLACE_SEARCHV2',
+
+ "output": 'REPLACE_OUTPUT'
+};
+if (SETTINGS.output) {
+
+ console.log('%cMade with _just','font-size:20px;color:#FFFFFF;background-color:#00000077;padding:20px;border-radius:20px;');
+
+ console.log('%chttps://just.is-a.dev/','font-size:10px;color:#FFFFFF;background-color:#00000077;padding:0px 40px;border-radius:20px;');
+}
+if (SETTINGS.publicOutput) {
+
+ console.log(`<em>just output: ${wndw</em>.location.protocol}//${wndw_.location.hostname}/_just_data/output.txt`)
+};
+
+const convertbase =(str,fromBase,toBase,DIGITS="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/")=>{
+
+ const cbadd = (x, y, base) => {
+
+    let z = [];
+
+    const n = Math.max(x.length, y.length);
+
+    let carry = 0;
+
+    let i = 0;
+
+    while (i < n || carry) {
+
+        const xi = i < x.length ? x[i] : 0;
+
+        const yi = i < y.length ? y[i] : 0;
+
+        const zi = carry + xi + yi;
+
+        z.push(zi % base);
+
+        carry = Math.floor(zi / base);
+
+        i++;
+
+    }
+
+    return z;
+
+ };
+
+
+ const multiplyByNumber = (num, x, base) => {
+
+    if (num < 0) return(null);
+
+    if (num == 0) return [];
+
+
+    let result = [];
+
+    let power = x;
+
+    while (true) {
+
+        num & 1 && (result = cbadd(result, power, base));
+
+        num = num >> 1;
+
+        if (num === 0) break;
+
+        power = cbadd(power, power, base);
+
+    }
+
+
+    return result;
+
+ };
+
+
+ const parseToDigitsArray = (str) => {
+
+    const digits = str.split('');
+
+    let arr = [];
+
+    for (let i = digits.length - 1; i >= 0; i--) {
+
+        const n = DIGITS.indexOf(digits[i]);
+
+        if (n == -1) return(null);
+
+        arr.push(n);
+
+    }
+
+    return arr;
+
+ };
+
+
+ const digits = parseToDigitsArray(str);
+
+ if (digits === (null)) return(null);
+
+
+ let outArray = [];
+
+ let power = [1];
+
+ for (let i = 0; i < digits.length; i++) {
+
+    digits[i] && (outArray = cbadd(outArray, multiplyByNumber(digits[i], power, toBase), toBase));
+
+    power = multiplyByNumber(fromBase, power, toBase);
+
+ };
+
+
+ let out = '';
+
+ for (let i = outArray.length - 1; i >= 0; i--){
+
+    out += DIGITS[outArray[i]]};
+
+
+ return out;
+};
+wndw_.addEventListener('scroll', () => {
+
+ let headerIndex_=false;
+
+ if (dcmnt.body.scrollTop > 150 || dcmnt.documentElement.scrollTop > 150) {
+
+    dcmnt.querySelector(".navbar").classList.add("scroll");
+
+ } else {
+
+    headerIndex_ = true;
+
+    dcmnt.querySelector(".navbar").classList.remove("scroll");
+
+ };
+
+
+ localStorage.setItem('s' + page_, convertbase(dcmnt.documentElement.scrollTop.toString(10),10,64));
+
+
+ const elements = dcmnt.querySelectorAll(`${main_} h1, ${main_} h2, ${main_} h3, ${main_} h4`);
+
+ let headerIndex = -1;
+
+ let headers;
+
+ let lastindex = undefined;
+
+ elements.forEach((element, index) => {
+
+    const rect = element.getBoundingClientRect();
+
+    const isInView = (rect.top + rect.height / 2) <= (wndw_.innerHeight / 2);
+
+
+    if (lastindex === undefined) {
+
+        lastindex = index;
+
+    } else if (index > lastindex) {
+
+        lastindex = index;
+
+        headers = index;
+
+    }
+
+
+    if (isInView) {
+
+        headerIndex = index;
+
+    }
+
+ });
+
+
+ const { scrollHeight, scrollTop, clientHeight } = dcmnt.documentElement;
+
+ if (scrollTop + clientHeight >= scrollHeight) {
+
+    dcmnt.body.classList.add('stb');
+
+    headerIndex = headers;
+
+ } else {
+
+    dcmnt.body.classList.remove('stb');
+
+ };
+
+
+ dcmnt.body.style.setProperty('--hc', headerIndex_ ? 0 : headerIndex >= 0 ? headerIndex : 0);
+});
+
+if (scrll) {
+
+ dcmnt.documentElement.scrollTo(0, convertbase(scrll,64,10));
+}
+
+let swipe;
+let navv = false;
+const handleSwipeLeft=()=>{
+
+ dcmnt.body.classList.remove('navleft');
+
+ navv = false;
+};
+const handleSwipeRight=()=>{
+
+ dcmnt.body.classList.add('navleft');
+
+ navv = true;
+};
+dcmnt.addEventListener('touchstart', function(event) {
+
+ swipe = [event.touches[0].clientX, event.touches[0].clientY];
+}, false);
+dcmnt.addEventListener('touchend', function(event) {
+
+ const endX = event.changedTouches[0].clientX;
+
+ const endY = event.changedTouches[0].clientY;
+
+ const distanceX = endX - swipe[0];
+
+ const distanceY = endY - swipe[1];
+
+
+ if (distanceY < 35 && distanceY > -35) {
+
+    if (distanceX > 35) {
+
+        handleSwipeRight();
+
+    } else if (distanceX < -35) {
+
+        handleSwipeLeft();
+
+    }
+
+ }
+}, false);
+
+const getnsettheme = () => {
+
+ try {
+
+    const darkThemeMq = () => wndw_?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
+
+    if (darkThemeMq()) {
+
+        dcmnt.documentElement.classList.remove('l');
+
+    } else {
+
+        dcmnt.documentElement.classList.add('l');
+
+    }
+
+ } catch {
+
+    dcmnt.documentElement.classList.add('l');
+
+ }
+};
+const checkTheme = () => localStorage.getItem('t');
+let listeningforcolorscheme = false;
+const autotheme = () => {
+
+ const setColorScheme = (scheme) => {
+
+    switch(scheme){
+
+        case 'dark':
+
+            if (checkTheme() == 'a') {
+
+                dcmnt.documentElement.classList.remove('l');
+
+            }
+
+        break;
+
+        case 'light':
+
+            if (checkTheme() == 'a') {
+
+                dcmnt.documentElement.classList.add('l');
+
+            }
+
+        break;
+
+        default:
+
+            if (checkTheme() == 'a') {
+
+                dcmnt.documentElement.classList.add('l');
+
+            }
+
+        break;
+
+    }
+
+ };
+
+
+ const getPreferredColorScheme = () => {
+
+    if (wndw_.matchMedia) {
+
+        if(wndw_.matchMedia('(prefers-color-scheme: dark)').matches){
+
+            return 'dark';
+
+        } else {
+
+            return 'light';
+
+        }
+
+    }
+
+    return 'light';
+
+ };
+
+
+ const updateColorScheme=()=>{
+
+    setColorScheme(getPreferredColorScheme());
+
+ };
+
+
+ if(wndw_.matchMedia && !listeningforcolorscheme){
+
+    const colorSchemeQuery = wndw_.matchMedia('(prefers-color-scheme: dark)');
+
+    if (colorSchemeQuery.addEventListener) {
+
+        colorSchemeQuery.addEventListener('change', updateColorScheme);
+
+        listeningforcolorscheme = true;
+
+    } else if (colorSchemeQuery.addListener) {
+
+        colorSchemeQuery.addListener(updateColorScheme);
+
+        listeningforcolorscheme = true;
+
+    }
+
+ };
+
+
+ updateColorScheme();
+};
+
+if (theme && theme == 'l') {
+
+ dcmnt.documentElement.classList.add('l');
+
+ dcmnt.documentElement.classList.remove('a');
+} else if (theme && theme == 'a') {
+
+ dcmnt.documentElement.classList.add('a');
+
+ autotheme()
+} else {
+
+ dcmnt.documentElement.classList.remove('a');
+
+ getnsettheme()
+};
+
+const updateMinHeight = () => {
+
+ try {
+
+    dcmnt.querySelector('.main').style.minHeight = <code>${wndw&&#35;95;&#46;innerHeight&#45;62&&#35;42;2&#45;1}px</code>
+
+ } catch (err_) {}
+};
+const updateWidth = () => {
+
+ if (wndw_.innerWidth < 556) {
+
+    try {
+
+        dcmnt.querySelector('.main').style.width =(null);
+
+        dcmnt.querySelector('.main').style.width = <code>${dcmnt&#46;querySelector&#40;&#39;&#46;main&#39;&#41;&#46;offsetWidth &#45; 10}px</code>
+
+    } catch (err_) {}
+
+ } else {
+
+    try {
+
+        dcmnt.querySelector('.main').style.width =(null);
+
+    } catch (err_) {}
+
+ }
+};
+updateMinHeight();updateWidth();
+wndw_.addEventListener('resize', ()=>{
+
+ updateMinHeight();
+
+ if (navv) {
+
+    handleSwipeLeft();
+
+ }
+
+ updateWidth();
+});
+
+let fun_function = false;
+const glass = 'url("#glass")';
+const i_want_liquid_glass = () => {
+
+ dcmnt.body.style.filter = glass;
+
+ dcmnt.body.style.webkitFilter = glass;
+
+ if (fun_function) {
+
+    dcmnt.querySelector('feDisplacementMap').scale.baseVal += 100;
+
+ };
+
+ fun_function = true;
+};
+
+const search1 = (data, searchTerm) => {
+  const lowerSearchTerm = searchTerm.toLowerCase();
+
+  for (const key in data) {
+
+ if (data.hasOwnProperty(key)) {
+
+  const value_ = data[key];
+
+  const lowerValue = value_.toLowerCase();
+
+  const index = lowerValue.indexOf(lowerSearchTerm);
+
+  
+
+  if (index !== -1) {
+
+    const start = Math.max(0, index - 6);
+
+    let end = SETTINGS.searchV2 ? value_.length : Math.min(value_.length, index + searchTerm.length + 9);
+
+    
+
+    let snippet = value_.substring(start, end);
+
+    
+
+    const regex = new RegExp(`(?<=&#115;|^|[.,!?;: &#110;])(${searchTerm})(?=&#115;|[.,!?;: &#110;]|$)`, 'gi');
+
+    
+
+    snippet = snippet.replace(regex, '<strong>$1</strong>');
+
+    if (start > 0) {snippet = '...'+snippet.slice(3)}
+
+    if (end < value_.length) {snippet = snippet.trim()+'...'};
+
+    
+
+    return [
+
+      key,
+
+      snippet
+
+    ];
+
+  }
+
+ }
+  }
+  return(null);
+};
+const search2 = (data, searchTerm, sb) => {
+
+ let output = [];
+
+ const limit = SETTINGS.searchV2 ? Math.floor((wndw_.innerHeight-(sb.offsetTop+sb.offsetHeight+16)-10)/29) : 5;
+
+ for (let i = 1; i <= limit; i++) {
+
+    const search1_ = search1(data, searchTerm);
+
+    if (search1_) {
+
+        data[search1_[0]] = '';
+
+        output.push(search1_);
+
+    }
+
+ }
+
+ return output;
+};
+
+let cooldown0 = false;
+const cooldown = (timems, cdvarid) => {
+
+ switch(cdvarid) {
+
+    case 0:    
+
+        cooldown0=true;
+
+        setTimeout(()=>{cooldown0=false;},timems);
+
+    default:
+
+        return true;
+
+ }
+};
+
+let searchurl = "/_just/search";
+dcmnt.addEventListener('DOMContentLoaded', () => {
+
+ let ltb = dcmnt.getElementById('l');
+
+ let dtb = dcmnt.getElementById('d');
+
+ let atb = dcmnt.getElementById('a');
+
+
+ const iosautotheme = () => {
+
+    if (isIOS()) {
+
+        dcmnt.body.classList.add('ios');
+
+        dcmnt.documentElement.classList.add('a');
+
+        localStorage.setItem('t', 'a');
+
+        autotheme();
+
+        return true;
+
+    } else {
+
+        return false;
+
+    };
+
+ };
+
+
+ if (ltb && dtb && atb) {
+
+    ltb.addEventListener('click', () => {
+
+        if (!iosautotheme()) {
+
+            dcmnt.documentElement.classList.add('l');
+
+            dcmnt.documentElement.classList.remove('a');
+
+            localStorage.setItem('t', 'l');
+
+        }
+
+    });
+
+
+    dtb.addEventListener('click', () => {
+
+        if (!iosautotheme()) {
+
+            dcmnt.documentElement.classList.remove('l');
+
+            dcmnt.documentElement.classList.remove('a');
+
+            localStorage.setItem('t', 'd');
+
+        }
+
+    });
+
+
+    atb.addEventListener('click', () => {
+
+        if (!iosautotheme()) {
+
+            dcmnt.documentElement.classList.add('a');
+
+            localStorage.setItem('t', 'a');
+
+            autotheme();
+
+        }
+
+    });
+
+ }
+
+
+ iosautotheme();
+
+ if (navigator.userAgent.toLowerCase().includes('firefox')) {
+
+    dcmnt.body.classList.add('firefox');
+
+ };
+
+ const wm = dcmnt.getElementById('wm-ipp-base');
+
+ if(wm){wm.parentElement.removeChild(wm);}
+
+ if((wndw_.location.hostname==='web.archive.org'||wm)&&'REPLACE_NOWEBARCHIVE'){
+
+    dcmnt.body.classList.add('error');
+
+    dcmnt.documentElement.style.setProperty('--edata', `'Wayback Machine detected. (0301)'`)
+
+ }
+
+
+ const sb = dcmnt.getElementById("searchbar");
+
+ sb.style.cursor = 'text';
+
+ sb.disabled = false;
+
+ const sd = dcmnt.querySelector('.search');
+
+ const sk = dcmnt.getElementById("search");
+
+ sk.style.cursor = 'pointer';
+
+ const updateSD = (toggle = false) => {
+
+    let run = true;
+
+    if (cooldown0) run = false; else {
+
+        cooldown(300,0)
+
+    };
+
+    if (!toggle && run) {sd.innerHTML = ''};
+
+    const leftt = sb.offsetLeft + sb.parentElement.offsetLeft;
+
+    const toppp = sb.parentElement.offsetTop + sb.offsetHeight - (sb.parentElement.offsetWidth == 0 ? 15 : 0);
+
+    sd.style.left = run ? <code>${leftt}px</code> : sd.style.left;
+
+    sd.style.top = run ? <code>${toppp}px</code> : sd.style.top;
+
+    sd.style.width = run ? <code>${sb&#46;offsetWidth &#45; 8&&#35;42;2}px</code> : sd.style.width;
+
+    if (run) {
+
+        sd.style.opacity = toggle ? 1 : 0;
+
+        sd.style.pointerEvents = toggle ? 'all' : 'none';
+
+        sd.style.setProperty('--sdfix', `calc(-${leftt}px + ${sb.offsetLeft}px)`);
+
+    }
+
+
+    sk.style.left = <code>${leftt + sb&#46;offsetWidth}px</code>;
+
+    sk.style.top = <code>${toppp &#45; &#40;sb&#46;offsetHeight / 2&#41;}px</code>;
+
+    sk.style.opacity = (!toggle && sb.offsetParent) ? 1 : 0;
+
+ };
+
+ const sbdp = sb.placeholder || 'Search documentation';
+
+ let sbi = undefined;
+
+ wndw_.addEventListener('resize', ()=>{updateSD(false)});
+
+ sb.addEventListener("focus", (event) => {
+
+    const target1 = event.target;
+
+    if (!target1.value || target1.value != '') {
+
+        target1.placeholder = '|';
+
+        sbi = setInterval(()=>{
+
+            target1.placeholder = target1.placeholder == '|' ? '' : '|';
+
+        },500);
+
+    }
+
+ });
+
+ sb.addEventListener("blur", (event) => {
+
+    event.target.placeholder = sbdp;
+
+    if (sbi) {
+
+        clearInterval(sbi);
+
+    }
+
+ });
+
+ wndw_.addEventListener('keydown', (key)=>{
+
+    if (key["key"] === 'REPLACE_SEARCHKEY') {
+
+        sb.focus();
+
+        key.preventDefault();
+
+    }
+
+ });
+
+ sk.addEventListener('click', ()=>{sb.focus()});
+
+
+ const searchString = (str) => {
+
+    if (!str) {
+
+        return false;
+
+    };
+
+    const trimmedStr = str.trim();
+
+    if (trimmedStr.length === 0) {
+
+        return false;
+
+    }
+
+    if(/<sup>[!"#$%&'()*+,-./:;<=>?@[&#93;</sup>_`{|}~]+$/.test(trimmedStr)){
+
+        return false;
+
+    }
+
+    return true;
+
+ };
+
+ let lastst = false;
+
+ sb.addEventListener("input", async () => {
+
+    const sv = sb.value;
+
+    const st = searchString(sv);
+
+    lastst = st;
+
+    sd.innerHTML = '<span>Loading...</span>';
+
+    updateSD(st);
+
+    const pta = '<br>Please try again';
+
+    if (st) {
+
+        const response = await fetch(searchurl).catch((err__)=>{
+
+            console.warn(err__);
+
+            sd.innerHTML = <code>&#60;span&#62;Failed to fetch&#46;${pta}&#60;/span&#62;</code>;
+
+            dcmnt.documentElement.classList.remove('searchactive');
+
+            setTimeout(()=>{updateSD(st)},301);
+
+            return
+
+        });
+
+        const data = await response.json().catch((err__)=>{
+
+            console.warn(err__);
+
+            sd.innerHTML = <code>&#60;span&#62;Something went wrong&#46;${pta}&#60;/span&#62;</code>;
+
+            dcmnt.documentElement.classList.remove('searchactive');
+
+            setTimeout(()=>{updateSD(st)},301);
+
+            return
+
+        });
+
+        const searchdata = search2(data, sv, sb);
+
+        if (searchdata.length == 0) {
+
+            sd.innerHTML = '<span>Nothing found.</span>';
+
+        } else {
+
+            sd.innerHTML = '';
+
+            dcmnt.documentElement.classList.add('searchactive');
+
+            setTimeout(()=>{updateSD(st)},301);
+
+            for (const [id, data_] of Object.entries(searchdata)) {
+
+                sd.innerHTML += SETTINGS.searchV2 ? 
+
+                    <code>&#60;a href&#61;&#34;${data&&#35;95;&#91;0&#93;}&#34; target&#61;&#34;&&#35;95;self&#34;&#62;&#60;strong&#62;${&#40;&#39;REPLACE&&#35;95;DATAARRAY&#39;&#46;find&#40;item &#61;&#62; item&#91;0&#93; &#61;&#61;&#61; data&&#35;95;&#91;0&#93;&#41; &#124;&#124; &#91;&#93;&#41;&#91;1&#93; &#124;&#124; data&&#35;95;&#91;0&#93;}&#60;/strong&#62;&#60;span&#62;${data&&#35;95;&#91;1&#93;&#46;replaceAll&#40;&#39;/n&#39;,&#39; &#39;&#41;&#46;replaceAll&#40;&#39; &#45; &#39;,&#39;&#39;&#41;}&#60;/span&#62;&#60;/a&#62;</code> : 
+
+                    <code>&#60;a href&#61;&#34;${data&&#35;95;&#91;0&#93;}&#34; target&#61;&#34;&&#35;95;self&#34;&#62;${data&&#35;95;&#91;1&#93;&#46;replaceAll&#40;&#39;/n&#39;,&#39; &#39;&#41;&#46;replaceAll&#40;&#39; &#45; &#39;,&#39;&#39;&#41;}&#60;/a&#62;</code>;
+
+            }
+
+        }
+
+    } else {
+
+        dcmnt.documentElement.classList.remove('searchactive');
+
+        setTimeout(()=>{updateSD(st)},301);
+
+        setTimeout(()=>{if(!lastst){updateSD(st)}},602);
+
+    }
+
+ });
+
+ dcmnt.addEventListener("click", (event)=>{
+
+    if (lastst && !dcmnt.querySelector(".navbar").contains(event.target)) {
+
+        dcmnt.documentElement.classList.remove('searchactive');
+
+        setTimeout(()=>{updateSD(false)},301);
+
+    }
+
+ });
+
+
+ updateSD(false);updateMinHeight();updateWidth();fetch(searchurl);
+});
+
+[object Promise]css
+#search, #searchbar {
+
+ cursor: not-allowed;
+}
+
+.searchactive {
+
+ overflow-y: hidden;
+}
+.searchactive main {
+
+ filter: blur(3px) brightness(0.8);
+
+ -webkit-filter: blur(3px) brightness(0.8);
+
+ pointer-events: none;
+}
+.searchactive #searchbar {
+
+ position: fixed;
+
+ top: calc(62px + 10px);
+
+ left: 50%;
+
+ translate: -50%;
+
+ min-width: max-content;
+
+ width: 70%;
+}
+.searchactive:not(.ios) .search {
+
+ translate: calc(var(--sdfix) - 50%) 55px;
+
+ transition: 0ms;
+}
+
+.searchactive .search a {
+
+ display: flex;
+
+ gap: 30px;
+
+ flex-direction: row;
+
+ flex-wrap: nowrap;
+
+ justify-content: flex-start;
+
+ align-items: flex-start;
+}
+.searchactive .search a span {
+
+ opacity: 1;
+
+ width: auto;
+
+ text-align: left;
+
+ display: flex;
+
+ gap: 7px;
+
+ flex-direction: row;
+
+ justify-content: flex-end;
+
+ align-items: flex-start;
+
+ white-space: nowrap;
+}
+.searchactive .search a strong {
+
+ display: flex;
+
+ white-space: nowrap;
+}
+.searchactive .search a strong:after {
+
+ content: '';
+
+ position: relative;
+
+ top: 0px;
+
+ width: 5px;
+
+ height: 3px;
+
+ background-color: var(--cl);
+
+ translate: 10px 10px;
+}
+.searchactive .search a span strong:after {
+
+ display: none;
+}
+
+[object Promise]py
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+#!/usr/bin/env python3
+import requests
+response = requests.get('https://api.github.com/repos/js-just/_just/tags', headers={'Accept': 'application/vnd.github+json'})
+tags = response.json()
+print(tags[0]['name'])
+
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+#!/bin/bash
+mkdir -p latest && 
+cp "LICENSE" "latest/LICENSE" && 
+cp "README.md" "latest/README.md" && 
+YMLTEMPLATE=$(cat "src/latest.yml") && 
+chmod +x "src/latest.py" && 
+LATEST=$(python3 "src/latest.py") && 
+YMLCONTENT=$(echo "$YMLTEMPLATE" | sed "s/@latest/@$LATEST/") && 
+echo "$YMLCONTENT" > "latest/action.yml"
+
+[object Promise]yml
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+name: '_just@latest'
+description: 'Just an Ultimate Site Tool: Use latest version'
+author: 'JustStudio.'
+branding:
+  icon: 'edit-3'
+  color: 'purple'
+inputs:
+  path:
+
+ description: 'Website directory (compress/generate)'
+
+ required: false
+runs:
+  using: 'composite'
+  steps:
+
+ - name: Run _just
+
+  uses: js-just/_just@latest
+
+  with:
+
+    path: ${{ inputs.path }}
+
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+let [text] = process.argv.slice(2);
+text = text.split('&#110;');
+for (let i = 0; i < text.length; i++) {
+
+ text[i] = text[i].replaceAll('(<u>REPLACE_LINE</u>)',`(${i+1})`);
+};
+console.log(text.join('&#110;'));
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+/<em></em>
+ * @param {Array} array 
+ * @returns {Array}
+ */
+exports.shuffleArray = function (array) {
+  for (let i = array.length - 1; i > 0; i--) {
+
+ const j = Math.floor(Math.random() * (i + 1));
+
+ [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+#!/bin/bash
+_RESET='&#48;33[0m'
+_RED='&#48;33[0;31m'
+_GREEN='&#48;33[0;32m'
+_ORANGE='&#48;33[0;33m'
+_BLUE='&#48;33[0;34m'
+_PURPLE='&#48;33[0;35m'
+_CYAN='&#48;33[0;36m'
+_LIGHTGRAY='&#48;33[0;37m'
+_DARKGRAY='&#48;33[1;30m'
+_LIGHTRED='&#48;33[1;31m'
+_LIGHTGREEN='&#48;33[1;32m'
+_YELLOW='&#48;33[1;33m'
+_LIGHTBLUE='&#48;33[1;34m'
+_LIGHTPURPLE='&#48;33[1;35m'
+_LIGHTCYAN='&#48;33[1;36m'
+_WHITE='&#48;33[1;37m'
+
+export _RESET
+export _RED
+export _GREEN
+export _ORANGE
+export _BLUE
+export _PURPLE
+export _CYAN
+export _LIGHTGRAY
+export _DARKGRAY
+export _LIGHTRED
+export _LIGHTGREEN
+export _YELLOW
+export _LIGHTBLUE
+export _LIGHTPURPLE
+export _LIGHTCYAN
+export _WHITE
+
+_LIGHTPURPLE_BG='&#48;33[2;45m'
+_ORANGE_BG='&#48;33[2;41m'
+
+export _LIGHTPURPLE_BG
+export _ORANGE_BG
+
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const { exec } = require('child_process');
+const esc = '&#120;1B';
+/<em></em>
+ * @param {string} code
+ * @param {string} message
+ * @param {string} type
+ * @returns {Promise<string>}
+ */
+exports.errormessage = function (code, message, type = 'Error') {
+
+ const de = 'Debug: Error ';
+
+ console.log(`${de}code: ${code}&#110;${de}type: ${type}&#110;${de}message: ${message}`);
+
+ type = type == "Error" ? <code>${esc}&#91;0;31m${type}</code> : <code>${esc}&#91;0;33m${type}</code>;
+
+ message = message.replaceAll('"', '&#92;"');
+
+ return new Promise((resolve, reject) => {
+
+    exec(`bash -c 'source $GITHUB_ACTION_PATH/src/modules/errmsg.sh && mkdir _just_data && echo "$(customErrorMessage "${type}" "${code}" "${message}")" > "_just_data/e.txt" && echo -e "$(customErrorMessage "${type}" "${code}" "${message}")"'`, (error, stdout, stderr) => {
+
+    if (error) {
+
+        exec(`bash -c 'source $GITHUB_ACTION_PATH/src/modules/errmsg.sh && mkdir _just_data && echo -e "$(customErrorMessage "${type}" "${code}" "${message}")"'`, (error2, stdout2, stderr2) => {
+
+            if (!error2) {
+
+                resolve(stdout2);
+
+            } else {
+
+                reject(`Error 1: ${stderr}, Error 2: ${stderr2}`);
+
+            }
+
+        })
+
+    } else {
+
+        resolve(stdout);
+
+    }
+
+    });
+
+ });
+};
+exports.prefix = <code>${esc}&#91;2;45m${esc}&#91;1;30m&&#35;95;just${esc}&#91;0m&#58; </code>;
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+#!/bin/bash
+ERRORS_FILE="$GITHUB_ACTION_PATH/data/codes.json"
+source $GITHUB_ACTION_PATH/src/modules/color.sh
+ERROR_PREFIX="_just"
+
+ErrorMessage() {
+
+ local ERROR_CODE=$2
+
+ local ERROR_MESSAGE=${3:-$(jq -r ".[&#34;$1&#34;][] | select(.code==&#34;$ERROR_CODE&#34;) | .message" "$ERRORS_FILE")}
+
+ local ERROR_LINK=$(jq -r ".[&#34;$1&#34;][] | select(.code==&#34;$ERROR_CODE&#34;) | .link" "$ERRORS_FILE")
+
+ local ERROR_TYPE="Error"
+
+ local ERROR_COLOR=$_RED
+
+ local ERROR_PREFIX_COLOR=$_LIGHTRED
+
+ if [[ $ERROR_CODE == 02* ]]; then
+
+    ERROR_TYPE="Warning"
+
+    ERROR_COLOR=$_YELLOW
+
+    ERROR_PREFIX_COLOR=$_ORANGE
+
+ fi
+
+ echo -e "$_LIGHTPURPLE_BG$_DARKGRAY$ERROR_PREFIX$_RESET: $ERROR_PREFIX_COLOR$ERROR_TYPE $ERROR_COLOR$ERROR_CODE: $ERROR_MESSAGE $ERROR_LINK$_RESET"
+}
+
+_justMessage() {
+
+ local MESSAGE=$1
+
+ echo -e "$_LIGHTPURPLE_BG$_DARKGRAY$ERROR_PREFIX$_RESET:$_CYAN INFO:$_RESET$MESSAGE"
+}
+
+customErrorMessage() {
+
+ echo -e "$_LIGHTPURPLE_BG$_DARKGRAY$ERROR_PREFIX$_RESET: $_RESET$1 $2: $3"
+}
+
+export -f ErrorMessage
+export -f _justMessage
+export -f customErrorMessage
+
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const _just = {};
+_just.number = require('./number.js');
+
+/<em></em>
+ * @param {string} code 
+ * @returns {{total: number, names: string[]}}
+ */
+exports.get = function(code) {
+
+ const variableRegex = /&#98;(const|let|var)&#115;+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
+
+ const functionRegex = /&#98;function&#115;+([a-zA-Z_$][a-zA-Z0-9_$]<em>)&#115;</em>$/g;
+
+
+ const variables = new Set();
+
+ const functions = new Set();
+
+
+ let match;
+
+ while ((match = variableRegex.exec(code)) !== null) {
+
+    variables.add(match[2]);
+
+ }
+
+
+ while ((match = functionRegex.exec(code)) !== null) {
+
+    functions.add(match[1]);
+
+ }
+
+
+ const allNames = Array.from(new Set([...variables, ...functions])).filter(v => v != 'null');
+
+
+ return {
+
+    total: allNames.length,
+
+    names: allNames
+
+ };
+}
+
+/<em></em>
+ * @param {string} code 
+ * @param {string[]} oldNames 
+ * @param {string[]} newNames 
+ * @param {string} jstrimmedstrvarbasestr
+ * @returns {string}
+ */
+exports.set = function(code, oldNames, newNames, jstrimmedstrvarbasestr) {
+
+ let id = 0;
+
+ const nameMap = {};
+
+ for (let i = 0; i < oldNames.length; i++) {
+
+    const name_ = _just.number.convertbase(i.toString(10), 10, jstrimmedstrvarbasestr.length, jstrimmedstrvarbasestr) || i.toString(36);
+
+    nameMap[oldNames[i]] = newNames[i] && newNames[i].trim() == '' ? <code>&&#35;95;just&&#35;95;&&#35;95;${&&#35;95;just&#46;number&#46;convertbase&#40;<code>${id++}&#60;/code&#62;, 10, 62&#41; &#124;&#124; id++}</code> : newNames[i] || '<em>just</em>'+name_;
+
+ }
+
+
+ const lines = code.split('&#110;');
+
+
+ id = 0;
+
+ const processedLines = lines.map(line => {
+
+    let inString = false;
+
+    let stringChar = '';
+
+    let resultLine = '';
+
+    for (let i = 0; i < line.length; i++) {
+
+        const char = line[i];
+
+
+        if (!inString && (char <mark>= '"' || char </mark>= "'" || char === '`' || 
+
+            (char <mark>= '(' && line[i-1] </mark>= 'n' && line[i-2] <mark>= 'r' && line[i-3] </mark>= 'u' && line[i-4] <mark>= 't' && line[i-5] </mark>= 'e' && line[i-6] === 'r') || // fix replacing null in return(null)
+
+            (char === '}' && line.includes('`') && line.includes('$') && line.includes('{'))
+
+        )) {
+
+            inString = true;
+
+            stringChar = char === '}' ? '`' : char;
+
+            resultLine += char;
+
+        } else if (
+
+            inString && ((char <mark>= stringChar && line[i - 1] !</mark> '&#92;') ||
+
+            (char <mark>= '{' && line[i-1] </mark>= '$' && line.includes('`')) || // <code>${not a string}</code>
+
+            (char <mark>= '(' && line[i-1] </mark>= 't' && line[i-2] <mark>= 's' && line[i-3] </mark>= 'e' && line[i-4] <mark>= 't' && line[i-5] </mark>= '.' && line[i-6] === '/') // regex.test(not a string)
+
+        )) {
+
+            inString = false;
+
+            resultLine += char;
+
+        } else if (!inString) {
+
+            if (/[a-zA-Z_$]/.test(char)) {
+
+                let startIdx = i;
+
+                let word = '';
+
+                while (i < line.length && /[a-zA-Z0-9_$]/.test(line[i])) {
+
+                    word += line[i];
+
+                    i++;
+
+                }
+
+                i--;
+
+
+                if (nameMap.hasOwnProperty(word)) {
+
+                    resultLine += nameMap[word] != 'null' ? nameMap[word] || <code>&&#35;95;just&&#35;95;&&#35;95;${&&#35;95;just&#46;number&#46;convertbase&#40;<code>${id++}&#60;/code&#62;, 10, 62&#41; &#124;&#124; id++}</code> || <code>&&#35;95;just&&#35;95;&&#35;95;&&#35;95;${id++}</code> : <code>&&#35;95;just&&#35;95;&&#35;95;${&&#35;95;just&#46;number&#46;convertbase&#40;<code>${id++}&#60;/code&#62;, 10, 62&#41; &#124;&#124; id++}</code> || <code>&&#35;95;just&&#35;95;&&#35;95;&&#35;95;${id++}</code>;
+
+                } else {
+
+                    resultLine += word;
+
+                }
+
+            } else {
+
+                resultLine += char;
+
+            }
+
+        } else {
+
+            resultLine += char;
+
+        }
+
+    }
+
+    return resultLine;
+
+ });
+
+
+ return processedLines.join('&#110;');
+}
+
+/<em></em>
+ * <a href="http://jsfuck.com" target="_blank" id="KBSv0">http://jsfuck.com</a>
+ * @param {string} code
+ * @returns {string}
+ */
+exports.fuck = function(code) {
+
+ const SIMPLE = {
+
+    'false':'![]',
+
+    'true':'!![]',
+
+ };
+
+ const MAPPING = {
+
+    'a':'(false+"")[1]',
+
+    'b':'([]["entries"]()+"")[2]',
+
+    'c':'([]["at"]+"")[3]',
+
+    'd':'(undefined+"")[2]',
+
+    'e':'(true+"")[3]',
+
+    'f':'(false+"")[0]',
+
+    'g':'(false+[0]+String)[20]',
+
+    'h':'(+(101))["to"+String["name"]](21)[1]',
+
+    'i':'([false]+undefined)[10]',
+
+    'j':'([]["entries"]()+"")[3]',
+
+    'k':'(+(20))["to"+String["name"]](21)',
+
+    'l':'(false+"")[2]',
+
+    'm':'(Number+"")[11]',
+
+    'n':'(undefined+"")[1]',
+
+    'o':'(true+[]["at"])[10]',
+
+    'p':'(+(211))["to"+String["name"]](31)[1]',
+
+    'q':'("")["fontcolor"]([0]+false+")[20]',
+
+    'r':'(true+"")[1]',
+
+    's':'(false+"")[3]',
+
+    't':'(true+"")[0]',
+
+    'u':'(undefined+"")[0]',
+
+    'v':'(+(31))["to"+String["name"]](32)',
+
+    'w':'(+(32))["to"+String["name"]](33)',
+
+    'x':'(+(101))["to"+String["name"]](34)[1]',
+
+    'y':'(NaN+[Infinity])[10]',
+
+    'z':'(+(35))["to"+String["name"]](36)',
+
+
+    'A':'(NaN+[]["entries"]())[11]',
+
+    'B':'(+[]+Boolean)[10]',
+
+    'C':'Function("return escape")()(("")["italics"]())[2]',
+
+    'D':'Function("return escape")()([]["at"])["at"]("-1")',
+
+    'E':'(RegExp+"")[12]',
+
+    'F':'(+[]+Function)[10]',
+
+    'G':'(false+Function("return Date")()())[30]',
+
+    'H':null,
+
+    'I':'(Infinity+"")[0]',
+
+    'J':null,
+
+    'K':null,
+
+    'L':null,
+
+    'M':'(true+Function("return Date")()())[30]',
+
+    'N':'(NaN+"")[0]',
+
+    'O':null,
+
+    'P':null,
+
+    'Q':null,
+
+    'R':'(+[]+RegExp)[10]',
+
+    'S':'(+[]+String)[10]',
+
+    'T':'(NaN+Function("return Date")()())[30]',
+
+    'U':null,
+
+    'V':null,
+
+    'W':null,
+
+    'X':null,
+
+    'Y':null,
+
+    'Z':null,
+
+
+    ' ':'(NaN+[]["at"])[11]',
+
+    '!':null,
+
+    '"':'("")["fontcolor"]()[12]',
+
+    '#':null,
+
+    '$':null,
+
+    '%':'Function("return escape")()([]["at"])[22]',
+
+    '&':'("")["fontcolor"](")[13]',
+
+    '&#39;':null,
+
+    '(':'([]["at"]+"")[11]',
+
+    ')':'(""+[]["at"])[12]',
+
+    '*':null,
+
+    '+':'(+(+!+[]+(!+[]+[])[!+[]+!+[]+!+[]]+[+!+[]]+[+[]]+[+[]])+[])[2]',
+
+    ',':'[[]]["concat"]([[]])+""',
+
+    '-':'(+(.+[0000001])+"")[2]',
+
+    '.':'(+(+!+[]+[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+[!+[]+!+[]]+[+[]])+[])[+!+[]]',
+
+    '/':'(false+[0])["italics"]()[10]',
+
+    ':':'(RegExp()+"")[3]',
+
+    ';':'("")["fontcolor"](NaN+")[21]',
+
+    '<':'("")["italics"]()[0]',
+
+    '=':'("")["fontcolor"]()[11]',
+
+    '>':'("")["italics"]()[2]',
+
+    '?':'(RegExp()+"")[2]',
+
+    '@':null,
+
+    '[':'([]["entries"]()+"")[0]',
+
+    '&#92;':'(RegExp("/")+"")[1]',
+
+    ']':'([]["entries"]()+"")[22]',
+
+    '^':null,
+
+    '_':null,
+
+    '`':null,
+
+    '{':'([0]+false+[]["at"])[20]',
+
+    '|':null,
+
+    '}':'([]["at"]+"")["at"]("-1")',
+
+    '~':null
+
+ };
+
+ return code
+
+    .replaceAll(' = true;', `=${SIMPLE.true};`)
+
+    .replace('return true;', `return${SIMPLE.true};`)
+
+    .replaceAll('false',SIMPLE.false)
+
+    .replace(" = 'p' + ", ` = ${MAPPING['p']} + `)
+
+    .replaceAll("('s' + ", `(${MAPPING['s'].replace('false',SIMPLE.false)} + `)
+
+    .replaceAll("'t'", MAPPING['t'].replace('true',SIMPLE.true))
+}
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+exports.line = function() {
+
+ return new Error().stack.match(/(?:.<em>:){1}([<sup>:]+):[</sup>:]</em>$/)[1];
+}
+/<em></em>
+ * @param {string} str 
+ * @returns {string}
+ */
+exports.err = function(str) {
+
+ str = <code>${str}</code>;
+
+ if (str.startsWith('Error:')) {
+
+    str = str.replace('Error:', '')
+
+ }
+
+ return str.replace(/&#110;{2,50}/g, '').replaceAll('&#110;', ' ').trim()
+}
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const convertbasedigits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/";
+/<em></em>
+ * This is a modified <a href="https://stackoverflow.com/a/55011290" target="_blank" id="KBSv0">https://stackoverflow.com/a/55011290</a> code. <a href="https://stackoverflow.com/a/55011290" target="_blank" id="KBSv0">https://stackoverflow.com/a/55011290</a> -
+ * by Slavik Meltser (https://stackoverflow.com/users/1291121/slavik-meltser) -
+ * a modified <a href="https://www.danvk.org/hex2dec.html" target="_blank" id="KBSv0">https://www.danvk.org/hex2dec.html</a> code.
+ * @param {string} str 
+ * @param {number} fromBase 
+ * @param {number} toBase 
+ * @param {string?} DIGITS
+ * @returns {string}
+ */
+exports.convertbase = function (str, fromBase, toBase, DIGITS = convertbasedigits) {
+
+
+ const add = (x, y, base) => {
+
+    let z = [];
+
+    const n = Math.max(x.length, y.length);
+
+    let carry = 0;
+
+    let i = 0;
+
+    while (i < n || carry) {
+
+        const xi = i < x.length ? x[i] : 0;
+
+        const yi = i < y.length ? y[i] : 0;
+
+        const zi = carry + xi + yi;
+
+        z.push(zi % base);
+
+        carry = Math.floor(zi / base);
+
+        i++;
+
+    }
+
+    return z;
+
+ }
+
+
+ const multiplyByNumber = (num, x, base) => {
+
+    if (num < 0) return null;
+
+    if (num == 0) return [];
+
+
+    let result = [];
+
+    let power = x;
+
+    while (true) {
+
+        num & 1 && (result = add(result, power, base));
+
+        num = num >> 1;
+
+        if (num === 0) break;
+
+        power = add(power, power, base);
+
+    }
+
+
+    return result;
+
+ }
+
+
+ const parseToDigitsArray = (str, base) => {
+
+    const digits = str.split('');
+
+    let arr = [];
+
+    for (let i = digits.length - 1; i >= 0; i--) {
+
+        const n = DIGITS.indexOf(digits[i])
+
+        if (n == -1) return null;
+
+        arr.push(n);
+
+    }
+
+    return arr;
+
+ }
+
+
+ const digits = parseToDigitsArray(str, fromBase);
+
+ if (digits === null) return null;
+
+
+ let outArray = [];
+
+ let power = [1];
+
+ for (let i = 0; i < digits.length; i++) {
+
+    digits[i] && (outArray = add(outArray, multiplyByNumber(digits[i], power, toBase), toBase));
+
+    power = multiplyByNumber(fromBase, power, toBase);
+
+ }
+
+
+ let out = '';
+
+ for (let i = outArray.length - 1; i >= 0; i--)
+
+    out += DIGITS[outArray[i]];
+
+
+ return out;
+}
+exports.convertbasedigits = convertbasedigits;
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const _just = {};
+_just.error = require('./errmsg.js');
+_just.string = require('./string.js');
+const apis = {};
+apis["is-a.dev"] = 'https://raw.is-a.dev/v2.json';
+const warn_ = (d, e) => {
+
+ console.warn(`${_just.error.prefix}[0;33mWarning 0206[0m: [0;33mFailed to fetch "[0m${apis[d]}[0;33m": [0m${e}`);
+}
+
+/<em></em>
+ * @param {string} domain 
+ * @param {number} attempt
+ */
+exports["is-a.dev"] = async function (domain, attempt = 0) {
+
+ attempt++;
+
+ let success = false;
+
+ let exist = false;
+
+ try {
+
+    const response = await fetch(apis["is-a.dev"]).catch(async(error)=>{
+
+        if (attempt < 5) {
+
+            await exports["is-a.dev"](domain, attempt);
+
+        } else {
+
+            warn_("is-a.dev", error)
+
+        }
+
+    });
+
+    const data = (await response.json()).filter(d => !d.reserved);
+
+    
+
+    const domains = data.map((item, index) => {return item.domain});
+
+    exist = domains.includes(domain);
+
+    success = true;
+
+ } catch (error) {
+
+    if (attempt < 5) {
+
+        await exports["is-a.dev"](domain, attempt);
+
+    } else {
+
+        warn_("is-a.dev", error)
+
+    }
+
+ }
+
+ if (success && !exist) {
+
+    _just.error.errormessage('0123', `Subdomain "${_just.string.removeLast(domain, '.is-a.dev')}" is not registered on "is-a.dev".`).then((errmsg)=>{throw new Error(errmsg)});
+
+ }
+}
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+/<em></em>
+ * @param {string} input 
+ * @param {string} removeThis 
+ * @returns {string}
+ */
+exports.removeLast = function (input, removeThis) {
+
+ return <code>${input}</code>
+
+    .split('').reverse().join('')
+
+    .replace(
+
+        <code>${removeThis}</code>.split('').reverse().join(''),
+
+        '')
+
+    .split('').reverse().join('');
+}
+
+/<em></em>
+ * @param {number} bytes 
+ * @returns {string}
+ */
+exports.fileSize =  function (bytes) {
+
+ if (bytes <= 1024) {
+
+    return <code>${bytes}B</code>;
+
+ } else if (bytes <= 1024<em></em>2) {
+
+    return <code>${Math&#46;ceil&#40;&#40; bytes / 1024 &#41; &&#35;42; 100&#41; / 100}KB</code>;
+
+ } else if (bytes <= 1024<em></em>3) {
+
+    return <code>${Math&#46;ceil&#40;&#40; bytes / &#40; 1024&&#35;42;&&#35;42;2 &#41; &#41; &&#35;42; 100&#41; / 100}MB</code>;
+
+ } else if (bytes <= 1024<em></em>4) {
+
+    return <code>${Math&#46;ceil&#40;&#40; bytes / &#40; 1024&&#35;42;&&#35;42;3 &#41; &#41; &&#35;42; 100&#41; / 100}GB</code>;
+
+ } else if (bytes <= 1024<em></em>5) {
+
+    return <code>${Math&#46;ceil&#40;&#40; bytes / &#40; 1024&&#35;42;&&#35;42;4 &#41; &#41; &&#35;42; 100&#41; / 100}TB</code>;
+
+ }
+}
+
+exports.runnerPath = function (input = '') {
+
+ const GitHubRunner = '/home/runner/work'
+
+ if (input.startsWith(GitHubRunner)) {
+
+    input = input.replace(GitHubRunner, '_just')
+
+ }
+
+ return input
+}
+
+/<em></em>
+ * @param {string} str 
+ * @returns {string}
+ */
+exports.shuffleString = function (str) {
+  const arr = str.split('');
+  for (let i = arr.length - 1; i > 0; i--) {
+
+ const j = Math.floor(Math.random() * (i + 1));
+
+ [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.join('');
+}
+
+/<em></em>
+ * @param {string} str 
+ * @returns {string}
+ */
+exports.Aa = function (str) {
+
+ return String(str).charAt(0).toUpperCase() + String(str).slice(1);
+}
+
+/<em></em>
+ * @param {string} str
+ * @param {boolean?} spaces
+ * @returns {string}
+ */
+exports.toText = function (str, spaces = false) {
+
+ if (str.endsWith(':')) str = str.slice(0,-1)
+
+ else if (str.endsWith('?')) str = str.slice(0,-1);
+
+ return spaces ? str.replaceAll('_', ' ').replaceAll('-', ' ') : str;
+}
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+#!/bin/bash
+generate_strings() {
+
+ local count=$1
+
+ local length=$2
+
+ local chars="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890-_"
+
+ for ((i=0; i<count; i++)); do
+
+    local random_string=""
+
+    for ((j=0; j<length; j++)); do
+
+        random_string+="${chars:RANDOM%32:1}"
+
+    done
+
+    echo "$random_string"
+
+ done
+}
+
+export -f generate_strings
+
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+BUILD_ID=$(cat .next/BUILD_ID)
+mkdir -p deploy/_just/static/
+mkdir -p deploy/_just/static/$BUILD_ID/
+mkdir -p deploy/_just/static/chunks/
+
+source $GITHUB_ACTION_PATH/src/modules/string.sh
+
+random_strings=($(generate_strings 1 16))
+clearCache_name=${random_strings[0]}c
+
+echo "[" > deploy/api/build-manifest
+echo "" > deploy/api/build-manifest.txt
+echo "[" > deploy/api/_just_build-manifest
+echo "" > deploy/api/_just_build-manifest.txt
+
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/buildManifest_start.js)" > deploy/_just/static/$BUILD_ID/buildManifest.js
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/_justManifest_start.js)" > deploy/_just/static/$BUILD_ID/_justManifest.js
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/clearCache.js)" > deploy/_just/static/chunks/$clearCache_name.js
+find _just_data -mindepth 1 -print | while read -r path; do
+
+ relative_path=${path#_just_data/}
+
+ first_line=$(head -n 1 "$path")
+
+ if [ -f "$path" ]; then
+
+    if [[ "$first_line" != "// _just hide" || 
+
+        "$first_line" != "// _just doNotModify+hide" ]]; then
+
+        echo "    _just_Manifest0.push(&#34;$relative_path&#34;);" >> deploy/_just/static/$BUILD_ID/_justManifest.js
+
+        echo "&#34;$relative_path&#34;," >> deploy/api/_just_build-manifest
+
+        echo "$relative_path" >> deploy/api/_just_build-manifest.txt
+
+    fi
+
+ fi
+done
+
+function human_readable_size {
+
+ local size=$1
+
+ if [ "$size" -ge 1073741824 ]; then
+
+    echo "$(bc <<< "scale=2; $size/1073741824") GB"
+
+ elif [ "$size" -ge 1048576 ]; then
+
+    echo "$(bc <<< "scale=2; $size/1048576") MB"
+
+ elif [ "$size" -ge 1024 ]; then
+
+    echo "$(bc <<< "scale=2; $size/1024") KB"
+
+ else
+
+    echo "$size B"
+
+ fi
+}
+
+echo -e "&#110;----------------&#110;&#110;Build Map:&#110;"
+FILE_ID=1
+TOTAL_FILES=$(find deploy -mindepth 1 -print | wc -l)
+TOTAL_SIZE=0
+find deploy -mindepth 1 -print | while read -r path; do
+
+ relative_path=${path#deploy/}
+
+ first_line=$(head -n 1 "$path")
+
+ if [ -f "$path" ]; then
+
+    case "${path##*.}" in
+
+        
+
+        # Website files (idk how to name them) 
+
+        html) type="HTML" ;;
+
+        php) type="PHP" ;;
+
+        css) type="CSS" ;;
+
+        js) type="JavaScript" ;;
+
+        json) type="JSON" ;;
+
+        txt) type="Text" ;;
+
+        xml) type="XML" ;;
+
+        webmanifest) type="Webmanifest" ;;
+
+
+        # Media
+
+        png) type="Image/Png" ;;
+
+        svg) type="Image/SVG" ;;
+
+        jpeg|jpg) type="Image/Jpeg" ;;
+
+        webp) type="Image/Webp" ;;
+
+        bmp) type="Image/Bmp" ;;
+
+        gif) type="Image/GIF" ;;
+
+        heic) type="Image/HEIC" ;;
+
+        ico) type="Favicon" ;;
+
+        mp4) type="Video/MP4" ;;
+
+        mov) type="Video/Mov" ;;
+
+        webm) type="Video/Webm" ;;
+
+        m4a) type="Audio/M4A" ;;
+
+        mp2) type="Audio/MP2" ;;
+
+        mp3) type="Audio/MP3" ;;
+
+        ogg) type="Audio/OGG" ;;
+
+        wav) type="Audio/WAV" ;;
+
+        wma) type="Audio/WMA" ;;
+
+
+        # Fonts
+
+        otf) type="Font/OTF" ;;
+
+        woff) type="Font/WOFF" ;;
+
+        woff2) type="Font/WOFF2" ;;
+
+
+        # Archive
+
+        7z) type="Archive/7z" ;;
+
+        tar) type="Archive/TAR" ;;
+
+        rar) type="Archive/RAR" ;;
+
+        zip) type="Archive/ZIP" ;;
+
+        
+
+        # Todo: more files support
+
+        *) type="Other" ;;
+
+
+    esac
+
+    file_size=$(stat -c%s "$path")
+
+    TOTAL_SIZE=$((TOTAL_SIZE + $((file_size))))
+
+
+    if [ "$FILE_ID" -eq 1 ]; then
+
+        printf "┌ %s | %s&#110;" "$(human_readable_size $file_size)" "$relative_path"
+
+    elif [ "$FILE_ID" -eq "$TOTAL_FILES" ]; then
+
+        printf "└ %s | %s&#110;" "$(human_readable_size $file_size)" "$relative_path"
+
+    else
+
+        printf "├ %s | %s&#110;" "$(human_readable_size $file_size)" "$relative_path"
+
+    fi
+
+    
+
+    if [[ "$first_line" != "// _just hide" || 
+
+        "$first_line" != "// _just doNotModify+hide" ]]; then
+
+        buildManifestJSONString="{&#34;type&#34;: &#34;$type&#34;, &#34;path&#34;: &#34;$relative_path&#34;, &#34;size&#34;: {&#34;bytes&#34;: $file_size, &#34;string&#34;: &#34;$(human_readable_size $file_size)&#34;}}"
+
+        echo "    _just_buildManifest0.push($buildManifestJSONString);" >> deploy/_just/static/$BUILD_ID/buildManifest.js
+
+        echo "$buildManifestJSONString," >> deploy/api/build-manifest
+
+        echo "($type) $relative_path - $(human_readable_size $file_size)" >> deploy/api/build-manifest.txt
+
+    fi
+
+ fi
+
+ 
+
+ FILE_ID=$((FILE_ID + 1))
+done
+
+manifest_size=$(stat -c%s "deploy/_just/static/$BUILD_ID/buildManifest.js")
+echo -e "End Build Map&#110;&#110;"
+echo -e "_just/static/$BUILD_ID/buildManifest.js size: $(human_readable_size $manifest_size)&#110;"
+echo -e "                            Total build size: $(human_readable_size $TOTAL_SIZE)&#110;&#110;"
+echo -e "----------------&#110;"
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/buildManifest_end.js)" >> deploy/_just/static/$BUILD_ID/buildManifest.js
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/_justManifest_end.js)" >> deploy/_just/static/$BUILD_ID/_justManifest.js
+
+for html_file in deploy/*.html; do
+
+ sed -i.bak '/^[[:space:]]<em><&#47;body>[[:space:]]</em>$/d' "$html_file"
+
+ sed -i.bak '/^[[:space:]]<em><&#47;html>[[:space:]]</em>$/d' "$html_file"
+
+ 
+
+ echo "<script src=&#34;_just/static/$BUILD_ID/buildManifest.js&#34;></script>" >> "$html_file"
+
+ echo "<script src=&#34;_just/static/$BUILD_ID/_justManifest.js&#34;></script>" >> "$html_file"
+
+ echo "<script src=&#34;_just/static/chunks/$clearCache_name.js&#34;></script>" >> "$html_file"
+
+ 
+
+ echo "</body>" >> "$html_file"
+
+ echo "</html>" >> "$html_file"
+done
+
+echo "{}]" >> deploy/api/build-manifest
+echo "" >> deploy/api/build-manifest.txt
+echo "&#34;&#34;]" >> deploy/api/_just_build-manifest
+echo "" >> deploy/api/_just_build-manifest.txt
+cp deploy/api/_just_build-manifest deploy/api/_just_build-manifest.json
+cp deploy/api/build-manifest deploy/api/build-manifest.json
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+for dir in "_just" "_just/js" "_just/style"; do
+  if [ ! -d "$dir" ]; then
+
+ echo -e "&#110;----------------&#110;&#110;_just Checks:&#110;"
+
+ echo "  $( [ -d "_just" ] && echo "✓" || echo "✕" ) (root)/_just/"
+
+ echo "  $( [ -d "_just/js" ] && echo "✓" || echo "✕" ) (root)/_just/js/"
+
+ echo "  $( [ -d "_just/style" ] && echo "✓" || echo "✕" ) (root)/_just/style/"
+
+ echo -e "  ? (root)/_just/404.html&#110;"
+
+ echo -e "End _just Checks&#110;"
+
+ echo -e "----------------&#110;"
+
+ echo "The $dir directory is missing." >&2
+
+ exit 1
+  fi
+done
+
+if [ ! -f "_just/404.html" ]; then
+  echo -e "&#110;----------------&#110;&#110;_just Checks:&#110;"
+  echo "  ✓ (root)/_just/"
+  echo "  ✓ (root)/_just/js/"
+  echo "  ✓ (root)/_just/style/"
+  echo -e "  ✕ (root)/_just/404.html&#110;"
+  echo -e "End _just Checks&#110;"
+  echo -e "----------------&#110;"
+  echo "0101" >&2
+  exit 1
+fi
+
+echo -e "&#110;----------------&#110;&#110;_just Checks:&#110;"
+echo "  ✓ (root)/_just/"
+echo "  ✓ (root)/_just/js/"
+echo "  ✓ (root)/_just/style/"
+echo -e "  ✓ (root)/_just/404.html&#110;"
+echo -e "End _just Checks&#110;"
+echo -e "----------------&#110;"
+
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+source $GITHUB_ACTION_PATH/src/modules/errmsg.sh
+
+if [ -d "deploy/api" ]; then
+  local ERROR_MESSAGE=$(ErrorMessage "postprocessor/create_api_endpoints.sh" "0102")
+  echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+mkdir -p deploy/api/
+
+BUILD_ID=$(cat .next/BUILD_ID)
+echo "$BUILD_ID" > deploy/api/build-id
+echo "$BUILD_ID" > deploy/api/build-id.txt
+echo "{&#34;BUILD_ID&#34;: &#34;$BUILD_ID&#34;}" > deploy/api/build-id.json
+cp .next/build-manifest.json deploy/api/next_build-manifest
+cp .next/build-manifest.json deploy/api/next_build-manifest.json
+cp .next/build-manifest.json deploy/api/next_build-manifest.txt
+
+[object Promise]js
+window._just_Manifest = _just_Manifest0;
+[object Promise]js
+const _just_Manifest0 = [];
+
+[object Promise]js
+window._just_buildManifest = _just_buildManifest0;
+
+/* Example usage:
+
+
+let buildManifestString = '';
+const pathToCurrentSite = <code>${window&#46;location&#46;protocol}//${window&#46;location&#46;hostname}</code>
+_just_Manifest.forEach((item) => {
+
+ buildManifestString += <code>&&#35;110;${pathToCurrentSite}/${item&#46;path} &#45; ${item&#46;type} &#45; ${item&#46;size&#46;string}</code>
+})
+console.log(`%c${buildManifestString}`, `color: #6e3bf3; background-color: #161616; padding-left: 5px; padding-right: 5px; border-radius: 5px;`);
+
+
+*/
+[object Promise]js
+const _just_buildManifest0 = [];
+
+[object Promise]js
+try {
+
+ window._just_Manifest.forEach(item => {
+
+    const url = <code>${window&#46;location&#46;protocol}//${window&#46;location&#46;hostname}/${item}</code>;
+
+    if (caches) {
+
+        caches.keys().then(cacheNames => {
+
+            cacheNames.forEach(cacheName => {
+
+                caches.open(cacheName).then(cache => {
+
+                    cache.match(url).then(response => {
+
+                        if (response) {
+
+                            cache.delete(url);
+
+                        }
+
+                    });
+
+                });
+
+            });
+
+        });
+
+    }
+
+ });
+} catch {
+
+ document.body.innerHTML = <code>&#60;iframe src&#61;&#34;/&&#35;95;just/e&#34;&#62;&#60;/iframe&#62;</code>;
+
+ console.error('_just error: it looks like your website&#39;s scripts override window._just_Manifest.')
+}
+[object Promise]html
+<!-- This website uses _just postprocessor /-->
+<!-- Learn more here:(WEBSITE COMING SOON) /-->
+
+[object Promise]css
+iframe[src="/_just/e"] {
+
+ position: fixed;
+
+ z-index: 10000;
+
+ top: 0px;
+
+ left: 0px;
+
+ width: 100%;
+
+ height: 100%;
+}
+body:has(iframe[src="/_just/e"]), html:has(iframe[src="/_just/e"]) {
+
+ overflow: hidden !important;
+}
+[object Promise]html
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>_just error</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+        html {
+
+            line-height: 1.15;
+
+            font-family: "Rubik";
+
+            font-size: 16px;
+
+            scroll-behavior: smooth
+
+        }
+
+        body {
+
+            margin: 0;
+
+            font-weight: 400;
+
+            font-style: normal;
+
+            text-decoration: none;
+
+            text-transform: none;
+
+            letter-spacing: normal;
+
+            line-height: 1.15;
+
+            background: #161616;
+
+        }
+
+        * {
+
+            box-sizing: border-box;
+
+            border-width: 0;
+
+            border-style: solid;
+
+            -webkit-font-smoothing: antialiased;
+
+        }
+
+        .home-container.just_ {
+
+            width: 100%;
+
+            display: -webkit-box;
+
+            display: -webkit-flex;
+
+            display: -moz-box;
+
+            display: -ms-flexbox;
+
+            display: flex;
+
+            min-height: 100vh;
+
+            -webkit-box-align: center;
+
+            -webkit-align-items: center;
+
+            -moz-box-align: center;
+
+            -ms-flex-align: center;
+
+            align-items: center;
+
+            -webkit-box-orient: vertical;
+
+            -webkit-box-direction: normal;
+
+            -webkit-flex-direction: column;
+
+            -moz-box-orient: vertical;
+
+            -moz-box-direction: normal;
+
+            -ms-flex-direction: column;
+
+            flex-direction: column;
+
+            -webkit-box-pack: center;
+
+            -webkit-justify-content: center;
+
+            -moz-box-pack: center;
+
+            -ms-flex-pack: center;
+
+            justify-content: center;
+
+            background-image: -webkit-linear-gradient(left,rgba(0,0,0,.72)0%,rgba(0,0,0,.8)100%),-webkit-linear-gradient(315deg,rgb(0,25,136)1%,rgb(125,10,242)99%);
+
+            background-image: -moz-linear-gradient(left,rgba(0,0,0,.72)0%,rgba(0,0,0,.8)100%),-moz-linear-gradient(315deg,rgb(0,25,136)1%,rgb(125,10,242)99%);
+
+            background-image: -o-linear-gradient(left,rgba(0,0,0,.72)0%,rgba(0,0,0,.8)100%),-o-linear-gradient(315deg,rgb(0,25,136)1%,rgb(125,10,242)99%);
+
+            background-image: linear-gradient(90deg,rgba(0,0,0,.72)0%,rgba(0,0,0,.8)100%),linear-gradient(135deg,rgb(0,25,136)1%,rgb(125,10,242)99%)
+
+        }
+
+        ._just {
+
+            scale: 0.98;
+
+            border-radius: 50px;
+
+            overflow: hidden;
+
+            box-shadow: 0px 0px 20px 0px #000000c4;
+
+        }
+
+        .home-name.just_ {
+
+            color: rgb(255,255,255);
+
+            font-size: 50px;
+
+            font-family: "Rubik"
+
+        }
+
+
+        .home-text1.just_ {
+
+            color: rgb(255,255,255);
+
+            font-size: 1.5em;font-family: "Rubik"
+
+        }
+
+
+        .home-text2.just_ {
+
+            color: rgb(255,255,255);
+
+            font-size: 16px;font-family: "Rubik"
+
+        }
+</style></head><body>
+<div class="<em>just"><div class="just</em> home-container"><span class="just_ home-name"><span class="just_">
+<span>Uh Oh!</span>
+</span></span><h1 class="just_ home-text1"><span class="just_">
+<span>_just error: a client-side exception has occurred.</span>
+</span></h1><span class="just_ home-text2"><span class="just_">
+<span>See the browser console for more information.</span>
+</span></span></div></div><script>document.ondragstart=noselect;document.onselectstart=noselect;document.oncontextmenu=noselect;function noselect(){return false;}</script></body></html>
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+source $GITHUB_ACTION_PATH/src/modules/errmsg.sh
+if [ -d "deploy/_just" ]; then
+  local ERROR_MESSAGE=$(ErrorMessage "postprocessor/modify_deployment.sh" "0103")
+  echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+mkdir -p deploy/_just/
+
+if [ -d "_just/dangerously-insert-files/_just" ]; then
+  local ERROR_MESSAGE=$(ErrorMessage "postprocessor/modify_deployment.sh" "0104")
+  echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+if [ -d "_just/dangerously-insert-files/_next" ]; then
+  local ERROR_MESSAGE=$(ErrorMessage "postprocessor/modify_deployment.sh" "0105")
+  echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+echo -e "&#110;----------------&#110;&#110;_just Chunks:&#110;"
+
+source $GITHUB_ACTION_PATH/src/modules/string.sh
+
+mkdir -p _just/dangerously-insert-files/_just/
+merged_data=($(generate_strings 1 16))
+merged_name=${merged_data[0]}
+mkdir -p _just/dangerously-insert-files/_just/$merged_name/
+merged_file="_just/dangerously-insert-files/_just/$merged_name/merged.js"
+[object Promise]
+for file in _just/js/*; do
+  file_size=$(stat -c%s "$file")
+  if [[ $file_size -gt 51200 ]]; then
+
+ cat "$file" >> "$merged_file"
+
+ echo -e "&#110;" >> "$merged_file"
+  fi
+done
+
+while [[ $(stat -c%s "$merged_file") -lt 131072 ]]; do
+  largest_file=$(ls -S _just/js/* | head -n 1)
+  if [[ -z "$largest_file" ]]; then
+
+ break
+  fi
+  if grep -q "$(basename "$largest_file")" "$merged_file"; then
+
+ sed -i "/$(basename "$largest_file")/d" "$merged_file"
+  else
+
+ break
+  fi
+done
+
+for file in _just/js/*; do
+  first_line=$(head -n 1 "$file")
+  if [[ $first_line == "// _just ignore"* ]]; then
+
+ continue
+  fi
+  if [[ ! -f "$merged_file" || $(stat -c%s "$merged_file") -lt 131072 ]]; then
+
+ cp "$file" "_just/js/$(basename "$file")"
+  fi
+done
+
+mkdir -p _just_data/_just/
+
+TOTAL_FILES_JS=0
+for file in _just/js/*; do
+  TOTAL_FILES_JS=$((TOTAL_FILES_JS + 1))
+done
+random_strings_js=($(generate_strings $TOTAL_FILES_JS 14))
+FILE_ID=1
+for file in _just/js/*; do
+  first_line=$(head -n 1 "$file")
+  if [[ $first_line == "// _just ignore"* ]]; then
+
+ continue
+  fi
+  FILE_ID_M1=$((FILE_ID - 1))
+  FILE_NAME=${random_strings_js[$FILE_ID_M1]}
+  cp "$file" "deploy/_just/${FILE_NAME}${FILE_ID}.js"
+  cp "$file" "_just_data/_just/${FILE_NAME}${FILE_ID}.js"
+  echo "_just/${FILE_NAME}${FILE_ID}.js"
+  FILE_ID=$((FILE_ID + 1))
+done
+
+TOTAL_FILES_CSS=0
+for file in _just/style/*; do
+  TOTAL_FILES_CSS=$((TOTAL_FILES_CSS + 1))
+done
+random_strings_css=($(generate_strings $TOTAL_FILES_CSS 14))
+FILE_ID=1
+for file in _just/style/*; do
+  FILE_ID_M1=$((FILE_ID - 1))
+  FILE_NAME=${random_strings_css[$FILE_ID_M1]}
+  cp "$file" "deploy/_just/${FILE_NAME}${FILE_ID}.css"
+  cp "$file" "_just_data/_just/${FILE_NAME}${FILE_ID}.css"
+  echo "_just/${FILE_NAME}${FILE_ID}.css"
+  FILE_ID=$((FILE_ID + 1))
+done
+
+echo -e "&#110;End _just Chunks&#110;"
+echo -e "----------------&#110;"
+echo -e "&#110;----------------&#110;&#110;Dangerously Inserted Files:&#110;"
+
+find _just/dangerously-insert-files/ -type f | while read -r file; do
+  relative_path="${file#_just/dangerously-insert-files/}"
+  target_dir="deploy/$(dirname "$relative_path")"
+  target_dir2="_just_data/$(dirname "$relative_path")"
+  mkdir -p "$target_dir"
+  mkdir -p "$target_dir2"
+  if [ -f "$target_dir/$(basename "$file")" ]; then
+
+ echo "Warning: Failed to insert file &#34;$target_dir/$(basename "$file")&#34;."
+  fi
+  if [ ! -f "$target_dir/$(basename "$file")" ]; then
+
+ cp "$file" "$target_dir/$(basename "$file")"
+
+ cp "$file" "$target_dir2/$(basename "$file")"
+
+ echo "$target_dir/$(basename "$file")"
+  fi
+done
+
+echo -e "&#110;End Dangerously Inserted Files&#110;"
+echo -e "----------------&#110;"
+
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+source $GITHUB_ACTION_PATH/src/modules/errmsg.sh
+
+find deploy -type f -name "*.html" | while read -r html_file; do
+  for js_file in deploy/_just/*.js; do
+
+ first_line=$(head -n 1 "$js_file")
+
+ if [[ "$first_line" == "// _just doNotInsert" || 
+
+      "$first_line" == "// _just hide" || 
+
+      "$first_line" == "// _just doNotModify+doNotInsert" || 
+
+      "$first_line" == "// _just doNotModify+hide" ]]; then
+
+  continue
+
+ fi
+
+ echo "<script src=&#34;/_just/$(basename "$js_file")&#34;></script>" >> "$html_file" # Insert js files as <script src="PATH TO FILE" />
+  done
+  for css_file in deploy/_just/*.css; do
+
+ echo "<link href=&#34;/_just/$(basename "$css_file")&#34; rel=&#34;stylesheet&#34;>" >> "$html_file" # Insert css files as <link href="PATH TO FILE" rel="stylesheet" />
+  done
+  echo "<link href=&#34;/_just/e.css&#34; rel=&#34;stylesheet&#34;>" >> "$html_file"
+  echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/comment.html)" >> "$html_file"
+  sed -i '/<&#47;head>/i&#32;'"$(cat "$html_file")" "$html_file"
+done
+
+if [ -f "deploy/404.html" ]; then
+  local ERROR_MESSAGE=$(ErrorMessage "postprocessor/override_deployment.sh" "0202")
+  echo -e "$ERROR_MESSAGE"
+fi
+if [ ! -f "deploy/404.html" ]; then
+  cp _just/404.html deploy/404.html
+fi
+
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/error.html)" > deploy/_just/e.html
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/error.css)" > deploy/_just/e.css
+
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+cp -r .next/server/pages/* deploy/
+mkdir -p deploy/_next/static/
+cp -r .next/static/* deploy/_next/static/
+if [ -f ".next/server/pages/en.html" ]; then
+  cp .next/server/pages/en.html deploy/index.html
+fi
+
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+#!/bin/bash
+source $GITHUB_ACTION_PATH/src/modules/errmsg.sh
+source $GITHUB_ACTION_PATH/src/modules/color.sh
+
+config=$(cat just.config.json)
+
+redirect_config_=$(echo "$config" | jq -r '.redirect_config')
+if ! echo "$config" | jq -e '.redirect_config' > /dev/null; then
+
+ local ERROR_MESSAGE=$(ErrorMessage "redirect/checks.sh" "0117")
+
+ echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+validate_redirect_config() {
+
+ if ! echo "$config" | jq -e '.redirect_config.url' > /dev/null; then
+
+    local ERROR_MESSAGE=$(ErrorMessage "redirect/checks.sh" "0114")
+
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+
+ fi
+}
+
+validate_paths() {
+
+ local paths=$(echo "$config" | jq -c '.redirect_config.paths[]?')
+
+ if [[ -n "$paths" ]]; then
+
+    local countt=0
+
+    for path in $paths; do
+
+        if ! echo "$path" | jq -e '.url' > /dev/null; then
+
+            local ERROR_MESSAGE=$(customErrorMessage "Error" "0115" "Missing &#34;url&#34; in item #$countt in &#34;paths&#34; in &#34;redirect_config&#34; in &#34;module.exports&#34; at &#34;just.config.js&#34; file.")
+
+            echo -e "::error::$_RED$ERROR_MESSAGE$_RESET" && exit 1
+
+        fi
+
+
+        if ! echo "$path" | jq -e '.path_' > /dev/null; then
+
+            local ERROR_MESSAGE=$(customErrorMessage "Error" "0116" "Missing &#34;path_&#34; in item #$countt in &#34;paths&#34; in &#34;redirect_config&#34; in &#34;module.exports&#34; at &#34;just.config.js&#34; file.")
+
+            echo -e "::error::$_RED$ERROR_MESSAGE$_RESET" && exit 1
+
+        fi
+
+
+        countt=$((countt + 1))
+
+    done
+
+ fi
+}
+
+validate_redirect_config
+validate_paths
+
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const template = {
+
+ "title": (url) => <code>Redirecting to ${url}&#46;&#46;&#46;</code>,
+
+ "viewport": "width=device-width, initial-scale=1.0",
+
+ "twitter": "summary_large_image"
+}
+const fs = require('fs');
+const path = require('path');
+const compress = (string) => string.replaceAll(`&#110;`,'').replaceAll('    ','');
+const filter = (input) => input ? input.replace(/[^a-zA-Z0-9]/g, (char) => `&#${char.charCodeAt(0)};`) : undefined;
+
+const config = JSON.parse(fs.readFileSync('just.config.json', 'utf-8'));
+const redirectConfig = config.redirect_config;
+
+const cssContent = compress(fs.readFileSync(path.join(__dirname, 'style.css'), 'utf-8'));
+fs.writeFileSync(`deploy/_just/style.css`, cssContent);
+
+const generatePage = (url, params, path_) => {
+
+ const URL = compress(`${url}`);
+
+ const PATH = (path_) => {
+
+    let output = compress(`${path_}`).toLowerCase();
+
+    if (output.startsWith('/')) {
+
+        output = output.slice(1);
+
+    }
+
+    if (output.endsWith('/')) {
+
+        output += 'index';
+
+    }
+
+    return output;
+
+ }
+
+
+ const tempTitle = template.title(URL);
+
+ const tempViewport = template.viewport;
+
+
+ const title = params ? params.title || tempTitle : tempTitle;
+
+ const description = params ? params.description || undefined : undefined;
+
+ const metaKeywords = params ? params.keywords || undefined : undefined;
+
+ const lang = params ? params.htmlLang || undefined : undefined;
+
+ const robots = params ? params.robots || undefined : undefined;
+
+ const charset = params ? params.charset || "UTF-8" : "UTF-8";
+
+ const viewport = params ? params.viewport || tempViewport : tempViewport;
+
+
+ const text1 = params && params.content ? filter(params.content.text1) || undefined : undefined;
+
+ const text2 = params && params.content ? filter(params.content.text2) || undefined : undefined;
+
+ const text3 = params && params.content ? filter(params.content.text3) || undefined : undefined;
+
+ 
+
+ const ogTitle = params && params.og ? params.og.title || title : title;
+
+ const ogDescription = params && params.og ? params.og.description || description : description;
+
+ 
+
+ const twitterCard = params && params.twitter ? params.twitter.card || template.twitter : template.twitter;
+
+
+ const yandexVerification = params ? params.yandex || undefined : undefined;
+
+
+ const googleAnalytics = params ? params.googleAnalytics || undefined : undefined;
+
+ const googleVerification = params ? params.google || undefined : undefined;
+
+
+ const page = path_ ? PATH() : "index";
+
+ const keywords = metaKeywords ? <code>&#60;meta name&#61;&#34;keywords&#34; content&#61;&#34;${metaKeywords}&#34;&#62;</code> : '';
+
+ const htmlLang = lang ? <code> lang&#61;&#34;${`${lang}</code>.toLowerCase()}"` : '';
+
+ const optionalstuff = () => {
+
+    let output = '';
+
+    if (yandexVerification) {
+
+        output += <code>&&#35;110;&#60;meta name&#61;&#34;yandex&#45;verification&#34; content&#61;&#34;${yandexVerification}&#34;&#62;</code>;
+
+    }
+
+    if (googleVerification) {
+
+        output += <code>&&#35;110;&#60;meta name&#61;&#34;google&#45;site&#45;verification&#34; content&#61;&#34;${googleVerification}&#34;&#62;</code>;
+
+    }
+
+    if (googleAnalytics) {
+
+        output += `&#110;<script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalytics}"></script>
+
+                    <script>
+
+                        window.dataLayer = window.dataLayer || [];
+
+                        function gtag() {
+
+                            dataLayer.push(arguments);
+
+                        }
+
+                        gtag('js', new Date());
+
+                        gtag('config', '${googleAnalytics}');
+
+                    </script>`
+
+    }
+
+    if (robots) {
+
+        output += <code>&&#35;110;&#60;meta name&#61;&#34;robots&#34; content&#61;&#34;${robots}&#34;&#62;</code>
+
+    }
+
+    return output;
+
+ }
+
+
+ const link = <code>&#60;a href&#61;&#34;${URL}&#34; target&#61;&#34;&&#35;95;self&#34;&#62;</code>;
+
+ const meta = '<meta property=';
+
+ const htmlContent = '<!DOCTYPE html>&#110;' + compress(`<html${htmlLang}>
+
+ <head>
+
+    <meta charset="${charset}">
+
+    <meta name="viewport" content="${viewport}">
+
+    <title>${title}</title>
+
+    <link rel="stylesheet" href="/_just/style.css">
+
+    ${description ? <code>&#60;meta name&#61;&#34;description&#34; content&#61;&#34;${description}&#34;&#62;</code> : ''}${keywords}
+
+    ${meta}"og:type" content="website">
+
+    ${meta}"twitter:card" content="${twitterCard}">
+
+    ${meta}"og:title" content="${ogTitle}">
+
+    ${ogDescription ? <code>${meta}&#34;og&#58;description&#34; content&#61;&#34;${ogDescription}&#34;&#62;</code> : ''}
+
+    ${meta}"og:url" content="${URL}">${optionalstuff()}
+
+ </head>
+
+ <body>
+
+    <h1 id="%24%7Btitle%7D">${title}</h1>
+
+    <div>
+
+        <span class="r">${text1 || `Redirecting...<br><small>to ${link}${URL}</a></small>`}</span>
+
+        <span class="d">${text2 || "Didn't get redirected?"} ${link}${text3 || 'Click here!'}</a></span>
+
+    </div>
+
+    <script>window.location.href='${URL}';</script>
+
+ </body>
+</html>`);
+
+ 
+
+ fs.writeFileSync(`deploy/${page}.html`, htmlContent);
+};
+
+generatePage(redirectConfig.url, redirectConfig.params);
+
+if (redirectConfig.paths) {
+
+ redirectConfig.paths.forEach(({ path_, url, params }) => {
+
+    generatePage(url, params, path_);
+
+ });
+}
+
+/*
+
+EXAMPLE just.config.js FILE for redirect(s):
+
+module.exports = {
+
+ type: "redirect", 
+
+ redirect_config: {
+
+    url: "https://justdeveloper.is-a.dev/", 
+
+    params: {
+
+        title: "JustDeveloper",
+
+        description: "the one who created this shi-",
+
+        keywords: "Just, an, Ultimate, Site, Tool",
+
+        htmlLang: "en",
+
+        og: {
+
+            title: "Redirect",
+
+            description: "Hello, World!"
+
+        },
+
+        twitter: {
+
+            card: "summary_large_image"
+
+        }
+
+    },
+
+    paths: [
+
+        {
+
+            path_: "github",
+
+            url: "https://github.com/JustDeveloper1", 
+
+            params: {
+
+                title: "JustDeveloper",
+
+                description: "GitHub Profile",
+
+                keywords: "Just, Developer",
+
+                htmlLang: "en",
+
+                og: {
+
+                    title: "Redirect2",
+
+                    description: "Hello, GitHub!"
+
+                },
+
+                twitter: {
+
+                    card: "summary_large_image"
+
+                }
+
+            }
+
+        }
+
+    ]
+
+ }
+}<div class="WjOXH"></div><br>everything combined:
+
+module.exports = {
+
+ type: "redirect", 
+
+ redirect_config: {
+
+    url: "https://justdeveloper.is-a.dev/", 
+
+    params: {
+
+        title: "JustDeveloper",
+
+        description: "the one who created this shi-",
+
+        keywords: "Just, an, Ultimate, Site, Tool",
+
+        htmlLang: "en",
+
+        robots: "index",
+
+        charset: "UTF-8",
+
+        viewport: "width=device-width",
+
+        yandex: "abc123",
+
+        google: "abc123",
+
+        googleAnalytics: "abc123",
+
+        content: {
+
+            text1: "Hello, World!",
+
+            text2: "do not click anywhere.",
+
+            text3: "click here!"
+
+        },
+
+        og: {
+
+            title: "Redirect",
+
+            description: "Hello, World!"
+
+        },
+
+        twitter: {
+
+            card: "summary_large_image"
+
+        }
+
+    }
+
+ }
+}
+
+*/
+
+[object Promise]css
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+html {
+
+ background-color: #111111;
+
+ padding: 10px;
+
+ display: block;
+
+ font-family: 'Rubik';
+
+ color: #dddddd;
+}
+
+a {
+
+ color: #dddddd;
+}
+
+body {
+
+ width: calc( 100% - 44px );
+
+ height: calc( 100% - 44px );
+
+ position: fixed;
+
+ margin: 0px;
+
+ padding: 10px;
+
+ display: block;
+
+ border-radius: 15px;
+
+ background-color: #222222;
+
+ background-image: linear-gradient(83deg, #353535, #232323);
+
+ filter: drop-shadow(2px 4px 6px #000000);
+
+ border-width: 2px;
+
+ border-style: solid;
+
+ border-color: #5f5f5f;
+
+ -webkit-filter: drop-shadow(2px 4px 6px #000000);
+}
+
+div {
+
+ position: fixed;
+
+ top: 50%;
+
+ left: 50%;
+
+ translate: -50% -50%;
+
+ display: flex;
+
+ flex-direction: column;
+
+ flex-wrap: nowrap;
+
+ align-content: center;
+
+ justify-content: center;
+
+ align-items: center;
+
+ gap: 10px;
+}
+
+h1 {
+
+ display: block;
+
+ font-size: 20px;
+
+ margin: 0px;
+
+ color: #dddddd;
+
+ text-align: center;
+}
+
+.r {
+
+ text-align: center;
+
+ font-size: 18px;
+}
+.r small {
+
+ font-size: 14px;
+
+ opacity: 0.5;
+}
+
+.d a {
+
+ filter: drop-shadow(0px 0px 7px #dddddd99);
+
+ -webkit-filter: drop-shadow(0px 0px 7px #dddddd99);
+}
+[object Promise]sh
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+#!/bin/bash
+ERRORS_FILE="$GITHUB_ACTION_PATH/data/codes.json"
+CONFIG_FILE="just.config.js"
+CONFIG_DATA="just.config.json"
+source $GITHUB_ACTION_PATH/src/modules/errmsg.sh
+source $GITHUB_ACTION_PATH/src/modules/color.sh
+if [ "$INPUT_PATH" == ""]; then
+  INPUT_PATH="."
+elif [ -z "$INPUT_PATH" ]; then
+  INPUT_PATH="."
+fi
+
+VERSION=$(echo "$GITHUB_ACTION_PATH" | grep -oP '(?<=/v)[0-9]+&#46;[0-9]+&#46;[0-9]+(-[a-zA-Z0-9]+)?' || echo "$GITHUB_SHA")
+if [[ "$VERSION" != "$GITHUB_SHA" && "$VERSION" != v* ]]; then
+  VERSION="v$VERSION"
+fi
+msg1=$(_justMessage "$_BLUE Running$_LIGHTPURPLE Just an Ultimate Site Tool$_RESET $VERSION")
+msg2=$(_justMessage "$_BLUE Installing Node.js$_RESET...")
+msg3=$(_justMessage "$_BLUE Installed Node.js$_RESET")
+msg4=$(_justMessage "$_GREEN Postprocessing completed$_RESET")
+msg5=$(_justMessage "$_GREEN Generating completed$_RESET")
+msg6=$(_justMessage "$_GREEN Compressing completed$_RESET")
+msg9=$(_justMessage "$_GREEN Generating completed$_RESET")
+echo -e "$msg1"
+
+installNodejs() {
+
+ echo -e "$msg2"
+
+ chmod +x "$GITHUB_ACTION_PATH/src/time.py" # use python to get current time in ms cuz yes
+
+ local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+
+ if ! command -v node > /dev/null; then # attempt 0: nodejs installed before running _just
+
+    # attempt 1: install via curl
+
+    sudo apt-get remove -y nodejs npm > /dev/null 2>&1 || true
+
+    sudo apt-get update -qq > /dev/null 2>&1
+
+    curl -fsSL <a href="https://deb.nodesource.com/setup_20.x" target="_blank" id="KBSv0">https://deb.nodesource.com/setup_20.x</a> | sudo -E bash - > /dev/null 2>&1
+
+    sudo apt-get install -y nodejs > /dev/null 2>&1
+
+    if ! command -v node > /dev/null; then
+
+        # attempt 2: install via curl with logs
+
+        local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0207")
+
+        echo -e "$ERROR_MESSAGE"
+
+        sudo apt-get remove -y nodejs npm || true
+
+        sudo apt-get update -qq
+
+        curl -fsSL <a href="https://deb.nodesource.com/setup_20.x" target="_blank" id="KBSv0">https://deb.nodesource.com/setup_20.x</a> | sudo -E bash -
+
+        sudo apt-get install -y nodejs
+
+        if ! command -v node > /dev/null; then
+
+            # attempt 3: install via sudo apt install
+
+            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0208")
+
+            echo -e "$ERROR_MESSAGE"
+
+            sudo apt update -qq && sudo apt install -y nodejs npm > /dev/null 2>&1
+
+            if [ $? -ne 0 ]; then
+
+                # attempt 4: install via sudo apt install with logs
+
+                local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0205")
+
+                echo -e "::error::$ERROR_MESSAGE"
+
+                sudo apt update
+
+                sudo apt install -y nodejs npm
+
+            fi
+
+        fi
+
+    fi
+
+ fi
+
+ local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+
+ NODEVERSION=$(node --version)
+
+ NODESECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2") # use js to get nodejs installing duration cuz yes
+
+ echo -e "$msg3 $NODEVERSION ($NODESECONDS)"
+}
+
+if [ -f "$CONFIG_DATA" ]; then
+
+ ERROR_MESSAGE=$(ErrorMessage "run.sh" "0113")
+
+ echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+if [ ! -f "$CONFIG_FILE" ]; then
+
+ ERROR_MESSAGE=$(ErrorMessage "run.sh" "0108")
+
+ echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+CONFIG_JSON=$(node -e "console.log(JSON.stringify(require('./just.config.js')));")
+if [ $? -ne 0 ]; then
+
+ ERROR_MESSAGE=$(ErrorMessage "run.sh" "0109")
+
+ echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+echo "Parsed just.config.js module.exports: $CONFIG_JSON" # debug
+echo "$CONFIG_JSON" > "$CONFIG_DATA"
+
+if [ -z "$(echo "$CONFIG_JSON" | jq -r '.module.exports')" ]; then
+
+ ERROR_MESSAGE=$(ErrorMessage "run.sh" "0112")
+
+ echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+TYPE=$(echo "$CONFIG_JSON" | jq -r '.type')
+if [ -z "$TYPE" ]; then
+
+ ERROR_MESSAGE=$(ErrorMessage "run.sh" "0110")
+
+ echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+if [[ "$TYPE" != "postprocessor" && "$TYPE" != "redirect" && "$TYPE" != "compress" && "$TYPE" != "docs" ]]; then
+
+ ERROR_MESSAGE=$(ErrorMessage "run.sh" "0111")
+
+ echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+_just_d="no" && 
+if [[ "$TYPE" != "compress" && ! ( "$TYPE" == "docs" && "$INPUT_PATH" != "." ) ]]; then
+
+ if [ -d "deploy" ]; then
+
+    ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0106")
+
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+
+ fi
+
+ if [ -d "_just_data" ]; then
+
+    ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0107")
+
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+
+ fi
+
+ mkdir -p deploy
+
+ mkdir -p _just_data
+elif [ "$TYPE" == "docs" ]; then
+
+ JDD=$(echo "$INPUT_PATH/_just_data" | sed 's#//*#/#g')
+
+ _just_dir=$(echo "$INPUT_PATH/_just" | sed 's#//*#/#g')
+
+ if [ -d "$JDD" ]; then
+
+    ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0125")
+
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+
+ fi
+
+ if [ -d "$_just_dir" ]; then
+
+    ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0125")
+
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+
+ fi
+
+ mkdir -p "$JDD"
+
+ mkdir -p "$_just_dir"
+
+ _just_d="yes"
+fi
+
+jserr() {
+
+ echo -e "::error::$(cat "_just_data/e.txt")" && exit 1
+}
+
+if [ "$TYPE" == "postprocessor" ]; then
+
+ set -e
+
+ postprocessor_checks=$(bash $GITHUB_ACTION_PATH/src/postprocessor/checks.sh 2>&1) || {
+
+    error_code=$?
+
+    if [ $error_code -eq 1 ]; then
+
+        ERROR_MESSAGE=$(ErrorMessage "postprocessor/checks.sh" "0100" "$postprocessor_checks")
+
+        if [ "$postprocessor_checks" == "0101" ]; then 
+
+            ERROR_MESSAGE=$(ErrorMessage "postprocessor/checks.sh" "0101")
+
+        fi
+
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+
+    fi
+
+ } && 
+
+ bash $GITHUB_ACTION_PATH/src/postprocessor/prepare_deployment.sh && 
+
+ bash $GITHUB_ACTION_PATH/src/postprocessor/create_api_endpoints.sh && 
+
+ bash $GITHUB_ACTION_PATH/src/postprocessor/modify_deployment.sh && 
+
+ bash $GITHUB_ACTION_PATH/src/postprocessor/override_deployment.sh && 
+
+ installNodejs && 
+
+ node $GITHUB_ACTION_PATH/src/compress.js "deploy" && 
+
+ bash $GITHUB_ACTION_PATH/src/postprocessor/build_map.sh && 
+
+ echo -e "$msg4"
+elif [ "$TYPE" == "redirect" ]; then
+
+ mkdir -p deploy/_just && 
+
+ installNodejs && 
+
+ bash $GITHUB_ACTION_PATH/src/redirect/checks.sh && 
+
+ node $GITHUB_ACTION_PATH/src/redirect/index.js && 
+
+ echo -e "$msg5"
+elif [ "$TYPE" == "compress" ]; then
+
+ mkdir -p deploy && 
+
+ installNodejs && 
+
+ node $GITHUB_ACTION_PATH/src/compress.js "$INPUT_PATH" && 
+
+ echo -e "$msg6"
+elif [ "$TYPE" == "docs" ]; then
+
+ HTML=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/page.html") && 
+
+ CSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/base.css") && 
+
+ JS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/page.js") && 
+
+ HIGHLIGHTCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/highlight.css") && 
+
+ BUTTONSCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/buttons.css") && 
+
+ SEARCHCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/search.css") && 
+
+ CUSTOMCSS=false && 
+
+ CUSTOMCSSPATH="just.config.css" && 
+
+ if [ -f "$CUSTOMCSSPATH" ]; then
+
+    CUSTOMCSS=$(cat "$CUSTOMCSSPATH")
+
+ fi && 
+
+ if [[ -d "_just" && "$_just_d" == "no" ]]; then
+
+    ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0121")
+
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+
+ fi && 
+
+ if [ -f "_just_error" ]; then 
+
+    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0127")
+
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+
+ fi && 
+
+ mkdir -p _just && 
+
+ mkdir -p deploy && 
+
+ installNodejs && 
+
+ bash $GITHUB_ACTION_PATH/src/documentation/checks.sh && 
+
+ INDEXJS0="$GITHUB_ACTION_PATH/src/documentation/index.js"
+
+ INDEXJS1=$(cat "$INDEXJS0") && 
+
+ INDEXJS2=$(cat "$GITHUB_ACTION_PATH/src/line.js") && 
+
+ echo "$INDEXJS2" > "$INDEXJS0" && 
+
+ INDEXJS3=$(node "$INDEXJS0" "$INDEXJS1") && 
+
+ echo "$INDEXJS3" > "$INDEXJS0" && 
+
+ HLJSLANGS=$(cat "$GITHUB_ACTION_PATH/data/hljslangs.json") && 
+
+ LANGS=$(cat "$GITHUB_ACTION_PATH/data/langs.json") && 
+
+ LANGSTEXT=$(cat "$GITHUB_ACTION_PATH/data/langstext.json") && 
+
+ node "$INDEXJS0" "$HTML" "$CSS" "$JS" "$INPUT_PATH" "$GITHUB_REPOSITORY" "$GITHUB_REPOSITORY_OWNER" "$CUSTOMCSS" "$HLJSLANGS" "$LANGS" "$HIGHLIGHTCSS" "$LANGSTEXT" "$VERSION" "$BUTTONSCSS" "$SEARCHCSS" || jserr && 
+
+ node $GITHUB_ACTION_PATH/src/compress.js "$INPUT_PATH" && 
+
+ node "$GITHUB_ACTION_PATH/src/documentation/logs.js" "$INPUT_PATH" && 
+
+ echo -e "$msg9"
+fi
+
+[object Promise]js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="KBSv0">https://juststudio.is-a.dev/</a>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const [time1, time2] = process.argv.slice(2);
+const diff = Math.ceil(Math.ceil(parseInt(time2, 10)) - Math.ceil(parseInt(time1, 10)));
+function time(ms) {
+
+ const s_ = Math.ceil(ms/1000);
+
+ if (ms < 0) {
+
+    return "0ms";
+
+ } else if (ms < 1000) {
+
+    return <code>${ms}ms</code>;
+
+ } else if (s_ > 60) {
+
+    return <code>${Math&#46;ceil&#40;s&&#35;95;/60&&#35;42;100&#41;/100}m</code>;
+
+ } else {
+
+    return <code>${Math&#46;ceil&#40;ms/100&#41;/10}s</code>;
+
+ }
+}
+console.log(time(diff));
+[object Promise]py
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+#!/usr/bin/env python3
+import time
+out = int(time.time() * 1000)
+print(out)
+<code>`</code>
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]</p>

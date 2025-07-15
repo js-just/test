@@ -1,1 +1,16 @@
-<p>[object Promise]</p>
+<p>[object Promise]
+This mode requires only the just.config.js file, <sub>except for the workflow file</sub>.
+<code>just&#46;config&#46;js</code>
+[object Promise]
+[object Promise]
+You can add <code>params{}</code>:
+[object Promise]
+You can also add <code>content{}</code> in <code>params{}</code> if you want to modify HTML content.
+[object Promise]
+[object Promise]
+[object Promise]
+You may add <code>paths&#91;&#93;</code> in <code>redirect&&#35;95;config{}</code> to create custom redirect paths.
+[object Promise]<div class="WjOXH"></div><br>[object Promise]
+[object Promise]
+
+</p>

@@ -1,1 +1,15 @@
-<p>[object Promise]</p>
+<p>[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]</p>

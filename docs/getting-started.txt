@@ -1,1 +1,44 @@
-<p>[object Promise]</p>
+<p>[object Promise]
+[object Promise]
+This documentation assumes some familiarity with
+[object Promise]
+And some familiarity with these languages
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+[object Promise]
+You can change name of workflow file and workflow name:
+[object Promise]
+You can also choose _just version:
+[object Promise]
+<strong>If you know what exactly you are doing, you may change anything.</strong>
+[object Promise]
+Choose what mode you want to use.
+ 
+Using <code>Postprocessor</code> mode:
+[object Promise]
+Using <code>Redirector</code> mode: 
+[object Promise]
+Using <code>Compressor</code> mode:
+[object Promise]
+Using <code>Generator</code> mode:
+[object Promise]
+[object Promise]<div class="WjOXH"></div><br>[object Promise]
+[object Promise]
+Make sure that permissions allow writing <code>pages</code> and <code>id&#45;token</code>, but do not allow writing <code>contents</code>, only read.
+[object Promise]
+Make a job for building your website using _just:
+[object Promise]
+[object Promise]
+Basic usage:
+[object Promise]
+Using multiple modes:
+[object Promise]
+[object Promise]
+[object Promise]
+
+[object Promise]
+[object Promise]
+
+</p>
