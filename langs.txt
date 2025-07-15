@@ -1,29 +1,29 @@
 <p><h1 id="Syntax%20highlighting">Syntax highlighting</h1>
-<code class="QFAwO">17
+<code class="RvQB6">17
 </code>
-<code class="QFAwO">18
+<code class="RvQB6">18
 </code>
-<code class="QFAwO">19
+<code class="RvQB6">19
 </code>
-<code class="QFAwO">20
+<code class="RvQB6">20
 </code>
-<code class="QFAwO">21
+<code class="RvQB6">21
 </code>
-<code class="QFAwO">22
+<code class="RvQB6">22
 </code>
-<code class="QFAwO">23
+<code class="RvQB6">23
 </code>
-<code class="QFAwO">24
+<code class="RvQB6">24
 </code>
-<code class="QFAwO">25
+<code class="RvQB6">25
 </code>
-<code class="QFAwO">26
+<code class="RvQB6">26
 </code>
-<code class="QFAwO">27
+<code class="RvQB6">27
 </code>
-<code class="QFAwO">28
+<code class="RvQB6">28
 </code>
-<code class="QFAwO">29
+<code class="RvQB6">29
 </code>
-<code class="QFAwO">30
+<code class="RvQB6">30
 </code></p>
