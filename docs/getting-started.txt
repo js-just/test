@@ -24,7 +24,7 @@ Using <code>Compressor</code> mode:
 [object Promise]
 Using <code>Generator</code> mode:
 [object Promise]
-[object Promise]<div class="WjOXH"></div><br>[object Promise]
+[object Promise]<div class="FsATY"></div><br>[object Promise]
 [object Promise]
 Make sure that permissions allow writing <code>pages</code> and <code>id&#45;token</code>, but do not allow writing <code>contents</code>, only read.
 [object Promise]
