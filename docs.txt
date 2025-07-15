@@ -1,14 +1,14 @@
 <p><h1 id="_just%20Docs">_just Docs</h1>
 Welcome to Just an Ultimate Site Tool documentation!
-<span class="rczvo42">"<strong><code>&&#35;95;just</code></strong>" is an abbreviation of <strong>Just an Ultimate Site Tool</strong>.</span><div class="KVmlH"></div><br><h2 id="What%20is%20_just%3F">What is _just?</h2>
+<span class="ZExWP9M">"<strong><code>&&#35;95;just</code></strong>" is an abbreviation of <strong>Just an Ultimate Site Tool</strong>.</span><div class="OTslN"></div><br><h2 id="What%20is%20_just%3F">What is _just?</h2>
 Just an Ultimate Site Tool is a GitHub Action for building static websites. 
 Currently it have 4 modes: 
 <ul><li><code>Postprocessor</code>: Modify and add your own files to generated Next.js website.</li><li><code>Redirector</code>: Client-side redirect using JavaScript.</li><li><code>Compressor</code>: Compresses your website.</li><li><code>Generator</code>: Generates documentation website using Markdown.</li></ul>
 
-<blockquote class="KVmlS">Just an Ultimate Site Tool is still in development at the <strong>alpha</strong> stage. Expect regular updates, possible bugs, and changes. If you have found a bug, please <a href="https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md" target="_blank" id="MBbsE">report it here</a>.</blockquote>
-<blockquote class="KVmlW">The docs are under construction!</blockquote>
-<blockquote class="KVml6">Do not use <code>Redirector</code> if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
+<blockquote class="OTslD">Just an Ultimate Site Tool is still in development at the <strong>alpha</strong> stage. Expect regular updates, possible bugs, and changes. If you have found a bug, please <a href="https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md" target="_blank" id="SJCD6">report it here</a>.</blockquote>
+<blockquote class="OTslV">The docs are under construction!</blockquote>
+<blockquote class="OTslS">Do not use <code>Redirector</code> if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
 <h2 id="Why%20_just%3F">Why _just?</h2>
-<ol><li><u>No packages.</u></li><li><u>Fast build.</u></li><li><strong class="KVml">No watermarks.</strong></li></ol>
-<span class="rczvo42">_just uses Node.js, but _just does not require you to use Node.js/npm/pnpm/Yarn/related packages stuff.</span>
+<ol><li><u>No packages.</u></li><li><u>Fast build.</u></li><li><strong class="OTsl">No watermarks.</strong></li></ol>
+<span class="ZExWP9M">_just uses Node.js, but _just does not require you to use Node.js/npm/pnpm/Yarn/related packages stuff.</span>
 </p>
