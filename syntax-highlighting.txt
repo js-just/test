@@ -20,7 +20,7 @@
 <h1 id="test20">test</h1>
 <h1 id="test21">test</h1>
 <h1 id="test22">test</h1>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -106,8 +106,8 @@ module&#46;exports = {
 &#42;/</span>
 </code>
 <h1 id="test23">test</h1>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -145,7 +145,7 @@ docs_config=$&#40;<span class="hljs-built_in">echo</span> <span class="hljs-stri
 }
 &lt;h1&gt;validate_docs_config&lt;/h1&gt;
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -249,7 +249,7 @@ SOFTWARE&#46;
 &nbsp;<span class="hljs-keyword">return</span> &#91;<span class="hljs-variable constant_">CSS</span>, <span class="hljs-variable constant_">HTML</span>&#93;;
 }
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -331,7 +331,7 @@ _just&#46;<span class="hljs-property">string</span> = <span class="hljs-built_in
 &nbsp;<span class="hljs-comment">// debug disabled</span>
 }
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -403,7 +403,7 @@ SOFTWARE&#46;
 }
 </code>
 <h1 id="test24">test</h1>
-<code class="mDGvS"><code>CSS</code><span class="hljs-selector-pseudo">&#58;root</span> {
+<code class="UTvi6"><code>CSS</code><span class="hljs-selector-pseudo">&#58;root</span> {
 &nbsp;<span class="hljs-attr">--bg</span>&#58; <span class="hljs-number"><div style="background&#58;#121212"></div>#121212</span>;
 &nbsp;<span class="hljs-attr">--cl</span>&#58; <span class="hljs-number"><div style="background&#58;#f0f0f0"></div>#f0f0f0</span>;
 &nbsp;<span class="hljs-attr">--kb</span>&#58; <span class="hljs-number"><div style="background&#58;#2196F3"></div>#2196F3</span>;
@@ -1560,7 +1560,7 @@ SOFTWARE&#46;
 &nbsp;<span class="hljs-attribute">gap</span>&#58; <span class="hljs-number">10px</span>;
 }
 </code>
-<code class="mDGvS"><code>CSS</code><span class="hljs-selector-id">#search</span> {
+<code class="UTvi6"><code>CSS</code><span class="hljs-selector-id">#search</span> {
 &nbsp;<span class="hljs-attribute">background-color</span>&#58; <span class="hljs-built_in">var</span>&#40;--bg&#41;;
 &nbsp;<span class="hljs-attribute">border</span>&#58; <span class="hljs-number">2px</span> solid <span class="hljs-built_in">var</span>&#40;--cl&#41;;
 &nbsp;<span class="hljs-attribute">font-family</span>&#58; Monospace;
@@ -1664,7 +1664,7 @@ SOFTWARE&#46;
 &nbsp;<span class="hljs-attribute">position</span>&#58; absolute;
 }
 </code>
-<code class="mDGvS"><code>CSS</code><span class="hljs-selector-class">&#46;hljs-number</span> {
+<code class="UTvi6"><code>CSS</code><span class="hljs-selector-class">&#46;hljs-number</span> {
 &nbsp;<span class="hljs-attribute">color</span>&#58; <span class="hljs-number"><div style="background&#58;#eda31b"></div>#eda31b</span>;
 }
 <span class="hljs-selector-class">&#46;hljs-meta</span>, <span class="hljs-selector-class">&#46;hljs-variable</span><span class="hljs-selector-class">&#46;language_</span>, <span class="hljs-selector-class">&#46;language_</span> {
@@ -1692,7 +1692,7 @@ SOFTWARE&#46;
 &nbsp;<span class="hljs-attribute">color</span>&#58; <span class="hljs-number"><div style="background&#58;#aad7ff"></div>#aad7ff</span>;
 }
 </code>
-<code class="mDGvS"><code>XML</code><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+<code class="UTvi6"><code>XML</code><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
 &nbsp;<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;REPLACE_CHARSET&quot;</span>&gt;</span>
@@ -1874,7 +1874,7 @@ SOFTWARE&#46;
 &nbsp;<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-keyword">const</span> fcrt_ = &#91;&#93;&#91;<span class="hljs-string">&quot;filter&quot;</span>&#93;&#91;<span class="hljs-string">&quot;constructor&quot;</span>&#93;&#40;<span class="hljs-string">&quot;return globalThis&quot;</span>&#41;&#40;&#41; &#124;&#124; &#91;&#93;&#91;<span class="hljs-string">&quot;filter&quot;</span>&#93;&#91;<span class="hljs-string">&quot;constructor&quot;</span>&#93;&#40;<span class="hljs-string">&quot;return this&quot;</span>&#41;&#40;&#41;;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-keyword">const</span> fcrt_ = &#91;&#93;&#91;<span class="hljs-string">&quot;filter&quot;</span>&#93;&#91;<span class="hljs-string">&quot;constructor&quot;</span>&#93;&#40;<span class="hljs-string">&quot;return globalThis&quot;</span>&#41;&#40;&#41; &#124;&#124; &#91;&#93;&#91;<span class="hljs-string">&quot;filter&quot;</span>&#93;&#91;<span class="hljs-string">&quot;constructor&quot;</span>&#93;&#40;<span class="hljs-string">&quot;return this&quot;</span>&#41;&#40;&#41;;
 <span class="hljs-keyword">const</span> wndw_ = fcrt_;
 <span class="hljs-keyword">const</span> dcmnt = fcrt_&#91;<span class="hljs-string">&quot;document&quot;</span>&#93;;
 <span class="hljs-keyword">const</span> page_ = <span class="hljs-string">&#x27;p&#x27;</span> + wndw_&#46;<span class="hljs-property">location</span>&#46;<span class="hljs-property">pathname</span>;
@@ -2361,7 +2361,7 @@ dcmnt&#46;<span class="hljs-title function_">addEventListener</span>&#40;<span c
 &nbsp;<span class="hljs-title function_">updateSD</span>&#40;<span class="hljs-literal">false</span>&#41;;<span class="hljs-title function_">updateMinHeight</span>&#40;&#41;;<span class="hljs-title function_">updateWidth</span>&#40;&#41;;<span class="hljs-title function_">fetch</span>&#40;searchurl&#41;;
 }&#41;;
 </code>
-<code class="mDGvS"><code>CSS</code><span class="hljs-selector-id">#search</span>, <span class="hljs-selector-id">#searchbar</span> {
+<code class="UTvi6"><code>CSS</code><span class="hljs-selector-id">#search</span>, <span class="hljs-selector-id">#searchbar</span> {
 &nbsp;<span class="hljs-attribute">cursor</span>&#58; not-allowed;
 }
 <span class="hljs-selector-class">&#46;searchactive</span> {
@@ -2420,8 +2420,8 @@ dcmnt&#46;<span class="hljs-title function_">addEventListener</span>&#40;<span c
 &nbsp;<span class="hljs-attribute">display</span>&#58; none;
 }
 </code>
-<code class="mDGvS"><code>Python</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;<span class="hljs-comment"># Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot; target=&quot;_blank&quot; id=&quot;FrWXT&quot;&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;</span>
+<code class="UTvi6"><code>Python</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;<span class="hljs-comment"># Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot; target=&quot;_blank&quot; id=&quot;rxkt0&quot;&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;</span>
 &lt;h1&gt;<span class="hljs-comment"># Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;</span>
 &lt;h1&gt;of this software <span class="hljs-keyword">and</span> associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -2443,8 +2443,8 @@ response = requests&#46;get&#40;<span class="hljs-string">&#x27;https&#58;//api&
 tags = response&#46;json&#40;&#41;
 <span class="hljs-built_in">print</span>&#40;tags&#91;<span class="hljs-number">0</span>&#93;&#91;<span class="hljs-string">&#x27;name&#x27;</span>&#93;&#41;
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -2470,8 +2470,8 @@ LATEST=$&#40;python3 <span class="hljs-string">&quot;src/latest&#46;py&quot;</sp
 YMLCONTENT=$&#40;<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$YMLTEMPLATE</span>&quot;</span> &#124; sed <span class="hljs-string">&quot;s/@latest/@<span class="hljs-variable">$LATEST</span>/&quot;</span>&#41; &amp;&amp; 
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$YMLCONTENT</span>&quot;</span> &gt; <span class="hljs-string">&quot;latest/action&#46;yml&quot;</span>
 </code>
-<code class="mDGvS"><code>YAML</code><span class="hljs-string">&lt;h1&gt;MIT</span> <span class="hljs-string">License&lt;/h1&gt;</span>
-<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">Copyright</span> <span class="hljs-string">&#40;c&#41;</span> <span class="hljs-number">2025 </span><span class="hljs-string">JustStudio&#46;</span> <span class="hljs-string">&lt;a</span> <span class="hljs-string">href=&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> <span class="hljs-string">target=&quot;_blank&quot;</span> <span class="hljs-string">id=&quot;FrWXT&quot;&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;</span>
+<code class="UTvi6"><code>YAML</code><span class="hljs-string">&lt;h1&gt;MIT</span> <span class="hljs-string">License&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">Copyright</span> <span class="hljs-string">&#40;c&#41;</span> <span class="hljs-number">2025 </span><span class="hljs-string">JustStudio&#46;</span> <span class="hljs-string">&lt;a</span> <span class="hljs-string">href=&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> <span class="hljs-string">target=&quot;_blank&quot;</span> <span class="hljs-string">id=&quot;rxkt0&quot;&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;</span>
 <span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">Permission</span> <span class="hljs-string">is</span> <span class="hljs-string">hereby</span> <span class="hljs-string">granted,</span> <span class="hljs-string">free</span> <span class="hljs-string">of</span> <span class="hljs-string">charge,</span> <span class="hljs-string">to</span> <span class="hljs-string">any</span> <span class="hljs-string">person</span> <span class="hljs-string">obtaining</span> <span class="hljs-string">a</span> <span class="hljs-string">copy&lt;/h1&gt;</span>
 <span class="hljs-string">&lt;h1&gt;of</span> <span class="hljs-string">this</span> <span class="hljs-string">software</span> <span class="hljs-string">and</span> <span class="hljs-string">associated</span> <span class="hljs-string">documentation</span> <span class="hljs-string">files</span> <span class="hljs-string">&#40;the</span> <span class="hljs-string">&quot;Software&quot;</span><span class="hljs-string">&#41;,</span> <span class="hljs-string">to</span> <span class="hljs-string">deal&lt;/h1&gt;</span>
 <span class="hljs-string">&lt;h1&gt;in</span> <span class="hljs-string">the</span> <span class="hljs-string">Software</span> <span class="hljs-string">without</span> <span class="hljs-string">restriction,</span> <span class="hljs-string">including</span> <span class="hljs-string">without</span> <span class="hljs-string">limitation</span> <span class="hljs-string">the</span> <span class="hljs-string">rights&lt;/h1&gt;</span>
@@ -2505,7 +2505,7 @@ YMLCONTENT=$&#40;<span class="hljs-built_in">echo</span> <span class="hljs-strin
 &nbsp;&nbsp;<span class="hljs-attr">with&#58;</span>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">path&#58;</span> <span class="hljs-string">${{</span> <span class="hljs-string">inputs&#46;path</span> <span class="hljs-string">}}</span>
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2532,7 +2532,7 @@ text = text&#46;<span class="hljs-title function_">split</span>&#40;<span class=
 <span class="hljs-variable language_">console</span>&#46;<span class="hljs-title function_">log</span>&#40;text&#46;<span class="hljs-title function_">join</span>&#40;<span class="hljs-string">&#x27;&amp;#110;&#x27;</span>&#41;&#41;;
 </code>
 <h1 id="test25">test</h1>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2563,8 +2563,8 @@ SOFTWARE&#46;
 &nbsp;&nbsp;<span class="hljs-keyword">return</span> array;
 }
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -2618,7 +2618,7 @@ _ORANGE_BG=<span class="hljs-string">&#x27;&amp;#48;33&#91;2;41m&#x27;</span>
 <span class="hljs-built_in">export</span> _LIGHTPURPLE_BG
 <span class="hljs-built_in">export</span> _ORANGE_BG
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2668,8 +2668,8 @@ SOFTWARE&#46;
 };
 <span class="hljs-built_in">exports</span>&#46;<span class="hljs-property">prefix</span> = <span class="hljs-string">`<span class="hljs-subst">${esc}</span>&#91;2;45m<span class="hljs-subst">${esc}</span>&#91;1;30m_just<span class="hljs-subst">${esc}</span>&#91;0m&#58; `</span>;
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -2714,7 +2714,7 @@ ERROR_PREFIX=<span class="hljs-string">&quot;_just&quot;</span>
 <span class="hljs-built_in">export</span> -f _justMessage
 <span class="hljs-built_in">export</span> -f customErrorMessage
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2936,7 +2936,7 @@ _just&#46;<span class="hljs-property">number</span> = <span class="hljs-built_in
 &nbsp;&nbsp;&nbsp;&nbsp;&#46;<span class="hljs-title function_">replaceAll</span>&#40;<span class="hljs-string">&quot;&#x27;t&#x27;&quot;</span>, <span class="hljs-variable constant_">MAPPING</span>&#91;<span class="hljs-string">&#x27;t&#x27;</span>&#93;&#46;<span class="hljs-title function_">replace</span>&#40;<span class="hljs-string">&#x27;true&#x27;</span>,<span class="hljs-variable constant_">SIMPLE</span>&#46;<span class="hljs-property">true</span>&#41;&#41;
 }
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2970,7 +2970,7 @@ SOFTWARE&#46;
 &nbsp;<span class="hljs-keyword">return</span> str&#46;<span class="hljs-title function_">replace</span>&#40;<span class="hljs-regexp">/&amp;#110;{2,50}/g</span>, <span class="hljs-string">&#x27;&#x27;</span>&#41;&#46;<span class="hljs-title function_">replaceAll</span>&#40;<span class="hljs-string">&#x27;&amp;#110;&#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span>&#41;&#46;<span class="hljs-title function_">trim</span>&#40;&#41;
 }
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -3063,7 +3063,7 @@ SOFTWARE&#46;
 }
 <span class="hljs-built_in">exports</span>&#46;<span class="hljs-property">convertbasedigits</span> = convertbasedigits;
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -3123,7 +3123,7 @@ apis&#91;<span class="hljs-string">&quot;is-a&#46;dev&quot;</span>&#93; = <span 
 &nbsp;}
 }
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -3209,8 +3209,8 @@ SOFTWARE&#46;
 &nbsp;<span class="hljs-keyword">return</span> spaces ? str&#46;<span class="hljs-title function_">replaceAll</span>&#40;<span class="hljs-string">&#x27;<em>&#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span>&#41;&#46;<span class="hljs-title function</em>">replaceAll</span>&#40;<span class="hljs-string">&#x27;-&#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span>&#41; &#58; str;
 }
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -3242,8 +3242,8 @@ SOFTWARE&#46;
 <span class="hljs-built_in">export</span> -f generate_strings
 </code>
 <h1 id="test26">test</h1>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -3399,8 +3399,8 @@ manifest_size=$&#40;<span class="hljs-built_in">stat</span> -c%s <span class="hl
 <span class="hljs-built_in">cp</span> deploy/api/_just_build-manifest deploy/api/_just_build-manifest&#46;json
 <span class="hljs-built_in">cp</span> deploy/api/build-manifest deploy/api/build-manifest&#46;json
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -3449,8 +3449,8 @@ manifest_size=$&#40;<span class="hljs-built_in">stat</span> -c%s <span class="hl
 <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;End _just Checks&amp;#110;&quot;</span>
 <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;----------------&amp;#110;&quot;</span>
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -3482,11 +3482,11 @@ BUILD_ID=$&#40;<span class="hljs-built_in">cat</span> &#46;next/BUILD_ID&#41;
 <span class="hljs-built_in">cp</span> &#46;next/build-manifest&#46;json deploy/api/next_build-manifest&#46;txt
 </code>
 <h1 id="test27">test</h1>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-variable language_">window</span>&#46;<span class="hljs-property">_just_Manifest</span> = _just_Manifest0;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-variable language_">window</span>&#46;<span class="hljs-property">_just_Manifest</span> = _just_Manifest0;
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-keyword">const</span> _just_Manifest0 = &#91;&#93;;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-keyword">const</span> _just_Manifest0 = &#91;&#93;;
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-variable language_">window</span>&#46;<span class="hljs-property">_just_buildManifest</span> = _just_buildManifest0;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-variable language_">window</span>&#46;<span class="hljs-property">_just_buildManifest</span> = _just_buildManifest0;
 <span class="hljs-comment">/&#42; Example usage&#58;
 
 let buildManifestString = &#x27;&#x27;;
@@ -3498,9 +3498,9 @@ console&#46;log&#40;<code>%c${buildManifestString}</code>, `color&#58; #6e3bf3; 
 
 &#42;/</span>
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-keyword">const</span> _just_buildManifest0 = &#91;&#93;;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-keyword">const</span> _just_buildManifest0 = &#91;&#93;;
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-keyword">try</span> {
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-keyword">try</span> {
 &nbsp;<span class="hljs-variable language_">window</span>&#46;<span class="hljs-property"><em>just_Manifest</span>&#46;<span class="hljs-title function</em>">forEach</span>&#40;<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> {
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">const</span> url = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">window</span>&#46;location&#46;protocol}</span>//<span class="hljs-subst">${<span class="hljs-variable language_">window</span>&#46;location&#46;hostname}</span>/<span class="hljs-subst">${item}</span>`</span>;
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">if</span> &#40;caches&#41; {
@@ -3522,10 +3522,10 @@ console&#46;log&#40;<code>%c${buildManifestString}</code>, `color&#58; #6e3bf3; 
 &nbsp;<span class="hljs-variable language_">console</span>&#46;<span class="hljs-title function_">error</span>&#40;<span class="hljs-string">&#x27;_just error&#58; it looks like your website&amp;#39;s scripts override window&#46;_just_Manifest&#46;&#x27;</span>&#41;
 }
 </code>
-<code class="mDGvS"><code>XML</code><span class="hljs-comment">&lt;!-- This website uses _just postprocessor /--&gt;</span>
+<code class="UTvi6"><code>XML</code><span class="hljs-comment">&lt;!-- This website uses _just postprocessor /--&gt;</span>
 <span class="hljs-comment">&lt;!-- Learn more here&#58;&#40;WEBSITE COMING SOON&#41; /--&gt;</span>
 </code>
-<code class="mDGvS"><code>CSS</code><span class="hljs-selector-tag">iframe</span><span class="hljs-selector-attr">&#91;src=<span class="hljs-string">&quot;/_just/e&quot;</span>&#93;</span> {
+<code class="UTvi6"><code>CSS</code><span class="hljs-selector-tag">iframe</span><span class="hljs-selector-attr">&#91;src=<span class="hljs-string">&quot;/_just/e&quot;</span>&#93;</span> {
 &nbsp;<span class="hljs-attribute">position</span>&#58; fixed;
 &nbsp;<span class="hljs-attribute">z-index</span>&#58; <span class="hljs-number">10000</span>;
 &nbsp;<span class="hljs-attribute">top</span>&#58; <span class="hljs-number">0px</span>;
@@ -3537,7 +3537,7 @@ console&#46;log&#40;<code>%c${buildManifestString}</code>, `color&#58; #6e3bf3; 
 &nbsp;<span class="hljs-attribute">overflow</span>&#58; hidden <span class="hljs-meta">!important</span>;
 }
 </code>
-<code class="mDGvS"><code>XML</code><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width&quot;</span>&gt;</span>
+<code class="UTvi6"><code>XML</code><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width&quot;</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>_just error<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1&#46;0&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
 <span class="hljs-keyword">@import</span> url&#40;<span class="hljs-string">&#x27;https&#58;//fonts&#46;googleapis&#46;com/css2?family=Roboto+Mono&#58;ital,wght@0,100&#46;&#46;700;1,100&#46;&#46;700&amp;family=Roboto&#58;ital,wght@0,100&#46;&#46;900;1,100&#46;&#46;900&amp;family=Rubik&#58;ital,wght@0,300&#46;&#46;900;1,300&#46;&#46;900&amp;display=swap&#x27;</span>&#41;;
@@ -3623,8 +3623,8 @@ console&#46;log&#40;<code>%c${buildManifestString}</code>, `color&#58; #6e3bf3; 
 <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>See the browser console for more information&#46;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"><span class="hljs-variable language_">document</span>&#46;<span class="hljs-property">ondragstart</span>=noselect;<span class="hljs-variable language_">document</span>&#46;<span class="hljs-property">onselectstart</span>=noselect;<span class="hljs-variable language_">document</span>&#46;<span class="hljs-property">oncontextmenu</span>=noselect;<span class="hljs-keyword">function</span> <span class="hljs-title function_">noselect</span>&#40;<span class="hljs-params"></span>&#41;{<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;}</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -3744,8 +3744,8 @@ find _just/dangerously-insert-files/ -<span class="hljs-built_in">type</span> f 
 <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;&amp;#110;End Dangerously Inserted Files&amp;#110;&quot;</span>
 <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;----------------&amp;#110;&quot;</span>
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -3791,8 +3791,8 @@ find deploy -<span class="hljs-built_in">type</span> f -name <span class="hljs-s
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$&#40;cat $GITHUB_ACTION_PATH/src/postprocessor/insert/error&#46;html&#41;</span>&quot;</span> &gt; deploy/_just/e&#46;html
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$&#40;cat $GITHUB_ACTION_PATH/src/postprocessor/insert/error&#46;css&#41;</span>&quot;</span> &gt; deploy/_just/e&#46;css
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -3817,8 +3817,8 @@ find deploy -<span class="hljs-built_in">type</span> f -name <span class="hljs-s
 <span class="hljs-keyword">fi</span>
 </code>
 <h1 id="test28">test</h1>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -3871,7 +3871,7 @@ redirect_config_=$&#40;<span class="hljs-built_in">echo</span> <span class="hljs
 validate_redirect_config
 validate_paths
 </code>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -4041,7 +4041,7 @@ module&#46;exports = {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 &nbsp;&nbsp;&nbsp;&nbsp;&#93;
 &nbsp;}
-}<div class="AqcO0"></div><br>everything combined&#58;
+}<div class="hyjM2"></div><br>everything combined&#58;
 module&#46;exports = {
 &nbsp;type&#58; &quot;redirect&quot;, 
 &nbsp;redirect_config&#58; {
@@ -4074,7 +4074,7 @@ module&#46;exports = {
 }
 &#42;/</span>
 </code>
-<code class="mDGvS"><code>CSS</code><span class="hljs-keyword">@import</span> url&#40;<span class="hljs-string">&#x27;https&#58;//fonts&#46;googleapis&#46;com/css2?family=Rubik&#58;ital,wght@0,300&#46;&#46;900;1,300&#46;&#46;900&amp;display=swap&#x27;</span>&#41;;
+<code class="UTvi6"><code>CSS</code><span class="hljs-keyword">@import</span> url&#40;<span class="hljs-string">&#x27;https&#58;//fonts&#46;googleapis&#46;com/css2?family=Rubik&#58;ital,wght@0,300&#46;&#46;900;1,300&#46;&#46;900&amp;display=swap&#x27;</span>&#41;;
 <span class="hljs-selector-tag">html</span> {
 &nbsp;<span class="hljs-attribute">background-color</span>&#58; <span class="hljs-number"><div style="background&#58;#111111"></div>#111111</span>;
 &nbsp;<span class="hljs-attribute">padding</span>&#58; <span class="hljs-number">10px</span>;
@@ -4134,8 +4134,8 @@ module&#46;exports = {
 &nbsp;-webkit-<span class="hljs-attribute">filter</span>&#58; <span class="hljs-built_in">drop-shadow</span>&#40;<span class="hljs-number">0px</span> <span class="hljs-number">0px</span> <span class="hljs-number">7px</span> <span class="hljs-number">#dddddd99</span>&#41;;
 }
 </code>
-<code class="mDGvS"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;FrWXT&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
+<code class="UTvi6"><code>Bash</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=<span class="hljs-string">&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rxkt0&quot;</span>&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;
 &lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
 &lt;h1&gt;of this software and associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
@@ -4341,7 +4341,7 @@ _just_d=<span class="hljs-string">&quot;no&quot;</span> &amp;&amp;
 <span class="hljs-keyword">fi</span>
 </code>
 <h1 id="test29">test</h1>
-<code class="mDGvS"><code>JavaScript</code><span class="hljs-comment">/&#42;
+<code class="UTvi6"><code>JavaScript</code><span class="hljs-comment">/&#42;
 MIT License
 Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;https&#58;//juststudio&#46;is-a&#46;dev/&gt;
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -4376,8 +4376,8 @@ SOFTWARE&#46;
 }
 <span class="hljs-variable language_">console</span>&#46;<span class="hljs-title function_">log</span>&#40;<span class="hljs-title function_">time</span>&#40;diff&#41;&#41;;
 </code>
-<code class="mDGvS"><code>Python</code>&lt;h1&gt;MIT License&lt;/h1&gt;
-&lt;h1&gt;<span class="hljs-comment"># Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot; target=&quot;_blank&quot; id=&quot;FrWXT&quot;&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;</span>
+<code class="UTvi6"><code>Python</code>&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;<span class="hljs-comment"># Copyright &#40;c&#41; 2025 JustStudio&#46; &lt;a href=&quot;https&#58;//juststudio&#46;is-a&#46;dev/&quot; target=&quot;_blank&quot; id=&quot;rxkt0&quot;&gt;https&#58;//juststudio&#46;is-a&#46;dev/&lt;/a&gt;&lt;/h1&gt;</span>
 &lt;h1&gt;<span class="hljs-comment"># Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;</span>
 &lt;h1&gt;of this software <span class="hljs-keyword">and</span> associated documentation files &#40;the <span class="hljs-string">&quot;Software&quot;</span>&#41;, to deal&lt;/h1&gt;
 &lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
