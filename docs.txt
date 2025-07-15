@@ -1,6 +1,6 @@
 <p>[object Promise]
 Welcome to Just an Ultimate Site Tool documentation!
-[object Promise]<div class="FsATY"></div><br>[object Promise]
+[object Promise]<div class="NbSr9"></div><br>[object Promise]
 Just an Ultimate Site Tool is a GitHub Action for building static websites. 
 Currently it have 4 modes: 
 [object Promise]

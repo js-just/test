@@ -1,5 +1,5 @@
 <p>[object Promise]
-This is a Markdown test for the Markdown Guide tools directory.<div class="FsATY"></div><br>headings
+This is a Markdown test for the Markdown Guide tools directory.<div class="NbSr9"></div><br>headings
 
 [object Promise]
 [object Promise]
@@ -10,13 +10,13 @@ This is a Markdown test for the Markdown Guide tools directory.<div class="FsATY
 Alternate One
 <mark></mark><mark></mark><mark></mark>=
 
-Alternate Two<div class="FsATY"></div><br>---
+Alternate Two<div class="NbSr9"></div><br>---
 
 paragraphs
 
 first paragraph
 
-second para<div class="FsATY"></div><br>line breaks
+second para<div class="NbSr9"></div><br>line breaks
 
 line one with trailing whitespace  
 line two right under
@@ -25,72 +25,72 @@ line one with no trailing whitespace, just hard return
 line two right under
 
 line one with no trailing backslash 
-line two right under<div class="FsATY"></div><br>bold
+line two right under<div class="NbSr9"></div><br>bold
 
 <strong>asterisks</strong>
 
 <u>underscores</u>
 
-in<em><em>middle</em></em>here<div class="FsATY"></div><br>italic
+in<em><em>middle</em></em>here<div class="NbSr9"></div><br>italic
 
 <em>asterisk</em>
 
 <em>underscore</em>
 
-in<em>middle</em>here<div class="FsATY"></div><br>bold and italic
+in<em>middle</em>here<div class="NbSr9"></div><br>bold and italic
 
 <em><strong>asterisks</strong></em>
 
-<em class="FsAT">underscores</em>
+<em class="NbSr">underscores</em>
 
-<em class="FsAT">combo</em>
+<em class="NbSr">combo</em>
 
-<em><strong>second combo</strong></em><div class="FsATY"></div><br>blockquotes
+<em><strong>second combo</strong></em><div class="NbSr9"></div><br>blockquotes
 
 [object Promise]
 [object Promise]
 [object Promise]
 [object Promise]
-[object Promise]<div class="FsATY"></div><br>ordered lists
+[object Promise]<div class="NbSr9"></div><br>ordered lists
 
 [object Promise]
 
 [object Promise]
 
  1. nested
-[object Promise]<div class="FsATY"></div><br>unordered lists
+[object Promise]<div class="NbSr9"></div><br>unordered lists
 
 [object Promise]
   - nested
 
 [object Promise]
 
-[object Promise]<div class="FsATY"></div><br>code
+[object Promise]<div class="NbSr9"></div><br>code
 
 <code>one tick mark</code>
 
 
  <one tab>
 
-  <indented><div class="FsATY"></div><br>horizontal rules
+  <indented><div class="NbSr9"></div><br>horizontal rules
 
-throughout this :)<div class="FsATY"></div><br>links
+throughout this :)<div class="NbSr9"></div><br>links
 
-normal link => <a href="https://cnn.com" target="_blank" id="LUDNW">cnn</a>
+normal link => <a href="https://cnn.com" target="_blank" id="uAWjK">cnn</a>
 
-brackets => <a href="https://cnn.com" target="_blank" id="LUDNW">https://cnn.com</a>
+brackets => <a href="https://cnn.com" target="_blank" id="uAWjK">https://cnn.com</a>
 
 brackets => <a href="mailto:me@somewhere.com">me@somewhere.com</a>
 
-naked url (test auto link) => <a href="https://cnn.com" target="_blank" id="LUDNW">https://cnn.com</a><div class="FsATY"></div><br>images
+naked url (test auto link) => <a href="https://cnn.com" target="_blank" id="uAWjK">https://cnn.com</a><div class="NbSr9"></div><br>images
 
-<img src="https://www.markdownguide.org/assets/images/tools/joplin.png" alt="test image" loading="lazy"><div class="FsATY"></div><br>[object Promise]
+<img src="https://www.markdownguide.org/assets/images/tools/joplin.png" alt="test image" loading="lazy"><div class="NbSr9"></div><br>[object Promise]
 | Syntax      | Description |
 | ----------- | ----------- |
 | Header      | Title       |
-| Paragraph   | Text        |<div class="FsATY"></div><br>[object Promise]
-[object Promise]<div class="FsATY"></div><br>[object Promise]
-[object Promise]<div class="FsATY"></div><br>[object Promise]
+| Paragraph   | Text        |<div class="NbSr9"></div><br>[object Promise]
+[object Promise]<div class="NbSr9"></div><br>[object Promise]
+[object Promise]<div class="NbSr9"></div><br>[object Promise]
 Here's a simple footnote,[<sup>1] and here's a longer one.[</sup>bignote]
 
 [^1]: This is the first footnote.
@@ -104,30 +104,30 @@ Here's a simple footnote,[<sup>1] and here's a longer one.[</sup>bignote]
  <code>{ my code }</code>
 
 
- Add as many paragraphs as you like.<div class="FsATY"></div><br>[object Promise]
-[object Promise]<div class="FsATY"></div><br>[object Promise]
+ Add as many paragraphs as you like.<div class="NbSr9"></div><br>[object Promise]
+[object Promise]<div class="NbSr9"></div><br>[object Promise]
 First Term
 : This is the definition of the first term.
 
 Second Term
 : This is one definition of the second term.
-: This is another definition of the second term.<div class="FsATY"></div><br>[object Promise]
+: This is another definition of the second term.<div class="NbSr9"></div><br>[object Promise]
 <del>two tilde</del>
 
-<sub>one tilde</sub><div class="FsATY"></div><br>[object Promise]
-<input type="checkbox" id="hgZX0"  checked title="Write"> Write the press release
-<input type="checkbox" id="hgZX1"  title="Update"> Update the website
-<input type="checkbox" id="hgZX2"  title="Contact"> Contact the media<div class="FsATY"></div><br>[object Promise]
+<sub>one tilde</sub><div class="NbSr9"></div><br>[object Promise]
+<input type="checkbox" id="FHTI0"  checked title="Write"> Write the press release
+<input type="checkbox" id="FHTI1"  title="Update"> Update the website
+<input type="checkbox" id="FHTI2"  title="Contact"> Contact the media<div class="NbSr9"></div><br>[object Promise]
 copy and paste: ☕
-shortcodes: :joy:<div class="FsATY"></div><br>[object Promise]
+shortcodes: :joy:<div class="NbSr9"></div><br>[object Promise]
 <mark>twoequals</mark>
 
-::twohypens::<div class="FsATY"></div><br>[object Promise]
-H<sub>2</sub>O<div class="FsATY"></div><br>[object Promise]
-X<sup>2</sup><div class="FsATY"></div><br>[object Promise]
+::twohypens::<div class="NbSr9"></div><br>[object Promise]
+H<sub>2</sub>O<div class="NbSr9"></div><br>[object Promise]
+X<sup>2</sup><div class="NbSr9"></div><br>[object Promise]
 *[HTML]: Hyper Text Markup Language
 
-The HTML specification is maintained by the W3C.<div class="FsATY"></div><br>[object Promise]
+The HTML specification is maintained by the W3C.<div class="NbSr9"></div><br>[object Promise]
 <em>italic test</em>
 
 <strong>bold test</strong></p>

@@ -10,7 +10,7 @@ You can also add <code>content{}</code> in <code>params{}</code> if you want to 
 [object Promise]
 [object Promise]
 You may add <code>paths&#91;&#93;</code> in <code>redirect&&#35;95;config{}</code> to create custom redirect paths.
-[object Promise]<div class="FsATY"></div><br>[object Promise]
+[object Promise]<div class="NbSr9"></div><br>[object Promise]
 [object Promise]
 
 </p>

@@ -1,14 +1,14 @@
 <p>[object Promise]
-Generated using <a href="https://just.is-a.dev/" target="_blank" id="LUDNW">Just an Ultimate Site Tool</a>.
+Generated using <a href="https://just.is-a.dev/" target="_blank" id="uAWjK">Just an Ultimate Site Tool</a>.
 
-Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <u>underlined</u>, <del>strikethrough</del>, <sub>sub</sub>, <sup>super</sup>, <mark>marked</mark>, <em class="FsAT"><strong>very important</strong></em>, <mark><em class="FsAT"><strong>extreme important</strong></em></mark>, <em class="lGCB"><strong>not important</strong></em> text.
-Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <u><code>underlined</code></u>, <del><code>strikethrough</code></del>, <sub><code>sub</code></sub>, <sup><code>super</code></sup>, <mark><code>marked</code></mark>, <em class="FsAT"><strong><code>very important</code></strong></em>, <mark><em class="FsAT"><strong><code>extreme important</code></strong></em></mark>, <em class="lGCB"><strong><code>not important</code></strong></em> code.
-
-[object Promise]
+Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <u>underlined</u>, <del>strikethrough</del>, <sub>sub</sub>, <sup>super</sup>, <mark>marked</mark>, <em class="NbSr"><strong>very important</strong></em>, <mark><em class="NbSr"><strong>extreme important</strong></em></mark>, <em class="coBs"><strong>not important</strong></em> text.
+Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <u><code>underlined</code></u>, <del><code>strikethrough</code></del>, <sub><code>sub</code></sub>, <sup><code>super</code></sup>, <mark><code>marked</code></mark>, <em class="NbSr"><strong><code>very important</code></strong></em>, <mark><em class="NbSr"><strong><code>extreme important</code></strong></em></mark>, <em class="coBs"><strong><code>not important</code></strong></em> code.
 
 [object Promise]
 
-A line:<div class="FsATY"></div><br>[object Promise]
+[object Promise]
+
+A line:<div class="NbSr9"></div><br>[object Promise]
 
 [object Promise]
 [object Promise]
@@ -47,9 +47,9 @@ No code here
 
 [object Promise]
 [object Promise]
-<a href="https://just.is-a.dev/" target="_blank" id="LUDNW" title="link title">a link</a>
-<a href="https://just.is-a.dev/" target="_blank" id="LUDNW">https://just.is-a.dev/</a>
-<a href="https://just.is-a.dev" target="_blank" id="LUDNW">https://just.is-a.dev</a><div class="FsATY"></div><br>[object Promise]
+<a href="https://just.is-a.dev/" target="_blank" id="uAWjK" title="link title">a link</a>
+<a href="https://just.is-a.dev/" target="_blank" id="uAWjK">https://just.is-a.dev/</a>
+<a href="https://just.is-a.dev" target="_blank" id="uAWjK">https://just.is-a.dev</a><div class="NbSr9"></div><br>[object Promise]
 [object Promise]
 [object Promise]
 [object Promise]
