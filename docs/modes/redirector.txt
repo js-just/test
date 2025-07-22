@@ -1,16 +1,16 @@
 <p><h1 id="Redirector%20mode">Redirector mode</h1>
 This mode requires only the just.config.js file, <sub>except for the workflow file</sub>.
 <code>just&#46;config&#46;js</code>
-<_just element="qwuMm4">11</_just>
-<blockquote class="DENIZ">Do not use this mode if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
+<_just element="hBGCAAG">11</_just>
+<blockquote class="ivoXQ">Do not use this mode if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
 You can add <code>params{}</code>:
-<_just element="qwuMm4">12</_just>
+<_just element="hBGCAAG">12</_just>
 You can also add <code>content{}</code> in <code>params{}</code> if you want to modify HTML content.
-<_just element="qwuMm4">13</_just>
-<blockquote class="DENIL"><code>&&#35;92;n</code> and tabs/4 spaces will be removed. Use <code>&#60;br&#62;</code> instead of <code>&&#35;92;n</code>.</blockquote>
+<_just element="hBGCAAG">13</_just>
+<blockquote class="ivoXC"><code>&&#35;92;n</code> and tabs/4 spaces will be removed. Use <code>&#60;br&#62;</code> instead of <code>&&#35;92;n</code>.</blockquote>
 <h3 id="Redirect%20paths">Redirect paths</h3>
 You may add <code>paths&#91;&#93;</code> in <code>redirect&&#35;95;config{}</code> to create custom redirect paths.
-<_just element="qwuMm4">14</_just><div class="DENIY"></div><br><h2 id="%3Ccode%3Emodule%26%2346%3Bexports%3C%2Fcode%3E%20JSON%20Schema"><code>module&#46;exports</code> JSON Schema</h2>
-<_just element="qwuMm4">15</_just>
+<_just element="hBGCAAG">14</_just><div class="ivoX0"></div><br><h2 id="%3Ccode%3Emodule%26%2346%3Bexports%3C%2Fcode%3E%20JSON%20Schema"><code>module&#46;exports</code> JSON Schema</h2>
+<_just element="hBGCAAG">15</_just>
 
 </p>
