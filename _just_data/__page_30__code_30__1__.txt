@@ -1,3 +1,0 @@
-  text
-<span class="hljs-addition">+ added</span>
-<span class="hljs-deletion">- removed</span>

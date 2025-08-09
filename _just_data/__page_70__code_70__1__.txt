@@ -1,3 +1,0 @@
-<span class="hljs-comment">&lt;!-- This website uses _just postprocessor /--&gt;</span>
-<span class="hljs-comment">&lt;!-- Learn more here:(WEBSITE COMING SOON) /--&gt;</span>
-

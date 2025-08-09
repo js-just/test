@@ -1,1 +1,0 @@
-    <span class="hljs-attr">uses:</span> <span class="hljs-string">js-just/_just@(put</span> <span class="hljs-string">version</span> <span class="hljs-string">name</span> <span class="hljs-string">here)</span>

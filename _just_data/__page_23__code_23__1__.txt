@@ -1,4 +1,0 @@
-<span class="hljs-comment">#!/usr/bin/env python3</span>
-<span class="hljs-keyword">import</span> time
-out = <span class="hljs-built_in">int</span>(time.time() * <span class="hljs-number">1000</span>)
-<span class="hljs-built_in">print</span>(out)

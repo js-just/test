@@ -1,3 +1,0 @@
-_just: title: Generator Mode
-<h1>Generator mode</h1>
-_just: prev: /docs/getting-started

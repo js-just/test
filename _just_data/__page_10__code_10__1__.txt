@@ -1,3 +1,0 @@
-<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
-  <span class="hljs-attr">type</span>: [<span class="hljs-string">&quot;docs&quot;</span>, <span class="hljs-string">&quot;compress&quot;</span>]
-}

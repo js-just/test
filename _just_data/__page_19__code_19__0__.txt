@@ -1,8 +1,0 @@
-console.log('hello world');
-console.warn(1 + 1);
-alert(false);
-const abc = true;
-for (i = 1; i <= 4; i++) {
-
- // do something
-}

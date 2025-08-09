@@ -1,4 +1,0 @@
-<span class="hljs-attr">permissions:</span>
-  <span class="hljs-attr">contents:</span> <span class="hljs-string">read</span>
-  <span class="hljs-attr">pages:</span> <span class="hljs-string">write</span>
-  <span class="hljs-attr">id-token:</span> <span class="hljs-string">write</span>

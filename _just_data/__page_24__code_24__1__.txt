@@ -1,7 +1,0 @@
-<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;hiii&quot;</span>)
-warn(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>)
-<span class="hljs-keyword">local</span> abc = <span class="hljs-literal">true</span>
-<span class="hljs-keyword">while</span> wait(<span class="hljs-number">1</span>) <span class="hljs-keyword">do</span>
-
- <span class="hljs-comment">-- do something</span>
-<span class="hljs-keyword">end</span>
