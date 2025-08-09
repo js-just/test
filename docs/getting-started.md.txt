@@ -1,153 +1,47 @@
-3t45tvg4veg
+dasfsdfasfs
 
 
-# Getting Started
-### Necessary knowledge
+<p><h1 id="Getting%20Started">Getting Started</h1>
+<h3 id="Necessary%20knowledge">Necessary knowledge</h3>
 This documentation assumes some familiarity with
-- GitHub
-- GitHub Actions
-- GitHub Pages
+<ul><li>GitHub</li><li>GitHub Actions</li><li>GitHub Pages</li></ul>
 And some familiarity with these languages
-- JavaScript
-- YAML
-- HTML
-- CSS
-- Markdown
-## Installation
-### Making your first project
-- Create new repository, and create `/.github/workflows/publish.yml` file, template:
-```yml
-name: Website
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Generate with _just
-        uses: js-just/latest@main
-        with: # Remove "with" and "path" here if you are not using compressor or generator modes!
-          path: . # Root directory, or you can replace the dot with the path to your website/docs directory to be generated/compressed. (Only for compressor and generator modes)
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: . # Root directory, or you can replace the dot with the path to your entire website to be deployed to GitHub Pages.
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
+<ul><li>JavaScript</li><li>YAML</li><li>HTML</li><li>CSS</li><li>Markdown</li></ul>
+<h2 id="Installation">Installation</h2>
+<h3 id="Making%20your%20first%20project">Making your first project</h3>
+<ul><li>Create new repository, and create <code>/&#46;github/workflows/publish&#46;yml</code> file, template:</li></ul>
+<_just element="KyNQKjt"></_just>
 You can change name of workflow file and workflow name:
-```yml
-name: Workflow name
-```
+<_just element="KyNQKjt">1</_just>
 You can also choose _just version:
-```yml
-        uses: js-just/_just@(put version name here)
-```
-**If you know what exactly you are doing, you may change anything.**
-- Create `just.config.js` file in the root directory:
+<_just element="KyNQKjt">2</_just>
+<strong>If you know what exactly you are doing, you may change anything.</strong>
+<ul><li>Create <code>just&#46;config&#46;js</code> file in the root directory:</li></ul>
 Choose what mode you want to use.
  
-Using `Postprocessor` mode:
-```js
-module.exports = {
-  type: "postprocessor"
-}
-```
-Using `Redirector` mode: 
-```js
-module.exports = {
-    type: "redirect", 
-    redirect_config: {
-        url: "https://example.com/", // Required. Replace with destination URL.
-    }
-}
-```
-Using `Compressor` mode:
-```js
-module.exports = {
-    type: "compress"
-}
-```
-Using `Generator` mode:
-```js
-module.exports = {
-    type: "docs",
-    docs_config: {
-        metatitle: "Documentation title", // Required. Replace with your documentation title.
-        domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
-    }
-}
-```
-- Read the documentation for the mode that you've chosen.
----
-### Pro installation
-- Create or modify your `.github/workflows/github_pages_workflow_name.yml`:
-Make sure that permissions allow writing `pages` and `id-token`, but do not allow writing `contents`, only read.
-```yml
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-```
+Using <code>Postprocessor</code> mode:
+<_just element="KyNQKjt">3</_just>
+Using <code>Redirector</code> mode: 
+<_just element="KyNQKjt">4</_just>
+Using <code>Compressor</code> mode:
+<_just element="KyNQKjt">5</_just>
+Using <code>Generator</code> mode:
+<_just element="KyNQKjt">6</_just>
+<ul><li>Read the documentation for the mode that you've chosen.</li></ul><div class="RpahG"></div><br><h3 id="Pro%20installation">Pro installation</h3>
+<ul><li>Create or modify your <code>&#46;github/workflows/github&&#35;95;pages&&#35;95;workflow&&#35;95;name&#46;yml</code>:</li></ul>
+Make sure that permissions allow writing <code>pages</code> and <code>id&#45;token</code>, but do not allow writing <code>contents</code>, only read.
+<_just element="KyNQKjt">7</_just>
 Make a job for building your website using _just:
-```yml
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Generate with _just
-        uses: js-just/_just@ # version name (recommended) (example: v0.0.29) / main branch (latest commit) (unstable, not recommended) / commit SHA (not recommended)
-        with:
-          path: # Path to your website directory to be generated/compressed. (Only for compressor and generator modes)
-```
-- Create `just.config.js` file:
+<_just element="KyNQKjt">8</_just>
+<ul><li>Create <code>just&#46;config&#46;js</code> file:</li></ul>
 Basic usage:
-```js
-module.exports = {
-  type: "(postprocessor/redirect/compress/docs)"
-}
-```
+<_just element="KyNQKjt">9</_just>
 Using multiple modes:
--# Currently available only combining generator and compressor.
-```js
-module.exports = {
-  type: ["docs", "compress"]
-}
-```
-- Read the documentation for the mode/modes that you've chosen.
+<span class="KyNQh77">Currently available only combining generator and compressor.</span>
+<_just element="KyNQKjt">10</_just>
+<ul><li>Read the documentation for the mode/modes that you've chosen.</li></ul>
 
-## Modes documentation
-- [Postprocessor](modes/postprocessor)
-- [Redirector](modes/redirector)
-- [Compressor](modes/compressor)
-- [Generator](modes/generator)
+<h2 id="Modes%20documentation">Modes documentation</h2>
+<ul><li><a href="modes/postprocessor" target="_blank" id="EiGtB">Postprocessor</a></li><li><a href="modes/redirector" target="_blank" id="EiGtB">Redirector</a></li><li><a href="modes/compressor" target="_blank" id="EiGtB">Compressor</a></li><li><a href="modes/generator" target="_blank" id="EiGtB">Generator</a></li></ul>
 
-_just: prev: /docs
+_just: prev: /docs</p>
