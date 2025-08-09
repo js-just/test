@@ -1,35 +1,38 @@
 <p><h1 id="This%20is%20a%20test%20page">This is a test page</h1>
-Generated using <a href="https://just.is-a.dev/" target="_blank" id="rcegT">Just an Ultimate Site Tool</a>.
+Generated using <a href="https://just.is-a.dev/" target="_blank" id="fZNmD">Just an Ultimate Site Tool</a>.
 
-Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <u>underlined</u>, <del>strikethrough</del>, <sub>sub</sub>, <sup>super</sup>, <mark>marked</mark>, <em class="JSUq"><strong>very important</strong></em>, <mark><em class="JSUq"><strong>extreme important</strong></em></mark>, <em class="QFzE"><strong>not important</strong></em> text.
-Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <u><code>underlined</code></u>, <del><code>strikethrough</code></del>, <sub><code>sub</code></sub>, <sup><code>super</code></sup>, <mark><code>marked</code></mark>, <em class="JSUq"><strong><code>very important</code></strong></em>, <mark><em class="JSUq"><strong><code>extreme important</code></strong></em></mark>, <em class="QFzE"><strong><code>not important</code></strong></em> code.
+Some <strong>bold</strong>, <em>italic</em>, <em><strong>important</strong></em>, <u>underlined</u>, <del>strikethrough</del>, <sub>sub</sub>, <sup>super</sup>, <mark>marked</mark>, <em class="rQvz"><strong>very important</strong></em>, <mark><em class="rQvz"><strong>extreme important</strong></em></mark>, <em class="SngK"><strong>not important</strong></em> text.
+Some <code>code</code>; <strong><code>bold</code></strong>, <em><code>italic</code></em>, <em><strong><code>important</code></strong></em>, <u><code>underlined</code></u>, <del><code>strikethrough</code></del>, <sub><code>sub</code></sub>, <sup><code>super</code></sup>, <mark><code>marked</code></mark>, <em class="rQvz"><strong><code>very important</code></strong></em>, <mark><em class="rQvz"><strong><code>extreme important</code></strong></em></mark>, <em class="SngK"><strong><code>not important</code></strong></em> code.
 
 <ol><li>List</li><li>(with numbers)</li></ol>
 
 <ul><li>List</li><li>(no numbers)</li></ul>
 
-A line:<div class="JSUqE"></div><br><_just element="mnDOuKO">17</_just>
+A line:<div class="rQvz1"></div><br><_just element="FbxtRT3">17</_just>
 
-<h1 id="Blockquotes%20test">Blockquotes test</h1>
-<blockquote>A blockquote.</blockquote>
-<blockquote>> Another one!</blockquote>
-<blockquote><blockquote><br>And another blockquote!</blockquote></blockquote>
-<blockquote><blockquote><br>> Many nested blockquotes.</blockquote></blockquote>
-<blockquote><blockquote><br>> > This line should not be another nested blockquote. (Limit: 4 nested blockqutes)</blockquote></blockquote>
-<blockquote><_just element="ACWj"></_just>[!NOTE] A note!</blockquote>
-<blockquote class="JSUq4">A tip!</blockquote>
-<blockquote class="JSUqP">Something important.</blockquote>
-<blockquote class="JSUqH">A warning!</blockquote>
-<blockquote class="JSUq6">Another warning?</blockquote>
-<blockquote><_just element="ACWj"></_just>[!NOTE] <code>&#91;!NOTE&#93;</code>, <code>&#91;!TIP&#93;</code>, <code>&#91;!IMPORTANT&#93;</code>, <code>&#91;!WARNING&#93;</code> and <code>&#91;!CAUTION&#93;</code> are should be in one line. You can add &#60;br> tags to break the line for HTML. <br> > <code>&#91;!NOTE&#93;</code>, <code>&#91;!TIP&#93;</code>, <code>&#91;!IMPORTANT&#93;</code>, <code>&#91;!WARNING&#93;</code> and <code>&#91;!CAUTION&#93;</code> cannot have nested blockquotes.</blockquote>
-<h1 id="Headers%20test%20(h1)">Headers test (h1)</h1>
-<h2 id="h2">h2</h2>
-<h3 id="h3">h3</h3>
-<h4 id="h4">h4</h4>
-<h5>h5</h5>
-<h6>h6</h6>
-<blockquote class="JSUqP">Only h1, h2, h3 and h4 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.</blockquote>
-<h1 id="Escape%20test">Escape test</h1>
+# Blockquotes test
+> A blockquote.
+<blockquote><br>Another one!</blockquote>
+<blockquote><br>> And another blockquote!</blockquote>
+<blockquote><br>> > Many nested blockquotes.</blockquote>
+<blockquote><br><blockquote><br>This line should not be another nested blockquote. (Limit: 4 nested blockqutes)</blockquote></blockquote>
+> <_just element="MOlW"></_just>[!NOTE] A note!
+> [!TIP] A tip!
+> [!IMPORTANT] Something important.
+> [!WARNING] A warning!
+> [!CAUTION] Another warning?
+
+> <_just element="MOlW"></_just>[!NOTE] <code>&#91;!NOTE&#93;</code>, <code>&#91;!TIP&#93;</code>, <code>&#91;!IMPORTANT&#93;</code>, <code>&#91;!WARNING&#93;</code> and <code>&#91;!CAUTION&#93;</code> are should be in one line. You can add &#60;br> tags to break the line for HTML. <br> > <code>&#91;!NOTE&#93;</code>, <code>&#91;!TIP&#93;</code>, <code>&#91;!IMPORTANT&#93;</code>, <code>&#91;!WARNING&#93;</code> and <code>&#91;!CAUTION&#93;</code> cannot have nested blockquotes.
+
+# Headers test (h1)
+## h2
+### h3
+#### h4
+##### h5
+###### h6
+> [!IMPORTANT] Only h1, h2, h3 and h4 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.
+
+# Escape test
 Not a line:
 &#45;--
 
@@ -45,17 +48,20 @@ No code here
 
 &#62; Not a blockquote.
 
-<blockquote><_just element="ACWj"></_just>&#91;&#33;&#78;&#79;&#84;&#69;&#93; A blockquote, but not a note.</blockquote>
-<h1 id="Links%20test">Links test</h1>
-<a href="https://just.is-a.dev/" target="_blank" id="rcegT" title="link title">a link</a>
-<a href="https://just.is-a.dev/" target="_blank" id="rcegT">https://just.is-a.dev/</a>
-<a href="https://just.is-a.dev" target="_blank" id="rcegT">https://just.is-a.dev</a><div class="JSUqE"></div><br><h2 id="v0.0.28%20bugs%3A">v0.0.28 bugs:</h2>
-<h4 id="blockquote%20link%3A">blockquote link:</h4>
-<blockquote class="JSUqH">Just an Ultimate Site Tool is in <strong>beta</strong>. Expect regular updates, possible bugs, and changes. If you have found a bug, please <a href="https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md" target="_blank" id="rcegT">report it here</a>.</blockquote>
-<h4 id="text%20styling%3A">text styling:</h4>
+> <_just element="MOlW"></_just>&#91;&#33;&#78;&#79;&#84;&#69;&#93; A blockquote, but not a note.
+
+# Links test
+<a href="https://just.is-a.dev/" target="_blank" id="fZNmD" title="link title">a link</a>
+<a href="https://just.is-a.dev/" target="_blank" id="fZNmD">https://just.is-a.dev/</a>
+<a href="https://just.is-a.dev" target="_blank" id="fZNmD">https://just.is-a.dev</a><div class="rQvz1"></div><br>## v0.0.28 bugs:
+#### blockquote link:
+> <a href="https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md" target="_blank" id="fZNmD">!WARNING] Just an Ultimate Site Tool is in <strong>beta</strong>. Expect regular updates, possible bugs, and changes. If you have found a bug, please [report it here</a>.
+
+#### text styling:
 "<strong><code>&&#35;95;just</code></strong>"
 
-<h2 id="v0.0.29%20features%3A">v0.0.29 features:</h2>
-<span class="mnDOr7L">small text</span>
+## v0.0.29 features:
+-# small text
+
 
 </p>
