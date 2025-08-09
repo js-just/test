@@ -7,38 +7,38 @@ And some familiarity with these languages
 <h2 id="Installation">Installation</h2>
 <h3 id="Making%20your%20first%20project">Making your first project</h3>
 <ul><li>Create new repository, and create <code>/&#46;github/workflows/publish&#46;yml</code> file, template:</li></ul>
-<_just element="mHliOko"></_just>
+<_just element="BsoxCk2"></_just>
 You can change name of workflow file and workflow name:
-<_just element="mHliOko">1</_just>
+<_just element="BsoxCk2">1</_just>
 You can also choose _just version:
-<_just element="mHliOko">2</_just>
+<_just element="BsoxCk2">2</_just>
 <strong>If you know what exactly you are doing, you may change anything.</strong>
 <ul><li>Create <code>just&#46;config&#46;js</code> file in the root directory:</li></ul>
 Choose what mode you want to use.
  
 Using <code>Postprocessor</code> mode:
-<_just element="mHliOko">3</_just>
+<_just element="BsoxCk2">3</_just>
 Using <code>Redirector</code> mode: 
-<_just element="mHliOko">4</_just>
+<_just element="BsoxCk2">4</_just>
 Using <code>Compressor</code> mode:
-<_just element="mHliOko">5</_just>
+<_just element="BsoxCk2">5</_just>
 Using <code>Generator</code> mode:
-<_just element="mHliOko">6</_just>
-<ul><li>Read the documentation for the mode that you've chosen.</li></ul><div class="XjufQ"></div><br><h3 id="Pro%20installation">Pro installation</h3>
+<_just element="BsoxCk2">6</_just>
+<ul><li>Read the documentation for the mode that you've chosen.</li></ul><div class="gPUa2"></div><br><h3 id="Pro%20installation">Pro installation</h3>
 <ul><li>Create or modify your <code>&#46;github/workflows/github&&#35;95;pages&&#35;95;workflow&&#35;95;name&#46;yml</code>:</li></ul>
 Make sure that permissions allow writing <code>pages</code> and <code>id&#45;token</code>, but do not allow writing <code>contents</code>, only read.
-<_just element="mHliOko">7</_just>
+<_just element="BsoxCk2">7</_just>
 Make a job for building your website using _just:
-<_just element="mHliOko">8</_just>
+<_just element="BsoxCk2">8</_just>
 <ul><li>Create <code>just&#46;config&#46;js</code> file:</li></ul>
 Basic usage:
-<_just element="mHliOko">9</_just>
+<_just element="BsoxCk2">9</_just>
 Using multiple modes:
-<span class="mHlioJQ">Currently available only combining generator and compressor.</span>
-<_just element="mHliOko">10</_just>
+<span class="Bsoxzf">Currently available only combining generator and compressor.</span>
+<_just element="BsoxCk2">10</_just>
 <ul><li>Read the documentation for the mode/modes that you've chosen.</li></ul>
 
 <h2 id="Modes%20documentation">Modes documentation</h2>
-<ul><li><a href="modes/postprocessor" target="_blank" id="wpWT9">Postprocessor</a></li><li><a href="modes/redirector" target="_blank" id="wpWT9">Redirector</a></li><li><a href="modes/compressor" target="_blank" id="wpWT9">Compressor</a></li><li><a href="modes/generator" target="_blank" id="wpWT9">Generator</a></li></ul>
+<ul><li><a href="modes/postprocessor" target="_blank" id="jVCuS">Postprocessor</a></li><li><a href="modes/redirector" target="_blank" id="jVCuS">Redirector</a></li><li><a href="modes/compressor" target="_blank" id="jVCuS">Compressor</a></li><li><a href="modes/generator" target="_blank" id="jVCuS">Generator</a></li></ul>
 
 </p>
