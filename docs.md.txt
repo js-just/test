@@ -1,4 +1,3 @@
-_just: title: Docs
 # _just Docs
 Welcome to Just an Ultimate Site Tool documentation!
 -# "**`_just`**" is an abbreviation of **Just an Ultimate Site Tool**.

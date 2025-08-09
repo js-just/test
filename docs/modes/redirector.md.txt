@@ -1,4 +1,3 @@
-_just: title: Redirector Mode
 # Redirector mode
 This mode requires only the just.config.js file, ~except for the workflow file~.
 `just.config.js`

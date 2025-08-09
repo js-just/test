@@ -1,4 +1,3 @@
-_just: title: Syntax highlighting test
 # Syntax highlighting
 ```json
 {

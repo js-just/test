@@ -1,4 +1,3 @@
-_just: title: Getting Started
 # Getting Started
 ### Necessary knowledge
 This documentation assumes some familiarity with
