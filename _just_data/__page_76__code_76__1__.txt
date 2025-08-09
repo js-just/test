@@ -1,0 +1,80 @@
+&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright (c) 2025 JustStudio. &lt;a href=<span class="hljs-string">&quot;https://juststudio.is-a.dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rGbS9&quot;</span>&gt;https://juststudio.is-a.dev/&lt;/a&gt;&lt;/h1&gt;
+&lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
+&lt;h1&gt;of this software and associated documentation files (the <span class="hljs-string">&quot;Software&quot;</span>), to deal&lt;/h1&gt;
+&lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
+&lt;h1&gt;to use, copy, modify, merge, publish, distribute, sublicense, and/or sell&lt;/h1&gt;
+&lt;h1&gt;copies of the Software, and to permit persons to whom the Software is&lt;/h1&gt;
+&lt;h1&gt;furnished to <span class="hljs-keyword">do</span> so, subject to the following conditions:&lt;/h1&gt;
+&lt;h1&gt;# The above copyright notice and this permission notice shall be included <span class="hljs-keyword">in</span> all&lt;/h1&gt;
+&lt;h1&gt;copies or substantial portions of the Software.&lt;/h1&gt;
+&lt;h1&gt;# THE SOFTWARE IS PROVIDED <span class="hljs-string">&quot;AS IS&quot;</span>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR&lt;/h1&gt;
+&lt;h1&gt;IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&lt;/h1&gt;
+&lt;h1&gt;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE&lt;/h1&gt;
+&lt;h1&gt;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER&lt;/h1&gt;
+&lt;h1&gt;LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,&lt;/h1&gt;
+&lt;h1&gt;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE&lt;/h1&gt;
+&lt;h1&gt;SOFTWARE.&lt;/h1&gt;
+<span class="hljs-comment">#!/bin/bash</span>
+<span class="hljs-built_in">source</span> <span class="hljs-variable">$GITHUB_ACTION_PATH</span>/src/modules/errmsg.sh
+<span class="hljs-built_in">source</span> <span class="hljs-variable">$GITHUB_ACTION_PATH</span>/src/modules/color.sh
+
+config=$(<span class="hljs-built_in">cat</span> just.config.json)
+
+redirect_config_=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$config</span>&quot;</span> | jq -r <span class="hljs-string">&#x27;.redirect_config&#x27;</span>)
+<span class="hljs-keyword">if</span> ! <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$config</span>&quot;</span> | jq -e <span class="hljs-string">&#x27;.redirect_config&#x27;</span> &gt; /dev/null; <span class="hljs-keyword">then</span>
+
+ <span class="hljs-built_in">local</span> ERROR_MESSAGE=$(ErrorMessage <span class="hljs-string">&quot;redirect/checks.sh&quot;</span> <span class="hljs-string">&quot;0117&quot;</span>)
+
+ <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;::error::<span class="hljs-variable">$ERROR_MESSAGE</span>&quot;</span> &amp;&amp; <span class="hljs-built_in">exit</span> 1
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-function"><span class="hljs-title">validate_redirect_config</span></span>() {
+
+ <span class="hljs-keyword">if</span> ! <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$config</span>&quot;</span> | jq -e <span class="hljs-string">&#x27;.redirect_config.url&#x27;</span> &gt; /dev/null; <span class="hljs-keyword">then</span>
+
+    <span class="hljs-built_in">local</span> ERROR_MESSAGE=$(ErrorMessage <span class="hljs-string">&quot;redirect/checks.sh&quot;</span> <span class="hljs-string">&quot;0114&quot;</span>)
+
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;::error::<span class="hljs-variable">$ERROR_MESSAGE</span>&quot;</span> &amp;&amp; <span class="hljs-built_in">exit</span> 1
+
+ <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">validate_paths</span></span>() {
+
+ <span class="hljs-built_in">local</span> paths=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$config</span>&quot;</span> | jq -c <span class="hljs-string">&#x27;.redirect_config.paths[]?&#x27;</span>)
+
+ <span class="hljs-keyword">if</span> [[ -n <span class="hljs-string">&quot;<span class="hljs-variable">$paths</span>&quot;</span> ]]; <span class="hljs-keyword">then</span>
+
+    <span class="hljs-built_in">local</span> countt=0
+
+    <span class="hljs-keyword">for</span> path <span class="hljs-keyword">in</span> <span class="hljs-variable">$paths</span>; <span class="hljs-keyword">do</span>
+
+        <span class="hljs-keyword">if</span> ! <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$path</span>&quot;</span> | jq -e <span class="hljs-string">&#x27;.url&#x27;</span> &gt; /dev/null; <span class="hljs-keyword">then</span>
+
+            <span class="hljs-built_in">local</span> ERROR_MESSAGE=$(customErrorMessage <span class="hljs-string">&quot;Error&quot;</span> <span class="hljs-string">&quot;0115&quot;</span> <span class="hljs-string">&quot;Missing &amp;#34;url&amp;#34; in item #<span class="hljs-variable">$countt</span> in &amp;#34;paths&amp;#34; in &amp;#34;redirect_config&amp;#34; in &amp;#34;module.exports&amp;#34; at &amp;#34;just.config.js&amp;#34; file.&quot;</span>)
+
+            <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;::error::$_RED$ERROR_MESSAGE<span class="hljs-variable">$_RESET</span>&quot;</span> &amp;&amp; <span class="hljs-built_in">exit</span> 1
+
+        <span class="hljs-keyword">fi</span>
+
+
+        <span class="hljs-keyword">if</span> ! <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$path</span>&quot;</span> | jq -e <span class="hljs-string">&#x27;.path_&#x27;</span> &gt; /dev/null; <span class="hljs-keyword">then</span>
+
+            <span class="hljs-built_in">local</span> ERROR_MESSAGE=$(customErrorMessage <span class="hljs-string">&quot;Error&quot;</span> <span class="hljs-string">&quot;0116&quot;</span> <span class="hljs-string">&quot;Missing &amp;#34;path_&amp;#34; in item #<span class="hljs-variable">$countt</span> in &amp;#34;paths&amp;#34; in &amp;#34;redirect_config&amp;#34; in &amp;#34;module.exports&amp;#34; at &amp;#34;just.config.js&amp;#34; file.&quot;</span>)
+
+            <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;::error::$_RED$ERROR_MESSAGE<span class="hljs-variable">$_RESET</span>&quot;</span> &amp;&amp; <span class="hljs-built_in">exit</span> 1
+
+        <span class="hljs-keyword">fi</span>
+
+
+        countt=$((countt + <span class="hljs-number">1</span>))
+
+    <span class="hljs-keyword">done</span>
+
+ <span class="hljs-keyword">fi</span>
+}
+
+validate_redirect_config
+validate_paths
+

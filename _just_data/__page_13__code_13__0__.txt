@@ -1,0 +1,24 @@
+module.exports = {
+
+ type: "redirect", 
+
+ redirect_config: {
+
+    url: "https://example.com/", // Required. Replace with destination URL.
+
+    params: { // Optional.
+
+        content: { // Optional.
+
+            text1: "Redirecting...", // Optional. "Redirecting...<br>" + generated content ("<small>to <a ...>...</a></small>") by default.
+
+            text2: "Didn't get redirected?", // Optional. "Didn't get redirected?" by default.
+
+            text3: "Click here!" // Optional. "Click here!" by default. <a ...>${text3}</a>
+
+        }
+
+    }
+
+ }
+}

@@ -1,0 +1,42 @@
+<span class="hljs-comment">/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. &lt;https://juststudio.is-a.dev/&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/</span>
+
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);
+<span class="hljs-keyword">const</span> num_ = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./modules/number.js&#x27;</span>);
+<span class="hljs-keyword">const</span> [files, id] = process.<span class="hljs-property">argv</span>.<span class="hljs-title function_">slice</span>(<span class="hljs-number">2</span>);
+<span class="hljs-keyword">const</span> filess = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(files);
+<span class="hljs-keyword">const</span> types = [
+
+ <span class="hljs-string">&quot;md&quot;</span>, <span class="hljs-string">&quot;html&quot;</span>, <span class="hljs-string">&quot;js&quot;</span>, <span class="hljs-string">&quot;css&quot;</span>
+];
+filess.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">file</span> =&gt;</span> {
+
+ fs.<span class="hljs-title function_">writeFileSync</span>(path.<span class="hljs-title function_">join</span>(process.<span class="hljs-title function_">cwd</span>(), <span class="hljs-string">&#x27;demo&#x27;</span>, <span class="hljs-string">`<span class="hljs-subst">${file.name.replaceAll(<span class="hljs-string">&#x27;.&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)}</span>.<span class="hljs-subst">${types[file.type]}</span>`</span>), file.<span class="hljs-property">content</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>);
+});
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(num_.<span class="hljs-title function_">convertbase</span>(<span class="hljs-title class_">String</span>(id), <span class="hljs-number">10</span>, <span class="hljs-number">62</span>));
+

@@ -1,0 +1,156 @@
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>_just error<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+<span class="hljs-keyword">@import</span> url(<span class="hljs-string">&#x27;https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&amp;family=Roboto:ital,wght@0,100..900;1,100..900&amp;family=Rubik:ital,wght@0,300..900;1,300..900&amp;display=swap&#x27;</span>);
+
+        <span class="hljs-selector-tag">html</span> {
+
+            <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1.15</span>;
+
+            <span class="hljs-attribute">font-family</span>: <span class="hljs-string">&quot;Rubik&quot;</span>;
+
+            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16px</span>;
+
+            <span class="hljs-attribute">scroll-behavior</span>: smooth
+
+        }
+
+        <span class="hljs-selector-tag">body</span> {
+
+            <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+
+            <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">400</span>;
+
+            <span class="hljs-attribute">font-style</span>: normal;
+
+            <span class="hljs-attribute">text-decoration</span>: none;
+
+            <span class="hljs-attribute">text-transform</span>: none;
+
+            <span class="hljs-attribute">letter-spacing</span>: normal;
+
+            <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1.15</span>;
+
+            <span class="hljs-attribute">background</span>: <span class="hljs-number">#161616</span>;
+
+        }
+
+        * {
+
+            <span class="hljs-attribute">box-sizing</span>: border-box;
+
+            <span class="hljs-attribute">border-width</span>: <span class="hljs-number">0</span>;
+
+            <span class="hljs-attribute">border-style</span>: solid;
+
+            -webkit-<span class="hljs-attribute">font-smoothing</span>: antialiased;
+
+        }
+
+        <span class="hljs-selector-class">.home-container</span><span class="hljs-selector-class">.just_</span> {
+
+            <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+
+            <span class="hljs-attribute">display</span>: -webkit-box;
+
+            <span class="hljs-attribute">display</span>: -webkit-flex;
+
+            <span class="hljs-attribute">display</span>: -moz-box;
+
+            <span class="hljs-attribute">display</span>: -ms-flexbox;
+
+            <span class="hljs-attribute">display</span>: flex;
+
+            <span class="hljs-attribute">min-height</span>: <span class="hljs-number">100vh</span>;
+
+            -webkit-<span class="hljs-attribute">box-align</span>: center;
+
+            -webkit-<span class="hljs-attribute">align-items</span>: center;
+
+            -moz-<span class="hljs-attribute">box-align</span>: center;
+
+            -ms-<span class="hljs-attribute">flex</span>-align: center;
+
+            <span class="hljs-attribute">align-items</span>: center;
+
+            -webkit-<span class="hljs-attribute">box-orient</span>: vertical;
+
+            -webkit-<span class="hljs-attribute">box-direction</span>: normal;
+
+            -webkit-<span class="hljs-attribute">flex-direction</span>: column;
+
+            -moz-<span class="hljs-attribute">box-orient</span>: vertical;
+
+            -moz-<span class="hljs-attribute">box-direction</span>: normal;
+
+            -ms-<span class="hljs-attribute">flex-direction</span>: column;
+
+            <span class="hljs-attribute">flex-direction</span>: column;
+
+            -webkit-<span class="hljs-attribute">box-pack</span>: center;
+
+            -webkit-<span class="hljs-attribute">justify-content</span>: center;
+
+            -moz-<span class="hljs-attribute">box-pack</span>: center;
+
+            -ms-<span class="hljs-attribute">flex</span>-pack: center;
+
+            <span class="hljs-attribute">justify-content</span>: center;
+
+            <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">-webkit-linear-gradient</span>(left,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">72</span>)<span class="hljs-number">0%</span>,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">8</span>)<span class="hljs-number">100%</span>),<span class="hljs-built_in">-webkit-linear-gradient</span>(<span class="hljs-number">315deg</span>,<span class="hljs-built_in">rgb</span>(<span class="hljs-number">0</span>,<span class="hljs-number">25</span>,<span class="hljs-number">136</span>)<span class="hljs-number">1%</span>,<span class="hljs-built_in">rgb</span>(<span class="hljs-number">125</span>,<span class="hljs-number">10</span>,<span class="hljs-number">242</span>)<span class="hljs-number">99%</span>);
+
+            <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">-moz-linear-gradient</span>(left,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">72</span>)<span class="hljs-number">0%</span>,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">8</span>)<span class="hljs-number">100%</span>),<span class="hljs-built_in">-moz-linear-gradient</span>(<span class="hljs-number">315deg</span>,<span class="hljs-built_in">rgb</span>(<span class="hljs-number">0</span>,<span class="hljs-number">25</span>,<span class="hljs-number">136</span>)<span class="hljs-number">1%</span>,<span class="hljs-built_in">rgb</span>(<span class="hljs-number">125</span>,<span class="hljs-number">10</span>,<span class="hljs-number">242</span>)<span class="hljs-number">99%</span>);
+
+            <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">-o-linear-gradient</span>(left,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">72</span>)<span class="hljs-number">0%</span>,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">8</span>)<span class="hljs-number">100%</span>),<span class="hljs-built_in">-o-linear-gradient</span>(<span class="hljs-number">315deg</span>,<span class="hljs-built_in">rgb</span>(<span class="hljs-number">0</span>,<span class="hljs-number">25</span>,<span class="hljs-number">136</span>)<span class="hljs-number">1%</span>,<span class="hljs-built_in">rgb</span>(<span class="hljs-number">125</span>,<span class="hljs-number">10</span>,<span class="hljs-number">242</span>)<span class="hljs-number">99%</span>);
+
+            <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">90deg</span>,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">72</span>)<span class="hljs-number">0%</span>,<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">8</span>)<span class="hljs-number">100%</span>),<span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">135deg</span>,<span class="hljs-built_in">rgb</span>(<span class="hljs-number">0</span>,<span class="hljs-number">25</span>,<span class="hljs-number">136</span>)<span class="hljs-number">1%</span>,<span class="hljs-built_in">rgb</span>(<span class="hljs-number">125</span>,<span class="hljs-number">10</span>,<span class="hljs-number">242</span>)<span class="hljs-number">99%</span>)
+
+        }
+
+        ._just {
+
+            <span class="hljs-attribute">scale</span>: <span class="hljs-number">0.98</span>;
+
+            <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50px</span>;
+
+            <span class="hljs-attribute">overflow</span>: hidden;
+
+            <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0px</span> <span class="hljs-number">0px</span> <span class="hljs-number">20px</span> <span class="hljs-number">0px</span> <span class="hljs-number">#000000c4</span>;
+
+        }
+
+        <span class="hljs-selector-class">.home-name</span><span class="hljs-selector-class">.just_</span> {
+
+            <span class="hljs-attribute">color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>);
+
+            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">50px</span>;
+
+            <span class="hljs-attribute">font-family</span>: <span class="hljs-string">&quot;Rubik&quot;</span>
+
+        }
+
+
+        <span class="hljs-selector-class">.home-text1</span><span class="hljs-selector-class">.just_</span> {
+
+            <span class="hljs-attribute">color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>);
+
+            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">1.5em</span>;<span class="hljs-attribute">font-family</span>: <span class="hljs-string">&quot;Rubik&quot;</span>
+
+        }
+
+
+        <span class="hljs-selector-class">.home-text2</span><span class="hljs-selector-class">.just_</span> {
+
+            <span class="hljs-attribute">color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>);
+
+            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16px</span>;<span class="hljs-attribute">font-family</span>: <span class="hljs-string">&quot;Rubik&quot;</span>
+
+        }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;_just&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;just_ home-container&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;just_ home-name&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;just_&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>Uh Oh!<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;just_ home-text1&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;just_&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>_just error: a client-side exception has occurred.<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;just_ home-text2&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;just_&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>See the browser console for more information.<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"><span class="hljs-variable language_">document</span>.<span class="hljs-property">ondragstart</span>=noselect;<span class="hljs-variable language_">document</span>.<span class="hljs-property">onselectstart</span>=noselect;<span class="hljs-variable language_">document</span>.<span class="hljs-property">oncontextmenu</span>=noselect;<span class="hljs-keyword">function</span> <span class="hljs-title function_">noselect</span>(<span class="hljs-params"></span>){<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;}</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>

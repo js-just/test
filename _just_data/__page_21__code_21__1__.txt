@@ -1,0 +1,36 @@
+* {
+
+ <span class="hljs-attribute">background-color</span>: black;
+}
+<span class="hljs-selector-tag">span</span> {
+
+ <span class="hljs-attribute">color</span>: white;
+}
+<span class="hljs-selector-class">.hw</span> {
+
+ <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#6e3bf3</span>;
+}
+<span class="hljs-selector-id">#abc</span> {
+
+ -webkit-<span class="hljs-attribute">filter</span>: <span class="hljs-built_in">blur</span>(<span class="hljs-number">8em</span>);
+}
+<span class="hljs-selector-tag">div</span><span class="hljs-selector-pseudo">:before</span> {
+
+ <span class="hljs-attribute">content</span>: <span class="hljs-string">&#x27;hello&#x27;</span>;
+}
+<span class="hljs-selector-pseudo">:root</span> {
+
+ <span class="hljs-attr">--color</span>: <span class="hljs-number">#ffffff</span>;
+
+ <span class="hljs-keyword">@media</span>(max-width: <span class="hljs-number">5px</span>) {
+
+    <span class="hljs-attr">--color</span>: <span class="hljs-number">#000000</span>;
+
+ }
+}
+::-webkit-scrollbar {
+
+ <span class="hljs-attribute">width</span>: <span class="hljs-number">7px</span>;
+
+ <span class="hljs-attribute">height</span>: <span class="hljs-number">7px</span>
+}

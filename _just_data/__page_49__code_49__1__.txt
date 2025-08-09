@@ -1,0 +1,48 @@
+<span class="hljs-string">&lt;h1&gt;MIT</span> <span class="hljs-string">License&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">Copyright</span> <span class="hljs-string">(c)</span> <span class="hljs-number">2025 </span><span class="hljs-string">JustStudio.</span> <span class="hljs-string">&lt;a</span> <span class="hljs-string">href=&quot;https://juststudio.is-a.dev/&quot;</span> <span class="hljs-string">target=&quot;_blank&quot;</span> <span class="hljs-string">id=&quot;rGbS9&quot;&gt;https://juststudio.is-a.dev/&lt;/a&gt;&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">Permission</span> <span class="hljs-string">is</span> <span class="hljs-string">hereby</span> <span class="hljs-string">granted,</span> <span class="hljs-string">free</span> <span class="hljs-string">of</span> <span class="hljs-string">charge,</span> <span class="hljs-string">to</span> <span class="hljs-string">any</span> <span class="hljs-string">person</span> <span class="hljs-string">obtaining</span> <span class="hljs-string">a</span> <span class="hljs-string">copy&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;of</span> <span class="hljs-string">this</span> <span class="hljs-string">software</span> <span class="hljs-string">and</span> <span class="hljs-string">associated</span> <span class="hljs-string">documentation</span> <span class="hljs-string">files</span> <span class="hljs-string">(the</span> <span class="hljs-string">&quot;Software&quot;</span><span class="hljs-string">),</span> <span class="hljs-string">to</span> <span class="hljs-string">deal&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;in</span> <span class="hljs-string">the</span> <span class="hljs-string">Software</span> <span class="hljs-string">without</span> <span class="hljs-string">restriction,</span> <span class="hljs-string">including</span> <span class="hljs-string">without</span> <span class="hljs-string">limitation</span> <span class="hljs-string">the</span> <span class="hljs-string">rights&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;to</span> <span class="hljs-string">use,</span> <span class="hljs-string">copy,</span> <span class="hljs-string">modify,</span> <span class="hljs-string">merge,</span> <span class="hljs-string">publish,</span> <span class="hljs-string">distribute,</span> <span class="hljs-string">sublicense,</span> <span class="hljs-string">and/or</span> <span class="hljs-string">sell&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;copies</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">Software,</span> <span class="hljs-string">and</span> <span class="hljs-string">to</span> <span class="hljs-string">permit</span> <span class="hljs-string">persons</span> <span class="hljs-string">to</span> <span class="hljs-string">whom</span> <span class="hljs-string">the</span> <span class="hljs-string">Software</span> <span class="hljs-string">is&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;furnished</span> <span class="hljs-string">to</span> <span class="hljs-string">do</span> <span class="hljs-string">so,</span> <span class="hljs-string">subject</span> <span class="hljs-string">to</span> <span class="hljs-string">the</span> <span class="hljs-string">following</span> <span class="hljs-string">conditions:&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">The</span> <span class="hljs-string">above</span> <span class="hljs-string">copyright</span> <span class="hljs-string">notice</span> <span class="hljs-string">and</span> <span class="hljs-string">this</span> <span class="hljs-string">permission</span> <span class="hljs-string">notice</span> <span class="hljs-string">shall</span> <span class="hljs-string">be</span> <span class="hljs-string">included</span> <span class="hljs-string">in</span> <span class="hljs-string">all&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;copies</span> <span class="hljs-string">or</span> <span class="hljs-string">substantial</span> <span class="hljs-string">portions</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">Software.&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;#</span> <span class="hljs-string">THE</span> <span class="hljs-string">SOFTWARE</span> <span class="hljs-string">IS</span> <span class="hljs-string">PROVIDED</span> <span class="hljs-string">&quot;AS IS&quot;</span><span class="hljs-string">,</span> <span class="hljs-string">WITHOUT</span> <span class="hljs-string">WARRANTY</span> <span class="hljs-string">OF</span> <span class="hljs-string">ANY</span> <span class="hljs-string">KIND,</span> <span class="hljs-string">EXPRESS</span> <span class="hljs-string">OR&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;IMPLIED,</span> <span class="hljs-string">INCLUDING</span> <span class="hljs-string">BUT</span> <span class="hljs-string">NOT</span> <span class="hljs-string">LIMITED</span> <span class="hljs-string">TO</span> <span class="hljs-string">THE</span> <span class="hljs-string">WARRANTIES</span> <span class="hljs-string">OF</span> <span class="hljs-string">MERCHANTABILITY,&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;FITNESS</span> <span class="hljs-string">FOR</span> <span class="hljs-string">A</span> <span class="hljs-string">PARTICULAR</span> <span class="hljs-string">PURPOSE</span> <span class="hljs-string">AND</span> <span class="hljs-string">NONINFRINGEMENT.</span> <span class="hljs-string">IN</span> <span class="hljs-literal">NO</span> <span class="hljs-string">EVENT</span> <span class="hljs-string">SHALL</span> <span class="hljs-string">THE&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;AUTHORS</span> <span class="hljs-string">OR</span> <span class="hljs-string">COPYRIGHT</span> <span class="hljs-string">HOLDERS</span> <span class="hljs-string">BE</span> <span class="hljs-string">LIABLE</span> <span class="hljs-string">FOR</span> <span class="hljs-string">ANY</span> <span class="hljs-string">CLAIM,</span> <span class="hljs-string">DAMAGES</span> <span class="hljs-string">OR</span> <span class="hljs-string">OTHER&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;LIABILITY,</span> <span class="hljs-string">WHETHER</span> <span class="hljs-string">IN</span> <span class="hljs-string">AN</span> <span class="hljs-string">ACTION</span> <span class="hljs-string">OF</span> <span class="hljs-string">CONTRACT,</span> <span class="hljs-string">TORT</span> <span class="hljs-string">OR</span> <span class="hljs-string">OTHERWISE,</span> <span class="hljs-string">ARISING</span> <span class="hljs-string">FROM,&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;OUT</span> <span class="hljs-string">OF</span> <span class="hljs-string">OR</span> <span class="hljs-string">IN</span> <span class="hljs-string">CONNECTION</span> <span class="hljs-string">WITH</span> <span class="hljs-string">THE</span> <span class="hljs-string">SOFTWARE</span> <span class="hljs-string">OR</span> <span class="hljs-string">THE</span> <span class="hljs-string">USE</span> <span class="hljs-string">OR</span> <span class="hljs-string">OTHER</span> <span class="hljs-string">DEALINGS</span> <span class="hljs-string">IN</span> <span class="hljs-string">THE&lt;/h1&gt;</span>
+<span class="hljs-string">&lt;h1&gt;SOFTWARE.&lt;/h1&gt;</span>
+<span class="hljs-attr">name:</span> <span class="hljs-string">&#x27;_just@l&#x27;</span>
+<span class="hljs-attr">description:</span> <span class="hljs-string">&#x27;Just an Ultimate Site Tool: Use latest version&#x27;</span>
+<span class="hljs-attr">author:</span> <span class="hljs-string">&#x27;JustStudio.&#x27;</span>
+<span class="hljs-attr">branding:</span>
+  <span class="hljs-attr">icon:</span> <span class="hljs-string">&#x27;edit-3&#x27;</span>
+  <span class="hljs-attr">color:</span> <span class="hljs-string">&#x27;purple&#x27;</span>
+<span class="hljs-attr">inputs:</span>
+  <span class="hljs-attr">path:</span>
+
+ <span class="hljs-attr">description:</span> <span class="hljs-string">&#x27;Website directory (compress/generate)&#x27;</span>
+
+ <span class="hljs-attr">required:</span> <span class="hljs-literal">false</span>
+  <span class="hljs-attr">fix-path:</span>
+
+ <span class="hljs-attr">description:</span> <span class="hljs-string">&#x27;Fix file path (generate)&#x27;</span>
+
+ <span class="hljs-attr">required:</span> <span class="hljs-literal">false</span>
+<span class="hljs-attr">runs:</span>
+  <span class="hljs-attr">using:</span> <span class="hljs-string">&#x27;composite&#x27;</span>
+  <span class="hljs-attr">steps:</span>
+
+ <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Run</span> <span class="hljs-string">_just</span>
+
+  <span class="hljs-attr">uses:</span> <span class="hljs-string">js-just/_just@latest</span>
+
+  <span class="hljs-attr">with:</span>
+
+    <span class="hljs-attr">path:</span> <span class="hljs-string">${{</span> <span class="hljs-string">inputs.path</span> <span class="hljs-string">}}</span>
+
+    <span class="hljs-attr">fix-path:</span> <span class="hljs-string">${{</span> <span class="hljs-string">inputs.fix-path</span> <span class="hljs-string">}}</span>
+

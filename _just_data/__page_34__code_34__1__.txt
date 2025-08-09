@@ -1,0 +1,28 @@
+&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright (c) 2025 JustStudio. &lt;a href=<span class="hljs-string">&quot;https://juststudio.is-a.dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rGbS9&quot;</span>&gt;https://juststudio.is-a.dev/&lt;/a&gt;&lt;/h1&gt;
+&lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
+&lt;h1&gt;of this software and associated documentation files (the <span class="hljs-string">&quot;Software&quot;</span>), to deal&lt;/h1&gt;
+&lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
+&lt;h1&gt;to use, copy, modify, merge, publish, distribute, sublicense, and/or sell&lt;/h1&gt;
+&lt;h1&gt;copies of the Software, and to permit persons to whom the Software is&lt;/h1&gt;
+&lt;h1&gt;furnished to <span class="hljs-keyword">do</span> so, subject to the following conditions:&lt;/h1&gt;
+&lt;h1&gt;# The above copyright notice and this permission notice shall be included <span class="hljs-keyword">in</span> all&lt;/h1&gt;
+&lt;h1&gt;copies or substantial portions of the Software.&lt;/h1&gt;
+&lt;h1&gt;# THE SOFTWARE IS PROVIDED <span class="hljs-string">&quot;AS IS&quot;</span>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR&lt;/h1&gt;
+&lt;h1&gt;IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&lt;/h1&gt;
+&lt;h1&gt;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE&lt;/h1&gt;
+&lt;h1&gt;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER&lt;/h1&gt;
+&lt;h1&gt;LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,&lt;/h1&gt;
+&lt;h1&gt;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE&lt;/h1&gt;
+&lt;h1&gt;SOFTWARE.&lt;/h1&gt;
+<span class="hljs-comment">#!/bin/bash</span>
+<span class="hljs-built_in">mkdir</span> -p demo &amp;&amp; 
+DEMO_LATEST_ID=$(node -e <span class="hljs-string">&quot;await fetch(&#x27;https://raw.just.is-a.dev/demo-id/&#x27;).then(async resp =&gt; {return await resp.json()}).then(resp =&gt; {console.log(resp.latest)})&quot;</span>) &amp;&amp; 
+DEMO_BUILT_ID=$(node <span class="hljs-string">&quot;src/demo.js&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$INPUT_FILES</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$DEMO_LATEST_ID</span>&quot;</span>) &amp;&amp; 
+DEMO_NEW_ID=$(node -e <span class="hljs-string">&quot;console.log(<span class="hljs-variable">$DEMO_LATEST_ID</span> + 1)&quot;</span>) &amp;&amp; 
+<span class="hljs-built_in">rm</span> -f <span class="hljs-string">&quot;just.config.js&quot;</span> &amp;&amp; 
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$INPUT_CONFIG</span>&quot;</span> &gt; just.config.js &amp;&amp; 
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;id=id/<span class="hljs-variable">$DEMO_BUILT_ID</span>&quot;</span> &gt;&gt; <span class="hljs-variable">$GITHUB_OUTPUT</span> &amp;&amp; 
+<span class="hljs-built_in">mkdir</span> -p demo-id &amp;&amp; 
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;{&amp;#34;latest&amp;#34;:<span class="hljs-variable">$DEMO_NEW_ID</span>}&quot;</span> &gt; <span class="hljs-string">&quot;demo-id/index.json&quot;</span>
+

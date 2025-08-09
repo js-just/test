@@ -1,0 +1,18 @@
+jobs:
+  build:
+
+ runs-on: ubuntu-latest
+
+ steps:
+
+  - name: Checkout
+
+    uses: actions/checkout@v4
+
+  - name: Generate with _just
+
+    uses: js-just/_just@ # version name (recommended) (example: v0.0.29) / main branch (latest commit) (unstable, not recommended) / commit SHA (not recommended)
+
+    with:
+
+      path: # Path to your website directory to be generated/compressed. (Only for compressor and generator modes)

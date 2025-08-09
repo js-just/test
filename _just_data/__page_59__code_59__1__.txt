@@ -1,0 +1,94 @@
+<span class="hljs-comment">/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. &lt;https://juststudio.is-a.dev/&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/</span>
+
+<span class="hljs-keyword">const</span> _just = {};
+_just.<span class="hljs-property">error</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./errmsg.js&#x27;</span>);
+_just.<span class="hljs-property">string</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./string.js&#x27;</span>);
+<span class="hljs-keyword">const</span> apis = {};
+apis[<span class="hljs-string">&quot;is-a.dev&quot;</span>] = <span class="hljs-string">&#x27;https://raw.is-a.dev/v2.json&#x27;</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">warn_</span> = (<span class="hljs-params">d, e</span>) =&gt; {
+
+ <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`<span class="hljs-subst">${_just.error.prefix}</span>[0;33mWarning 0206[0m: [0;33mFailed to fetch &quot;[0m<span class="hljs-subst">${apis[d]}</span>[0;33m&quot;: [0m<span class="hljs-subst">${e}</span>`</span>);
+}
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} domain 
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">number</span>} <span class="hljs-variable">attempt</span>
+ */</span>
+<span class="hljs-built_in">exports</span>[<span class="hljs-string">&quot;is-a.dev&quot;</span>] = <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> (<span class="hljs-params">domain, attempt = <span class="hljs-number">0</span></span>) {
+
+ attempt++;
+
+ <span class="hljs-keyword">let</span> success = <span class="hljs-literal">false</span>;
+
+ <span class="hljs-keyword">let</span> exist = <span class="hljs-literal">false</span>;
+
+ <span class="hljs-keyword">try</span> {
+
+    <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(apis[<span class="hljs-string">&quot;is-a.dev&quot;</span>]).<span class="hljs-title function_">catch</span>(<span class="hljs-title function_">async</span>(error)=&gt;{
+
+        <span class="hljs-keyword">if</span> (attempt &lt; <span class="hljs-number">5</span>) {
+
+            <span class="hljs-keyword">await</span> <span class="hljs-built_in">exports</span>[<span class="hljs-string">&quot;is-a.dev&quot;</span>](domain, attempt);
+
+        } <span class="hljs-keyword">else</span> {
+
+            <span class="hljs-title function_">warn_</span>(<span class="hljs-string">&quot;is-a.dev&quot;</span>, error)
+
+        }
+
+    });
+
+    <span class="hljs-keyword">const</span> data = (<span class="hljs-keyword">await</span> response.<span class="hljs-title function_">json</span>()).<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">d</span> =&gt;</span> !d.<span class="hljs-property">reserved</span>);
+
+    
+
+    <span class="hljs-keyword">const</span> domains = data.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">item, index</span>) =&gt;</span> {<span class="hljs-keyword">return</span> item.<span class="hljs-property">domain</span>});
+
+    exist = domains.<span class="hljs-title function_">includes</span>(domain);
+
+    success = <span class="hljs-literal">true</span>;
+
+ } <span class="hljs-keyword">catch</span> (error) {
+
+    <span class="hljs-keyword">if</span> (attempt &lt; <span class="hljs-number">5</span>) {
+
+        <span class="hljs-keyword">await</span> <span class="hljs-built_in">exports</span>[<span class="hljs-string">&quot;is-a.dev&quot;</span>](domain, attempt);
+
+    } <span class="hljs-keyword">else</span> {
+
+        <span class="hljs-title function_">warn_</span>(<span class="hljs-string">&quot;is-a.dev&quot;</span>, error)
+
+    }
+
+ }
+
+ <span class="hljs-keyword">if</span> (success &amp;&amp; !exist) {
+
+    _just.<span class="hljs-property">error</span>.<span class="hljs-title function_">errormessage</span>(<span class="hljs-string">&#x27;0123&#x27;</span>, <span class="hljs-string">`Subdomain &quot;<span class="hljs-subst">${_just.string.removeLast(domain, <span class="hljs-string">&#x27;.is-a.dev&#x27;</span>)}</span>&quot; is not registered on &quot;is-a.dev&quot;.`</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">errmsg</span>)=&gt;</span>{<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(errmsg)});
+
+ }
+}

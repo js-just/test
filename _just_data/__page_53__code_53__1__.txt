@@ -1,0 +1,58 @@
+&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright (c) 2025 JustStudio. &lt;a href=<span class="hljs-string">&quot;https://juststudio.is-a.dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rGbS9&quot;</span>&gt;https://juststudio.is-a.dev/&lt;/a&gt;&lt;/h1&gt;
+&lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
+&lt;h1&gt;of this software and associated documentation files (the <span class="hljs-string">&quot;Software&quot;</span>), to deal&lt;/h1&gt;
+&lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
+&lt;h1&gt;to use, copy, modify, merge, publish, distribute, sublicense, and/or sell&lt;/h1&gt;
+&lt;h1&gt;copies of the Software, and to permit persons to whom the Software is&lt;/h1&gt;
+&lt;h1&gt;furnished to <span class="hljs-keyword">do</span> so, subject to the following conditions:&lt;/h1&gt;
+&lt;h1&gt;# The above copyright notice and this permission notice shall be included <span class="hljs-keyword">in</span> all&lt;/h1&gt;
+&lt;h1&gt;copies or substantial portions of the Software.&lt;/h1&gt;
+&lt;h1&gt;# THE SOFTWARE IS PROVIDED <span class="hljs-string">&quot;AS IS&quot;</span>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR&lt;/h1&gt;
+&lt;h1&gt;IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&lt;/h1&gt;
+&lt;h1&gt;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE&lt;/h1&gt;
+&lt;h1&gt;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER&lt;/h1&gt;
+&lt;h1&gt;LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,&lt;/h1&gt;
+&lt;h1&gt;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE&lt;/h1&gt;
+&lt;h1&gt;SOFTWARE.&lt;/h1&gt;
+<span class="hljs-comment">#!/bin/bash</span>
+_RESET=<span class="hljs-string">&#x27;&amp;#48;33[0m&#x27;</span>
+_RED=<span class="hljs-string">&#x27;&amp;#48;33[0;31m&#x27;</span>
+_GREEN=<span class="hljs-string">&#x27;&amp;#48;33[0;32m&#x27;</span>
+_ORANGE=<span class="hljs-string">&#x27;&amp;#48;33[0;33m&#x27;</span>
+_BLUE=<span class="hljs-string">&#x27;&amp;#48;33[0;34m&#x27;</span>
+_PURPLE=<span class="hljs-string">&#x27;&amp;#48;33[0;35m&#x27;</span>
+_CYAN=<span class="hljs-string">&#x27;&amp;#48;33[0;36m&#x27;</span>
+_LIGHTGRAY=<span class="hljs-string">&#x27;&amp;#48;33[0;37m&#x27;</span>
+_DARKGRAY=<span class="hljs-string">&#x27;&amp;#48;33[1;30m&#x27;</span>
+_LIGHTRED=<span class="hljs-string">&#x27;&amp;#48;33[1;31m&#x27;</span>
+_LIGHTGREEN=<span class="hljs-string">&#x27;&amp;#48;33[1;32m&#x27;</span>
+_YELLOW=<span class="hljs-string">&#x27;&amp;#48;33[1;33m&#x27;</span>
+_LIGHTBLUE=<span class="hljs-string">&#x27;&amp;#48;33[1;34m&#x27;</span>
+_LIGHTPURPLE=<span class="hljs-string">&#x27;&amp;#48;33[1;35m&#x27;</span>
+_LIGHTCYAN=<span class="hljs-string">&#x27;&amp;#48;33[1;36m&#x27;</span>
+_WHITE=<span class="hljs-string">&#x27;&amp;#48;33[1;37m&#x27;</span>
+
+<span class="hljs-built_in">export</span> _RESET
+<span class="hljs-built_in">export</span> _RED
+<span class="hljs-built_in">export</span> _GREEN
+<span class="hljs-built_in">export</span> _ORANGE
+<span class="hljs-built_in">export</span> _BLUE
+<span class="hljs-built_in">export</span> _PURPLE
+<span class="hljs-built_in">export</span> _CYAN
+<span class="hljs-built_in">export</span> _LIGHTGRAY
+<span class="hljs-built_in">export</span> _DARKGRAY
+<span class="hljs-built_in">export</span> _LIGHTRED
+<span class="hljs-built_in">export</span> _LIGHTGREEN
+<span class="hljs-built_in">export</span> _YELLOW
+<span class="hljs-built_in">export</span> _LIGHTBLUE
+<span class="hljs-built_in">export</span> _LIGHTPURPLE
+<span class="hljs-built_in">export</span> _LIGHTCYAN
+<span class="hljs-built_in">export</span> _WHITE
+
+_LIGHTPURPLE_BG=<span class="hljs-string">&#x27;&amp;#48;33[2;45m&#x27;</span>
+_ORANGE_BG=<span class="hljs-string">&#x27;&amp;#48;33[2;41m&#x27;</span>
+
+<span class="hljs-built_in">export</span> _LIGHTPURPLE_BG
+<span class="hljs-built_in">export</span> _ORANGE_BG
+

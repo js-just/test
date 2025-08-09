@@ -1,0 +1,1 @@
+<span class="hljs-variable language_">window</span>.<span class="hljs-property">_just_Manifest</span> = _just_Manifest0;

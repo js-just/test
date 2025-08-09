@@ -1,0 +1,15 @@
+<span class="hljs-variable language_">window</span>.<span class="hljs-property">_just_buildManifest</span> = _just_buildManifest0;
+
+<span class="hljs-comment">/* Example usage:
+
+
+let buildManifestString = &#x27;&#x27;;
+const pathToCurrentSite = `${window.location.protocol}//${window.location.hostname}`
+_just_Manifest.forEach((item) =&gt; {
+
+ buildManifestString += `&amp;#110;${pathToCurrentSite}/${item.path} - ${item.type} - ${item.size.string}`
+})
+console.log(`%c${buildManifestString}`, `color: #6e3bf3; background-color: #161616; padding-left: 5px; padding-right: 5px; border-radius: 5px;`);
+
+
+*/</span>

@@ -1,0 +1,59 @@
+<h1>MIT License</h1>
+<h1># Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="rGbS9">https://juststudio.is-a.dev/</a></h1>
+<h1># Permission is hereby granted, free of charge, to any person obtaining a copy</h1>
+<h1>of this software and associated documentation files (the "Software"), to deal</h1>
+<h1>in the Software without restriction, including without limitation the rights</h1>
+<h1>to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</h1>
+<h1>copies of the Software, and to permit persons to whom the Software is</h1>
+<h1>furnished to do so, subject to the following conditions:</h1>
+<h1># The above copyright notice and this permission notice shall be included in all</h1>
+<h1>copies or substantial portions of the Software.</h1>
+<h1># THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</h1>
+<h1>IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</h1>
+<h1>FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</h1>
+<h1>AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</h1>
+<h1>LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</h1>
+<h1>OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</h1>
+<h1>SOFTWARE.</h1>
+<h1>Override Deployment</h1>
+source $GITHUB_ACTION_PATH/src/modules/errmsg.sh
+
+find deploy -type f -name "*.html" | while read -r html_file; do
+  for js_file in deploy/_just/*.js; do
+
+ first_line=$(head -n 1 "$js_file")
+
+ if [[ "$first_line" == "// _just doNotInsert" || 
+
+      "$first_line" == "// _just hide" || 
+
+      "$first_line" == "// _just doNotModify+doNotInsert" || 
+
+      "$first_line" == "// _just doNotModify+hide" ]]; then
+
+  continue
+
+ fi
+
+ echo "<script src=&#34;/_just/$(basename "$js_file")&#34;></script>" >> "$html_file" # Insert js files as <script src="PATH TO FILE" />
+  done
+  for css_file in deploy/_just/*.css; do
+
+ echo "<link href=&#34;/_just/$(basename "$css_file")&#34; rel=&#34;stylesheet&#34;>" >> "$html_file" # Insert css files as <link href="PATH TO FILE" rel="stylesheet" />
+  done
+  echo "<link href=&#34;/_just/e.css&#34; rel=&#34;stylesheet&#34;>" >> "$html_file"
+  echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/comment.html)" >> "$html_file"
+  sed -i '/<&#47;head>/i&#32;'"$(cat "$html_file")" "$html_file"
+done
+
+if [ -f "deploy/404.html" ]; then
+  local ERROR_MESSAGE=$(ErrorMessage "postprocessor/override_deployment.sh" "0202")
+  echo -e "$ERROR_MESSAGE"
+fi
+if [ ! -f "deploy/404.html" ]; then
+  cp _just/404.html deploy/404.html
+fi
+
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/error.html)" > deploy/_just/e.html
+echo "$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/error.css)" > deploy/_just/e.css
+

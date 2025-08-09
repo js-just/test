@@ -1,0 +1,258 @@
+<span class="hljs-emphasis">_just: title: Mattcone&#x27;s Markdown Test
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>Markdown test<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+This is a Markdown test for the Markdown Guide tools directory.
+
+---
+
+headings
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>One<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Two<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span></span>Three<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span></span>Four<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h5</span>&gt;</span></span>Five<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h5</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h6</span>&gt;</span></span>Six<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h6</span>&gt;</span></span>
+Alternate One
+=============
+
+Alternate Two
+-------------
+
+---
+
+paragraphs
+
+first paragraph
+
+second para
+
+---
+
+line breaks
+
+line one with trailing whitespace  
+line two right under
+
+line one with no trailing whitespace, just hard return
+line two right under
+
+line one with no trailing backslash 
+line two right under
+
+---
+
+bold
+
+<span class="hljs-strong">**asterisks**</span>
+
+<span class="hljs-strong">__underscores__</span>
+
+in<span class="hljs-strong">**middle**</span>here
+
+---
+
+italic
+
+*asterisk*
+
+_</span>underscore_
+
+in<span class="hljs-emphasis">*middle*</span>here
+
+---
+
+bold and italic
+
+<span class="hljs-strong">**<span class="hljs-emphasis">*asterisks*</span>**</span>
+
+<span class="hljs-strong">__<span class="hljs-emphasis">_underscores_</span>__</span>
+
+<span class="hljs-strong">__<span class="hljs-emphasis">*combo*</span>__</span>
+
+<span class="hljs-strong">**<span class="hljs-emphasis">_second combo_</span>**</span>
+
+---
+
+blockquotes
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span></span>single<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span></span><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">_just</span> <span class="hljs-attr">element</span>=<span class="hljs-string">&quot;ALYw&quot;</span>&gt;</span></span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">_just</span>&gt;</span></span>multi<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span></span>line<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span></span><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">_just</span> <span class="hljs-attr">element</span>=<span class="hljs-string">&quot;ALYw&quot;</span>&gt;</span></span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">_just</span>&gt;</span></span>nested<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span>
+<span class="hljs-section"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span></span><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span></span><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span>blockquotes<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span>
+---</span>
+
+ordered lists
+
+<span class="hljs-bullet">1.</span> first
+<span class="hljs-bullet">2.</span> second
+<span class="hljs-bullet">3.</span> third
+
+<span class="hljs-bullet">1.</span> this
+<span class="hljs-bullet">2.</span> is
+
+<span class="hljs-bullet"> 1.</span> nested
+<span class="hljs-bullet">3.</span> now
+
+---
+
+unordered lists
+
+<span class="hljs-bullet">-</span> dashes
+<span class="hljs-bullet">-</span> here
+<span class="hljs-bullet">  -</span> nested
+
+<span class="hljs-bullet">*</span> asterisks
+<span class="hljs-bullet">*</span> here
+
+<span class="hljs-bullet">+</span> plus
+<span class="hljs-bullet">+</span> signs
+
+---
+
+code
+
+<span class="hljs-code">`one tick mark`</span>
+
+
+ <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">one</span> <span class="hljs-attr">tab</span>&gt;</span></span>
+
+  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">indented</span>&gt;</span></span>
+
+---
+
+horizontal rules
+
+throughout this :)
+
+---
+
+links
+
+normal link =&gt; [<span class="hljs-string">cnn</span>](<span class="hljs-link">https://cnn.com</span>)
+
+brackets =&gt; <span class="language-xml">&lt;https://cnn.com&gt;</span>
+
+brackets =&gt; <span class="language-xml">&lt;me@somewhere.com&gt;</span>
+
+naked url (test auto link) =&gt; https://cnn.com
+
+---
+
+images
+
+![<span class="hljs-string">test image</span>](<span class="hljs-link">https://www.markdownguide.org/assets/images/tools/joplin.png</span>)
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Tables<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Fenced code blocks<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+<span class="hljs-literal">&amp;#96;</span><span class="hljs-literal">&amp;#96;</span><span class="hljs-literal">&amp;#96;</span>
+{
+  &quot;firstName&quot;: &quot;John&quot;,
+  &quot;lastName&quot;: &quot;Smith&quot;,
+  &quot;age&quot;: 25
+}
+<span class="hljs-literal">&amp;#96;</span><span class="hljs-literal">&amp;#96;</span><span class="hljs-literal">&amp;#96;</span>
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Syntax highlighting<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+<span class="hljs-literal">&amp;#96;</span><span class="hljs-literal">&amp;#96;</span><span class="hljs-literal">&amp;#96;</span>json
+{
+  &quot;firstName&quot;: &quot;John&quot;,
+  &quot;lastName&quot;: &quot;Smith&quot;,
+  &quot;age&quot;: 25
+}
+<span class="hljs-literal">&amp;#96;</span><span class="hljs-literal">&amp;#96;</span><span class="hljs-literal">&amp;#96;</span>
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Footnotes<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+Here&#x27;s a simple footnote,[^1] and here&#x27;s a longer one.[^bignote]
+
+[<span class="hljs-symbol">^1</span>]: <span class="hljs-link">This is the first footnote.</span>
+
+[<span class="hljs-symbol">^bignote</span>]: <span class="hljs-link">Here&#x27;s one with multiple paragraphs and code.</span>
+
+
+ Indent paragraphs to include them in the footnote.
+
+
+ <span class="hljs-code">`{ my code }`</span>
+
+
+ Add as many paragraphs as you like.
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Heading IDs<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+<span class="hljs-section"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span></span>My Great Heading {#custom-id}<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span>
+---</span>
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Definition lists<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Strikethrough<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+~~two tilde~~
+
+~one tilde~
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Task lists<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+<span class="hljs-bullet">-</span> [x] Write the press release
+<span class="hljs-bullet">-</span> [ ] Update the website
+<span class="hljs-bullet">-</span> [ ] Contact the media
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Emoji<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+copy and paste: ☕
+shortcodes: :joy:
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Highlight<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+==twoequals==
+
+::twohypens::
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Subscript<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+H~2~O
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Superscript<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+X^2^
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>Abbreviation<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+<span class="hljs-emphasis">*[HTML]: Hyper Text Markup Language
+
+The HTML specification is maintained by the W3C.
+
+---
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span></span>HTML<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span></span>italic test<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span></span>
+
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span></span>bold test<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span></span>
+</span>

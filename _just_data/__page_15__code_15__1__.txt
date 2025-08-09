@@ -1,0 +1,46 @@
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+
+ <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;redirect&quot;</span>, 
+
+ <span class="hljs-attr">redirect_config</span>: {
+
+    <span class="hljs-attr">url</span>: <span class="hljs-string">&quot;https://example.com/&quot;</span>, <span class="hljs-comment">// Required. Replace with destination URL.</span>
+
+    <span class="hljs-attr">paths</span>: [ <span class="hljs-comment">// Optional</span>
+
+        {
+
+            <span class="hljs-attr">path_</span>: <span class="hljs-string">&quot;example&quot;</span>, <span class="hljs-comment">// Required. Replace with path.</span>
+
+            <span class="hljs-attr">url</span>: <span class="hljs-string">&quot;https://example.com/&quot;</span>, <span class="hljs-comment">// Required. Replace with path destination URL.</span>
+
+            <span class="hljs-attr">params</span>: { <span class="hljs-comment">// Optional.</span>
+
+                <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;redirect website title here&quot;</span>, <span class="hljs-comment">// Optional. Replace with any title you want. Recommended.</span>
+
+                <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;redirect website description here&quot;</span>, <span class="hljs-comment">// Optional. Replace with any description you want.</span>
+
+                <span class="hljs-attr">keywords</span>: <span class="hljs-string">&quot;some, keywords, here&quot;</span>, <span class="hljs-comment">// Optional. Replace with any keywords you want. Separate keywords by commas.</span>
+
+                <span class="hljs-attr">htmlLang</span>: <span class="hljs-string">&quot;en&quot;</span>, <span class="hljs-comment">// Optional. &lt;html lang=&quot;${htmlLang}&quot;&gt;</span>
+
+                <span class="hljs-attr">robots</span>: <span class="hljs-string">&quot;index&quot;</span>, <span class="hljs-comment">// Optional. &lt;meta name=&quot;robots&quot; content=&quot;${robots}&quot;&gt;</span>
+
+                <span class="hljs-attr">charset</span>: <span class="hljs-string">&quot;utf-8&quot;</span>, <span class="hljs-comment">// Optional. &quot;utf-8&quot; by default. &lt;meta charset=&quot;${charset}&quot;&gt; and file charset.</span>
+
+                <span class="hljs-attr">viewport</span>: <span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>, <span class="hljs-comment">// Optional. &quot;width=device-width, initial-scale=1.0&quot; by default. &lt;meta name=&quot;viewport&quot; content=&quot;${viewport}&quot;&gt;</span>
+
+                <span class="hljs-attr">yandex</span>: <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-comment">// Optional. Put your Yandex verification string here. &lt;meta name=&quot;yandex-verification&quot; content=&quot;${yandex}&quot;&gt;</span>
+
+                <span class="hljs-attr">google</span>: <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-comment">// Optional. Put your Google verification string here. &lt;meta name=&quot;google-site-verification&quot; content=&quot;${google}&quot;&gt;</span>
+
+                <span class="hljs-attr">googleAnalytics</span>: <span class="hljs-string">&quot;&quot;</span> <span class="hljs-comment">// Optional. Put your Google Analytics ID here.</span>
+
+            }
+
+        }
+
+    ]
+
+ }
+}

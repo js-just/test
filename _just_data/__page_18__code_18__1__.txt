@@ -1,0 +1,4 @@
+<span class="hljs-punctuation">[</span>
+
+ <span class="hljs-string">&quot;hello&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;world&quot;</span>
+<span class="hljs-punctuation">]</span>

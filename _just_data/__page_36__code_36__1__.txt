@@ -1,0 +1,162 @@
+<span class="hljs-comment">/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. &lt;https://juststudio.is-a.dev/&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/</span>
+
+<span class="hljs-keyword">const</span> baseregex = <span class="hljs-regexp">/(@_just base)/g</span>;
+<span class="hljs-keyword">const</span> baseregex2= <span class="hljs-regexp">/(@_just base;)/g</span>;
+<span class="hljs-keyword">const</span> coderegex = <span class="hljs-regexp">/(@_just highlight)/g</span>;
+<span class="hljs-keyword">const</span> coderegex2= <span class="hljs-regexp">/(@_just highlight;)/g</span>;
+<span class="hljs-keyword">const</span> btnsregex = <span class="hljs-regexp">/(@_just buttons)/g</span>;
+<span class="hljs-keyword">const</span> btnsregex2= <span class="hljs-regexp">/(@_just buttons;)/g</span>;
+<span class="hljs-keyword">const</span> srchregex = <span class="hljs-regexp">/(@_just search)/g</span>;
+<span class="hljs-keyword">const</span> srchregex2= <span class="hljs-regexp">/(@_just search;)/g</span>;
+<span class="hljs-keyword">const</span> classRegex= <span class="hljs-regexp">/&amp;#46;([a-zA-Z0-9_-]+)/g</span>;
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} CSS 
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string?</span>} <span class="hljs-variable">CUSTOM</span>
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} CODE 
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">boolean?</span>} <span class="hljs-variable">USECODE</span>
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} <span class="hljs-variable">CSSBUTTONS</span>
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} <span class="hljs-variable">CSSSEARCH</span>
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">[string, boolean]</span>}
+ */</span>
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">customcss</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">CSS, CUSTOM, CODE, USECODE = <span class="hljs-literal">true</span>, CSSBUTTONS, CSSSEARCH</span>) {
+
+ <span class="hljs-keyword">const</span> addcss = <span class="hljs-variable constant_">CSSBUTTONS</span> + <span class="hljs-variable constant_">CSSSEARCH</span>;
+
+ <span class="hljs-keyword">if</span> (!<span class="hljs-variable constant_">CUSTOM</span>) {
+
+    <span class="hljs-keyword">return</span> [
+
+        <span class="hljs-variable constant_">USECODE</span> ? <span class="hljs-variable constant_">CSS</span> + <span class="hljs-variable constant_">CODE</span> + addcss : <span class="hljs-variable constant_">CSS</span> + addcss,
+
+        <span class="hljs-literal">true</span>,
+
+    ];
+
+ }
+
+ <span class="hljs-keyword">let</span> usedcsssearch = <span class="hljs-literal">false</span>;
+
+ <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">CUSTOM</span>.<span class="hljs-title function_">replace</span>(srchregex, <span class="hljs-variable constant_">CSSSEARCH</span>).<span class="hljs-title function_">replace</span>(srchregex2, <span class="hljs-variable constant_">CSSSEARCH</span>) != <span class="hljs-variable constant_">CUSTOM</span>) {
+
+    usedcsssearch = <span class="hljs-literal">true</span>;
+
+ }
+
+ <span class="hljs-keyword">const</span> custom = <span class="hljs-variable constant_">CUSTOM</span>
+
+    .<span class="hljs-title function_">replace</span>(baseregex2,<span class="hljs-variable constant_">CSS</span>)
+
+    .<span class="hljs-title function_">replace</span>(baseregex, <span class="hljs-variable constant_">CSS</span>)
+
+    .<span class="hljs-title function_">replace</span>(coderegex2, <span class="hljs-variable constant_">USECODE</span> ? <span class="hljs-variable constant_">CODE</span> : <span class="hljs-string">&#x27;&#x27;</span>)
+
+    .<span class="hljs-title function_">replace</span>(coderegex, <span class="hljs-variable constant_">USECODE</span> ? <span class="hljs-variable constant_">CODE</span> : <span class="hljs-string">&#x27;&#x27;</span>)
+
+    .<span class="hljs-title function_">replace</span>(btnsregex, <span class="hljs-variable constant_">CSSBUTTONS</span>)
+
+    .<span class="hljs-title function_">replace</span>(btnsregex2, <span class="hljs-variable constant_">CSSBUTTONS</span>)
+
+    .<span class="hljs-title function_">replace</span>(srchregex, <span class="hljs-variable constant_">CSSSEARCH</span>)
+
+    .<span class="hljs-title function_">replace</span>(srchregex2, <span class="hljs-variable constant_">CSSSEARCH</span>);
+
+ <span class="hljs-keyword">return</span> [custom, usedcsssearch];
+}
+
+<span class="hljs-keyword">const</span> savedclasses = {};
+<span class="hljs-keyword">let</span> language_class;
+<span class="hljs-keyword">let</span> prompt_class;
+<span class="hljs-keyword">let</span> function_class;
+<span class="hljs-keyword">let</span> classid = <span class="hljs-number">0</span>;
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} TEMPLATE 
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} CSS 
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} HTML 
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} DATANAME8 
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">string[]</span>}
+ */</span>
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">highlightclasses</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">TEMPLATE, CSS, HTML, DATANAME8</span>) {
+
+ <span class="hljs-keyword">const</span> classes = [];
+
+ <span class="hljs-keyword">let</span> match;
+
+ <span class="hljs-keyword">while</span> ((match = classRegex.<span class="hljs-title function_">exec</span>(<span class="hljs-variable constant_">TEMPLATE</span>)) !== <span class="hljs-literal">null</span>) {
+
+    classes.<span class="hljs-title function_">push</span>(match[<span class="hljs-number">1</span>]);
+
+ }
+
+ <span class="hljs-keyword">const</span> uniqueClasses = <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(classes.<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a,b</span>) =&gt;</span> a.<span class="hljs-property">length</span> - b.<span class="hljs-property">length</span>))).<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> !savedclasses[c]).<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a,b</span>) =&gt;</span> a.<span class="hljs-property">length</span> - b.<span class="hljs-property">length</span>);
+
+ uniqueClasses.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">class_</span> =&gt;</span> {
+
+    savedclasses[class_] = <span class="hljs-string">`<span class="hljs-subst">${DATANAME8}</span><span class="hljs-subst">${classid++}</span>`</span>;
+
+    <span class="hljs-keyword">if</span> (class_ == <span class="hljs-string">&quot;language_&quot;</span>) {language_class = savedclasses[class_]}
+
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (class_ == <span class="hljs-string">&quot;prompt_&quot;</span>) {prompt_class= savedclasses[class_]}
+
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (class_==<span class="hljs-string">&quot;function_&quot;</span>){function_class=savedclasses[class_]}
+
+ });
+
+ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [class_, hlclass] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(savedclasses)) {
+
+    <span class="hljs-variable constant_">CSS</span> = <span class="hljs-variable constant_">CSS</span>.<span class="hljs-title function_">replace</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">`.<span class="hljs-subst">${class_}</span>(?= |.|,)`</span>, <span class="hljs-string">&#x27;g&#x27;</span>), <span class="hljs-string">`.<span class="hljs-subst">${hlclass}</span>`</span>);
+
+    <span class="hljs-keyword">const</span> regex = <span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(
+
+        <span class="hljs-string">`&lt;([a-zA-Z0-9]+)([^&gt;]*)&amp;#92;sclass=&quot;([^&quot;]*&amp;#92;b<span class="hljs-subst">${class_}</span>&amp;#92;b[^&quot;]*)&quot;([^&gt;]*)&gt;([&amp;#92;s&amp;#92;S]*?)&lt;/&amp;#92;1&gt;`</span>,
+
+        <span class="hljs-string">&#x27;gm&#x27;</span>
+
+    );
+
+    <span class="hljs-variable constant_">HTML</span> = <span class="hljs-variable constant_">HTML</span>.<span class="hljs-title function_">replace</span>(regex, <span class="hljs-function">(<span class="hljs-params">match, tagName, beforeClassAttrs, classAttrValue, afterClassAttrs, innerContent</span>) =&gt;</span> {
+
+        <span class="hljs-keyword">const</span> classes_ = classAttrValue.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27; &#x27;</span>);
+
+        <span class="hljs-keyword">if</span> (!classes_.<span class="hljs-title function_">includes</span>(hlclass)) {
+
+            classes_.<span class="hljs-title function_">push</span>(hlclass);
+
+        }
+
+        <span class="hljs-keyword">const</span> newClassAttr = classes_.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27; &#x27;</span>);
+
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;<span class="hljs-subst">${tagName}</span><span class="hljs-subst">${beforeClassAttrs}</span> class=&quot;<span class="hljs-subst">${newClassAttr.replace(/(?&lt;=&amp;#<span class="hljs-number">115</span>;|^| )hljs(.*?) (?=|$)/, <span class="hljs-string">&#x27;&#x27;</span>).replace(<span class="hljs-string">&quot;language_&quot;</span>, language_class).replace(<span class="hljs-string">&quot;prompt_&quot;</span>, prompt_class).replace(<span class="hljs-string">&quot;function_&quot;</span>, function_class).replace(/(.*?) &amp;#<span class="hljs-number">49</span>;/, <span class="hljs-string">&#x27;$1&#x27;</span>)}</span>&quot;<span class="hljs-subst">${afterClassAttrs}</span>&gt;<span class="hljs-subst">${innerContent}</span>&lt;/<span class="hljs-subst">${tagName}</span>&gt;`</span>;
+
+    });
+
+    <span class="hljs-comment">//HTML = HTML.replace(new RegExp(`&lt;(.*?) class=&quot;(.*?)${class_}(.*?)&quot;&gt;(.*?)&lt;/&amp;#92;1&gt;`, &#x27;gm&#x27;), `&lt;$1 class=&quot;$2${hlclass}$3&quot;&gt;$4&lt;/$1&gt;`);</span>
+
+ }
+
+ <span class="hljs-keyword">return</span> [<span class="hljs-variable constant_">CSS</span>, <span class="hljs-variable constant_">HTML</span>];
+}
+

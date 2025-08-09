@@ -1,0 +1,12 @@
+module.exports = {
+
+ type: "docs",
+
+ docs_config: {
+
+    metatitle: "Documentation title", // Required. Replace with your documentation title.
+
+    domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
+
+ }
+}

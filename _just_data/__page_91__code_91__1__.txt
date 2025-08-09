@@ -1,0 +1,110 @@
+<span class="hljs-emphasis">_just: title: Syntax highlighting test
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>Syntax highlighting<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+&amp;#96;&amp;#96;&amp;#96;json
+{
+
+ &quot;hello&quot;: &quot;world&quot;,
+
+ &quot;number&quot;: 1234567890,
+
+ &quot;array&quot;: []
+}
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;json
+[
+
+ &quot;hello&quot;, &quot;world&quot;
+]
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;js
+console.log(&#x27;hello world&#x27;);
+console.warn(1 + 1);
+alert(false);
+const abc = true;
+for (i = 1; i &lt;= 4; i++) {
+
+ // do something
+}
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;html
+&lt;!DOCTYPE html&gt;
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hw&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;abc&quot;</span>&gt;</span></span>Hello World!<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span>
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;css
+* {
+
+ background-color: black;
+}
+span {
+
+ color: white;
+}
+.hw {
+
+ border: 1px solid #6e3bf3;
+}
+#abc {
+
+ -webkit-filter: blur(8em);
+}
+div:before {
+
+ content: &#x27;hello&#x27;;
+}
+:root {
+
+ --color: #ffffff;
+
+ @media(max-width: 5px) {
+
+    --color: #000000;
+
+ }
+}
+::-webkit-scrollbar {
+
+ width: 7px;
+
+ height: 7px
+}
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;sh
+#!/bin/bash
+echo &quot;Hello World!&quot;
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;py
+#!/usr/bin/env python3
+import time
+out = int(time.time() * 1000)
+print(out)
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;lua
+print(&quot;hiii&quot;)
+warn(1 + 1)
+local abc = true
+while wait(1) do
+
+ -- do something
+end
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;md
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span>markdown inside markdown<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;go
+// go
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;golang
+// golang
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;golo
+
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;gololang
+
+&amp;#96;&amp;#96;&amp;#96;
+&amp;#96;&amp;#96;&amp;#96;diff
+  text
++ added
+- removed
+&amp;#96;&amp;#96;&amp;#96;
+</span>

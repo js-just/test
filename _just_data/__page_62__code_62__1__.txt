@@ -1,0 +1,259 @@
+&lt;h1&gt;MIT License&lt;/h1&gt;
+&lt;h1&gt;# Copyright (c) 2025 JustStudio. &lt;a href=<span class="hljs-string">&quot;https://juststudio.is-a.dev/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;rGbS9&quot;</span>&gt;https://juststudio.is-a.dev/&lt;/a&gt;&lt;/h1&gt;
+&lt;h1&gt;# Permission is hereby granted, free of charge, to any person obtaining a copy&lt;/h1&gt;
+&lt;h1&gt;of this software and associated documentation files (the <span class="hljs-string">&quot;Software&quot;</span>), to deal&lt;/h1&gt;
+&lt;h1&gt;<span class="hljs-keyword">in</span> the Software without restriction, including without limitation the rights&lt;/h1&gt;
+&lt;h1&gt;to use, copy, modify, merge, publish, distribute, sublicense, and/or sell&lt;/h1&gt;
+&lt;h1&gt;copies of the Software, and to permit persons to whom the Software is&lt;/h1&gt;
+&lt;h1&gt;furnished to <span class="hljs-keyword">do</span> so, subject to the following conditions:&lt;/h1&gt;
+&lt;h1&gt;# The above copyright notice and this permission notice shall be included <span class="hljs-keyword">in</span> all&lt;/h1&gt;
+&lt;h1&gt;copies or substantial portions of the Software.&lt;/h1&gt;
+&lt;h1&gt;# THE SOFTWARE IS PROVIDED <span class="hljs-string">&quot;AS IS&quot;</span>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR&lt;/h1&gt;
+&lt;h1&gt;IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&lt;/h1&gt;
+&lt;h1&gt;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE&lt;/h1&gt;
+&lt;h1&gt;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER&lt;/h1&gt;
+&lt;h1&gt;LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,&lt;/h1&gt;
+&lt;h1&gt;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE&lt;/h1&gt;
+&lt;h1&gt;SOFTWARE.&lt;/h1&gt;
+&lt;h1&gt;Generate Build Map/Manifest&lt;/h1&gt;
+BUILD_ID=$(<span class="hljs-built_in">cat</span> .next/BUILD_ID)
+<span class="hljs-built_in">mkdir</span> -p deploy/_just/static/
+<span class="hljs-built_in">mkdir</span> -p deploy/_just/static/<span class="hljs-variable">$BUILD_ID</span>/
+<span class="hljs-built_in">mkdir</span> -p deploy/_just/static/chunks/
+
+<span class="hljs-built_in">source</span> <span class="hljs-variable">$GITHUB_ACTION_PATH</span>/src/modules/string.sh
+
+random_strings=($(generate_strings 1 16))
+clearCache_name=<span class="hljs-variable">${random_strings[0]}</span>c
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;[&quot;</span> &gt; deploy/api/build-manifest
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span> &gt; deploy/api/build-manifest.txt
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;[&quot;</span> &gt; deploy/api/_just_build-manifest
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span> &gt; deploy/api/_just_build-manifest.txt
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/buildManifest_start.js)</span>&quot;</span> &gt; deploy/_just/static/<span class="hljs-variable">$BUILD_ID</span>/buildManifest.js
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/_justManifest_start.js)</span>&quot;</span> &gt; deploy/_just/static/<span class="hljs-variable">$BUILD_ID</span>/_justManifest.js
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/clearCache.js)</span>&quot;</span> &gt; deploy/_just/static/chunks/<span class="hljs-variable">$clearCache_name</span>.js
+find _just_data -mindepth 1 -<span class="hljs-built_in">print</span> | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> -r path; <span class="hljs-keyword">do</span>
+
+ relative_path=<span class="hljs-variable">${path#_just_data/}</span>
+
+ first_line=$(<span class="hljs-built_in">head</span> -n 1 <span class="hljs-string">&quot;<span class="hljs-variable">$path</span>&quot;</span>)
+
+ <span class="hljs-keyword">if</span> [ -f <span class="hljs-string">&quot;<span class="hljs-variable">$path</span>&quot;</span> ]; <span class="hljs-keyword">then</span>
+
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$first_line</span>&quot;</span> != <span class="hljs-string">&quot;// _just hide&quot;</span> || 
+
+        <span class="hljs-string">&quot;<span class="hljs-variable">$first_line</span>&quot;</span> != <span class="hljs-string">&quot;// _just doNotModify+hide&quot;</span> ]]; <span class="hljs-keyword">then</span>
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    _just_Manifest0.push(&amp;#34;<span class="hljs-variable">$relative_path</span>&amp;#34;);&quot;</span> &gt;&gt; deploy/_just/static/<span class="hljs-variable">$BUILD_ID</span>/_justManifest.js
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&amp;#34;<span class="hljs-variable">$relative_path</span>&amp;#34;,&quot;</span> &gt;&gt; deploy/api/_just_build-manifest
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$relative_path</span>&quot;</span> &gt;&gt; deploy/api/_just_build-manifest.txt
+
+    <span class="hljs-keyword">fi</span>
+
+ <span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-keyword">function</span> human_readable_size {
+
+ <span class="hljs-built_in">local</span> size=<span class="hljs-variable">$1</span>
+
+ <span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$size</span>&quot;</span> -ge 1073741824 ]; <span class="hljs-keyword">then</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(bc &lt;&lt;&lt; <span class="hljs-string">&quot;scale=2; <span class="hljs-variable">$size</span>/1073741824&quot;</span>)</span> GB&quot;</span>
+
+ <span class="hljs-keyword">elif</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$size</span>&quot;</span> -ge 1048576 ]; <span class="hljs-keyword">then</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(bc &lt;&lt;&lt; <span class="hljs-string">&quot;scale=2; <span class="hljs-variable">$size</span>/1048576&quot;</span>)</span> MB&quot;</span>
+
+ <span class="hljs-keyword">elif</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$size</span>&quot;</span> -ge 1024 ]; <span class="hljs-keyword">then</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(bc &lt;&lt;&lt; <span class="hljs-string">&quot;scale=2; <span class="hljs-variable">$size</span>/1024&quot;</span>)</span> KB&quot;</span>
+
+ <span class="hljs-keyword">else</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$size</span> B&quot;</span>
+
+ <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;&amp;#110;----------------&amp;#110;&amp;#110;Build Map:&amp;#110;&quot;</span>
+FILE_ID=1
+TOTAL_FILES=$(find deploy -mindepth 1 -<span class="hljs-built_in">print</span> | <span class="hljs-built_in">wc</span> -l)
+TOTAL_SIZE=0
+find deploy -mindepth 1 -<span class="hljs-built_in">print</span> | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> -r path; <span class="hljs-keyword">do</span>
+
+ relative_path=<span class="hljs-variable">${path#deploy/}</span>
+
+ first_line=$(<span class="hljs-built_in">head</span> -n 1 <span class="hljs-string">&quot;<span class="hljs-variable">$path</span>&quot;</span>)
+
+ <span class="hljs-keyword">if</span> [ -f <span class="hljs-string">&quot;<span class="hljs-variable">$path</span>&quot;</span> ]; <span class="hljs-keyword">then</span>
+
+    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">${path##*.}</span>&quot;</span> <span class="hljs-keyword">in</span>
+
+        
+
+        <span class="hljs-comment"># Website files (idk how to name them) </span>
+
+        html) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;HTML&quot;</span> ;;
+
+        php) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;PHP&quot;</span> ;;
+
+        css) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;CSS&quot;</span> ;;
+
+        js) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;JavaScript&quot;</span> ;;
+
+        json) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;JSON&quot;</span> ;;
+
+        txt) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Text&quot;</span> ;;
+
+        xml) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;XML&quot;</span> ;;
+
+        webmanifest) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Webmanifest&quot;</span> ;;
+
+
+        <span class="hljs-comment"># Media</span>
+
+        png) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Image/Png&quot;</span> ;;
+
+        svg) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Image/SVG&quot;</span> ;;
+
+        jpeg|jpg) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Image/Jpeg&quot;</span> ;;
+
+        webp) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Image/Webp&quot;</span> ;;
+
+        bmp) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Image/Bmp&quot;</span> ;;
+
+        gif) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Image/GIF&quot;</span> ;;
+
+        heic) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Image/HEIC&quot;</span> ;;
+
+        ico) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Favicon&quot;</span> ;;
+
+        mp4) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Video/MP4&quot;</span> ;;
+
+        mov) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Video/Mov&quot;</span> ;;
+
+        webm) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Video/Webm&quot;</span> ;;
+
+        m4a) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Audio/M4A&quot;</span> ;;
+
+        mp2) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Audio/MP2&quot;</span> ;;
+
+        mp3) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Audio/MP3&quot;</span> ;;
+
+        ogg) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Audio/OGG&quot;</span> ;;
+
+        wav) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Audio/WAV&quot;</span> ;;
+
+        wma) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Audio/WMA&quot;</span> ;;
+
+
+        <span class="hljs-comment"># Fonts</span>
+
+        otf) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Font/OTF&quot;</span> ;;
+
+        woff) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Font/WOFF&quot;</span> ;;
+
+        woff2) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Font/WOFF2&quot;</span> ;;
+
+
+        <span class="hljs-comment"># Archive</span>
+
+        7z) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Archive/7z&quot;</span> ;;
+
+        tar) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Archive/TAR&quot;</span> ;;
+
+        rar) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Archive/RAR&quot;</span> ;;
+
+        zip) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Archive/ZIP&quot;</span> ;;
+
+        
+
+        <span class="hljs-comment"># Todo: more files support</span>
+
+        *) <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;Other&quot;</span> ;;
+
+
+    <span class="hljs-keyword">esac</span>
+
+    file_size=$(<span class="hljs-built_in">stat</span> -c%s <span class="hljs-string">&quot;<span class="hljs-variable">$path</span>&quot;</span>)
+
+    TOTAL_SIZE=$((TOTAL_SIZE + $((file_size))))
+
+
+    <span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$FILE_ID</span>&quot;</span> -eq 1 ]; <span class="hljs-keyword">then</span>
+
+        <span class="hljs-built_in">printf</span> <span class="hljs-string">&quot;┌ %s | %s&amp;#110;&quot;</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(human_readable_size $file_size)</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$relative_path</span>&quot;</span>
+
+    <span class="hljs-keyword">elif</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$FILE_ID</span>&quot;</span> -eq <span class="hljs-string">&quot;<span class="hljs-variable">$TOTAL_FILES</span>&quot;</span> ]; <span class="hljs-keyword">then</span>
+
+        <span class="hljs-built_in">printf</span> <span class="hljs-string">&quot;└ %s | %s&amp;#110;&quot;</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(human_readable_size $file_size)</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$relative_path</span>&quot;</span>
+
+    <span class="hljs-keyword">else</span>
+
+        <span class="hljs-built_in">printf</span> <span class="hljs-string">&quot;├ %s | %s&amp;#110;&quot;</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(human_readable_size $file_size)</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$relative_path</span>&quot;</span>
+
+    <span class="hljs-keyword">fi</span>
+
+    
+
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$first_line</span>&quot;</span> != <span class="hljs-string">&quot;// _just hide&quot;</span> || 
+
+        <span class="hljs-string">&quot;<span class="hljs-variable">$first_line</span>&quot;</span> != <span class="hljs-string">&quot;// _just doNotModify+hide&quot;</span> ]]; <span class="hljs-keyword">then</span>
+
+        buildManifestJSONString=<span class="hljs-string">&quot;{&amp;#34;type&amp;#34;: &amp;#34;<span class="hljs-variable">$type</span>&amp;#34;, &amp;#34;path&amp;#34;: &amp;#34;<span class="hljs-variable">$relative_path</span>&amp;#34;, &amp;#34;size&amp;#34;: {&amp;#34;bytes&amp;#34;: <span class="hljs-variable">$file_size</span>, &amp;#34;string&amp;#34;: &amp;#34;<span class="hljs-subst">$(human_readable_size $file_size)</span>&amp;#34;}}&quot;</span>
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    _just_buildManifest0.push(<span class="hljs-variable">$buildManifestJSONString</span>);&quot;</span> &gt;&gt; deploy/_just/static/<span class="hljs-variable">$BUILD_ID</span>/buildManifest.js
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$buildManifestJSONString</span>,&quot;</span> &gt;&gt; deploy/api/build-manifest
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;(<span class="hljs-variable">$type</span>) <span class="hljs-variable">$relative_path</span> - <span class="hljs-subst">$(human_readable_size $file_size)</span>&quot;</span> &gt;&gt; deploy/api/build-manifest.txt
+
+    <span class="hljs-keyword">fi</span>
+
+ <span class="hljs-keyword">fi</span>
+
+ 
+
+ FILE_ID=$((FILE_ID + <span class="hljs-number">1</span>))
+<span class="hljs-keyword">done</span>
+
+manifest_size=$(<span class="hljs-built_in">stat</span> -c%s <span class="hljs-string">&quot;deploy/_just/static/<span class="hljs-variable">$BUILD_ID</span>/buildManifest.js&quot;</span>)
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;End Build Map&amp;#110;&amp;#110;&quot;</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;_just/static/<span class="hljs-variable">$BUILD_ID</span>/buildManifest.js size: <span class="hljs-subst">$(human_readable_size $manifest_size)</span>&amp;#110;&quot;</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;                            Total build size: <span class="hljs-subst">$(human_readable_size $TOTAL_SIZE)</span>&amp;#110;&amp;#110;&quot;</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;----------------&amp;#110;&quot;</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/buildManifest_end.js)</span>&quot;</span> &gt;&gt; deploy/_just/static/<span class="hljs-variable">$BUILD_ID</span>/buildManifest.js
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(cat $GITHUB_ACTION_PATH/src/postprocessor/insert/_justManifest_end.js)</span>&quot;</span> &gt;&gt; deploy/_just/static/<span class="hljs-variable">$BUILD_ID</span>/_justManifest.js
+
+<span class="hljs-keyword">for</span> html_file <span class="hljs-keyword">in</span> deploy/*.html; <span class="hljs-keyword">do</span>
+
+ sed -i.bak <span class="hljs-string">&#x27;/^[[:space:]]*&lt;&amp;#47;body&gt;[[:space:]]*$/d&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$html_file</span>&quot;</span>
+
+ sed -i.bak <span class="hljs-string">&#x27;/^[[:space:]]*&lt;&amp;#47;html&gt;[[:space:]]*$/d&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$html_file</span>&quot;</span>
+
+ 
+
+ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;script src=&amp;#34;_just/static/<span class="hljs-variable">$BUILD_ID</span>/buildManifest.js&amp;#34;&gt;&lt;/script&gt;&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$html_file</span>&quot;</span>
+
+ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;script src=&amp;#34;_just/static/<span class="hljs-variable">$BUILD_ID</span>/_justManifest.js&amp;#34;&gt;&lt;/script&gt;&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$html_file</span>&quot;</span>
+
+ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;script src=&amp;#34;_just/static/chunks/<span class="hljs-variable">$clearCache_name</span>.js&amp;#34;&gt;&lt;/script&gt;&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$html_file</span>&quot;</span>
+
+ 
+
+ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;/body&gt;&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$html_file</span>&quot;</span>
+
+ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;/html&gt;&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$html_file</span>&quot;</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;{}]&quot;</span> &gt;&gt; deploy/api/build-manifest
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span> &gt;&gt; deploy/api/build-manifest.txt
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&amp;#34;&amp;#34;]&quot;</span> &gt;&gt; deploy/api/_just_build-manifest
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span> &gt;&gt; deploy/api/_just_build-manifest.txt
+<span class="hljs-built_in">cp</span> deploy/api/_just_build-manifest deploy/api/_just_build-manifest.json
+<span class="hljs-built_in">cp</span> deploy/api/build-manifest deploy/api/build-manifest.json

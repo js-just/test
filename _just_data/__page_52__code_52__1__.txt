@@ -1,0 +1,274 @@
+<span class="hljs-comment">/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. &lt;https://juststudio.is-a.dev/&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/</span>
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} cssText 
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">Array</span>} 
+ */</span>
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">JSON</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">cssText</span>) {
+  <span class="hljs-keyword">const</span> cleanedCSS = cssText.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/&amp;#47;&amp;#42;[&amp;#115;&amp;#83;]*?&amp;#42;&amp;#47;/g</span>, <span class="hljs-string">&#x27;&#x27;</span>);
+  <span class="hljs-keyword">let</span> index = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">let</span> ruleid = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">const</span> length = cleanedCSS.<span class="hljs-property">length</span>;
+
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">skipWhitespace</span>(<span class="hljs-params"></span>) {
+
+ <span class="hljs-keyword">while</span> (index &lt; length &amp;&amp; <span class="hljs-regexp">/&amp;#115;/</span>.<span class="hljs-title function_">test</span>(cleanedCSS[index])) index++;
+  }
+
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">peek</span>(<span class="hljs-params"></span>) {
+
+ <span class="hljs-keyword">return</span> cleanedCSS[index];
+  }
+
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">consume</span>(<span class="hljs-params"></span>) {
+
+ <span class="hljs-keyword">return</span> cleanedCSS[index++];
+  }
+
+  <span class="hljs-keyword">const</span> stack = [];
+  <span class="hljs-keyword">const</span> rules = [];
+
+  <span class="hljs-keyword">while</span> (index &lt; length) {
+
+ <span class="hljs-title function_">skipWhitespace</span>();
+
+
+ <span class="hljs-keyword">if</span> (index &gt;= length) <span class="hljs-keyword">break</span>;
+
+
+ <span class="hljs-keyword">const</span> char = <span class="hljs-title function_">peek</span>();
+
+
+ <span class="hljs-keyword">if</span> (char === <span class="hljs-string">&#x27;}&#x27;</span>) {
+
+  index++;
+
+  <span class="hljs-keyword">if</span> (stack.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) stack.<span class="hljs-title function_">pop</span>();
+
+  <span class="hljs-keyword">continue</span>;
+
+ }
+
+
+ <span class="hljs-keyword">if</span> (char === <span class="hljs-string">&#x27;@&#x27;</span>) {
+
+  rules.<span class="hljs-title function_">push</span>(<span class="hljs-title function_">parseAtRule</span>());
+
+ } <span class="hljs-keyword">else</span> {
+
+  rules.<span class="hljs-title function_">push</span>(<span class="hljs-title function_">parseSelectorOrNested</span>());
+
+ }
+  }
+
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseAtRule</span>(<span class="hljs-params"></span>) {
+
+ <span class="hljs-keyword">let</span> start = index;
+
+ <span class="hljs-keyword">while</span> (index &lt; length &amp;&amp; cleanedCSS[index] !== <span class="hljs-string">&#x27;{&#x27;</span> &amp;&amp; cleanedCSS[index] !== <span class="hljs-string">&#x27;;&#x27;</span>) {
+
+  index++;
+
+ }
+
+ <span class="hljs-keyword">const</span> atRuleHeader = cleanedCSS.<span class="hljs-title function_">slice</span>(start, index).<span class="hljs-title function_">trim</span>();
+
+
+ <span class="hljs-keyword">if</span> (cleanedCSS[index] === <span class="hljs-string">&#x27;{&#x27;</span>) {
+
+  index++;
+
+  <span class="hljs-keyword">const</span> nestedRules = [];
+
+  stack.<span class="hljs-title function_">push</span>({ <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;at-rule&#x27;</span>, <span class="hljs-attr">name</span>: atRuleHeader, <span class="hljs-attr">rules</span>: nestedRules, <span class="hljs-attr">id</span>: ruleid++ });
+
+  
+
+  <span class="hljs-keyword">while</span> (index &lt; length) {
+
+    <span class="hljs-title function_">skipWhitespace</span>();
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">peek</span>() === <span class="hljs-string">&#x27;}&#x27;</span>) {
+
+      index++;
+
+      <span class="hljs-keyword">break</span>;
+
+    }
+
+    nestedRules.<span class="hljs-title function_">push</span>(<span class="hljs-title function_">parseSelectorOrNested</span>());
+
+  }
+
+  
+
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;at-rule&#x27;</span>, <span class="hljs-attr">name</span>: atRuleHeader, <span class="hljs-attr">rules</span>: nestedRules, <span class="hljs-attr">id</span>: ruleid++ };
+
+  
+
+ } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cleanedCSS[index] === <span class="hljs-string">&#x27;;&#x27;</span>) {
+
+  index++;
+
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;at-rule&#x27;</span>, <span class="hljs-attr">name</span>: atRuleHeader, <span class="hljs-attr">rules</span>: [], <span class="hljs-attr">id</span>: ruleid++ };
+
+ }
+
+ 
+
+ <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;at-rule&#x27;</span>, <span class="hljs-attr">name</span>: atRuleHeader, <span class="hljs-attr">rules</span>: [], <span class="hljs-attr">id</span>: ruleid++ };
+  }
+
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseSelectorOrNested</span>(<span class="hljs-params"></span>) {
+
+ <span class="hljs-keyword">let</span> start = index;
+
+ <span class="hljs-keyword">while</span> (
+
+  index &lt; length &amp;&amp;
+
+  cleanedCSS[index] !== <span class="hljs-string">&#x27;{&#x27;</span> &amp;&amp;
+
+  cleanedCSS[index] !== <span class="hljs-string">&#x27;}&#x27;</span>
+
+ ) {
+
+  index++;
+
+ }
+
+ 
+
+ <span class="hljs-keyword">const</span> selectorText = cleanedCSS.<span class="hljs-title function_">slice</span>(start, index).<span class="hljs-title function_">trim</span>();
+
+
+ <span class="hljs-keyword">if</span> (cleanedCSS[index] === <span class="hljs-string">&#x27;{&#x27;</span>) {
+
+  index++;
+
+  
+
+  <span class="hljs-title function_">skipWhitespace</span>();
+
+
+  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^[.#a-zA-Z0-9&amp;#45;&amp;#115;,:()%*&amp;#43;&lt;&gt;_]+$/</span>.<span class="hljs-title function_">test</span>(selectorText)) {
+
+    <span class="hljs-keyword">const</span> selectors = selectorText.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;,&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">s</span> =&gt;</span> s.<span class="hljs-title function_">trim</span>());
+
+    <span class="hljs-keyword">const</span> properties = {};
+
+    <span class="hljs-keyword">const</span> nestedRules = [];
+
+
+    <span class="hljs-keyword">while</span> (index &lt; length) {
+
+      <span class="hljs-title function_">skipWhitespace</span>();
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-title function_">peek</span>() === <span class="hljs-string">&#x27;}&#x27;</span>) {
+
+        index++;
+
+        <span class="hljs-keyword">break</span>;
+
+      }
+
+      
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-title function_">peek</span>() === <span class="hljs-string">&#x27;@&#x27;</span>) {
+
+        nestedRules.<span class="hljs-title function_">push</span>(<span class="hljs-title function_">parseAtRule</span>());
+
+        <span class="hljs-keyword">continue</span>;
+
+      }
+
+
+      <span class="hljs-keyword">let</span> propStart = index;
+
+      <span class="hljs-keyword">while</span> (
+
+        index &lt; length &amp;&amp;
+
+        cleanedCSS[index] !== <span class="hljs-string">&#x27;;&#x27;</span> &amp;&amp;
+
+        cleanedCSS[index] !== <span class="hljs-string">&#x27;}&#x27;</span>
+
+      ) {
+
+        index++;
+
+      }
+
+      
+
+      <span class="hljs-keyword">const</span> line = cleanedCSS.<span class="hljs-title function_">slice</span>(propStart, index).<span class="hljs-title function_">trim</span>();
+
+
+      <span class="hljs-keyword">if</span> (!line) <span class="hljs-keyword">break</span>;
+
+
+      <span class="hljs-keyword">if</span> (line.<span class="hljs-title function_">includes</span>(<span class="hljs-string">&#x27;:&#x27;</span>)) {
+
+        <span class="hljs-keyword">const</span> [key, value] = line.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;:&#x27;</span>).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">s</span> =&gt;</span> s.<span class="hljs-title function_">trim</span>());
+
+        properties[key] = value;
+
+        <span class="hljs-keyword">if</span> (cleanedCSS[index] === <span class="hljs-string">&#x27;;&#x27;</span>) index++;
+
+      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cleanedCSS[index] === <span class="hljs-string">&#x27;}&#x27;</span>) {
+
+        index++;
+
+        <span class="hljs-keyword">break</span>;
+
+      }
+
+    }
+
+
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;rule&#x27;</span>, selectors, properties, nestedRules, <span class="hljs-attr">id</span>: ruleid++ };
+
+    
+
+  } <span class="hljs-keyword">else</span> {
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+
+  }
+
+  
+
+ } <span class="hljs-keyword">else</span> {
+
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+
+ }
+  }
+
+  <span class="hljs-keyword">return</span> rules.<span class="hljs-title function_">filter</span>(<span class="hljs-title class_">Boolean</span>).<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a.<span class="hljs-property">id</span> - b.<span class="hljs-property">id</span>);;
+}
+

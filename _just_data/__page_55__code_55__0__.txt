@@ -1,0 +1,65 @@
+<h1>MIT License</h1>
+<h1># Copyright (c) 2025 JustStudio. <a href="https://juststudio.is-a.dev/" target="_blank" id="rGbS9">https://juststudio.is-a.dev/</a></h1>
+<h1># Permission is hereby granted, free of charge, to any person obtaining a copy</h1>
+<h1>of this software and associated documentation files (the "Software"), to deal</h1>
+<h1>in the Software without restriction, including without limitation the rights</h1>
+<h1>to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</h1>
+<h1>copies of the Software, and to permit persons to whom the Software is</h1>
+<h1>furnished to do so, subject to the following conditions:</h1>
+<h1># The above copyright notice and this permission notice shall be included in all</h1>
+<h1>copies or substantial portions of the Software.</h1>
+<h1># THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</h1>
+<h1>IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</h1>
+<h1>FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</h1>
+<h1>AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</h1>
+<h1>LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</h1>
+<h1>OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</h1>
+<h1>SOFTWARE.</h1>
+#!/bin/bash
+ERRORS_FILE="$GITHUB_ACTION_PATH/data/codes.json"
+source $GITHUB_ACTION_PATH/src/modules/color.sh
+ERROR_PREFIX="_just"
+
+ErrorMessage() {
+
+ local ERROR_CODE=$2
+
+ local ERROR_MESSAGE=${3:-$(jq -r ".[&#34;$1&#34;][] | select(.code==&#34;$ERROR_CODE&#34;) | .message" "$ERRORS_FILE")}
+
+ local ERROR_LINK=$(jq -r ".[&#34;$1&#34;][] | select(.code==&#34;$ERROR_CODE&#34;) | .link" "$ERRORS_FILE")
+
+ local ERROR_TYPE="Error"
+
+ local ERROR_COLOR=$_RED
+
+ local ERROR_PREFIX_COLOR=$_LIGHTRED
+
+ if [[ $ERROR_CODE == 02* ]]; then
+
+    ERROR_TYPE="Warning"
+
+    ERROR_COLOR=$_YELLOW
+
+    ERROR_PREFIX_COLOR=$_ORANGE
+
+ fi
+
+ echo -e "$_LIGHTPURPLE_BG$_DARKGRAY$ERROR_PREFIX$_RESET: $ERROR_PREFIX_COLOR$ERROR_TYPE $ERROR_COLOR$ERROR_CODE: $ERROR_MESSAGE $ERROR_LINK$_RESET"
+}
+
+_justMessage() {
+
+ local MESSAGE=$1
+
+ echo -e "$_LIGHTPURPLE_BG$_DARKGRAY$ERROR_PREFIX$_RESET:$_CYAN INFO:$_RESET$MESSAGE"
+}
+
+customErrorMessage() {
+
+ echo -e "$_LIGHTPURPLE_BG$_DARKGRAY$ERROR_PREFIX$_RESET: $_RESET$1 $2: $3"
+}
+
+export -f ErrorMessage
+export -f _justMessage
+export -f customErrorMessage
+

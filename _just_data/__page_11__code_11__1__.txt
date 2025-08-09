@@ -1,0 +1,10 @@
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+
+ <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;redirect&quot;</span>, 
+
+ <span class="hljs-attr">redirect_config</span>: {
+
+    <span class="hljs-attr">url</span>: <span class="hljs-string">&quot;https://example.com/&quot;</span> <span class="hljs-comment">// Required. Replace with destination URL.</span>
+
+ }
+}

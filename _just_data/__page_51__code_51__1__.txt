@@ -1,0 +1,40 @@
+<span class="hljs-comment">/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. &lt;https://juststudio.is-a.dev/&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/</span>
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">Array</span>} array 
+ * <span class="hljs-doctag">@returns</span> {<span class="hljs-type">Array</span>}
+ */</span>
+<span class="hljs-built_in">exports</span>.<span class="hljs-property">shuffleArray</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">array</span>) {
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = array.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt; <span class="hljs-number">0</span>; i--) {
+
+ <span class="hljs-keyword">const</span> j = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() * (i + <span class="hljs-number">1</span>));
+
+ [array[i], array[j]] = [array[j], array[i]];
+  }
+  <span class="hljs-keyword">return</span> array;
+}
+

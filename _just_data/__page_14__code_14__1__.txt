@@ -1,0 +1,63 @@
+<span class="hljs-attr">name:</span> <span class="hljs-string">Website</span>
+
+<span class="hljs-attr">on:</span>
+  <span class="hljs-attr">push:</span>
+
+ <span class="hljs-attr">branches:</span> [<span class="hljs-string">&quot;main&quot;</span>]
+  <span class="hljs-attr">workflow_dispatch:</span>
+
+<span class="hljs-attr">permissions:</span>
+  <span class="hljs-attr">contents:</span> <span class="hljs-string">read</span>
+  <span class="hljs-attr">pages:</span> <span class="hljs-string">write</span>
+  <span class="hljs-attr">id-token:</span> <span class="hljs-string">write</span>
+
+<span class="hljs-attr">concurrency:</span>
+  <span class="hljs-attr">group:</span> <span class="hljs-string">&quot;pages&quot;</span>
+  <span class="hljs-attr">cancel-in-progress:</span> <span class="hljs-literal">false</span>
+
+<span class="hljs-attr">jobs:</span>
+  <span class="hljs-attr">build:</span>
+
+ <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+
+ <span class="hljs-attr">steps:</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Checkout</span>
+
+    <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v4</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">Pages</span>
+
+    <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/configure-pages@v5</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Generate</span> <span class="hljs-string">with</span> <span class="hljs-string">_just</span>
+
+    <span class="hljs-attr">uses:</span> <span class="hljs-string">js-just/latest@main</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Upload</span> <span class="hljs-string">artifact</span>
+
+    <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/upload-pages-artifact@v3</span>
+
+    <span class="hljs-attr">with:</span>
+
+      <span class="hljs-attr">path:</span> <span class="hljs-string">.</span>
+
+  <span class="hljs-attr">deploy:</span>
+
+ <span class="hljs-attr">environment:</span>
+
+  <span class="hljs-attr">name:</span> <span class="hljs-string">github-pages</span>
+
+  <span class="hljs-attr">url:</span> <span class="hljs-string">${{</span> <span class="hljs-string">steps.deployment.outputs.page_url</span> <span class="hljs-string">}}</span>
+
+ <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+
+ <span class="hljs-attr">needs:</span> <span class="hljs-string">build</span>
+
+ <span class="hljs-attr">steps:</span>
+
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Deploy</span> <span class="hljs-string">to</span> <span class="hljs-string">GitHub</span> <span class="hljs-string">Pages</span>
+
+    <span class="hljs-attr">id:</span> <span class="hljs-string">deployment</span>
+
+    <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/deploy-pages@v4</span>

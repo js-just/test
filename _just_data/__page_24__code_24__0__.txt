@@ -1,0 +1,7 @@
+print("hiii")
+warn(1 + 1)
+local abc = true
+while wait(1) do
+
+ -- do something
+end

@@ -1,0 +1,39 @@
+<span class="hljs-keyword">try</span> {
+
+ <span class="hljs-variable language_">window</span>.<span class="hljs-property">_just_Manifest</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> {
+
+    <span class="hljs-keyword">const</span> url = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">window</span>.location.protocol}</span>//<span class="hljs-subst">${<span class="hljs-variable language_">window</span>.location.hostname}</span>/<span class="hljs-subst">${item}</span>`</span>;
+
+    <span class="hljs-keyword">if</span> (caches) {
+
+        caches.<span class="hljs-title function_">keys</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">cacheNames</span> =&gt;</span> {
+
+            cacheNames.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">cacheName</span> =&gt;</span> {
+
+                caches.<span class="hljs-title function_">open</span>(cacheName).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">cache</span> =&gt;</span> {
+
+                    cache.<span class="hljs-title function_">match</span>(url).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+
+                        <span class="hljs-keyword">if</span> (response) {
+
+                            cache.<span class="hljs-title function_">delete</span>(url);
+
+                        }
+
+                    });
+
+                });
+
+            });
+
+        });
+
+    }
+
+ });
+} <span class="hljs-keyword">catch</span> {
+
+ <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">`&lt;iframe src=&quot;/_just/e&quot;&gt;&lt;/iframe&gt;`</span>;
+
+ <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&#x27;_just error: it looks like your website&amp;#39;s scripts override window._just_Manifest.&#x27;</span>)
+}
