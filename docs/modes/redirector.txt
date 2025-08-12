@@ -2,20 +2,20 @@
 <strong>- Client-side redirect.</strong>
 This mode requires only the just.config.js file, (except for the workflow file).
 <code>just&#46;config&#46;js</code>
-<_just element="HPCoNvS">12</_just>
-<blockquote class="gwLb3">Do not use this mode if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
+<_just element="mbXKo6i">12</_just>
+<blockquote class="fMQw9">Do not use this mode if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
 You can add <code>params{}</code>:
-<_just element="HPCoNvS">13</_just>
+<_just element="mbXKo6i">13</_just>
 You can also add <code>content{}</code> in <code>params{}</code> if you want to modify HTML content.
-<_just element="HPCoNvS">14</_just>
-<blockquote class="gwLb6"><code>&&#35;92;n</code> and tabs/4 spaces will be removed. Use <code>&#60;br&#62;</code> instead of <code>&&#35;92;n</code>.</blockquote>
+<_just element="mbXKo6i">14</_just>
+<blockquote class="fMQw8"><code>&&#35;92;n</code> and tabs/4 spaces will be removed. Use <code>&#60;br&#62;</code> instead of <code>&&#35;92;n</code>.</blockquote>
 Remember that your repository should have a <code>&#46;github/workflows/WORKFLOW&&#35;95;NAME&#46;yml</code> file.
-<span class="HPCoaO3">Template:</span>
-<_just element="HPCoNvS">15</_just>
+<span class="mbXKBUi">Template:</span>
+<_just element="mbXKo6i">15</_just>
 
 <h3 id="Redirect%20paths">Redirect paths</h3>
 You may add <code>paths&#91;&#93;</code> in <code>redirect&&#35;95;config{}</code> to create custom redirect paths.
-<_just element="HPCoNvS">16</_just>
+<_just element="mbXKo6i">16</_just>
 
 <h2 id="How%20it%20works%3F">How it works?</h2>
 Every HTML page has:
@@ -24,7 +24,7 @@ That means that users should be redirected, even if they have disabled JavaScrip
 
 <h2 id="Why%20is%20%3Ccode%3EHTTP%203XX%3C%2Fcode%3E%20better%3F">Why is <code>HTTP 3XX</code> better?</h2>
 A response with an <code>HTTP 3XX</code> status code and with the <code>location</code> header makes a real redirect.
-This mode generates client-side redirects that only support browsers!<div class="gwLbU"></div><br><h2 id="%3Ccode%3Emodule%26%2346%3Bexports%3C%2Fcode%3E%20JSON%20Schema"><code>module&#46;exports</code> JSON Schema</h2>
-<_just element="HPCoNvS">17</_just>
+This mode generates client-side redirects that only support browsers!<div class="fMQw1"></div><br><h2 id="%3Ccode%3Emodule%26%2346%3Bexports%3C%2Fcode%3E%20JSON%20Schema"><code>module&#46;exports</code> JSON Schema</h2>
+<_just element="mbXKo6i">17</_just>
 
 </p>
