@@ -4,29 +4,30 @@
 <blockquote>This mode redirects your static website, such as your <code>&#46;github&#46;io</code> website, to a specified URL.</blockquote>
 This mode requires only the <code>just&#46;config&#46;js</code> file, (except for the workflow file).
 <code>just&#46;config&#46;js</code>
-<_just element="MnjeP4R">14</_just>
-<blockquote class="CzIHT">Do not use this mode if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
+<_just element="mepjXy">15</_just>
+<blockquote class="AUGo2">Do not use this mode if you can make server-side <code>HTTP 3XX</code> redirects.</blockquote>
 You can add <code>params{}</code>:
-<_just element="MnjeP4R">15</_just>
+<_just element="mepjXy">16</_just>
 You can also add <code>content{}</code> in <code>params{}</code> if you want to modify HTML content.
-<_just element="MnjeP4R">16</_just>
-<blockquote class="CzIH1"><code>&&#35;92;n</code> and tabs/4 spaces will be removed. Use <code>&#60;br&#62;</code> instead of <code>&&#35;92;n</code>.</blockquote>
+<_just element="mepjXy">17</_just>
+<blockquote class="AUGoC"><code>&&#35;92;n</code> and tabs/4 spaces will be removed. Use <code>&#60;br&#62;</code> instead of <code>&&#35;92;n</code>.</blockquote>
 Remember that your repository should have a <code>&#46;github/workflows/WORKFLOW&&#35;95;NAME&#46;yml</code> file.
-<span class="MnjeH1D">Template:</span>
-<_just element="MnjeP4R">17</_just>
+<span class="mepj1yH">Template:</span>
+<_just element="mepjXy">18</_just>
 
 <h3 id="Redirect%20paths">Redirect paths</h3>
 You may add <code>paths&#91;&#93;</code> in <code>redirect&&#35;95;config{}</code> to create custom redirect paths.
-<_just element="MnjeP4R">18</_just>
+<_just element="mepjXy">19</_just>
 
-<h2 id="How%20it%20works%3F">How it works?</h2>
-Every HTML page has:
+<h2 id="How%20it%20works%3F2">How it works?</h2>
+It generates HTML pages based on your <code>module&#46;exports</code> input.
+Every generated HTML page has:
 <ul><li><code>&#60;meta http&#45;equiv&#61;&#34;refresh&#34; content&#61;&#34;0;url&#61;&#46;&#46;&#46;&#34;&#62;</code> in <code>&#60;head&#62;</code>. This means that the user will be redirected to the destination URL in 0 seconds after the page has loaded.</li><li>Fallback #1 - <code>&#60;script&#62;&#46;&#46;&#46;&#60;/script&#62;</code> in <code>&#60;body&#62;</code> redirects the user to the destination URL.</li><li>Fallback #2 - Other elements in <code>&#60;body&#62;</code> ("Redirecting... <...>", "Didn't get redirected? <code>&#60;a &#46;&#46;&#46;&#62;</code> Click here! <code>&#60;/a&#62;</code> ").</li></ul>
 That means that users should be redirected, even if they have disabled JavaScript in their browser settings.
 
 <h2 id="Why%20is%20%3Ccode%3EHTTP%203XX%3C%2Fcode%3E%20better%3F">Why is <code>HTTP 3XX</code> better?</h2>
 A response with an <code>HTTP 3XX</code> status code and with the <code>location</code> header makes a real redirect.
-This mode generates client-side redirects that only support browsers!<div class="CzIHL"></div><br><h2 id="%3Ccode%3Emodule%26%2346%3Bexports%3C%2Fcode%3E%20JSON%20Schema"><code>module&#46;exports</code> JSON Schema</h2>
-<_just element="MnjeP4R">19</_just>
+This mode generates client-side redirects that only support browsers!<div class="AUGo0"></div><br><h2 id="%3Ccode%3Emodule%26%2346%3Bexports%3C%2Fcode%3E%20JSON%20Schema"><code>module&#46;exports</code> JSON Schema</h2>
+<_just element="mepjXy">20</_just>
 
 </p>
