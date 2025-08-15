@@ -8,18 +8,18 @@ Generated Next.js website should be in <code>&#46;next/server/pages/</code> and 
 Required directories are:
 <ul><li><code>&&#35;95;just</code></li><li><code>&&#35;95;just/dangerously&#45;insert&#45;files</code></li><li><code>&&#35;95;just/js</code></li><li><code>&&#35;95;just/style</code></li></ul>
 
-<span class="kGIFskE"><code>just&#46;config&#46;js</code></span>
-<_just element="kGIFTcQ">14</_just>
-<span class="kGIFskE"><code>&#46;github/workflows/WORKFLOW&&#35;95;NAME&#46;yml</code></span>
-<_just element="kGIFTcQ">15</_just>
+<span class="cwthkY"><code>just&#46;config&#46;js</code></span>
+<_just element="cwthICk">14</_just>
+<span class="cwthkY"><code>&#46;github/workflows/WORKFLOW&&#35;95;NAME&#46;yml</code></span>
+<_just element="cwthICk">15</_just>
 
 <h2 id="Required%20directories">Required directories</h2>
-<span class="kGIFskE">Required only directories, not files within them (except for the <code>&&#35;95;just/404&#46;html</code> file).</span>
+<span class="cwthkY">Required only directories, not files within them (except for the <code>&&#35;95;just/404&#46;html</code> file).</span>
 In <strong><code>&&#35;95;just/js</code></strong> you can put your JavaScript files to be inserted into the <code>deploy/&&#35;95;just</code> directory and into every HTML page.
 In <strong><code>&&#35;95;just/style</code></strong> you can place your CSS files to be inserted into the <code>deploy/&&#35;95;just</code> directory and into every HTML page as well.
 Within <strong><code>&&#35;95;just/dangerously&#45;insert&#45;files</code></strong>, you may include any files that you wish to insert into the <code>deploy</code> directory.
 
-<blockquote class="SeCD6">Inserting files via the <strong><code>&&#35;95;just/dangerously&#45;insert&#45;files</code></strong> directory may cause website errors or files may not be inserted if there is already a file with the same name in the <code>deploy</code> directory.</blockquote>
+<blockquote class="XMRAU">Inserting files via the <strong><code>&&#35;95;just/dangerously&#45;insert&#45;files</code></strong> directory may cause website errors or files may not be inserted if there is already a file with the same name in the <code>deploy</code> directory.</blockquote>
 The <strong><code>&&#35;95;just/404&#46;html</code> file</strong> is required and it'll become the <code>deploy/404&#46;html</code> file (if the <code>deploy/404&#46;html</code> file already exists, it will be overwritten).
 
 <h2 id="How%20it%20works%3F2">How it works?</h2>
@@ -28,7 +28,7 @@ The <strong><code>&&#35;95;just/404&#46;html</code> file</strong> is required an
 <h2 id="Troubleshooting">Troubleshooting</h2>
 This mode may cause website issues.
 You can try fixing them by switching the postprocessor version in your workflow file.
-<_just element="kGIFTcQ">16</_just>
+<_just element="cwthICk">16</_just>
 Available postprocessor versions are: <code>&#34;24&#34;</code>, <code>&#34;26&#34;</code> (default), <code>&#34;32&#34;</code>.
 
 </p>
