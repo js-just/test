@@ -2,18 +2,18 @@
 <strong>- Compresses your website.</strong>
 
 <blockquote>This mode compresses your static website's <code>&#46;html</code>, <code>&#46;js</code>, <code>&#46;css</code>, <code>&#46;xml</code>, <code>&#46;svg</code>, <code>&#46;json</code> and <code>&#46;webmanifest</code> files.<br> It removes every comments, tabs and newlines. <br><br>For JavaScript it also compresses booleans and undefined: <br><ul style="margin-bottom: -19px"><li> <code>true</code> -> <code>!0</code> </li><li> <code>false</code> -> <code>!1</code> </li><li> <code>undefined</code> -> <code>&#91;&#93;&#91;&#91;&#93;&#93;</code> </li></ul></blockquote>
-<blockquote><_just element="nKDX"></_just>[!WARNING] This mode is under development, and it may cause JavaScript and HTML errors! <br>To fix JavaScript, do not forget semicolons. <br>To fix HTML newlines, use <code>&#60;br&#62;</code> instead. <br>Please <a href="https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md" target="_blank" id="gqYwA">report any bugs</a> you find.</blockquote>
+<blockquote><_just element="OynL"></_just>[!WARNING] This mode is under development, and it may cause JavaScript and HTML errors! <br>To fix JavaScript, do not forget semicolons. <br>To fix HTML newlines, use <code>&#60;br&#62;</code> instead. <br>Please <a href="https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md" target="_blank" id="ogAUB">report any bugs</a> you find.</blockquote>
 <br><br>
 This mode requires only the <code>just&#46;config&#46;js</code> file and the workflow file.
-<span class="cubRKcR"><code>just&#46;config&#46;js</code></span>
-<_just element="cubRsK">11</_just>
+<span class="kGIFskE"><code>just&#46;config&#46;js</code></span>
+<_just element="kGIFTcQ">11</_just>
 
-<span class="cubRKcR"><code>&#46;github/workflows/WORKFLOW&&#35;95;NAME&#46;yml</code></span>
-<_just element="cubRsK">12</_just>
+<span class="kGIFskE"><code>&#46;github/workflows/WORKFLOW&&#35;95;NAME&#46;yml</code></span>
+<_just element="kGIFTcQ">12</_just>
 
 <h2 id="How%20it%20works%3F">How it works?</h2>
 It compresses files by removing tabs, newlines and comments.
 Also it compresses booleans and undefined in JavaScript:
-<_just element="cubRsK">13</_just>
-<span class="cubRKcR"><code>&#91;&#93;&#91;&#91;&#93;&#93;</code> ( <code>undefined</code> ) by <a href="https://jsfuck.com/" target="_blank" id="gqYwA">JSFuck</a></span>
+<_just element="kGIFTcQ">13</_just>
+<span class="kGIFskE"><code>&#91;&#93;&#91;&#91;&#93;&#93;</code> ( <code>undefined</code> ) by <a href="https://jsfuck.com/" target="_blank" id="ogAUB">JSFuck</a></span>
 </p>
