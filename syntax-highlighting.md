@@ -1,0 +1,5367 @@
+## test
+## test
+## test
+### test
+## test
+### test
+### test
+## test
+## test
+## test
+### test
+### test
+## test
+## test
+### test
+## test
+## test
+### test
+### test
+## test
+## test
+### test
+## test
+## test
+### test
+## test
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
+import { join } from 'path';
+
+const deployDir = process.argv[2] || __dirname;
+import { JSON as css } from '../lib/ast/css.js';
+
+async function serializeRules(rules) {
+    let result = '';
+
+    const ruleToString = async (rule) => {
+        if (!rule) return '';
+
+        if (rule.type === 'at-rule') {
+            let innerContent = '';
+            if (rule.rules && rule.rules.filter(Boolean).length > 0) {
+                innerContent = await serializeRules(rule.rules.filter(Boolean).sort((a, b) => a.id - b.id));
+            }
+            return `${rule.name}{${innerContent}}`;
+        } else if (rule.type === 'rule') {
+            const props = [];
+            for (const [key, value] of Object.entries(rule.properties)) {
+                props.push(`${key}:${value}`);
+            }
+            return `${rule.selectors.join(',')}{${props.join(';')}}`;
+        }
+        return '';
+    };
+
+    for (const rule of rules) {
+        result += await ruleToString(rule);
+    }
+
+    return result;
+}
+
+async function compressFile(filePath) {
+    let content = readFileSync(filePath, 'utf8');
+    let done = false;
+    if (filePath.endsWith('.css')) {
+        content = css(content);
+        const compressed = await serializeRules(content.sort((a, b) => a.id - b.id));
+        writeFileSync(filePath, compressed, 'utf8');
+        done = true;
+    } else if (filePath.endsWith('.json') || filePath.endsWith('.webmanifest')) {
+        try {
+            content = JSON.parse(content);
+            const compressed = JSON.stringify(content);
+            writeFileSync(filePath, compressed, 'utf8');
+            done = true;
+        } catch (_e) {}
+    }
+
+    if (done) {
+        return;
+    }
+
+    if (filePath.endsWith('.js')) {
+        content = content.replace(/(?<!["'`][\s\S]*)\/\/.*\n/g, '\n')
+                         .replace(/\/\*[\s\S]*?\*\//g, '');
+    }
+
+    if (filePath.endsWith('.html') || filePath.endsWith('.svg') || filePath.endsWith('.xml')) {
+        content = content.replace(/<!--[\s\S]*?-->/g, '');
+    }
+
+    if (filePath.endsWith('.js')) {
+        content = content
+        .replace(/(?<!['"`][\s\S]*)\btrue\b(?!['"`][\s\S]*)/g, '!0')
+        .replace(/(?<!['"`][\s\S]*)\bfalse\b(?!['"`][\s\S]*)/g, '!1')
+        .replace(/(?<!['"`][\s\S]*)\bundefined\b(?!['"`][\s\S]*)/g, '[][[]]')
+        .replace(/(?<!['"`][\s\S]*)\/\/(.*?)\n/g, '');
+    }    
+
+    content = content.replace(/(\s*["'`])([^"'\n`]*)(["'`]\s*)/g, (match, p1, p2, p3) => {
+        return p1 + p2.replace(/\s+/g, ' ') + p3;
+    });
+
+    content = content.replace(/\n\s*/g, ' ').replace(/\s+/g, ' ');
+
+    if (filePath.endsWith('.js')) {
+        content = content.replace(/;\s*}/g, '}').replace(/;\s*$/, '')
+                         .replace(/(?<!['"`][\s\S]*)\/\*(.*?)\*\/(?!['"`][\s\S]*)/g, '');
+    }
+
+    if (filePath.endsWith('.js') || filePath.endsWith('.json') || filePath.endsWith('.webmanifest')) {
+        content = content.replace(/,\s*}/g, '}').replace(/,\s*]}/g, ']');
+    }
+
+    writeFileSync(filePath, content, 'utf8');
+}
+
+async function findAndCompressFiles(dir) {
+    await readdirSync(dir).forEach(async file => {
+        const filePath = join(dir, file);
+        const stat = statSync(filePath);
+        if (stat.isDirectory()) {
+            await findAndCompressFiles(filePath);
+        } else if (
+            file.endsWith('.html') || 
+            file.endsWith('.svg') || 
+            file.endsWith('.xml') || 
+            file.endsWith('.css') || 
+            file.endsWith('.js') || 
+            file.endsWith('.json') || 
+            file.endsWith('.webmanifest')
+        ) {
+            await compressFile(filePath);
+        }
+    });
+}
+
+await findAndCompressFiles(deployDir);
+
+/*
+
+EXAMPLE just.config.js FILE to minify js, css, html files in your static website:
+
+module.exports = {
+    type: "compress"
+}
+
+*/
+
+```
+```sh
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/bin/bash
+mkdir -p _lastcommit && \
+echo "$GITHUB_SHA" > _lastcommit/sha.txt
+
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const fs = require('fs');
+const path = require('path');
+const num_ = require('../lib/number.js');
+const [files, id] = process.argv.slice(2);
+const filess = JSON.parse(files);
+const types = [
+    "md", "html", "js", "css"
+];
+filess.forEach(file => {
+    fs.writeFileSync(path.join(process.cwd(), 'demo', `${file.name.replaceAll('.','')}.${types[file.type]}`), file.content, 'utf-8');
+});
+
+console.log(num_.convertbase(String(id), 10, 62));
+
+```
+```sh
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/bin/bash
+mkdir -p demo && \
+DEMO_LATEST_ID=$(node -e "await fetch('https://raw.just.is-a.dev/v1/demo-id/').then(async resp => {return await resp.json()}).then(resp => {console.log(resp.value)})") && \
+DEMO_BUILT_ID=$(node "src/demo.js" "$INPUT_FILES" "$DEMO_LATEST_ID") && \
+DEMO_NEW_ID=$(node -e "console.log($DEMO_LATEST_ID + 1)") && \
+rm -f "just.config.js" && \
+echo "$INPUT_CONFIG" > just.config.js && \
+echo "id=id/$DEMO_BUILT_ID" >> $GITHUB_OUTPUT && \
+mkdir -p demo-id && \
+source lib/tojson.sh && \
+CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
+echo "$CONTENT" > demo-id/index.json
+
+```
+## test
+```sh
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/bin/bash
+source $GITHUB_ACTION_PATH/lib/errmsg.sh
+config=$(cat just.config.json)
+
+docs_config=$(echo "$config" | jq -r '.docs_config')
+if ! echo "$config" | jq -e '.docs_config' > /dev/null; then
+    ERROR_MESSAGE=$(ErrorMessage "docs/checks.sh" "0118")
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+validate_docs_config() {
+    local metatitle=$(echo "$config" | jq -r '.docs_config.metatitle' > /dev/null)
+    if [[ -z "$metatitle" ]]; then
+        local ERROR_MESSAGE=$(ErrorMessage "docs/checks.sh" "0119")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
+    local domain=$(echo "$config" | jq -r '.docs_config.domain' > /dev/null)
+    if [[ -z "$domain" ]]; then
+        local ERROR_MESSAGE=$(ErrorMessage "docs/checks.sh" "0120")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
+}
+
+# validate_docs_config
+
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const baseregex = /(@_just base)/g;
+const baseregex2= /(@_just base;)/g;
+const coderegex = /(@_just highlight)/g;
+const coderegex2= /(@_just highlight;)/g;
+const btnsregex = /(@_just buttons)/g;
+const btnsregex2= /(@_just buttons;)/g;
+const srchregex = /(@_just search)/g;
+const srchregex2= /(@_just search;)/g;
+const classRegex= /\.([a-zA-Z0-9_-]+)/g;
+/**
+ * @param {string} CSS 
+ * @param {string?} CUSTOM
+ * @param {string} CODE 
+ * @param {boolean?} USECODE
+ * @param {string} CSSBUTTONS
+ * @param {string} CSSSEARCH
+ * @returns {[string, boolean]}
+ */
+exports.customcss = function (CSS, CUSTOM, CODE, USECODE = true, CSSBUTTONS, CSSSEARCH) {
+    const addcss = CSSBUTTONS + CSSSEARCH;
+    if (!CUSTOM) {
+        return [
+            USECODE ? CSS + CODE + addcss : CSS + addcss,
+            true,
+        ];
+    }
+    let usedcsssearch = false;
+    if (CUSTOM.replace(srchregex, CSSSEARCH).replace(srchregex2, CSSSEARCH) != CUSTOM) {
+        usedcsssearch = true;
+    }
+    const custom = CUSTOM
+        .replace(baseregex2,CSS)
+        .replace(baseregex, CSS)
+        .replace(coderegex2, USECODE ? CODE : '')
+        .replace(coderegex, USECODE ? CODE : '')
+        .replace(btnsregex, CSSBUTTONS)
+        .replace(btnsregex2, CSSBUTTONS)
+        .replace(srchregex, CSSSEARCH)
+        .replace(srchregex2, CSSSEARCH);
+    return [custom, usedcsssearch];
+}
+
+const savedclasses = {};
+let language_class;
+let prompt_class;
+let function_class;
+let classid = 0;
+/**
+ * @param {string} TEMPLATE 
+ * @param {string} CSS 
+ * @param {string} HTML 
+ * @param {string} DATANAME8 
+ * @returns {string[]}
+ */
+exports.highlightclasses = function (TEMPLATE, CSS, HTML, DATANAME8) {
+    const classes = [];
+    let match;
+    while ((match = classRegex.exec(TEMPLATE)) !== null) {
+        classes.push(match[1]);
+    }
+    const uniqueClasses = Array.from(new Set(classes.sort((a,b) => a.length - b.length))).filter(c => !savedclasses[c]).sort((a,b) => a.length - b.length);
+    uniqueClasses.forEach(class_ => {
+        savedclasses[class_] = `${DATANAME8}${classid++}`;
+        if (class_ == "language_") {language_class = savedclasses[class_]}
+        else if (class_ == "prompt_") {prompt_class= savedclasses[class_]}
+        else if (class_=="function_"){function_class=savedclasses[class_]}
+    });
+    for (const [class_, hlclass] of Object.entries(savedclasses)) {
+        CSS = CSS.replace(new RegExp(`.${class_}(?= |.|,)`, 'g'), `.${hlclass}`);
+        const regex = new RegExp(
+            `<([a-zA-Z0-9]+)([^>]*)\\sclass="([^"]*\\b${class_}\\b[^"]*)"([^>]*)>([\\s\\S]*?)</\\1>`,
+            'gm'
+        );
+        HTML = HTML.replace(regex, (match, tagName, beforeClassAttrs, classAttrValue, afterClassAttrs, innerContent) => {
+            const classes_ = classAttrValue.split(' ');
+            if (!classes_.includes(hlclass)) {
+                classes_.push(hlclass);
+            }
+            const newClassAttr = classes_.join(' ');
+            return `<${tagName}${beforeClassAttrs} class="${newClassAttr.replace(/(?<=\s|^| )hljs(.*?) (?=|$)/, '').replace("language_", language_class).replace("prompt_", prompt_class).replace("function_", function_class).replace(/(.*?) \1/, '$1')}"${afterClassAttrs}>${innerContent}</${tagName}>`;
+        });
+        //HTML = HTML.replace(new RegExp(`<(.*?) class="(.*?)${class_}(.*?)">(.*?)</\\1>`, 'gm'), `<$1 class="$2${hlclass}$3">$4</$1>`);
+    }
+    return [CSS, HTML];
+}
+
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const [light] = process.argv.slice(2);
+console.log(JSON.stringify({
+    "_just_light": light
+}));
+
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const _just = {};
+const [PATH] = process.argv.slice(2);
+_just.string = require('../../lib/string.js');
+
+const charset = "utf-8";
+const fs = require('fs');
+const path = require('path');
+const rootDirA = PATH || '.';
+const rootDirB = process.cwd();
+try {
+    const logs = fs.readFileSync(path.join(rootDirA !== '.' ? rootDirA : rootDirB, '_just_data', 'output.txt'), charset);
+    let logsstr = logs;
+    const outputlogs = logsstr !== '';
+    const l = ['\n\n','\n    ','\n        '];
+    logsstr += outputlogs? l[0] : '';
+    let newlogs = `COMPRESSED:`;
+
+    function findMarkdownFiles(dir) {
+        let results = [];
+        const list = fs.readdirSync(dir);
+        list.forEach(file => {
+            file = path.join(dir, file);
+            const stat = fs.statSync(file);
+            if (stat && stat.isDirectory()) {
+                results = results.concat(findMarkdownFiles(file));
+            } else if (file.endsWith('.md') || file.endsWith('.mdx')) {
+                results.push(file);
+            }
+        });
+        return results;
+    }
+    let fileID = 0;
+    let toobig = false;
+    findMarkdownFiles(rootDirB).forEach(file => {
+        fileID++;
+        if (newlogs.length >= 2 ** 28) {
+            if (!toobig) {
+                newlogs += '\n\n\nerror: logs are too big'
+            }
+            toobig = true;
+            return;
+        }
+        newlogs += toobig ? '' : `${l[1]}FILE #${fileID} "${_just.string.removeLast(_just.string.runnerPath(file), 'md')}html":`;
+        try {
+            const fileNameWithoutExt = path.basename(file, path.extname(file));
+            const outFilePath = (ext) => path.join(path.dirname(file), `${fileNameWithoutExt}.${ext}`);
+            const htmlsize = _just.string.fileSize(fs.statSync(outFilePath('html')).size);
+            newlogs += toobig ? '' : `${l[2]}SIZE: ${htmlsize} (html output)`;
+        } catch (err) {
+            newlogs += toobig ? '' : `${l[2]}ERROR: ${err}`;
+        }
+        let sl = false;
+        let fd = false;
+        try {
+            fs.unlink(file, function(err) {
+                if (!toobig) {newlogs += err ? `${l[2]}MARKDOWN FILE DELETED: NO. (${err}) (fs)` : newlogs += `${l[2]}MARKDOWN FILE DELETED: YES.`};
+                sl = true;
+                fd = true;
+            })
+        } catch (err) {
+            newlogs += sl || toobig ? '' : `${l[2]}MARKDOWN FILE DELETED: NO. (${err}) (tc)`; // tc here means try{}catch(){}
+            fd = true;
+        }
+    });
+
+    console.log(newlogs);
+    logsstr += outputlogs? newlogs : '';
+    fs.writeFileSync(path.join(rootDirA !== '.' ? rootDirA : rootDirB, '_just_data', 'output.txt'), logsstr, charset);
+} catch (eee) {
+    // debug disabled
+}
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const regex = /(?<=^|\n)_just: (prev|next): \/(.*?)(?=\n|$)/g;
+exports.regex = regex;
+
+/**
+ * @param {string} text 
+ * @returns {[
+ *     string, 
+ *     {
+ *         "prev"?: string,
+ *         "next"?: string
+ *     }
+ * ]}
+ */
+exports.get = (text) => {
+    const data = {};
+    text.replace(regex, (a, b, c) => {
+        data[b] = c;
+        return '';
+    })
+    return [
+        text, 
+        data
+    ]
+}
+
+/**
+ * 
+ * @param {{
+ *     "prev"?: string,
+ *     "next"?: string
+ * }} data 
+ * @param {string} n0 
+ * @param {string} n1 
+ * @param {string} n2 
+ * @param {string} pid 
+ * @param {string} nid 
+ * @param {[string[]]} pl
+ * @returns {string}
+ */
+exports.html = (data, n0, n1, n2, pid, nid, pl) => {
+    if (!data.prev && !data.next) {
+        return '';
+    } else {
+        const dataprev = '/' + data.prev;
+        const datanext = '/' + data.next;
+        const pl1 = [], pl2 = {};
+        for (const [id, p] of Object.entries(pl)) {
+            pl1.push(p[0]);
+            pl2[p[0]] = p[1];
+        }
+        return `<div class="${n0}"${data.next && !data.prev ? ' style="display:flex;flex-direction:column;"' :''}>${data.prev && pl1.includes(dataprev) ? `<button class="${n1}" id="${pid}"><small>Previous page</small><span>${pl2[dataprev] || data.prev}</span></button>` : ''}${data.next && pl1.includes(datanext) ? `<button class="${n2}" id="${nid}"${data.next && !data.prev ? ' style="align-self:flex-end;"' : ''}><small>Next page</small><span>${pl2[datanext] || data.next}</span></button>` : ''}</div>`;
+    }
+}
+```
+## test
+```css
+:root {
+    --bg: #121212;
+    --cl: #f0f0f0;
+    --kb: #2196F3;
+    --tf: 'Rubik', sans-serif;
+    --bh: 32px;
+    --bp: 0.5em;
+    --br: 6px;
+    --mp: 170px;
+    --mn: 10px;
+    --nh: center;
+    --ft: 10px;
+    --fr: 10px;
+    --md: #ffffff26;
+    --nt: #4964ff80;
+    --nb: #4964ff2b;
+    --tt: #4992ff80;
+    --tb: #4992ff2b;
+    --it: #6d49ff80;
+    --ib: #6d49ff2b;
+    --wt: #ffd84980;
+    --wb: #ffd8492b;
+    --ct: #ff624980;
+    --cb: #ff62492b;
+    --sb: 62px;
+}
+@media(min-width: 1250px) {
+    :root {
+        --mn: 50px;
+        --mp: 250px;
+        --nh: left;
+        --ft: 0px;
+        --fr: 50px;
+    }
+}
+@media(min-width: 1500px) {
+    :root {
+        --mn: 200px;
+        --mp: 400px;
+        --fr: calc(100% + 15px);
+    }
+}
+.l {
+    --bg: #f0f0f0;
+    --cl: #121212;
+    --md: #00000026;
+    --wt: #ffb00080;
+    --wb: #ffb0002b;
+}
+@media (prefers-color-scheme: light) {
+    .a {
+        --bg: #f0f0f0;
+        --cl: #121212;
+        --md: #00000026;
+        --wt: #ffb00080;
+        --wb: #ffb0002b;
+    }
+}
+.stb {
+    --sb: 0px;
+}
+
+* {
+    transition: 300ms;
+    color: var(--cl);
+    border-color: var(--cl);
+    font-family: var(--tf);
+    outline-color: transparent;
+    outline-width: 3px;
+    outline-offset: 3px;
+    outline-style: solid;
+}
+
+html {
+    width: 100%;
+    overflow-wrap: break-word;
+    scroll-behavior: smooth;
+}
+body {
+    background-color: var(--bg);
+    display: flex;
+    margin: 0px;
+    max-width: 100%;
+    gap: 5px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0)
+}
+::-webkit-scrollbar-thumb {
+    background: var(--cl);
+    border: 2px solid var(--bg);
+    border-radius: 10px;
+}
+
+a, button {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+}
+button {
+    text-decoration-thickness: 3px;
+    opacity: 0.75;
+}
+a, button, input {
+    font-family: var(--tf);
+    border-radius: var(--br);
+}
+button, input {
+    height: var(--bh);
+    background-color: var(--cl);
+    color: var(--bg);
+    border: none;
+    margin: 0;
+    padding: 0;
+    padding-left: var(--bp);
+    padding-right: var(--bp);
+    font-family: var(--tf);
+    font-size: 14px;
+    font-weight: 400;
+}
+.l button, .l input {
+    background-color: var(--md);
+    color: var(--cl);
+}
+@media (prefers-color-scheme: light) {
+    .a button, .a input {
+        background-color: var(--md);
+        color: var(--cl);
+    }
+}
+button:hover, input:hover {
+    opacity: 0.85;
+}
+button:active {
+    opacity: 0.75 !important;
+    transition: 50ms;
+}
+a:focus-visible {
+    text-decoration-color: var(--cl);
+    outline-color: var(--kb);
+}
+button:focus-visible {
+    opacity: 1;
+    text-decoration-color: var(--bg);
+    outline-color: var(--kb);
+}
+input:placeholder-shown {
+    color: var(--md);
+    opacity: 0.9;
+}
+::placeholder { /* Fix Firefox */
+  color: #838383;
+  opacity: 1;
+}
+
+@keyframes line {
+    0%, 0.1% {
+        width: 0%;
+        left: 0%;
+    }
+    2% {
+        width: 75%;
+    }
+    3.5%, 98% {
+        width: 100%;
+        left: 0%;
+    }
+    100% {
+        width: 0%;
+        left: 100%;
+    }
+}
+@keyframes noline {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
+    }
+}
+
+a#ext {
+    padding-right: 10px;
+}
+a#ext:after {
+    content: '↗';
+    position: fixed;
+    top: 0%;
+    font-family: 'Murecho', var(--tf), monospace, sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    translate: 2px -20%;
+    opacity: 0.5;
+    transition: 200ms;
+}
+a#ext:hover:not(:focus):after {
+    translate: 2px -25%;
+}
+.navbar {
+    background-color: var(--bg);
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: calc(100% - 30px);
+    height: 50px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    border-style: solid;
+    border-width: 0px;
+    border-bottom-width: 2px;
+    gap: 15px;
+    max-width: 100%;
+    overflow: hidden;
+    overflow-x: auto;
+    justify-content: space-between;
+    cursor: default;
+    user-select: none;
+    z-index: 2;
+}
+.navbar .heading {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--bg);
+    z-index: 1;
+    filter: drop-shadow(20px 0px 5px var(--bg));
+    -webkit-filter: drop-shadow(20px 0px 5px var(--bg));
+}
+.navbar .heading img {
+    width: 35px;
+}
+.navbar .links {
+    position: fixed;
+    left: 50%;
+    translate: -50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+}
+.navbar .links a {
+    opacity: 0.6;
+    transition: 300ms;
+    filter: hue-rotate(1deg);
+    -webkit-filter: hue-rotate(1deg);
+}
+.navbar .links a:before {
+    content: '';
+    position: fixed;
+    width: 0%;
+    height: 1px;
+    left: 0%;
+    top: calc(100% + 2px);
+    background-color: var(--cl);
+    transition: 150ms;
+    z-index: -1;
+    animation: 300ms noline ease-out 1;
+}
+.navbar .links a:hover:not(:focus) {
+    opacity: 1;
+    filter: drop-shadow(0px 0px 2px);
+    -webkit-filter: drop-shadow(0px 0px 2px);
+    transition: 150ms;
+}
+.navbar .links a:hover:not(:focus):before {
+    width: 100%;
+    left: 0%;
+    animation: 6s line linear infinite;
+}
+.navbar .links a:focus {
+    opacity: 1;
+}
+.navbar .buttons {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    position: fixed;
+    right: 15px;
+    z-index: 1;
+}
+.navbar .buttons input {
+    position: absolute;
+    right: calc(100% + 10px);
+    display: none;
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+}
+@media(max-width: 700px) {
+    .navbar {
+        padding-left: 30px;
+        padding-right: 30px;
+        width: calc(100% - 60px);
+    }
+    .navbar .buttons {
+        display: none;
+    }
+    .navbar:has(.buttons button) .links {
+        left: initial;
+        right: 30px;
+        translate: 0%;
+    }
+}
+@media(min-width: 1000px) {
+    .navbar .buttons input {
+        display: inline-block;
+        pointer-events: all;
+        user-select: all;
+        z-index: 0;
+    }
+    .navbar:has(.buttons button) .links {
+        left: 33%;
+        translate: 0%;
+    }
+}
+@media(min-width: 1200px) {
+    .navbar:has(.buttons button) .links {
+        left: 33%;
+        translate: 0%;
+    }
+}
+@media(min-width: 1600px) {
+    .navbar:has(.buttons button) .links {
+        left: 50%;
+        translate: -50%;
+    }
+}
+@media(max-width: 1000px) {
+    .navbar:not(:has(.buttons button)) {
+        padding-left: 30px;
+        padding-right: 30px;
+        width: calc(100% - 60px);
+    }
+    .navbar:not(:has(.buttons button)) .links {
+        left: initial;
+        right: 30px;
+        translate: 0;
+    }
+}
+@media(min-width: 1000px) {
+    .navbar:not(:has(.buttons button)) .links {
+        left: 50%;
+        translate: -50%;
+    }
+}
+.navbar.scroll {
+    border-bottom-right-radius: var(--br);
+}
+body.navbar-invert .navbar.scroll {
+    filter: invert();
+    -webkit-filter: invert();
+    border-block-width: 0px;
+}
+body.navbar-invert .navbar.scroll .links a:hover {
+    filter: hue-rotate(1deg);
+    -webkit-filter: hue-rotate(1deg);
+}
+body.navbar-invert:not(.navbar-noimginvert) .navbar.scroll .heading img {
+    filter: invert();
+    -webkit-filter: invert();
+}
+body.navbar-invert .navbar.scroll, .l .navbar .links a#ext:after {
+    opacity: 1;
+}
+body.navbar-invert .navbar.scroll, .l .navbar .links a:hover {
+    filter: hue-rotate(1deg);
+    -webkit-filter: hue-rotate(1deg);
+}
+@media (prefers-color-scheme: light) {
+    .a .navbar .links a#ext:after {
+        opacity: 1;
+    }
+    .a .navbar .links a:hover {
+        filter: hue-rotate(1deg);
+        -webkit-filter: hue-rotate(1deg);
+    }
+}
+.navbar .heading:not(:has(span)) {
+    width: auto;
+    height: auto;
+    min-height: 20px;
+    max-height: 35px;
+}
+.navbar .heading:not(:has(span)) img {
+    width: auto;
+    height: auto;
+    max-height: 32px;
+    min-height: 20px;
+}
+header {
+    height: 62px;
+    position: sticky;
+    z-index: 10;
+}
+
+main {
+    position: relative;
+    width: 100%;
+    z-index: 0;
+}
+main nav {
+    position: sticky;
+    top: 64px;
+    height: 0;
+    width: var(--mp);
+    z-index: 3;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    user-select: none;
+}
+nav.left {
+    padding-left: var(--mn);
+    width: calc(var(--mp) - 5px);
+}
+@media(max-width: 555px) {
+    nav.left {
+        translate: -100%;
+    }
+}
+.navleft nav.left {
+    translate: 0%;
+}
+nav.right {
+    padding-right: var(--mn);
+    left: 100%;
+    z-index: 2;
+}
+@media (max-width: 700px) {
+    nav.right {
+        display: none;
+    }
+}
+nav.right div {
+    width: calc(100% - 15px - var(--mn));
+    margin-top: 50px;
+    translate: calc(var(--fr) + 15px);
+}
+nav.right div span {
+    display: block;
+    position: relative;
+    height: 19px;
+    z-index: 3;
+}
+nav.right div > span {
+    pointer-events: none;
+}
+nav.right div ul {
+    padding-left: 10px;
+    z-index: 2;
+    position: relative;
+    background-color: var(--md);
+}
+nav.right div ul li {
+    height: 20px;
+    margin-top: 10px;
+    background-color: var(--bg);
+}
+nav.right div ul li.secondary {
+    translate: 10px;
+    width: calc(100% - 10px);
+}
+nav.right div ul li:after, nav.right div ul li:before {
+    content: '';
+    background-color: var(--bg);
+    width: 4px;
+    position: fixed;
+    height: 33px;
+    z-index: -1;
+    transition: 300ms;
+}
+nav.right div ul li:after {
+    right: 100%;
+    width: calc(100% + 4px);
+    translate: calc(100% - 3.8px) calc(-100% + 1px);
+}
+nav.right div ul li:not(.secondary):after {
+    left: 0%;
+    right: initial;
+    translate: 6px calc(-100% + 2px);
+}
+nav.right div ul li:before {
+    translate: -10px -10px;
+}
+nav.right div ul li.secondary:before {
+    height: 29px;
+    translate: -26px -7px;
+    width: 20px;
+}
+nav.right div ul li.secondary:after {
+    height: 38px;
+    translate: calc(100% - 3.8px) calc(-100% + 7px);
+}
+nav.right div ul li.secondary:has(+ .secondary):before {
+    height: 40px;
+}
+nav.right div ul li.secondary + li:not(.secondary):after {
+    height: 27px;
+}
+nav.right div ul span {
+    padding-left: 5px;
+    overflow: hidden;
+}
+nav.right div ul:after {
+    content: '';
+    position: fixed;
+    width: 5px;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+    background-color: var(--bg);
+    translate: -1px;
+    transition: 300ms;
+}
+nav.right div .slider {
+    position: fixed;
+    z-index: 1;
+    top: 79px;
+    height: 20px;
+    width: 100%;
+    left: 0%;
+    background-color: var(--cl);
+    translate: 0px calc(var(--hc) * 30px);
+    padding: 0;
+}
+#main {
+    position: relative;
+    margin-top: -20px;
+    z-index: 1;
+}
+.main {
+    position: relative;
+    top: 4px;
+    padding-left: var(--mp);
+    padding-right: calc(var(--mp) - 10px);
+    z-index: 1;
+    translate: -5px;
+    padding-bottom: 50px;
+}
+@media(max-width: 700px) {
+    .main {
+        padding-right: 5px;
+    }
+}
+@media(max-width: 555px) {
+    .main {
+        padding-left: 5px;
+        translate: 0px;
+    }
+}
+.navleft .main {
+    padding-left: var(--mp);
+    translate: -5px;
+}
+main nav ul:has(ul) {
+    width: calc(100% - 10px - var(--mn));
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    overflow-y: auto;
+    max-height: calc(100vh - 189px + var(--sb));
+}
+main nav ul {
+    margin: 0;
+    padding: 0;
+}
+main nav ul span strong {
+    display: block;
+    width: 100%;
+    text-align: var(--nh);
+    margin-bottom: 15px;
+    pointer-events: none;
+    user-select: none;
+    padding-right: var(--ft);
+    margin-left: calc(0px - var(--ft));
+}
+main nav ul a span {
+    opacity: 0.75; 
+}
+main nav ul a span:hover, .chc span {
+    opacity: 1;
+}
+main nav ul ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+main nav li {
+    display: block;
+}
+.ios .navbar .heading {
+    -webkit-filter: none;
+    filter: none;
+}
+nav.left > ul > li > span {
+    margin-bottom: 15px;
+}
+.ios nav.right {
+    display: none;
+}
+.ios .main {
+    padding-right: 5px;
+}
+
+.main:before {
+    content: '';
+    position: fixed;
+    top: -28px;
+    width: 1px;
+    height: calc(100% + 28px);
+    background-color: var(--md);
+    translate: -10px;
+    opacity: 0.5;
+}
+@media(max-width: 555px) {
+    .main:before {
+        opacity: 0;
+    }
+}
+.navleft .main:before {
+    opacity: 0.5;
+}
+blockquote {
+    display: block;
+    margin: 0;
+    margin-top: 10px;
+    border-color: var(--md);
+    border-style: solid;
+    border-width: 0;
+    border-left-width: 5px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+blockquote blockquote {
+    opacity: 0.75;
+}
+blockquote:hover {
+    border-color: var(--cl);
+    opacity: 1;
+}
+code {
+    background-color: var(--md);
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}
+code, code span {
+    font-family: monospace;
+    cursor: text;
+}
+.line {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 5px;
+    background-color: var(--md);
+    margin-top: 20px;
+    margin-bottom: 1px;
+    overflow: hidden;
+}
+.line:after {
+    content: '';
+    position: relative;
+    display: block;
+    top: 0%;
+    left: -120%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--cl);
+    transition: 1s;
+    transition-delay: 400ms;
+    transition-timing-function: ease-in-out;
+}
+.line, .line:after {
+    border-radius: 10px;
+}
+.line:hover:after {
+    left: 120%;
+    transition-delay: 0ms;
+}
+.code {
+    display: block;
+    width: calc(100% - 10px);
+    padding: 5px;
+    line-height: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.code:has(code) {
+    margin-top: 28px;
+    border-top-left-radius: 0px;
+}
+.code code {
+    position: relative;
+    display: block;
+    translate: -5px -23px;
+    margin-bottom: -20px;
+    width: max-content;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    pointer-events: none;
+    white-space: nowrap;
+    user-select: none;
+}
+.note, .ntip, .impr, .warn, .caut {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-top: 35px;
+    line-height: 20px;
+    padding-right: 10px;
+}
+.note:before, .ntip:before, .impr:before, .warn:before, .caut:before {
+    position: fixed;
+    translate: 0px -25px;
+    font-weight: 500;
+    height: 20px;
+}
+.note {
+    background-color: var(--nb);
+    border-color: var(--nt) !important;
+}
+.note:before {
+    content: 'Note';
+    color: var(--nt);
+}
+.ntip {
+    background-color: var(--tb);
+    border-color: var(--tt) !important;
+}
+.ntip:before {
+    content: 'Tip';
+    color: var(--tt);
+}
+.impr {
+    background-color: var(--ib);
+    border-color: var(--it) !important;
+}
+.impr:before {
+    content: 'Important';
+    color: var(--it);
+}
+.warn {
+    background-color: var(--wb);
+    border-color: var(--wt) !important;
+}
+.warn:before {
+    content: 'Warning';
+    color: var(--wt);
+}
+.caut {
+    background-color: var(--cb);
+    border-color: var(--ct) !important;
+}
+.caut:before {
+    content: 'Caution';
+    color: var(--ct);
+}
+
+footer {
+    position: relative;
+    background-color: var(--bg);
+    z-index: 2;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+footer * {
+    height: 20px;
+}
+footer div {
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    gap: 5px;   
+}
+footer div button {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--md);
+    padding: 0;
+    width: 20px;
+    max-width: 20px;
+    color: var(--cl);
+    font-family: var(--tf);
+    font-weight: 600;
+    overflow: hidden;
+}
+footer div button svg {
+    position: relative;
+    width: 20px;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    -webkit-translate: -50% -50%;
+    scale: 0.75;
+    opacity: 0.75;
+    fill: var(--cl);
+    transition: 700ms;
+}
+footer div button:hover svg {
+    transform: rotate(10deg);
+    -webkit-transform: rotate(10deg);
+}
+footer div button:focus-visible {
+    outline-offset: 0;
+    background-color: var(--kb);
+}
+footer div:has(button:focus-visible) {
+    outline-style: solid;
+    outline-width: 5px;
+    outline-offset: 5px;
+    outline-color: var(--cl);
+}
+footer div, footer button {
+    border: 1px solid var(--md);
+}
+footer:before {
+    content: '';
+    position: absolute;
+    bottom: 59px;
+    right: 0px;
+    width: 100%;
+    height: 1px;
+    background-color: var(--md);
+    opacity: 0.5;
+}
+html.l:not(.a) #l, html:not(.l):not(.a) #d, html.a #a{
+    border-color: var(--cl)
+}
+#l svg circle {
+    fill: var(--cl);
+    scale: 0.9;
+    translate: 5% 5%;
+}
+#d {
+    transform: rotate(5deg);
+    -webkit-transform: rotate(5deg);
+}
+#d svg {
+    scale: 0.7;
+}
+#a {
+    text-align: center;
+    vertical-align: middle;
+    align-content: center;
+    align-items: center;
+}
+.ios footer div:has(button) {
+    display: none;
+}
+#main small {
+    display: none;
+    opacity: 0.25;
+    width: 100%;
+    text-align: center;
+}
+@media(max-width: 555px) {
+    #main small {
+        display: block;
+    }
+}
+.navleft #main small {
+    display: none;
+}
+
+
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+h5 {
+    display: block;
+    font-size: 0.83em;
+    margin-block-start: 1.67em;
+    margin-block-end: 1.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+h6 {
+    display: block;
+    font-size: 0.67em;
+    margin-block-start: 2.33em;
+    margin-block-end: 2.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+p {
+    display: block;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
+
+.debug * {
+    outline-color: #888888;
+    outline-offset: 0;
+    outline-width: 1px;
+    outline-style: dashed;
+}
+.debug .main {
+    z-index: 2;
+}
+.debug .main span {
+    background-color: blue;
+    width: 100%;
+    display: block;
+}
+.debug .left, .debug .right {
+    background-color: #ff000080;
+}
+.debug .left ul, .debug .right div {
+    background-color: red;
+}
+.debug .navbar {
+    background-color: green;
+}
+.debug nav.right div *:not(.slider), .debug nav.right div *:after, .debug nav.right div *:before {
+    background-color: transparent;
+    color: black;
+}
+
+h1, h2, h3 {
+    padding-top: 62px; margin-top: -62px;
+}
+.underline, .main a {
+    text-decoration: underline;
+}
+.main a {
+    color: var(--kb);
+}
+
+.search {
+    position: fixed;
+    padding-top: 16px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 6px;
+    translate: 0px -6px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    background-color: var(--md);
+    backdrop-filter: blur(4px) url("#glass") brightness(0.3);
+    -webkit-backdrop-filter: blur(4px) url("#glass") brightness(0.3);
+    z-index: -1;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--md);
+}
+.search a {
+    height: 19px;
+    overflow: hidden;
+}
+.search span {
+    opacity: 0.75;
+    width: 100%;
+    text-align: center;
+}
+.firefox .search, .ios .search {
+    backdrop-filter: blur(4px) brightness(0.3) !important;
+    -wenkit-backdrop-filter: blur(4px) brightness(0.3) !important;
+}
+.ios .search {
+    background-color: var(--bg);
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+mark {
+    background-color: var(--wt);
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 5px;
+}
+
+.main a#ext:after {
+    position: relative !important;
+    display: inline-block;
+}
+.main img {
+    max-width: 100%;
+}
+
+input[type="checkbox"] {
+    pointer-events: none;
+    accent-color: var(--kb) !important;
+    height: auto;
+    display: inline;
+}
+
+.code:has(code) span:has(div) {
+    padding-left: 15px;
+}
+.code:has(code) span div {
+    display: inline;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    translate: -12.5px 3.5px;
+    border-radius: 50%;
+}
+.code, .code code, .code * {
+    background: #3c3c3c;
+    color: #ffffff;
+}
+.l .code, .l .code code, .l .code * {
+    background: #e5e5e5;
+    color: #000000;
+}
+@media (prefers-color-scheme: light) {
+    .a .code, .a .code code, .a .code * {
+        background: #e5e5e5;
+        color: #000000;
+    }
+}
+
+html:before, html:after, body:before, body:after {
+    content: none !important;
+}
+header, main {
+    display: block !important;
+}
+
+.error:before {
+    content: 'Uh oh!' !important;
+    font-size: 2em;
+    position: fixed;
+    top: 50%;
+    translate: 0 calc(-100% - 6px);
+    width: 50%;
+    text-align: center;
+    border-bottom: 1px solid white;
+    white-space: nowrap;
+}
+.error:after {
+    content: 'Something went wrong.' !important;
+    position: fixed;
+    top: 50%;
+}
+html:has(.error):before {
+    content: '_just' !important;
+    font-size: 13px;
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    line-break: anywhere;
+    margin-right: 5px;
+}
+html:has(.error):after {
+    content: var(--edata) !important;
+    position: fixed;
+    top: calc(50% + 24px);
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.5;
+}
+.error * {
+    display: none !important;
+}
+
+#search {
+    display: none;
+}
+
+.small {
+    opacity: 0.5;
+    font-size: 12px;
+}
+
+html:has(.navleft) {
+    overflow: hidden;
+    touch-action: pan-y;
+}
+html:has(.navleft) .main {
+    pointer-events: none;
+    user-select: none;
+    filter: blur(3px) brightness(0.8);
+    -webkit-filter: blur(3px) brightness(0.8);
+}
+.navleft .navbar .links {
+    translate: calc(0px - calc(var(--mp) - 10px)) !important;
+}
+
+.main .linkspace {
+    margin-right: -12px;
+}
+.main .linkspace:after {
+    translate: 0px -20%;
+}
+.main .linkspace:hover:not(:focus):after {
+    translate: 0px -25%;
+}
+
+.main .linkmark {
+    margin-right: -17px;
+}
+.main .linkmark:after {
+    translate: -1px -70%;
+}
+.main .linkmark:hover:not(:focus) {
+    margin-right: -10px;
+}
+.main .linkmark:hover:not(:focus):after {
+    translate: 0px -25%;
+}
+
+.main #ext {
+    white-space: nowrap;
+}
+
+.main .linkdot {
+    margin-right: -17px;
+}
+.main .linkdot:after {
+    translate: 2px -40%;
+}
+.main .linkdot:hover:not(:focus):after {
+    translate: 2px -45%;
+}
+
+main nav li ul {
+    padding-top: 0px;
+    width: 100%;
+}
+main nav li ul li:has(strong) {
+    padding-top: 10px;
+}
+@media(min-width: 1250px) {
+    main nav li ul li:has(strong) {
+        padding-left: 10px;
+    }
+    main nav li ul li:has(strong):before {
+        content: '';
+        height: var(--liheight);
+        width: 3px;
+        background-color: var(--md);
+        display: block;
+        position: relative;
+        translate: -10px 0px;
+        border-radius: 50px;
+        opacity: 0.5;
+        margin-bottom: calc(0px - var(--liheight));
+    }
+}
+
+nav.left:not(:has(strong)) > ul {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#contents {
+    overflow-y: scroll;
+    height: calc(var(--contents) - 50px);
+    overflow-x: clip;
+}
+
+input[type="checkbox"] {
+    height: 13px;
+}
+
+```
+```css
+#search {
+    background-color: var(--bg);
+    border: 2px solid var(--cl);
+    font-family: Monospace;
+    position: fixed;
+    z-index: 23;
+    display: block !important;
+    width: 20px;
+    height: 16px;
+    padding-bottom: 1px;
+    translate: calc(-100% - 5px) -50%;
+    text-align: center;
+    border-radius: 50px;
+    cursor: pointer;
+    user-select: none;
+    transition: none;
+}
+.ios #search {
+    display: none !important;
+}
+
+.next {
+    padding: 10px;
+    margin-top: 45px;
+    border: 2px solid var(--md);
+    border-radius: 20px;
+    max-width: 769px;
+    position: relative;
+    translate: -50% 0px;
+    left: 50%;
+}
+.next:before {
+    content: '';
+    background-color: var(--md);
+    opacity: 0.5;
+    width: calc(100% + 20px);
+    height: 1px;
+    display: block;
+    top: -30px;
+    position: relative;
+    left: -10px;
+}
+.next button {
+    width: 50%;
+    background-color: transparent;
+    color: var(--cl);
+    font-weight: bold;
+    opacity: 1;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.next .next1 {
+    border-right: 1px solid var(--md);
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.next .next2 {
+    border-left: 1px solid var(--md);
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.next button:hover {
+    scale: 101%;
+    background-color: #ffffff20;
+}
+.l .next button:hover {
+    background-color: #00000020;
+}
+@media (prefers-color-scheme: light) {
+    .a .next button:hover {
+        background-color: #00000020;
+    }
+}
+.next button small, .next button span {
+    display: block !important;
+    white-space: nowrap;
+}
+.next button small {
+    font-weight: normal;
+}
+.next button:hover small, .next button:hover span {
+    translate: 0px -50%;
+}
+.next button:hover small {
+    scale: 103%;
+    opacity: 0 !important;
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+@media (max-width: 450px) {
+    .next {
+        display: none;
+    }
+}
+
+.code {
+    cursor: default;
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+.code::-webkit-scrollbar {
+    width: 5px;
+    height: 5px
+}
+.code::-webkit-scrollbar-thumb {
+    border: 1px solid var(--bg);
+}
+.code code {
+    position: absolute;
+}
+
+```
+## test
+```css
+.hljs-number, .hljs-bullet {
+    color: #eda31b;
+}
+.hljs-meta, .hljs-variable.language_, .language_, .hljs-params, .hljs-subst, .hljs-string .hljs-variable, .hljs-quote {
+    color: #d0d1ff;
+}
+.hljs-meta.prompt_, .hljs-selector-id, .prompt_, .hljs-doctag, .hljs-link {
+    color: #29d3a9;
+}
+.hljs-comment, .hljs-tag, .hljs-code {
+    color: #a2a2a2;
+}
+.hljs-keyword, .hljs-attr, .hljs-selector-class, .hljs-symbol {
+    color: #c3acff;
+}
+.hljs-name, .hljs-selector-tag, .hljs-title.function_, .function_, .hljs-property, .hljs-section, .hljs-strong, .hljs-emphasis {
+    color: #89a8f9;
+}
+.hljs-string, .hljs-type {
+    color: #afffaf;
+}
+.hljs-literal, .hljs-selector-pseudo, .hljs-function, .hljs-function .hljs-title {
+    color: #faadf9;
+}
+.hljs-built_in, .hljs-attribute, .hljs-regexp {
+    color: #aad7ff;
+}
+
+.hljs-strong {
+    font-weight: bolder;
+}
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-addition, .hljs-deletion {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: -3px;
+    margin-right: -3px;
+    border-radius: 5px
+}
+.hljs-addition {
+    background-color: #2a8c2e80;
+}
+.hljs-deletion {
+    background-color: #8c2a2a80;
+}
+
+```
+```css
+.hljs-number, .hljs-bullet {
+    color: #eda31b;
+}
+.hljs-meta, .hljs-variable.language_, .language_, .hljs-params, .hljs-subst, .hljs-string .hljs-variable, .hljs-quote {
+    color: #4c50ff;
+}
+.hljs-meta.prompt_, .hljs-selector-id, .prompt_, .hljs-doctag, .hljs-link {
+    color: #05975e;
+}
+.hljs-comment, .hljs-tag, .hljs-code {
+    color: #a2a2a2;
+}
+.hljs-keyword, .hljs-attr, .hljs-selector-class, .hljs-symbol {
+    color: #723cff;
+}
+.hljs-name, .hljs-selector-tag, .hljs-title.function_, .function_, .hljs-property, .hljs-section, .hljs-strong, .hljs-emphasis {
+    color: #1e5cff;
+}
+.hljs-string, .hljs-type {
+    color: #00aa00;
+}
+.hljs-literal, .hljs-selector-pseudo, .hljs-function, .hljs-function .hljs-title {
+    color: #d745d5;
+}
+.hljs-built_in, .hljs-attribute, .hljs-regexp {
+    color: #2f9dff;
+}
+
+.hljs-strong {
+    font-weight: bolder;
+}
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-addition, .hljs-deletion {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: -3px;
+    margin-right: -3px;
+    border-radius: 5px
+}
+.hljs-addition {
+    background-color: #95ec9980;
+}
+.hljs-deletion {
+    background-color: #e1868680;
+}
+
+```
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="REPLACE_CHARSET">
+        <meta name="viewport" content="REPLACE_VIEWPORT">
+        <title>REPLACE_TITLE</title>
+        <link rel="preload" href="/_just/REPLACE_CSS.css" as="style">
+        <link rel="preload" href="/_just/REPLACE_JS.js" as="script">
+        <link href="/_just/REPLACE_CSS.css" rel="stylesheet">
+        <script src="/_just/REPLACE_JS.js"></script>
+        REPLACE_DATA
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" as="style">
+        <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+        REPLACE_CUSTOM
+        <noscript>
+            <style>
+                html > body > header > nav:first-of-type > div:last-of-type, 
+                html > body > main > div:first-of-type > nav:last-of-type > div > div, 
+                html > body > main > footer > div {
+                    display: none;
+                }
+                html > body > header > nav:first-of-type > :nth-child(2):not(a) {
+                    left: 100% !important;
+                    translate: calc(-15px - 100%) !important;
+                    width: max-content;
+                    @media(max-width: 700px) {
+                        translate: calc(-30px - 100%) !important;
+                    }
+                }
+                html > body > main > div > small {
+                    display: none !important;
+                }
+            </style>
+        </noscript>
+        <style>
+            html:before {
+                content: '_just';
+                font-size: 13px;
+                position: fixed;
+                bottom: 5px;
+                left: 5px;
+                line-break: anywhere;
+                margin-right: 5px;
+            }
+            html:after {
+                content: 'Couldn\'t load the website. (0302)';
+                position: fixed;
+                top: calc(50% + 24px);
+                width: 100%;
+                text-align: center;
+                font-size: 12px;
+                opacity: 0.5;
+            }
+            body:before {
+                content: 'Uh oh!';
+                font-size: 2em;
+                position: fixed;
+                top: 50%;
+                translate: 0 calc(-100% - 6px);
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid white;
+                white-space: nowrap;
+            }
+            body:after {
+                content: 'Something went wrong.';
+                position: fixed;
+                top: 50%;
+                width: 100%;
+                text-align: center;
+            }
+            html {
+                color: white;
+                background-color: black;
+            }
+            header, main {
+                display: none;
+            }
+        </style>
+    </head>
+    <body style="--hc: 0"><script>0</script>
+        <header>
+            <nav class="navbar">
+                <div class="heading">
+                    REPLACE_LOGO
+                    REPLACE_NAME
+                </div>
+                <div class="links">
+                    REPLACE_LINKS
+                </div>
+                <div class="buttons">
+                    REPLACE_BUTTONS
+                    <input placeholder="Search documentation" id="searchbar" disabled>
+                    <span id="search">REPLACE_SEARCHKEY</span>
+                    <div class="search"></div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div id="main">
+                <nav class="left">
+                    <ul>
+                        REPLACE_PAGES
+                    </ul>
+                </nav>
+                <nav class="right">
+                    REPLACE_CONTENTS
+                </nav>
+                <article class="main">
+                    REPLACE_CONTENT
+                    REPLACE_PREVNEXT
+                </article>
+                <small>Swipe right to open the menu and swipe left to close it.</small>
+            </div>
+            <footer>
+                <div>
+                    <button id="l" title="Switch to Light Theme" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" alt="Switch to Light Theme">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="4"></line>
+                            <line x1="12" y1="20" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"></line>
+                            <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="4" y2="12"></line>
+                            <line x1="20" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"></line>
+                            <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
+                    <button id="d" title="Switch to Dark Theme" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" alt="Switch to Dark Theme">
+                            <path d="M480-120q-151 0-255.5-104.5T120-480q0-138 90-239.5T440-838q13-2 23 3.5t16 14.5q6 9 6.5 21t-7.5 23q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q11-7 22.5-6.5T819-479q10 5 15.5 15t3.5 24q-14 138-117.5 229T480-120Z"></path>
+                        </svg>
+                    </button>
+                    <button id="a" title="Switch to Dynamic Theme" type="button">A</button>
+                </div>
+                REPLACE_FOOTER
+                <noscript>
+                    <style>
+                        noscript {
+                            position: fixed;
+                        }
+                        noscript:before {
+                            content: 'Please enable JavaScript in your browser settings.';
+                            position: fixed;
+                            left: 0px;
+                            translate: 0px 62px;
+                            font-weight: bolder;
+                            font-size: 2em;
+                            width: 100%;
+                            text-align: center;
+                            height: 100%;
+                            background-color: var(--cb);
+                            outline: 20px solid var(--ct);
+                        }
+                    </style>
+                </noscript>
+            </footer>
+        </main>
+        <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden;">
+            <defs>
+                <filter id="glass" x="0%" y="0%" width="100%" height="100%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise"></feTurbulence>
+                    <feGaussianBlur in="noise" stdDeviation="20" result="blurred"></feGaussianBlur>
+                    <feDisplacementMap in="SourceGraphic" in2="blurred" scale="30" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+                </filter>
+            </defs>
+        </svg>
+        <script>REPLACE_SCRIPT</script>
+    </body>
+</html>
+```
+```js
+const fcrt_ = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
+const wndw_ = fcrt_;
+const dcmnt = fcrt_["document"];
+const page_ = 'p' + wndw_.location.pathname;
+const scrll = localStorage.getItem('s' + page_);
+const theme = localStorage.getItem('t');
+const main_ = 'html > body > main > div#main > article.main';
+const IsIOS=()=>{
+    return (/iPad|iPhone|iPod/.test(wndw_.navigator.userAgent) && !wndw_.MSStream) || (/Mac/.test(wndw_.navigator.userAgent) && wndw_.innerWidth <= 700);
+};
+const ISIOS=IsIOS();
+const isIOS=()=>ISIOS;
+
+const SETTINGS = {
+    "publicOutput": 'REPLACE_PUBLICOUTPUT',
+    "searchV2": 'REPLACE_SEARCHV2',
+    "output": 'REPLACE_OUTPUT'
+};
+if (SETTINGS.output) {
+    console.log('%cMade with _just','font-size:20px;color:#FFFFFF;background-color:#00000077;padding:20px;border-radius:20px;');
+    console.log('%chttps://just.is-a.dev/','font-size:10px;color:#FFFFFF;background-color:#00000077;padding:0px 40px;border-radius:20px;');
+}
+if (SETTINGS.publicOutput) {
+    console.log(`_just output: ${wndw_.location.protocol}//${wndw_.location.hostname}/_just_data/output.txt`)
+};
+
+const throwError = (code) => {
+    const messages = {
+        '0301': 'Wayback Machine detected.'
+    };
+    dcmnt.body.classList.add('error');
+    dcmnt.documentElement.style.setProperty('--edata', `'${messages[code] || 'Just an Ultimate Site Tool: A client-side error has occurred.'} (${code})'`);
+    throw new Error(`REPLACE_ERRORPREFIX ${code}. For more information, visit https://just.is-a.dev/errors/${code}`);
+};
+
+const checkElement = (elements) => {
+    elements.forEach(elem => {
+        if (elem === null) {
+            throwError('0302');
+        }
+    });
+};
+
+const convertbase =(str,fromBase,toBase,DIGITS="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/")=>{
+    const cbadd = (x, y, base) => {
+        let z = [];
+        const n = Math.max(x.length, y.length);
+        let carry = 0;
+        let i = 0;
+        while (i < n || carry) {
+            const xi = i < x.length ? x[i] : 0;
+            const yi = i < y.length ? y[i] : 0;
+            const zi = carry + xi + yi;
+            z.push(zi % base);
+            carry = Math.floor(zi / base);
+            i++;
+        }
+        return z;
+    };
+
+    const multiplyByNumber = (num, x, base) => {
+        if (num < 0) return(null);
+        if (num == 0) return [];
+
+        let result = [];
+        let power = x;
+        while (true) {
+            num & 1 && (result = cbadd(result, power, base));
+            num = num >> 1;
+            if (num === 0) break;
+            power = cbadd(power, power, base);
+        }
+
+        return result;
+    };
+
+    const parseToDigitsArray = (str) => {
+        const digits = str.split('');
+        let arr = [];
+        for (let i = digits.length - 1; i >= 0; i--) {
+            const n = DIGITS.indexOf(digits[i]);
+            if (n == -1) return(null);
+            arr.push(n);
+        }
+        return arr;
+    };
+
+    const digits = parseToDigitsArray(str);
+    if (digits === (null)) return(null);
+
+    let outArray = [];
+    let power = [1];
+    for (let i = 0; i < digits.length; i++) {
+        digits[i] && (outArray = cbadd(outArray, multiplyByNumber(digits[i], power, toBase), toBase));
+        power = multiplyByNumber(fromBase, power, toBase);
+    };
+
+    let out = '';
+    for (let i = outArray.length - 1; i >= 0; i--){
+        out += DIGITS[outArray[i]]};
+
+    return out;
+};
+let stb_ = false;
+const updateNavRight = () => {
+    const navright = dcmnt.getElementById('contents');
+    const offset = stb_ ? -136 : -84;
+    navright.style.setProperty('--contents', `${wndw_.innerHeight + offset}px`);
+};
+let lhc = 0;
+wndw_.addEventListener('scroll', () => {
+    let headerIndex_=false;
+    checkElement([dcmnt.querySelector(".navbar")]);
+    if (dcmnt.body.scrollTop > 150 || dcmnt.documentElement.scrollTop > 150) {
+        dcmnt.querySelector(".navbar").classList.add("scroll");
+    } else {
+        headerIndex_ = true;
+        dcmnt.querySelector(".navbar").classList.remove("scroll");
+    };
+
+    localStorage.setItem('s' + page_, convertbase(dcmnt.documentElement.scrollTop.toString(10),10,64));
+
+    const elements = dcmnt.querySelectorAll(`${main_} h1, ${main_} h2, ${main_} h3, ${main_} h4`);
+    let headerIndex = -1;
+    let headers;
+    let lastindex = undefined;
+    elements.forEach((element, index) => {
+        const rect = element.getBoundingClientRect();
+        const isInView = (rect.top + rect.height / 2) <= (wndw_.innerHeight / 2);
+
+        if (lastindex === undefined) {
+            lastindex = index;
+        } else if (index > lastindex) {
+            lastindex = index;
+            headers = index;
+        }
+
+        if (isInView) {
+            headerIndex = index;
+        }
+    });
+
+    const { scrollHeight, scrollTop, clientHeight } = dcmnt.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight) {
+        dcmnt.body.classList.add('stb');
+        stb_ = true;
+        headerIndex = headers;
+    } else {
+        dcmnt.body.classList.remove('stb');
+        stb_ = false;
+    };
+
+    const hc_ = headerIndex_ ? 0 : headerIndex >= 0 ? headerIndex : 0;
+    const nr = 'REPLACE_NR';
+    const _hc = 'REPLACE_CHC';
+    dcmnt.body.style.setProperty('--hc', hc_);
+    try{dcmnt.getElementById(`${nr}${lhc}`).classList.remove(_hc);dcmnt.getElementById(`${nr}${hc_}`).classList.add(_hc);lhc = hc_;}catch(__e){};
+    updateNavRight();
+});
+
+if (scrll) {
+    dcmnt.documentElement.scrollTo(0, convertbase(scrll,64,10));
+}
+
+let swipe;
+let navv = false;
+const handleSwipeLeft=()=>{
+    dcmnt.body.classList.remove('navleft');
+    navv = false;
+};
+const handleSwipeRight=()=>{
+    dcmnt.body.classList.add('navleft');
+    navv = true;
+};
+dcmnt.addEventListener('touchstart', function(event) {
+    swipe = [event.touches[0].clientX, event.touches[0].clientY];
+}, false);
+dcmnt.addEventListener('touchend', function(event) {
+    const endX = event.changedTouches[0].clientX;
+    const endY = event.changedTouches[0].clientY;
+    const distanceX = endX - swipe[0];
+    const distanceY = endY - swipe[1];
+
+    if (distanceY < 35 && distanceY > -35) {
+        if (distanceX > 35) {
+            handleSwipeRight();
+        } else if (distanceX < -35) {
+            handleSwipeLeft();
+        }
+    }
+}, false);
+
+const getnsettheme = () => {
+    try {
+        const darkThemeMq = () => wndw_?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
+        if (darkThemeMq()) {
+            dcmnt.documentElement.classList.remove('l');
+        } else {
+            dcmnt.documentElement.classList.add('l');
+        }
+    } catch {
+        dcmnt.documentElement.classList.add('l');
+    }
+};
+const checkTheme = () => localStorage.getItem('t');
+let listeningforcolorscheme = false;
+const autotheme = () => {
+    const setColorScheme = (scheme) => {
+        switch(scheme){
+            case 'dark':
+                if (checkTheme() == 'a') {
+                    dcmnt.documentElement.classList.remove('l');
+                }
+            break;
+            case 'light':
+                if (checkTheme() == 'a') {
+                    dcmnt.documentElement.classList.add('l');
+                }
+            break;
+            default:
+                if (checkTheme() == 'a') {
+                    dcmnt.documentElement.classList.add('l');
+                }
+            break;
+        }
+    };
+
+    const getPreferredColorScheme = () => {
+        if (wndw_.matchMedia) {
+            if(wndw_.matchMedia('(prefers-color-scheme: dark)').matches){
+                return 'dark';
+            } else {
+                return 'light';
+            }
+        }
+        return 'light';
+    };
+
+    const updateColorScheme=()=>{
+        setColorScheme(getPreferredColorScheme());
+    };
+
+    if(wndw_.matchMedia && !listeningforcolorscheme){
+        const colorSchemeQuery = wndw_.matchMedia('(prefers-color-scheme: dark)');
+        if (colorSchemeQuery.addEventListener) {
+            colorSchemeQuery.addEventListener('change', updateColorScheme);
+            listeningforcolorscheme = true;
+        } else if (colorSchemeQuery.addListener) {
+            colorSchemeQuery.addListener(updateColorScheme);
+            listeningforcolorscheme = true;
+        }
+    };
+
+    updateColorScheme();
+};
+
+if (theme && theme == 'l') {
+    dcmnt.documentElement.classList.add('l');
+    dcmnt.documentElement.classList.remove('a');
+} else if (theme && theme == 'a') {
+    dcmnt.documentElement.classList.add('a');
+    autotheme()
+} else {
+    dcmnt.documentElement.classList.remove('a');
+    getnsettheme()
+};
+
+const updateMinHeight = () => {
+    try {
+        dcmnt.querySelector('.main').style.minHeight = `${wndw_.innerHeight-62*2-1}px`
+    } catch (err_) {}
+};
+const updateWidth = () => {
+    if (wndw_.innerWidth < 556) {
+        try {
+            dcmnt.querySelector('.main').style.width =(null);
+            dcmnt.querySelector('.main').style.width = `${dcmnt.querySelector('.main').offsetWidth - 10}px`
+        } catch (err_) {}
+    } else {
+        try {
+            dcmnt.querySelector('.main').style.width =(null);
+        } catch (err_) {}
+    }
+};
+updateMinHeight();updateWidth();
+wndw_.addEventListener('resize', ()=>{
+    updateMinHeight();
+    if (navv) {
+        handleSwipeLeft();
+    }
+    updateWidth();
+    updateNavRight();
+});
+
+let fun_function = false;
+const glass = 'url("#glass")';
+const i_want_liquid_glass = () => {
+    dcmnt.body.style.filter = glass;
+    dcmnt.body.style.webkitFilter = glass;
+    if (fun_function) {
+        dcmnt.querySelector('feDisplacementMap').scale.baseVal += 100;
+    };
+    fun_function = true;
+};
+
+const search1 = (data, searchTerm) => {
+  const lowerSearchTerm = searchTerm.toLowerCase();
+
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      const value_ = data[key];
+      const lowerValue = value_.toLowerCase();
+      const index = lowerValue.indexOf(lowerSearchTerm);
+      
+      if (index !== -1) {
+        const start = Math.max(0, index - 6);
+        let end = SETTINGS.searchV2 ? value_.length : Math.min(value_.length, index + searchTerm.length + 9);
+        
+        let snippet = value_.substring(start, end);
+        
+        const regex = new RegExp(`(?<=\s|^|[.,!?;: \n])(${searchTerm})(?=\s|[.,!?;: \n]|$)`, 'gi');
+        
+        snippet = snippet.replace(regex, '<strong>$1</strong>');
+        if (start > 0) {snippet = '...'+snippet.slice(3)}
+        if (end < value_.length) {snippet = snippet.trim()+'...'};
+        
+        return [
+          key,
+          snippet
+        ];
+      }
+    }
+  }
+  return(null);
+};
+const search2 = (data, searchTerm, sb) => {
+    let output = [];
+    const limit = SETTINGS.searchV2 ? Math.floor((wndw_.innerHeight-(sb.offsetTop+sb.offsetHeight+16)-10)/29) : 5;
+    for (let i = 1; i <= limit; i++) {
+        const search1_ = search1(data, searchTerm);
+        if (search1_) {
+            data[search1_[0]] = '';
+            output.push(search1_);
+        }
+    }
+    return output;
+};
+
+let cooldown0 = false;
+const cooldown = (timems, cdvarid) => {
+    switch(cdvarid) {
+        case 0:    
+            cooldown0=true;
+            setTimeout(()=>{cooldown0=false;},timems);
+        default:
+            return true;
+    }
+};
+
+let searchurl = "/_just/search";
+dcmnt.addEventListener('DOMContentLoaded', () => {
+    checkElement([dcmnt.querySelector('.main')]);
+
+    let ltb = dcmnt.getElementById('l');
+    let dtb = dcmnt.getElementById('d');
+    let atb = dcmnt.getElementById('a');
+
+    const iosautotheme = () => {
+        if (isIOS()) {
+            dcmnt.body.classList.add('ios');
+            dcmnt.documentElement.classList.add('a');
+            localStorage.setItem('t', 'a');
+            autotheme();
+            return true;
+        } else {
+            return false;
+        };
+    };
+
+    if (ltb && dtb && atb) {
+        ltb.addEventListener('click', () => {
+            if (!iosautotheme()) {
+                dcmnt.documentElement.classList.add('l');
+                dcmnt.documentElement.classList.remove('a');
+                localStorage.setItem('t', 'l');
+            }
+        });
+
+        dtb.addEventListener('click', () => {
+            if (!iosautotheme()) {
+                dcmnt.documentElement.classList.remove('l');
+                dcmnt.documentElement.classList.remove('a');
+                localStorage.setItem('t', 'd');
+            }
+        });
+
+        atb.addEventListener('click', () => {
+            if (!iosautotheme()) {
+                dcmnt.documentElement.classList.add('a');
+                localStorage.setItem('t', 'a');
+                autotheme();
+            }
+        });
+    }
+
+    iosautotheme();
+    if (wndw_.navigator.userAgent.toLowerCase().includes('firefox')) {
+        dcmnt.body.classList.add('firefox');
+    };
+    const wm = dcmnt.getElementById('wm-ipp-base');
+    if(wm){wm.parentElement.removeChild(wm);}
+    if((wndw_.location.hostname==='web.archive.org'||wm)&&'REPLACE_NOWEBARCHIVE'){
+        throwError('0301');
+    }
+
+    const sb = dcmnt.getElementById("searchbar");
+    sb.style.cursor = 'text';
+    sb.disabled = false;
+    const sd = dcmnt.querySelector('.search');
+    const sk = dcmnt.getElementById("search");
+    checkElement([sb, sd, sk]);
+    sk.style.cursor = 'pointer';
+    const updateSD = (toggle = false) => {
+        let run = true;
+        if (cooldown0) run = false; else {
+            cooldown(300,0)
+        };
+        if (!toggle && run) {sd.innerHTML = ''};
+        const leftt = sb.offsetLeft + sb.parentElement.offsetLeft;
+        const toppp = sb.parentElement.offsetTop + sb.offsetHeight - (sb.parentElement.offsetWidth == 0 ? 15 : 0);
+        sd.style.left = run ? `${leftt}px` : sd.style.left;
+        sd.style.top = run ? `${toppp}px` : sd.style.top;
+        sd.style.width = run ? `${sb.offsetWidth - 8*2}px` : sd.style.width;
+        if (run) {
+            sd.style.opacity = toggle ? 1 : 0;
+            sd.style.pointerEvents = toggle ? 'all' : 'none';
+            sd.style.setProperty('--sdfix', `calc(-${leftt}px + ${sb.offsetLeft}px)`);
+        }
+
+        sk.style.left = `${leftt + sb.offsetWidth}px`;
+        sk.style.top = `${toppp - (sb.offsetHeight / 2)}px`;
+        sk.style.opacity = (!toggle && sb.offsetParent) ? 1 : 0;
+    };
+    const sbdp = sb.placeholder || 'Search documentation';
+    let sbi = undefined;
+    wndw_.addEventListener('resize', ()=>{updateSD(false)});
+    sb.addEventListener("focus", (event) => {
+        const target1 = event.target;
+        if (!target1.value || target1.value != '') {
+            target1.placeholder = '|';
+            sbi = setInterval(()=>{
+                target1.placeholder = target1.placeholder == '|' ? '' : '|';
+            },500);
+        }
+    });
+    sb.addEventListener("blur", (event) => {
+        event.target.placeholder = sbdp;
+        if (sbi) {
+            clearInterval(sbi);
+        }
+    });
+    wndw_.addEventListener('keydown', (key)=>{
+        if (key["key"] === 'REPLACE_SEARCHKEY') {
+            sb.focus();
+            key.preventDefault();
+        }
+    });
+    sk.addEventListener('click', ()=>{sb.focus()});
+
+    const searchString = (str) => {
+        if (!str) {
+            return false;
+        };
+        const trimmedStr = str.trim();
+        if (trimmedStr.length === 0) {
+            return false;
+        }
+        if(/^[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/.test(trimmedStr)){
+            return false;
+        }
+        return true;
+    };
+    let lastst = false;
+    sb.addEventListener("input", async () => {
+        const sv = sb.value;
+        const st = searchString(sv);
+        lastst = st;
+        sd.innerHTML = '<span>Loading...</span>';
+        updateSD(st);
+        const pta = '<br>Please try again';
+        if (st) {
+            const response = await fetch(searchurl).catch((err__)=>{
+                console.warn(err__);
+                sd.innerHTML = `<span>Failed to fetch.${pta}</span>`;
+                dcmnt.documentElement.classList.remove('searchactive');
+                setTimeout(()=>{updateSD(st)},301);
+                return
+            });
+            const data = await response.json().catch((err__)=>{
+                console.warn(err__);
+                sd.innerHTML = `<span>Something went wrong.${pta}</span>`;
+                dcmnt.documentElement.classList.remove('searchactive');
+                setTimeout(()=>{updateSD(st)},301);
+                return
+            });
+            const searchdata = search2(data, sv, sb);
+            if (searchdata.length == 0) {
+                sd.innerHTML = '<span>Nothing found.</span>';
+            } else {
+                sd.innerHTML = '';
+                dcmnt.documentElement.classList.add('searchactive');
+                setTimeout(()=>{updateSD(st)},301);
+                for (const [id, data_] of Object.entries(searchdata)) {
+                    sd.innerHTML += SETTINGS.searchV2 ? 
+                        `<a href="${data_[0]}" target="_self"><strong>${('REPLACE_DATAARRAY'.find(item => item[0] === data_[0]) || [])[1] || data_[0]}</strong><span>${data_[1].replaceAll('\n',' ').replaceAll(' - ','')}</span></a>` : 
+                        `<a href="${data_[0]}" target="_self">${data_[1].replaceAll('\n',' ').replaceAll(' - ','')}</a>`;
+                }
+            }
+        } else {
+            dcmnt.documentElement.classList.remove('searchactive');
+            setTimeout(()=>{updateSD(st)},301);
+            setTimeout(()=>{if(!lastst){updateSD(st)}},602);
+        }
+    });
+    dcmnt.addEventListener("click", (event)=>{
+        if (lastst && !dcmnt.querySelector(".navbar").contains(event.target)) {
+            dcmnt.documentElement.classList.remove('searchactive');
+            setTimeout(()=>{updateSD(false)},301);
+        }
+    });
+
+    updateSD(false);updateMinHeight();updateWidth();fetch(searchurl);updateNavRight();
+});
+
+```
+```css
+#search, #searchbar {
+    cursor: not-allowed;
+}
+
+.searchactive {
+    overflow-y: hidden;
+}
+.searchactive main {
+    filter: blur(3px) brightness(0.8);
+    -webkit-filter: blur(3px) brightness(0.8);
+    pointer-events: none;
+}
+.searchactive #searchbar {
+    position: fixed;
+    top: calc(62px + 10px);
+    left: 50%;
+    translate: -50%;
+    min-width: max-content;
+    width: 70%;
+}
+.searchactive:not(.ios) .search {
+    translate: calc(var(--sdfix) - 50%) 55px;
+    transition: 0ms;
+}
+
+.searchactive .search a {
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.searchactive .search a span {
+    opacity: 1;
+    width: auto;
+    text-align: left;
+    display: flex;
+    gap: 7px;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    white-space: nowrap;
+}
+.searchactive .search a strong {
+    display: flex;
+    white-space: nowrap;
+}
+.searchactive .search a strong:after {
+    content: '';
+    position: relative;
+    top: 0px;
+    width: 5px;
+    height: 3px;
+    background-color: var(--cl);
+    translate: 10px 10px;
+}
+.searchactive .search a span strong:after {
+    display: none;
+}
+
+```
+```py
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/usr/bin/env python3
+import requests
+response = requests.get('https://raw.just.is-a.dev/v1/last-commit/', headers={'Accept': 'application/json'})
+data = response.json()
+print(data['value'])
+
+```
+```sh
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/bin/bash
+mkdir -p _lastcommit && \
+source lib/tojson.sh && \
+CONTENT=$(toJSON "$GITHUB_SHA" "Last commit SHA") && \
+echo "$CONTENT" > _lastcommit/index.json
+
+```
+```py
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/usr/bin/env python3
+import requests
+response = requests.get('https://api.github.com/repos/js-just/_just/tags', headers={'Accept': 'application/vnd.github+json'})
+tags = response.json()
+print(tags[0]['name'])
+
+```
+```sh
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/bin/bash
+mkdir -p latest && \
+cp "LICENSE" "latest/LICENSE" && \
+cp "README.md" "latest/README.md" && \
+YMLTEMPLATE=$(cat "src/latest.yml") && \
+chmod +x "src/latest.py" && \
+LATEST=$(python3 "src/latest.py") && \
+YMLCONTENT=$(echo "$YMLTEMPLATE" | sed "s/@latest/@$LATEST/") && \
+YMLFIX=$(echo "$YMLCONTENT" | sed "s/@l/@latest/") && \
+echo "$YMLFIX" > "latest/action.yml" && \
+
+source lib/tojson.sh && \
+CONTENT=$(toJSON "$LATEST" "Latest version") && \
+echo "$CONTENT" > latest/index.json
+
+```
+```yml
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+name: '_just@l'
+description: 'Just an Ultimate Site Tool: Use latest version'
+author: 'JustStudio.'
+branding:
+  icon: 'edit-3'
+  color: 'purple'
+inputs:
+  path:
+    description: 'Website directory (compress/generate)'
+    required: false
+  fix-path:
+    description: 'Fix file path (generate)'
+    required: false
+  postprocessor-version:
+    description: 'Postprocessor version ("24" || "26" || "32") (postprocessor)'
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - name: Run _just
+      uses: js-just/_just@latest
+      with:
+        path: ${{ inputs.path }}
+        fix-path: ${{ inputs.fix-path }}
+        postprocessor-version: ${{ inputs.postprocessor-version }}
+
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+let [text] = process.argv.slice(2);
+text = text.split('\n');
+for (let i = 0; i < text.length; i++) {
+    text[i] = text[i].replaceAll('(__REPLACE_LINE__)',`(${i+1})`);
+};
+console.log(text.join('\n'));
+```
+## test
+```md
+> [!WARNING]
+> **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
+> The postprocessor source can be found here:
+> - https://github.com/js-just/_just/tree/v0.0.24/src;
+> - https://github.com/js-just/_just/tree/v0.0.26/src/postprocessor;
+> - https://github.com/js-just/_just/tree/v0.0.32/src/postprocessor.
+
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const fs = require('fs');
+const path = require('path');
+const config = JSON.parse(fs.readFileSync('just.config.json', 'utf8'));
+const errmsg = require('../../lib/errmsg.js');
+const [v] = process.argv.slice(2);
+console.log(v);
+
+const watermarkify = config.watermark ? config.watermark === true ? true : false : false;
+const throwerror = (a,b) => {
+    console.log('::error::'+a+': '+b);
+    errmsg.errormessage(a, b).then((e)=>{throw new Error('::error::'+e)});
+}
+
+if (config.watermark && typeof(config.watermark) !== 'boolean') {
+    throwerror('', `Invalid property type: watermark should be boolean.`);
+}
+if (v != '24' && v != '26' && v != '32' && v != '') {
+    throwerror('', `Invalid input value: postprocessor-version should be one of: "24", "26", "32".`);
+}
+
+function getFiles(dir) {
+    let results = [];
+    const list = fs.readdirSync(dir);
+    list.forEach(file => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(getFiles(filePath));
+        } else if (path.extname(file) === '.html') {
+            results.push(filePath);
+        }
+    });
+    return results;
+}
+const files = getFiles('.');
+
+function fixHtmlString(str) {
+    const commentStart1 = "<!-- This website uses _just postprocessor /-->";
+    const commentStart2 = "<!-- Learn more here:(WEBSITE COMING SOON) /-->";
+
+    str = String(str);
+
+    function notag(tag) {
+        const index = [str.lastIndexOf(tag)];
+        if (index[0] === -1) return;
+        index.push(index[0] + tag.length);
+        str = `${str.slice(0,index[0])}${str.slice(index[1])}`;
+    }
+    function notags() {
+        notag('</body>');
+        notag('</html>');
+    }
+    notags();
+    if (v != '24') {
+        notags();
+    }
+
+    function replaceLastOccurrence(text, searchStr, replaceStr) {
+        const lastIndex = text.lastIndexOf(searchStr);
+        if (lastIndex === -1) return text;
+        return (
+            text.slice(0, lastIndex) +
+            replaceStr +
+            text.slice(lastIndex + searchStr.length)
+        );
+    }
+
+    str = replaceLastOccurrence(str, commentStart1, watermarkify ? "<!--   This website uses Just an Ultimate Site Tool   /-->" : '');
+    str = replaceLastOccurrence(str, commentStart2, watermarkify ? "<!--   Learn more here:      https://just.is-a.dev/   /-->" : '');
+
+    function extractPaths(htmlString) {
+        const scriptRegex = /<script\s+[^>]*src=["'](?:\/_just|_just)\/([^"']+)["'][^>]*><\/script>/gi;
+        const linkRegex = /<link\s+[^>]*href=["'](?:\/_just|_just)\/([^"']+)["'][^>]*\s+rel=["']stylesheet["'][^>]*>/gi;
+
+        const matches = [];
+
+        let match;
+
+        while ((match = scriptRegex.exec(htmlString)) !== null) {
+            matches.push([0,match[1]]);
+        }
+
+        while ((match = linkRegex.exec(htmlString)) !== null) {
+            matches.push([1,match[1]]);
+        }
+
+        return matches;
+    }
+    let preload = '';
+    extractPaths(str).forEach(urlpath => {
+        preload += `<link rel="preload" href="/_just/${urlpath[1]}" as="${urlpath[0] === 0 ? 'script' : 'style'}">`;
+    });
+
+    return `${str.replace('<head>', `<head>${preload}`)}</html></body>`;
+    }
+
+files.forEach(file => {
+    let content = fs.readFileSync(file);
+    fs.writeFileSync(file, fixHtmlString(content), 'utf8');
+});
+
+console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
+
+```
+### test
+```sh
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/bin/bash
+source $GITHUB_ACTION_PATH/lib/errmsg.sh
+source $GITHUB_ACTION_PATH/lib/color.sh
+
+config=$(cat just.config.json)
+
+redirect_config_=$(echo "$config" | jq -r '.redirect_config')
+if ! echo "$config" | jq -e '.redirect_config' > /dev/null; then
+    local ERROR_MESSAGE=$(ErrorMessage "redirect/checks.sh" "0117")
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+validate_redirect_config() {
+    if ! echo "$config" | jq -e '.redirect_config.url' > /dev/null; then
+        local ERROR_MESSAGE=$(ErrorMessage "redirect/checks.sh" "0114")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
+}
+
+validate_paths() {
+    local paths=$(echo "$config" | jq -c '.redirect_config.paths[]?')
+    if [[ -n "$paths" ]]; then
+        local countt=0
+        for path in $paths; do
+            if ! echo "$path" | jq -e '.url' > /dev/null; then
+                local ERROR_MESSAGE=$(customErrorMessage "Error" "0115" "Missing \"url\" in item #$countt in \"paths\" in \"redirect_config\" in \"module.exports\" at \"just.config.js\" file.")
+                echo -e "::error::$_RED$ERROR_MESSAGE$_RESET" && exit 1
+            fi
+
+            if ! echo "$path" | jq -e '.path_' > /dev/null; then
+                local ERROR_MESSAGE=$(customErrorMessage "Error" "0116" "Missing \"path_\" in item #$countt in \"paths\" in \"redirect_config\" in \"module.exports\" at \"just.config.js\" file.")
+                echo -e "::error::$_RED$ERROR_MESSAGE$_RESET" && exit 1
+            fi
+
+            countt=$((countt + 1))
+        done
+    fi
+}
+
+validate_redirect_config
+validate_paths
+
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const template = {
+    "title": (url) => `Redirecting to ${url}...`,
+    "viewport": "width=device-width, initial-scale=1.0",
+    "twitter": "summary_large_image"
+}
+const fs = require('fs');
+const path = require('path');
+const compress = (string) => string.replaceAll(`\n`,'').replaceAll('    ','');
+const filter = (input) => input ? input.replace(/[^a-zA-Z0-9]/g, (char) => `&#${char.charCodeAt(0)};`) : undefined;
+
+const config = JSON.parse(fs.readFileSync('just.config.json', 'utf-8'));
+const redirectConfig = config.redirect_config;
+
+const cssContent = compress(fs.readFileSync(path.join(__dirname, 'style.css'), 'utf-8'));
+fs.writeFileSync(`deploy/_just/style.css`, cssContent);
+
+const generatePage = (url, params, path_) => {
+    const URL = compress(`${url}`);
+    const PATH = (path_) => {
+        let output = compress(`${path_}`).toLowerCase();
+        if (output.startsWith('/')) {
+            output = output.slice(1);
+        }
+        if (output.endsWith('/')) {
+            output += 'index';
+        }
+        return output;
+    }
+
+    const tempTitle = template.title(URL);
+    const tempViewport = template.viewport;
+
+    const title = params ? params.title || tempTitle : tempTitle;
+    const description = params ? params.description || undefined : undefined;
+    const metaKeywords = params ? params.keywords || undefined : undefined;
+    const lang = params ? params.htmlLang || undefined : undefined;
+    const robots = params ? params.robots || undefined : undefined;
+    const charset = params ? params.charset || "UTF-8" : "UTF-8";
+    const viewport = params ? params.viewport || tempViewport : tempViewport;
+
+    const text1 = params && params.content ? filter(params.content.text1) || undefined : undefined;
+    const text2 = params && params.content ? filter(params.content.text2) || undefined : undefined;
+    const text3 = params && params.content ? filter(params.content.text3) || undefined : undefined;
+    
+    const ogTitle = params && params.og ? params.og.title || title : title;
+    const ogDescription = params && params.og ? params.og.description || description : description;
+    
+    const twitterCard = params && params.twitter ? params.twitter.card || template.twitter : template.twitter;
+
+    const yandexVerification = params ? params.yandex || undefined : undefined;
+
+    const googleAnalytics = params ? params.googleAnalytics || undefined : undefined;
+    const googleVerification = params ? params.google || undefined : undefined;
+
+    const page = path_ ? PATH() : "index";
+    const keywords = metaKeywords ? `<meta name="keywords" content="${metaKeywords}">` : '';
+    const htmlLang = lang ? ` lang="${`${lang}`.toLowerCase()}"` : '';
+    const optionalstuff = () => {
+        let output = '';
+        if (yandexVerification) {
+            output += `\n<meta name="yandex-verification" content="${yandexVerification}">`;
+        }
+        if (googleVerification) {
+            output += `\n<meta name="google-site-verification" content="${googleVerification}">`;
+        }
+        if (googleAnalytics) {
+            output += `\n<script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalytics}"></script>
+                        <script>
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag() {
+                                dataLayer.push(arguments);
+                            }
+                            gtag('js', new Date());
+                            gtag('config', '${googleAnalytics}');
+                        </script>`
+        }
+        if (robots) {
+            output += `\n<meta name="robots" content="${robots}">`
+        }
+        return output;
+    }
+
+    const link = `<a href="${URL}" target="_self">`;
+    const meta = '<meta property=';
+    const htmlContent = '<!DOCTYPE html>' + `<html${htmlLang}>` +
+    '<head>' +
+        `<meta http-equiv="refresh" content="0;url=${URL}">` +
+        `<meta charset="${charset}">` +
+        `<meta name="viewport" content="${viewport}">` +
+        `<title>${title}</title>` +
+        `<link rel="stylesheet" href="/_just/style.css">` +
+        `${description ? `<meta name="description" content="${description}">` : ''}${keywords}` +
+        `${meta}"og:type" content="website">` +
+        `${meta}"twitter:card" content="${twitterCard}">` +
+        `${meta}"og:title" content="${ogTitle}">` +
+        `${ogDescription ? `${meta}"og:description" content="${ogDescription}">` : ''}` +
+        `${meta}"og:url" content="${URL}">${optionalstuff()}` +
+    '</head>' +
+    '<body>' +
+        `<h1>${title}</h1>` +
+        '<div>' +
+            `<span class="r">${text1 || `Redirecting...<br><small>to ${link}${URL}</a></small>`}</span>` +
+            `<span class="d">${text2 || "Didn’t get redirected?"} ${link}${text3 || 'Click here!'}</a></span>` +
+        '</div>' +
+        `<script>window.location.replace('${URL}')</script><script>window.location.href='${URL}'</script><script>window.location.assign('${URL}')</script>` +
+    '</body>' +
+'</html>';
+    
+    fs.writeFileSync(`deploy/${page}.html`, htmlContent);
+};
+
+generatePage(redirectConfig.url, redirectConfig.params);
+
+if (redirectConfig.paths) {
+    redirectConfig.paths.forEach(({ path_, url, params }) => {
+        generatePage(url, params, path_);
+    });
+}
+
+/*
+
+EXAMPLE just.config.js FILE for redirect(s):
+
+module.exports = {
+    type: "redirect", 
+    redirect_config: {
+        url: "https://justdeveloper.is-a.dev/", 
+        params: {
+            title: "JustDeveloper",
+            description: "the one who created this shi-",
+            keywords: "Just, an, Ultimate, Site, Tool",
+            htmlLang: "en",
+            og: {
+                title: "Redirect",
+                description: "Hello, World!"
+            },
+            twitter: {
+                card: "summary_large_image"
+            }
+        },
+        paths: [
+            {
+                path_: "github",
+                url: "https://github.com/JustDeveloper1", 
+                params: {
+                    title: "JustDeveloper",
+                    description: "GitHub Profile",
+                    keywords: "Just, Developer",
+                    htmlLang: "en",
+                    og: {
+                        title: "Redirect2",
+                        description: "Hello, GitHub!"
+                    },
+                    twitter: {
+                        card: "summary_large_image"
+                    }
+                }
+            }
+        ]
+    }
+}
+
+
+------------------------
+
+everything combined:
+
+module.exports = {
+    type: "redirect", 
+    redirect_config: {
+        url: "https://justdeveloper.is-a.dev/", 
+        params: {
+            title: "JustDeveloper",
+            description: "the one who created this shi-",
+            keywords: "Just, an, Ultimate, Site, Tool",
+            htmlLang: "en",
+            robots: "index",
+            charset: "UTF-8",
+            viewport: "width=device-width",
+            yandex: "abc123",
+            google: "abc123",
+            googleAnalytics: "abc123",
+            content: {
+                text1: "Hello, World!",
+                text2: "do not click anywhere.",
+                text3: "click here!"
+            },
+            og: {
+                title: "Redirect",
+                description: "Hello, World!"
+            },
+            twitter: {
+                card: "summary_large_image"
+            }
+        }
+    }
+}
+
+*/
+
+```
+```css
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+html {
+    background-color: #111111;
+    padding: 10px;
+    display: block;
+    font-family: 'Rubik';
+    color: #dddddd;
+}
+
+a {
+    color: #dddddd;
+}
+
+body {
+    width: calc( 100% - 44px );
+    height: calc( 100% - 44px );
+    position: fixed;
+    margin: 0px;
+    padding: 10px;
+    display: block;
+    border-radius: 15px;
+    background-color: #222222;
+    background-image: linear-gradient(83deg, #353535, #232323);
+    filter: drop-shadow(2px 4px 6px #000000);
+    border-width: 2px;
+    border-style: solid;
+    border-color: #5f5f5f;
+    -webkit-filter: drop-shadow(2px 4px 6px #000000);
+}
+
+div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+h1 {
+    display: block;
+    font-size: 20px;
+    margin: 0px;
+    color: #dddddd;
+    text-align: center;
+}
+
+.r {
+    text-align: center;
+    font-size: 18px;
+}
+.r small {
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.d a {
+    filter: drop-shadow(0px 0px 7px #dddddd99);
+    -webkit-filter: drop-shadow(0px 0px 7px #dddddd99);
+}
+```
+```sh
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/bin/bash
+ERRORS_FILE="$GITHUB_ACTION_PATH/data/codes.json"
+CONFIG_FILE="just.config.js"
+CONFIG_DATA="just.config.json"
+source $GITHUB_ACTION_PATH/lib/errmsg.sh
+source $GITHUB_ACTION_PATH/lib/color.sh
+source $GITHUB_ACTION_PATH/lib/runts.sh
+if [ "$INPUT_PATH" == ""]; then
+    INPUT_PATH="."
+elif [ -z "$INPUT_PATH" ]; then
+    INPUT_PATH="."
+fi
+
+chmod +x "$GITHUB_ACTION_PATH/src/last-commit.py"
+LAST_COMMIT=$(python3 "$GITHUB_ACTION_PATH/src/last-commit.py")
+COMMIT_SHA=$(cat "$GITHUB_ACTION_PATH/data/generated/sha.txt")
+VERSION=$(echo "$GITHUB_ACTION_PATH" | grep -oP '(?<=/v)[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?' || echo "$COMMIT_SHA")
+if [[ "$VERSION" != "$COMMIT_SHA" && "$VERSION" != v* ]]; then
+    VERSION="v$VERSION"
+elif [[ "$VERSION" == "$COMMIT_SHA" && "$COMMIT_SHA" == "$LAST_COMMIT" ]]; then
+    VERSION="@main $VERSION"
+fi
+msg1=$(_justMessage "$_BLUE Running$_LIGHTPURPLE Just an Ultimate Site Tool$_RESET $VERSION")
+msg2=$(_justMessage "$_BLUE Installing Node.js$_RESET...")
+msg3=$(_justMessage "$_BLUE Installed Node.js$_RESET")
+msg4=$(_justMessage "$_BLUE Redirecting...$_RESET")
+msg5=$(_justMessage "$_GREEN Generating completed$_RESET")
+msg6=$(_justMessage "$_GREEN Compressing completed$_RESET")
+msg9=$(_justMessage "$_GREEN Generating completed$_RESET")
+msg10=$(_justMessage "$_BLUE Installing TypeScript compiler$_RESET...")
+msg11=$(_justMessage "$_BLUE Installed TypeScript compiler$_RESET")
+echo -e "$msg1"
+
+chmod +x "$GITHUB_ACTION_PATH/src/time.py" # use python to get current time in ms cuz yes
+TIME0=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+installNodejs() {
+    echo -e "$msg2"
+    local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+    if ! command -v node > /dev/null; then # attempt 0: nodejs installed before running _just
+        # attempt 1: install via curl
+        sudo apt-get remove -y nodejs npm > /dev/null 2>&1 || true
+        sudo apt-get update -qq > /dev/null 2>&1
+        curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - > /dev/null 2>&1
+        sudo apt-get install -y nodejs > /dev/null 2>&1
+        if ! command -v node > /dev/null; then
+            # attempt 2: install via curl with logs
+            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0207")
+            echo -e "$ERROR_MESSAGE"
+            sudo apt-get remove -y nodejs npm || true
+            sudo apt-get update -qq
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            if ! command -v node > /dev/null; then
+                # attempt 3: install via sudo apt install
+                local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0208")
+                echo -e "$ERROR_MESSAGE"
+                sudo apt update -qq && sudo apt install -y nodejs npm > /dev/null 2>&1
+                if [ $? -ne 0 ]; then
+                    # attempt 4: install via sudo apt install with logs
+                    local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0205")
+                    echo -e "::error::$ERROR_MESSAGE"
+                    sudo apt update
+                    sudo apt install -y nodejs npm
+                fi
+            fi
+        fi
+    fi
+    local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+    NODEVERSION=$(node --version)
+    NODESECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2") # use js to get nodejs installing duration cuz yes
+    echo -e "$msg3 $NODEVERSION ($NODESECONDS)"
+}
+installTypeScriptCompiler() {
+    echo -e "$msg10"
+    local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+    if ! command -v tsc > /dev/null; then # attempt 0: tsc installed before running _just
+        # attempt 1: install without logs
+        sudo apt remove -y typescript > /dev/null 2>&1 || true
+        sudo apt update -qq > /dev/null 2>&1 || true
+        sudo apt install -y typescript > /dev/null 2>&1
+        if ! command -v tsc > /dev/null; then
+            # attempt 2: install with logs
+            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0210")
+            echo -e "$ERROR_MESSAGE"
+            sudo apt remove -y typescript || true
+            sudo apt update -qq || true
+            sudo apt install -y typescript
+        fi
+    fi
+    local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+    TSCVERSION=$(tsc --version 2>/dev/null)
+    TSCSECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2")
+    echo -e "$msg11 $TSCVERSION ($TSCSECONDS)"
+}
+
+if [ -f "$CONFIG_DATA" ]; then
+    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0113")
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+if [ ! -f "$CONFIG_FILE" ]; then
+    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0108")
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+CONFIG_JSON=$(node -e "console.log(JSON.stringify(require('./just.config.js')));")
+if [ $? -ne 0 ]; then
+    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0109")
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+echo "Parsed just.config.js module.exports: $CONFIG_JSON" # debug
+echo "$CONFIG_JSON" > "$CONFIG_DATA"
+
+if [ -z "$(echo "$CONFIG_JSON" | jq -r '.module.exports')" ]; then
+    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0112")
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+TYPE=$(echo "$CONFIG_JSON" | jq -r '.type')
+if [ -z "$TYPE" ]; then
+    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0110")
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+if [[ "$TYPE" != "postprocessor" && "$TYPE" != "redirect" && "$TYPE" != "compress" && "$TYPE" != "docs" ]]; then
+    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0111")
+    echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+
+_just_d="no" && \
+if [[ "$TYPE" != "compress" && ! ( "$TYPE" == "docs" && "$INPUT_PATH" != "." ) ]]; then
+    if [ -d "deploy" ]; then
+        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0106")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
+    if [ -d "_just_data" ]; then
+        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0107")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
+    mkdir -p deploy
+    mkdir -p _just_data
+elif [ "$TYPE" == "docs" ]; then
+    JDD=$(echo "$INPUT_PATH/_just_data" | sed 's#//*#/#g')
+    _just_dir=$(echo "$INPUT_PATH/_just" | sed 's#//*#/#g')
+    if [ -d "$JDD" ]; then
+        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0125")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
+    if [ -d "$_just_dir" ]; then
+        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0125")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
+    mkdir -p "$JDD"
+    mkdir -p "$_just_dir"
+    _just_d="yes"
+fi
+
+jserr() {
+    echo -e "::error::$(cat "_just_data/e.txt")" && exit 1
+}
+HLJSCSS="$GITHUB_ACTION_PATH/src/documentation/templates/hljs-themes"
+hljsstyles() {
+    echo "$(node $GITHUB_ACTION_PATH/src/documentation/hljscss.js "$(cat "$HLJSCSS/_just_default_light.css")")"
+}
+
+if [ "$TYPE" != "postprocessor" ]; then
+    echo "postprocessor=0" >> "$GITHUB_OUTPUT"
+fi
+
+if [ "$TYPE" == "postprocessor" ]; then
+    rm -f just.config.json && \
+    rm -rf deploy _just_data && \
+    echo "postprocessor=1" >> "$GITHUB_OUTPUT" && \
+    echo -e "$msg4"
+elif [ "$TYPE" == "redirect" ]; then
+    mkdir -p deploy/_just && \
+    installNodejs && \
+    bash $GITHUB_ACTION_PATH/src/redirect/checks.sh && \
+    node $GITHUB_ACTION_PATH/src/redirect/index.js && \
+    TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
+    DONEIN=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME0" "$TIME3") && \
+    echo -e "$msg5 ($DONEIN)"
+elif [ "$TYPE" == "compress" ]; then
+    mkdir -p deploy && \
+    installNodejs && \
+    node $GITHUB_ACTION_PATH/src/compress.js "$INPUT_PATH" && \
+    TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
+    DONEIN=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME0" "$TIME3") && \
+    echo -e "$msg6 ($DONEIN)"
+elif [ "$TYPE" == "docs" ]; then
+    HTML=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/page.html") && \
+    CSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/base.css") && \
+    JS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/page.js") && \
+    HIGHLIGHTCSS=$(cat "$HLJSCSS/_just_default_dark.css") && \
+    HIGHLIGHTJSON=$(hljsstyles) && \
+    BUTTONSCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/buttons.css") && \
+    SEARCHCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/search.css") && \
+    CUSTOMCSS=false && \
+    CUSTOMCSSPATH="just.config.css" && \
+    if [ -f "$CUSTOMCSSPATH" ]; then
+        CUSTOMCSS=$(cat "$CUSTOMCSSPATH")
+    fi && \
+    if [[ -d "_just" && "$_just_d" == "no" ]]; then
+        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0121")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi && \
+    if [ -f "_just_error" ]; then 
+        ERROR_MESSAGE=$(ErrorMessage "run.sh" "0127")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi && \
+    mkdir -p _just && \
+    mkdir -p deploy && \
+    installNodejs && \
+    bash $GITHUB_ACTION_PATH/src/documentation/checks.sh && \
+    INDEXJS0="$GITHUB_ACTION_PATH/src/documentation/index.js"
+    INDEXJS1=$(cat "$INDEXJS0") && \
+    INDEXJS2=$(cat "$GITHUB_ACTION_PATH/src/line.js") && \
+    echo "$INDEXJS2" > "$INDEXJS0" && \
+    INDEXJS3=$(node "$INDEXJS0" "$INDEXJS1") && \
+    echo "$INDEXJS3" > "$INDEXJS0" && \
+    HLJSLANGS=$(cat "$GITHUB_ACTION_PATH/data/hljslangs.json") && \
+    LANGS=$(cat "$GITHUB_ACTION_PATH/data/langs.json") && \
+    LANGSTEXT=$(cat "$GITHUB_ACTION_PATH/data/langstext.json") && \
+    node "$INDEXJS0" "$HTML" "$CSS" "$JS" "$INPUT_PATH" "$GITHUB_REPOSITORY" "$GITHUB_REPOSITORY_OWNER" "$CUSTOMCSS" "$HLJSLANGS" "$LANGS" "$HIGHLIGHTCSS" "$LANGSTEXT" "$VERSION" "$BUTTONSCSS" "$SEARCHCSS" "$HIGHLIGHTJSON" "$INPUT_FIXPATH" || jserr && \
+    node $GITHUB_ACTION_PATH/src/compress.js "$INPUT_PATH" && \
+    node "$GITHUB_ACTION_PATH/src/documentation/logs.js" "$INPUT_PATH" && \
+    TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
+    DONEIN=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME0" "$TIME3") && \
+    echo -e "$msg9 ($DONEIN)"
+fi
+
+```
+### test
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const [time1, time2] = process.argv.slice(2);
+const diff = Math.ceil(Math.ceil(parseInt(time2, 10)) - Math.ceil(parseInt(time1, 10)));
+function time(ms) {
+    const s_ = Math.ceil(ms/1000);
+    if (ms < 0) {
+        return "0ms";
+    } else if (ms < 1000) {
+        return `${ms}ms`;
+    } else if (s_ > 60) {
+        return `${Math.ceil(s_/60*100)/100}m`;
+    } else {
+        return `${Math.ceil(ms/100)/10}s`;
+    }
+}
+console.log(time(diff));
+```
+```py
+# MIT License
+# 
+# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+#!/usr/bin/env python3
+import time
+out = int(time.time() * 1000)
+print(out)
+```
+## test
+### test
+```css
+* {
+    margin: 0;
+}
+html {
+    color: #ffffff;
+    font-family: monospace;
+    text-align: center;
+}
+body {
+    background-color: #000000;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    height: auto;
+    width: 75%;
+}
+@property --angle1 {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false
+}
+h1 {
+    font-size: 30px;
+    -webkit-text-stroke-color: hsl(var(--angle1) 100% 50%);
+    -webkit-text-stroke-width: 0.5px;
+    filter: drop-shadow(0px 20px 50px hsl(var(--angle1) 100% 50%)) drop-shadow(10px 5px 5px hsl(var(--angle1) 100% 50% / 50%)) drop-shadow(400px -10px 50px hsl(var(--angle1) 100% 50% / 50%)) drop-shadow(-400px 20px 50px hsl(var(--angle1) 100% 50% / 50%));
+    animation: 3s rgb linear infinite;
+}
+@keyframes rgb {
+    from {
+        --angle1: 0deg
+    }
+    to {
+        --angle1: 360deg
+    }
+}
+span {
+    position: fixed;
+    translate: -50% 2px;
+    width: 100%;
+    background: hsl(0deg 0% 100% / 25%);
+    background: radial-gradient(circle, hsl(0deg 0% 100% / 25%) 0%, hsl(0deg 0% 0% / 0%) 100%);
+    background: -moz-radial-gradient(circle, hsl(0deg 0% 100% / 25%) 0%, hsl(0deg 0% 0% / 0%) 100%);
+    background: -webkit-radial-gradient(circle, hsl(0deg 0% 100% / 25%) 0%, hsl(0deg 0% 0% / 0%) 100%);
+    max-width: 700px;
+    color: hsl(0 0% 75%);
+    filter: saturate(0%);
+    opacity: 0.4;
+    padding-bottom: 5px;
+}
+h4 {
+    translate: 0% calc(100% + 9px);
+}
+```
+## test
+## test
+```md
+_just: title: Advanced usage
+# Advanced usage
+
+_just: prev: /docs/generator/syntax
+_just: next: /docs/generator/troubleshooting
+```
+```md
+_just: title: Supported markdown syntax
+# Markdown support
+### Supported elements
+- Headings (Alternate headings aren’t supported.)
+- Line Breaks
+- Bold (Use asterisks. Underscores aren’t supported.)
+- Italic
+- Blockquotes
+- Ordered Lists (Nested lists aren’t supported.)
+- Unordered Lists (Nested lists aren’t supported.)
+- Code (To escape backticks (\`) use backslash (\\))
+- Horizontal Rules
+- Links
+- Images
+- Fenced Code Blocks (Use triple backticks (\`\`\`). Spaces/Tabs aren’t supported.)
+- Syntax Highlighting
+- Heading IDs (Automatically generated.)
+- Strikethrough
+- Task Lists
+- Emoji (copy and paste)
+- Highlight
+- Subscript
+- Superscript
+- Automatic URL Linking
+- Disabling Automatic URL Linking (You can also use backslash (\\) before protocol to disable Automatic URL Linking)
+- HTML
+
+### Not supported elements
+- Paragraphs
+- Footnotes
+- Definition Lists
+- Abbreviation
+
+### Planned
+- Emoji (shortcodes)
+
+## Support for Additional Syntax Elements
+- Note, tip, important, warning, caution blockquotes:
+\`\`\`md
+> [!NOTE] A note!
+> [!TIP] A tip!
+> [!IMPORTANT] Something important.
+> [!WARNING] A warning!
+> [!CAUTION] Caution!
+\`\`\`
+
+- Underline:
+__Underline example__
+\`\`\`md
+__This text will be underlined.__
+\`\`\`
+
+- Subtext:
+-# Subtext example
+\`\`\`md
+-# This line will be made smaller and greyed out.
+\`\`\`
+
+_just: prev: /docs/modes/generator
+_just: next: /docs/generator/advanced-usage
+```
+```md
+_just: title: Troubleshooting
+# Troubleshooting
+
+_just: prev: /docs/generator/advanced-usage
+```
+```md
+_just: title: Getting Started
+# Getting Started
+### Necessary knowledge
+This documentation assumes some familiarity with
+- GitHub
+- GitHub Actions
+- GitHub Pages
+And some familiarity with these languages
+- JavaScript
+- YAML
+- HTML
+- CSS
+- Markdown
+## Installation
+### Making your first project
+- Create new repository, and create `/.github/workflows/publish.yml` file, template:
+\`\`\`yml
+name: Website
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Generate with _just
+        uses: js-just/latest@main
+        with: # Remove "with" and "path" here if you are not using compressor or generator modes!
+          path: . # Root directory, or you can replace the dot with the path to your website/docs directory to be generated/compressed. (Only for compressor and generator modes)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: . # Root directory, or you can replace the dot with the path to your entire website to be deployed to GitHub Pages.
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+\`\`\`
+You can change name of workflow file and workflow name:
+\`\`\`yml
+name: Workflow name
+\`\`\`
+You can also choose _just version:
+\`\`\`yml
+        uses: js-just/_just@(put version name here)
+\`\`\`
+**If you know what exactly you are doing, you may change anything.**
+- Create `just.config.js` file in the root directory:
+Choose what mode you want to use.
+ 
+Using `Postprocessor` mode:
+\`\`\`js
+module.exports = {
+  type: "postprocessor"
+}
+\`\`\`
+Using `Redirector` mode: 
+\`\`\`js
+module.exports = {
+    type: "redirect", 
+    redirect_config: {
+        url: "https://example.com/", // Required. Replace with destination URL.
+    }
+}
+\`\`\`
+Using `Compressor` mode:
+\`\`\`js
+module.exports = {
+    type: "compress"
+}
+\`\`\`
+Using `Generator` mode:
+\`\`\`js
+module.exports = {
+    type: "docs",
+    docs_config: {
+        metatitle: "Documentation title", // Required. Replace with your documentation title.
+        domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
+    }
+}
+\`\`\`
+- Read the documentation for the mode that you’ve chosen.
+---
+### Pro installation
+- Create or modify your `.github/workflows/github_pages_workflow_name.yml`:
+Make sure that permissions allow writing `pages` and `id-token`, but do not allow writing `contents`, only read.
+\`\`\`yml
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+\`\`\`
+Make a job for building your website using _just:
+\`\`\`yml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Generate with _just
+        uses: js-just/_just@ # version name (recommended) (example: v0.0.29) / main branch (latest commit) (unstable, not recommended) / commit SHA (not recommended)
+        with:
+          path: # Path to your website directory to be generated/compressed. (Only for compressor and generator modes)
+\`\`\`
+- Create `just.config.js` file:
+Basic usage:
+\`\`\`js
+module.exports = {
+  type: "(postprocessor/redirect/compress/docs)"
+}
+\`\`\`
+Using multiple modes:
+-# Currently available only combining generator and compressor.
+\`\`\`js
+module.exports = {
+  type: ["docs", "compress"]
+}
+\`\`\`
+- Read the documentation for the mode/modes that you’ve chosen.
+
+## Modes documentation
+- [Postprocessor](/docs/modes/postprocessor)
+- [Redirector](/docs/modes/redirector)
+- [Compressor](/docs/modes/compressor)
+- [Generator](/docs/modes/generator)
+
+## Reserved directories
+Your repository should not have these directories:
+- _just_data
+- deploy
+If your repository has any of these, _just will throw an error.
+
+_just: prev: /docs
+```
+### test
+```md
+_just: title: Compressor Mode
+# Compressor mode
+**- Compresses your website.**
+
+> This mode compresses your static website's `.html`, `.js`, `.css`, `.xml`, `.svg`, `.json` and `.webmanifest` files.<br> It removes every comments, tabs and newlines. <br><br>For JavaScript it also compresses booleans and undefined: <br><ul style="margin-bottom: -19px"><li> `true` -> `!0` </li><li> `false` -> `!1` </li><li> `undefined` -> `[][[]]` </li></ul>
+
+> [!WARNING] This mode is under development, and it may cause JavaScript and HTML errors! <br>To fix JavaScript, do not forget semicolons. <br>To fix HTML newlines, use `<br>` instead. <br>Please [report any bugs](https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md) you find.
+<br><br>
+This mode requires only the `just.config.js` file and the workflow file.
+-# `just.config.js`
+\`\`\`js
+module.exports = {
+    type: "compress"
+}
+\`\`\`
+
+-# `.github/workflows/WORKFLOW_NAME.yml`
+\`\`\`yml
+name: Website
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Generate with _just
+        uses: js-just/latest@main
+        with:
+          path: . # Root directory, or you can replace the dot with the path to your website directory to be compressed.
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: . # Root directory, or you can replace the dot with the path to your entire website to be deployed to GitHub Pages.
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+\`\`\`
+
+## How it works?
+It compresses files by removing tabs, newlines and comments.
+Also it compresses booleans and undefined in JavaScript:
+\`\`\`js
+!0     // true
+!1     // false
+[][[]] // undefined
+\`\`\`
+-# `[][[]]` ( `undefined` ) by [JSFuck](https://jsfuck.com/)
+
+_just: prev: /docs/getting-started
+```
+```md
+_just: title: Generator Mode
+# Generator mode
+**- Generates documentation website using Markdown.**
+
+> This website is generated using this mode.
+
+This mode requires the `just.config.js` file and the workflow file.
+-# `just.config.js`
+\`\`\`js
+module.exports = {
+    type: "docs",
+    docs_config: {
+        metatitle: "Documentation title", // Required. Replace with your documentation title.
+        domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
+    }
+}
+\`\`\`
+
+-# `.github/workflows/WORKFLOW_NAME.yml`
+\`\`\`yml
+name: Website
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Generate with _just
+        uses: js-just/latest@main
+        with:
+          path: . # Root directory, or you can replace the dot with the path to your docs directory to be generated.
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: . # Root directory, or you can replace the dot with the path to your entire website to be deployed to GitHub Pages.
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+\`\`\`
+
+After generating the documentation, this mode uses the [Compressor mode](/docs/modes/compressor) to compress the generated website.
+Use Markdown (`.md`) files for documentation. You can also use HTML/CSS/JavaScript for custom pages, but remember that they will be compressed using the [Compressor mode](/docs/modes/compressor)!
+
+## How it works?
+It processes every Markdown file and generates HTML page for each of them.
+
+_just: prev: /docs/getting-started
+_just: next: /docs/generator/syntax
+```
+```md
+_just: title: Postprocessor Mode
+# Postprocessor mode
+**- Add your own files to generated Next.js website.**
+
+> With this mode you can add your own files to generated Next.js website. <br>This mode creates the `deploy` directory and outputs files into it.<br> If your Next.js website outputs an `en.html` file, it will be copied into the `index.html` file.
+
+This mode requires the `just.config.js` file, the workflow file, some directories and `_just/404.html`.
+Next.js website should be generated **before** running this mode.
+Generated Next.js website should be in `.next/server/pages/` and `.next/static/` directories.
+Required directories are:
+- `_just`
+- `_just/dangerously-insert-files`
+- `_just/js`
+- `_just/style`
+
+-# `just.config.js`
+\`\`\`js
+module.exports = {
+    type: "postprocessor"
+}
+\`\`\`
+-# `.github/workflows/WORKFLOW_NAME.yml`
+\`\`\`yaml
+name: Website
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: npm
+        id: install-npm
+        run: npm i
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
+            echo "runner=yarn" >> $GITHUB_OUTPUT
+            exit 0
+          elif [ -f "${{ github.workspace }}/package.json" ]; then
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "Unable to determine package manager"
+            exit 1
+          fi
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: next
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Build with Next.js
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Override with _just
+        uses: js-just/latest@main
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: deploy
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+\`\`\`
+
+## Required directories
+-# Required only directories, not files within them (except for the `_just/404.html` file).
+
+In **`_just/js`** you can put your JavaScript files to be inserted into the `deploy/_just` directory and into every HTML page.
+In **`_just/style`** you can place your CSS files to be inserted into the `deploy/_just` directory and into every HTML page as well.
+Within **`_just/dangerously-insert-files`**, you may include any files that you wish to insert into the `deploy` directory.
+
+> [!CAUTION] Inserting files via the **`_just/dangerously-insert-files`** directory may cause website errors or files may not be inserted if there is already a file with the same name in the `deploy` directory.
+
+The **`_just/404.html` file** is required and it’ll become the `deploy/404.html` file (if the `deploy/404.html` file already exists, it will be overwritten).
+
+## How it works?
+1. It creates a `deploy` directory and copies every file from the `.next/server/pages` and `.next/static` directories to it.
+2. If there is a `deploy/en.html` file, it will copies to the `deploy/index.html`.
+3. It copies `_just/404.html` to `deploy/404.html` (if it exists, it’ll be overwritten).
+4. Every `_just/js/*.js` copies into `deploy/_just`; Every `_just/style/*.css` copies into `deploy/_just`; Every `_just/dangerously-insert-files/*` copies into `deploy`.
+5. Every JavaScript and CSS file in `deploy/_just` are inserted into every HTML page as HTML tags.
+
+## Troubleshooting
+This mode may cause website issues.
+You can try fixing them by switching the postprocessor version in your workflow file.
+\`\`\`yaml
+      - name: Override with _just
+        uses: js-just/latest@main
+        with:
+          postprocessor-version: "26"
+\`\`\`
+Available postprocessor versions are: `"24"`, `"26"` (default), `"32"`.
+
+_just: prev: /docs/getting-started
+```
+```md
+_just: title: Redirector Mode
+# Redirector mode
+**- Client-side redirect.**
+
+> This mode redirects your static website, such as your `.github.io` website, to a specified URL.
+
+This mode requires only the `just.config.js` file, (except for the workflow file).
+`just.config.js`
+\`\`\`js
+module.exports = {
+    type: "redirect", 
+    redirect_config: {
+        url: "https://example.com/" // Required. Replace with destination URL.
+    }
+}
+\`\`\`
+> [!TIP] Do not use this mode if you can make server-side `HTTP 3XX` redirects.
+
+You can add `params{}`:
+\`\`\`js
+module.exports = {
+    type: "redirect", 
+    redirect_config: {
+        url: "https://example.com/", // Required. Replace with destination URL.
+        params: { // Optional.
+            title: "redirect website title here", // Optional. Replace with any title you want. Recommended.
+            description: "redirect website description here", // Optional. Replace with any description you want.
+            keywords: "some, keywords, here", // Optional. Replace with any keywords you want. Separate keywords by commas.
+            htmlLang: "en", // Optional. <html lang="${htmlLang}">
+            robots: "index", // Optional. <meta name="robots" content="${robots}">
+            charset: "utf-8", // Optional. "utf-8" by default. <meta charset="${charset}"> and file charset.
+            viewport: "width=device-width, initial-scale=1.0", // Optional. "width=device-width, initial-scale=1.0" by default. <meta name="viewport" content="${viewport}">
+            yandex: "", // Optional. Put your Yandex verification string here. <meta name="yandex-verification" content="${yandex}">
+            google: "", // Optional. Put your Google verification string here. <meta name="google-site-verification" content="${google}">
+            googleAnalytics: "" // Optional. Put your Google Analytics ID here.
+        }
+    }
+}
+\`\`\`
+You can also add `content{}` in `params{}` if you want to modify HTML content.
+\`\`\`js
+module.exports = {
+    type: "redirect", 
+    redirect_config: {
+        url: "https://example.com/", // Required. Replace with destination URL.
+        params: { // Optional.
+            content: { // Optional.
+                text1: "Redirecting...", // Optional. "Redirecting...<br>" + generated content ("<small>to <a ...>...</a></small>") by default.
+                text2: "Didn’t get redirected?", // Optional. "Didn’t get redirected?" by default.
+                text3: "Click here!" // Optional. "Click here!" by default. <a ...>${text3}</a>
+            }
+        }
+    }
+}
+\`\`\`
+> [!NOTE] `\\n` and tabs/4 spaces will be removed. Use `<br>` instead of `\\n`.
+
+Remember that your repository should have a `.github/workflows/WORKFLOW_NAME.yml` file.
+-# Template:
+\`\`\`yml
+name: Website
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Generate with _just
+        uses: js-just/latest@main
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+\`\`\`
+
+### Redirect paths
+You may add `paths[]` in `redirect_config{}` to create custom redirect paths.
+\`\`\`js
+module.exports = {
+    type: "redirect", 
+    redirect_config: {
+        url: "https://example.com/", // Required. Replace with destination URL.
+        paths: [ // Optional
+            {
+                path_: "example", // Required. Replace with path.
+                url: "https://example.com/", // Required. Replace with path destination URL.
+                params: { // Optional.
+                    title: "redirect website title here", // Optional. Replace with any title you want. Recommended.
+                    description: "redirect website description here", // Optional. Replace with any description you want.
+                    keywords: "some, keywords, here", // Optional. Replace with any keywords you want. Separate keywords by commas.
+                    htmlLang: "en", // Optional. <html lang="${htmlLang}">
+                    robots: "index", // Optional. <meta name="robots" content="${robots}">
+                    charset: "utf-8", // Optional. "utf-8" by default. <meta charset="${charset}"> and file charset.
+                    viewport: "width=device-width, initial-scale=1.0", // Optional. "width=device-width, initial-scale=1.0" by default. <meta name="viewport" content="${viewport}">
+                    yandex: "", // Optional. Put your Yandex verification string here. <meta name="yandex-verification" content="${yandex}">
+                    google: "", // Optional. Put your Google verification string here. <meta name="google-site-verification" content="${google}">
+                    googleAnalytics: "" // Optional. Put your Google Analytics ID here.
+                }
+            }
+        ]
+    }
+}
+\`\`\`
+
+## How it works?
+It generates HTML pages based on your `module.exports` input.
+Every generated HTML page has:
+- `<meta http-equiv="refresh" content="0;url=...">` in `<head>`. This means that the user will be redirected to the destination URL in 0 seconds after the page has loaded.
+- Fallback #1 - `<script>...</script>` in `<body>` redirects the user to the destination URL.
+- Fallback #2 - Other elements in `<body>` ("Redirecting... <...>", "Didn’t get redirected? `<a ...>` Click here! `</a>` ").
+That means that users should be redirected, even if they have disabled JavaScript in their browser settings.
+
+## Why is `HTTP 3XX` better?
+A response with an `HTTP 3XX` status code and with the `location` header makes a real redirect.
+This mode generates client-side redirects that only support browsers!
+
+---
+
+## `module.exports` JSON Schema
+\`\`\`json
+{
+    "$id": "https://just.is-a.dev/schema/r.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "_just just.config.js module.exports Redirector mode",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "redirect_config": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "params": {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "keywords": {
+                            "type": "string"
+                        },
+                        "htmlLang": {
+                            "type": "string"
+                        },
+                        "robots": {
+                            "type": "string"
+                        },
+                        "charset": {
+                            "type": "string"
+                        },
+                        "viewport": {
+                            "type": "string"
+                        },
+                        "yandex": {
+                            "type": "string"
+                        },
+                        "google": {
+                            "type": "string"
+                        },
+                        "googleAnalytics": {
+                            "type": "string"
+                        },
+                        "content": {
+                            "type": "object",
+                            "properties": {
+                                "text1": {
+                                    "type": "string"
+                                },
+                                "text2": {
+                                    "type": "string"
+                                },
+                                "text3": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": []
+                        },
+                        "og": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": []
+                        },
+                        "twitter": {
+                            "type": "object",
+                            "properties": {
+                                "card": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "card"
+                            ]
+                        }
+                    },
+                    "required": []
+                },
+                "paths": {
+                    "type": "array",
+                    "items": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "path_": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                },
+                                "params": {
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "keywords": {
+                                            "type": "string"
+                                        },
+                                        "htmlLang": {
+                                            "type": "string"
+                                        },
+                                        "og": {
+                                            "type": "object",
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": []
+                                        },
+                                        "twitter": {
+                                            "type": "object",
+                                            "properties": {
+                                                "card": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "card"
+                                            ]
+                                        }
+                                    },
+                                    "required": []
+                                }
+                            },
+                            "required": [
+                                "path_",
+                                "url"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "url"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "redirect_config"
+    ]
+}
+\`\`\`
+
+_just: prev: /docs/getting-started
+```
+```md
+_just: title: Docs
+# _just Docs
+Welcome to Just an Ultimate Site Tool documentation!
+-# "**`_just`**" is an abbreviation of **Just an Ultimate Site Tool**.
+---
+## What is _just?
+Just an Ultimate Site Tool is a GitHub Action for building static websites. 
+Currently it have 4 modes: 
+- `Postprocessor`: Add your own files to generated Next.js website.
+- `Redirector`: Client-side redirect using JavaScript.
+- `Compressor`: Compresses your website.
+- `Generator`: Generates documentation website using Markdown.
+
+> [!WARNING] Just an Ultimate Site Tool is still in development at the **alpha** stage. Expect regular updates, possible bugs, and changes. If you have found a bug, please [report it here](https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md).
+> [!CAUTION] The docs are under construction!
+> [!TIP] Do not use `Redirector` if you can make server-side `HTTP 3XX` redirects.
+
+## Why _just?
+1. __No packages.__
+2. __Fast build.__
+3. __**No watermarks.**__
+-# _just uses Node.js, but _just does not require you to use Node.js/npm/pnpm/Yarn/related packages stuff.
+
+_just: next: /docs/getting-started
+```
+## test
+```svg
+<!-- 
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+\-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" version="1.1">
+    <path d="M 518.656 198.677 C 518.404 198.929, 516.016 199.317, 513.349 199.538 C 506.674 200.092, 500.971 200.830, 498 201.525 C 496.625 201.847, 494.375 202.255, 493 202.432 C 488.792 202.974, 483.782 203.983, 477.500 205.555 C 469.302 207.605, 468.500 207.823, 468.500 208.006 C 468.500 208.093, 467.237 208.371, 465.694 208.624 C 463.331 209.011, 452.219 212.639, 447 214.727 C 446.175 215.057, 445.275 215.388, 445 215.463 C 442.343 216.183, 439.406 217.396, 439 217.941 C 438.725 218.310, 435.575 219.648, 432 220.915 C 423.517 223.922, 418.676 226.144, 417.765 227.448 C 417.361 228.027, 417.024 228.151, 417.015 227.724 C 416.995 226.714, 395.745 237.805, 394.773 239.333 C 394.365 239.975, 394.024 240.146, 394.015 239.714 C 394.007 239.282, 392.321 240.069, 390.268 241.464 C 388.215 242.859, 386.212 244, 385.816 244 C 384.771 244, 372.505 252.686, 371.016 254.480 C 369.412 256.413, 367.274 256.417, 365.348 254.491 C 364.518 253.661, 363.476 253.206, 363.033 253.480 C 362.589 253.754, 361.671 253.308, 360.991 252.489 C 360.311 251.670, 358.910 251, 357.878 251 C 356.845 251, 356 250.550, 356 250 C 356 249.450, 355.525 249, 354.944 249 C 354.363 249, 351.326 247.729, 348.194 246.175 C 345.062 244.621, 342.050 243.217, 341.500 243.055 C 340.950 242.893, 339.375 242.318, 338 241.778 C 327.899 237.809, 317.310 234.344, 316.342 234.691 C 315.705 234.919, 314.890 234.632, 314.533 234.053 C 314.175 233.474, 312.634 233, 311.108 233 C 309.582 233, 308.024 232.691, 307.646 232.313 C 307.268 231.935, 306.181 231.516, 305.230 231.382 C 304.278 231.248, 299.675 230.236, 295 229.133 C 290.325 228.031, 284.025 226.868, 281 226.548 C 277.975 226.228, 273.025 225.659, 270 225.283 C 252.363 223.091, 209.932 224.968, 197 228.513 C 196.725 228.588, 194.250 228.986, 191.500 229.397 C 188.750 229.808, 185.375 230.568, 184 231.086 C 182.625 231.603, 180.488 232.246, 179.250 232.513 C 170.497 234.407, 167.510 235.268, 166.250 236.260 C 165.563 236.802, 165 236.989, 165 236.676 C 165 236.363, 161.963 237.233, 158.250 238.609 C 154.538 239.986, 150.825 241.267, 150 241.457 C 147.263 242.086, 139.530 245.318, 137.527 246.669 C 136.443 247.401, 134.789 248, 133.852 248 C 131.586 248, 98 264.963, 98 266.107 C 98 266.598, 97.155 267, 96.122 267 C 95.090 267, 93.685 267.675, 93 268.500 C 92.315 269.325, 91.205 270, 90.533 270 C 89.860 270, 88.495 270.900, 87.500 272 C 86.505 273.100, 85.085 274, 84.345 274 C 83.605 274, 83 274.450, 83 275 C 83 275.550, 82.501 276, 81.891 276 C 79.879 276, 62 293.252, 62 295.193 C 62 295.715, 61.437 296.770, 60.750 297.537 C 60.062 298.303, 58.985 299.552, 58.355 300.311 C 56.590 302.438, 49.052 318.249, 48.729 320.500 C 48.571 321.600, 48.137 322.988, 47.765 323.584 C 47.392 324.180, 46.818 326.205, 46.488 328.084 C 46.159 329.963, 45.500 333.300, 45.022 335.500 C 42.724 346.102, 45.051 371.259, 49.057 379.112 C 50.126 381.207, 51 383.664, 51 384.572 C 51 388.475, 62.719 406.730, 69.448 413.306 C 74.672 418.413, 79.015 422, 79.973 422 C 80.538 422, 81 422.360, 81 422.801 C 81 423.640, 89.638 429.408, 90.185 428.933 C 90.358 428.783, 92.483 429.911, 94.907 431.441 C 97.330 432.971, 99.805 434.298, 100.407 434.390 C 101.008 434.481, 101.950 434.821, 102.500 435.145 C 110.803 440.033, 138.482 442.831, 152.255 440.174 C 156.691 439.318, 169.650 439.457, 176.500 440.434 C 178.150 440.670, 179.982 440.893, 180.570 440.931 C 182.470 441.053, 190.132 448.217, 191.108 450.783 C 192.858 455.388, 193.088 459.655, 193.517 495.642 C 193.752 515.364, 194.165 534.200, 194.434 537.500 C 194.703 540.800, 195.137 546.200, 195.400 549.500 C 195.662 552.800, 196.123 556.886, 196.423 558.581 C 196.723 560.276, 197.185 563.201, 197.450 565.081 C 197.714 566.961, 198.170 569.625, 198.464 571 C 198.757 572.375, 199.257 575.525, 199.576 578 C 200.060 581.763, 201.684 589.358, 203.424 596 C 203.640 596.825, 204.374 599.750, 205.054 602.500 C 205.735 605.250, 206.910 608.733, 207.666 610.240 C 208.422 611.746, 209.038 613.321, 209.035 613.740 C 209.020 615.802, 212.551 626, 213.281 626 C 213.741 626, 213.890 626.370, 213.610 626.822 C 213.331 627.274, 213.795 628.961, 214.641 630.572 C 215.487 632.182, 216.353 634.366, 216.566 635.424 C 217.569 640.418, 233.042 669.497, 240.107 679.663 C 241.698 681.953, 243 684.316, 243 684.913 C 243 685.511, 243.367 686, 243.815 686 C 244.263 686, 245.381 687.575, 246.299 689.500 C 247.217 691.425, 248.395 693, 248.916 693 C 249.438 693, 250.126 693.821, 250.444 694.824 C 250.762 695.827, 251.824 697.514, 252.803 698.574 C 253.782 699.633, 256.069 702.668, 257.886 705.318 C 259.703 707.967, 261.822 710.378, 262.595 710.675 C 263.368 710.971, 264 711.579, 264 712.025 C 264 713.441, 280.782 731.865, 289.877 740.434 C 292.834 743.220, 297.359 747.525, 299.932 750 C 306.218 756.047, 315.475 763.938, 319.874 767 C 321.850 768.375, 324.316 770.260, 325.355 771.188 C 328.588 774.077, 341.899 783, 342.977 783 C 343.539 783, 344 783.348, 344 783.773 C 344 784.198, 345.688 785.416, 347.750 786.481 C 349.813 787.545, 352.713 789.236, 354.196 790.238 C 356.992 792.127, 378.500 803.373, 378.500 802.946 C 378.500 802.813, 380.525 803.737, 383 805 C 385.475 806.263, 387.500 807.198, 387.500 807.078 C 387.500 806.958, 388.850 807.388, 390.500 808.034 C 398.667 811.233, 405.577 813.805, 406.250 813.897 C 406.663 813.954, 407.225 814.056, 407.500 814.125 C 407.775 814.194, 408.337 814.335, 408.750 814.438 C 409.163 814.542, 412.450 815.569, 416.056 816.721 C 419.661 817.872, 424.161 819.071, 426.056 819.383 C 427.950 819.696, 430.850 820.324, 432.500 820.778 C 434.150 821.232, 436.175 821.551, 437 821.486 C 437.825 821.421, 439.175 821.690, 440 822.083 C 440.825 822.477, 443.975 823.106, 447 823.482 C 479.004 827.453, 509.300 826.187, 542.500 819.491 C 543.600 819.269, 544.950 819.023, 545.500 818.945 C 546.050 818.867, 547.343 818.351, 548.374 817.800 C 549.405 817.248, 551.205 816.676, 552.374 816.528 C 558.106 815.803, 574.895 810.501, 583 806.857 C 584.375 806.238, 586.400 805.403, 587.500 805.001 C 592.414 803.203, 609.632 795.547, 610.851 794.617 C 611.594 794.051, 612.755 793.506, 613.432 793.407 C 614.108 793.308, 618 791.301, 622.081 788.947 C 626.161 786.593, 630.962 783.973, 632.750 783.125 C 634.538 782.277, 636 781.227, 636 780.792 C 636 780.356, 636.873 780, 637.941 780 C 639.009 780, 640.171 779.532, 640.525 778.959 C 640.879 778.387, 643.043 776.746, 645.334 775.312 C 647.625 773.879, 650.574 771.647, 651.886 770.353 C 654.887 767.394, 656.038 767.408, 660.531 770.456 C 662.521 771.807, 666.479 773.789, 669.325 774.860 C 672.171 775.931, 676.750 777.923, 679.500 779.288 C 682.250 780.652, 687.425 782.758, 691 783.967 C 694.575 785.176, 698.897 786.793, 700.604 787.560 C 703.908 789.045, 714.204 791.756, 720 792.666 C 721.925 792.968, 724.276 793.627, 725.224 794.129 C 726.172 794.631, 730.447 795.511, 734.724 796.083 C 739.001 796.655, 743.625 797.340, 745 797.606 C 750.749 798.715, 759.518 799.235, 776.500 799.471 C 799.268 799.789, 812.128 798.661, 831.500 794.650 C 832.600 794.422, 835.410 793.919, 837.745 793.531 C 840.079 793.143, 842.248 792.408, 842.564 791.897 C 842.880 791.386, 843.489 791.184, 843.918 791.449 C 844.582 791.860, 858.409 788.125, 863 786.296 C 863.825 785.967, 864.950 785.597, 865.500 785.474 C 867.450 785.037, 876.544 781.836, 879.500 780.546 C 882.252 779.345, 887.500 777.118, 892.500 775.029 C 900.922 771.510, 917 763.451, 917 762.749 C 917 762.272, 917.414 762.138, 917.919 762.450 C 918.425 762.763, 919.438 762.451, 920.169 761.758 C 920.901 761.065, 923.975 759.200, 927 757.612 C 932.504 754.724, 941.704 748.953, 945.440 746.046 C 949.684 742.744, 957.972 734.449, 957.985 733.491 C 957.993 732.935, 958.900 731.919, 960 731.232 C 961.100 730.545, 962 729.378, 962 728.638 C 962 727.898, 963.090 726.116, 964.422 724.678 C 968.304 720.490, 976.276 702.756, 977.539 695.500 C 979.207 685.914, 979.659 680.484, 979.480 672.167 C 979.246 661.296, 978.304 653.436, 976.926 650.863 C 976.417 649.910, 976 648.387, 976 647.478 C 976 644.894, 969.226 630.091, 965.256 624 C 955.874 609.605, 929.667 589, 920.742 589 C 920.004 589, 918.973 588.575, 918.450 588.055 C 917.928 587.536, 916.061 586.859, 914.301 586.550 C 912.542 586.242, 909.998 585.570, 908.648 585.056 C 902.810 582.837, 884.480 582.241, 872.620 583.885 C 851.766 586.777, 834.628 581.777, 832.550 572.194 C 832.229 570.712, 831.721 568.375, 831.422 567 C 830.965 564.900, 829.683 500.778, 829.913 491.500 C 830.055 485.772, 825.439 448.343, 823.873 442.529 C 823.279 440.324, 822.649 437.390, 822.472 436.010 C 822.114 433.212, 818.282 418.339, 817.317 416 C 816.977 415.175, 816.591 414.050, 816.460 413.500 C 815.768 410.596, 811.657 399.237, 810.461 396.925 C 809.701 395.456, 809.362 393.972, 809.707 393.627 C 810.051 393.282, 809.883 393, 809.333 393 C 808.783 393, 808.333 392.367, 808.333 391.594 C 808.333 390.304, 805.895 384.797, 800.765 374.500 C 793.332 359.580, 789.947 353.455, 784.817 345.646 C 781.617 340.776, 779 336.581, 779 336.323 C 779 335.758, 768.812 322.352, 766.164 319.431 C 765.132 318.294, 764.110 316.876, 763.894 316.282 C 762.158 311.520, 729.615 278.189, 714 265.182 C 709.325 261.288, 703.870 256.728, 701.878 255.051 C 699.887 253.373, 697.787 252, 697.212 252 C 696.637 252, 696.017 251.606, 695.833 251.126 C 695.430 250.069, 680.296 239.716, 675.746 237.384 C 673.961 236.469, 672.275 235.413, 672 235.036 C 671.725 234.659, 669.475 233.316, 667 232.050 C 664.525 230.785, 661.825 229.374, 661 228.914 C 655.177 225.668, 642 219.151, 642 219.517 C 642 219.764, 640.399 219.067, 638.443 217.968 C 636.486 216.869, 634.124 215.842, 633.193 215.686 C 632.262 215.530, 630.600 214.928, 629.500 214.349 C 624.814 211.881, 597.497 204.064, 587.500 202.332 C 578.874 200.836, 571.669 199.787, 567 199.347 C 559.665 198.655, 519.238 198.095, 518.656 198.677" stroke="none" fill="#6c3cf4" fill-rule="evenodd"/>
+</svg>
+```
+```justc
+
+```
+```md
+# This is a test page
+Generated using [Just an Ultimate Site Tool](https://just.is-a.dev/).
+
+Some **bold**, *italic*, ***important***, __underlined__, ~~strikethrough~~, ~sub~, ^super^, ==marked==, __***very important***__, __==***extreme important***==__, ~~***not important***~~ text.
+Some `code`; **`bold`**, *`italic`*, ***`important`***, __`underlined`__, ~~`strikethrough`~~, ~`sub`~, ^`super`^, ==`marked`==, __***`very important`***__, __==***`extreme important`***==__, ~~***`not important`***~~ code.
+
+1. List
+2. (with numbers)
+
+- List
+- (no numbers)
+
+A line:
+---
+
+\`\`\`
+Some code here
+\`\`\`
+
+# Blockquotes test
+> A blockquote.
+> > Another one!
+> > > And another blockquote!
+> > > > Many nested blockquotes.
+> > > > > This line should not be another nested blockquote. (Limit: 4 nested blockqutes)
+
+> [!NOTE] A note!
+> [!TIP] A tip!
+> [!IMPORTANT] Something important.
+> [!WARNING] A warning!
+> [!CAUTION] Another warning?
+
+> [!NOTE] `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` and `[!CAUTION]` are should be in one line. You can add \<br> tags to break the line for HTML. <br> > `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` and `[!CAUTION]` cannot have nested blockquotes.
+
+# Headers test (h1)
+## h2
+### h3
+#### h4
+##### h5
+###### h6
+> [!IMPORTANT] Only h1, h2, h3 and h4 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.
+
+# Escape test
+Not a line:
+\---
+
+\1. Not a list
+2\. (with numbers)
+
+\- Not a list
+\- (no numbers)
+
+\`\`\`
+No code here
+\`\`\`
+
+\> Not a blockquote.
+
+> \[!NOTE] A blockquote, but not a note.
+
+\https://example.com - escaped link
+`https://example.com` - disabled auto linking
+
+# Links test
+[a link](https://just.is-a.dev/ "link title")
+<https://just.is-a.dev/>
+https://just.is-a.dev
+
+---
+
+## v0.0.28 bugs:
+#### blockquote link:
+> [!WARNING] Just an Ultimate Site Tool is in **beta**. Expect regular updates, possible bugs, and changes. If you have found a bug, please [report it here](https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md).
+
+#### text styling:
+"**`_just`**"
+
+## v0.0.29 features:
+-# small text
+
+_just: prev: /docs/getting-started
+_just: next: /docs/getting-started
+
+```
+```md
+_just: title: Syntax highlighting test
+# Syntax highlighting
+\`\`\`json
+{
+    "hello": "world",
+    "number": 1234567890,
+    "array": []
+}
+\`\`\`
+\`\`\`json
+[
+    "hello", "world"
+]
+\`\`\`
+\`\`\`js
+console.log('hello world');
+console.warn(1 + 1);
+alert(false);
+const abc = true;
+for (i = 1; i <= 4; i++) {
+    // do something
+}
+\`\`\`
+\`\`\`html
+<!DOCTYPE html>
+<span class="hw" id="abc">Hello World!</span>
+\`\`\`
+\`\`\`css
+* {
+    background-color: black;
+}
+span {
+    color: white;
+}
+.hw {
+    border: 1px solid #6e3bf3;
+}
+#abc {
+    -webkit-filter: blur(8em);
+}
+div:before {
+    content: 'hello';
+}
+:root {
+    --color: #ffffff;
+    @media(max-width: 5px) {
+        --color: #000000;
+    }
+}
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px
+}
+\`\`\`
+\`\`\`sh
+#!/bin/bash
+echo "Hello World!"
+\`\`\`
+\`\`\`py
+#!/usr/bin/env python3
+import time
+out = int(time.time() * 1000)
+print(out)
+\`\`\`
+\`\`\`lua
+print("hiii")
+warn(1 + 1)
+local abc = true
+while wait(1) do
+    -- do something
+end
+\`\`\`
+\`\`\`md
+# markdown inside markdown
+\`\`\`
+\`\`\`go
+// go
+\`\`\`
+\`\`\`golang
+// golang
+\`\`\`
+\`\`\`golo
+
+\`\`\`
+\`\`\`gololang
+
+\`\`\`
+\`\`\`diff
+  text
++ added
+- removed
+\`\`\`
+```
+```md
+_just: title: Mattcone's Markdown Test
+# Markdown test
+
+This is a Markdown test for the Markdown Guide tools directory.
+
+---
+
+headings
+
+# One
+
+## Two
+
+### Three
+
+#### Four
+
+##### Five
+
+###### Six
+
+Alternate One
+=============
+
+Alternate Two
+-------------
+
+---
+
+paragraphs
+
+first paragraph
+
+second para
+
+---
+
+line breaks
+
+line one with trailing whitespace  
+line two right under
+
+line one with no trailing whitespace, just hard return
+line two right under
+
+line one with no trailing backslash \
+line two right under
+
+---
+
+bold
+
+**asterisks**
+
+__underscores__
+
+in**middle**here
+
+---
+
+italic
+
+*asterisk*
+
+_underscore_
+
+in*middle*here
+
+---
+
+bold and italic
+
+***asterisks***
+
+___underscores___
+
+__*combo*__
+
+**_second combo_**
+
+---
+
+blockquotes
+
+> single
+
+> multi
+>
+> line
+
+> nested
+>
+>> blockquotes
+
+---
+
+ordered lists
+
+1. first
+2. second
+3. third
+
+1. this
+2. is
+    1. nested
+3. now
+
+---
+
+unordered lists
+
+- dashes
+- here
+  - nested
+
+* asterisks
+* here
+
++ plus
++ signs
+
+---
+
+code
+
+`one tick mark`
+
+    <one tab>
+      <indented>
+
+---
+
+horizontal rules
+
+throughout this :)
+
+---
+
+links
+
+normal link => [cnn](https://cnn.com)
+
+brackets => <https://cnn.com>
+
+brackets => <me@somewhere.com>
+
+naked url (test auto link) => https://cnn.com
+
+---
+
+images
+
+![test image](https://www.markdownguide.org/assets/images/tools/joplin.png)
+
+---
+
+## Tables
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+
+---
+
+## Fenced code blocks
+
+\`\`\`
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+\`\`\`
+
+---
+
+## Syntax highlighting
+
+\`\`\`json
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+\`\`\`
+
+---
+
+## Footnotes
+
+Here's a simple footnote,[^1] and here's a longer one.[^bignote]
+
+[^1]: This is the first footnote.
+
+[^bignote]: Here's one with multiple paragraphs and code.
+
+    Indent paragraphs to include them in the footnote.
+
+    `{ my code }`
+
+    Add as many paragraphs as you like.
+
+---
+
+## Heading IDs
+
+### My Great Heading {#custom-id}
+
+---
+
+## Definition lists
+
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
+
+---
+
+## Strikethrough
+
+~~two tilde~~
+
+~one tilde~
+
+---
+
+## Task lists
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
+
+---
+
+## Emoji
+
+copy and paste: ☕
+shortcodes: :joy:
+
+---
+
+## Highlight
+
+==twoequals==
+
+::twohypens::
+
+---
+
+## Subscript
+
+H~2~O
+
+---
+
+## Superscript
+
+X^2^
+
+---
+
+## Abbreviation
+
+*[HTML]: Hyper Text Markup Language
+
+The HTML specification is maintained by the W3C.
+
+---
+
+## HTML
+
+<em>italic test</em>
+
+<strong>bold test</strong>
+```
+```md
+test
+
+```
+### test
+```json
+{"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
+```
