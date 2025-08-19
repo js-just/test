@@ -1,27 +1,27 @@
 ### test
 ## test
-### test
-### test
-### test
 ## test
 ## test
 ### test
+## test
 ### test
-### test
-## test
-## test
-## test
 ### test
 ## test
 ## test
 ## test
 ## test
 ### test
-## test
+### test
 ### test
 ## test
 ## test
 ### test
+## test
+## test
+## test
+### test
+## test
+## test
 ## test
 ## test
 ```js
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -2020,7 +2020,7 @@ input[type="checkbox"] {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3869,7 +3869,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -3999,7 +3999,7 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
-### test
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -4007,23 +4007,54 @@ _just: title: Advanced usage
 ### Markdown files
 You can specify the page title by adding `_just: title: ...` in the first line of the Markdown file.
 -# Example:
-\`\`\`
+\`\`\`md
 _just: title: This is text will be page title
 \`\`\`
 
 You can also specify the previous and next pages:
-\`\`\`
+\`\`\`md
 _just: prev: /path/to/previous/page
 _just: next: /path/to/next/page
 \`\`\`
-> The path to the page should start with a slash (/). <br>This path is a relative path from the root directory of your website, which you’ve specified in the workflow file. <br>The path to the page should not end with a file extension name (e.g., `.md`).
+> The path to the page should start with a slash (/). <br>This path is a relative path from the root directory of your website, which you’ve specified in the workflow file. <br>The path to the page should not end with a file extension name (e.g., `.md` ).
 This will add buttons to the end of the page.
 Just an Ultimate Site Tool will automatically get the title of the previous and/or next pages and insert it into the generated button output.
 The output should look like this:
 ![Output](/img/generator-adv-prevnext.png)
 
 ### The `just.config.js` file
+You can change search key: (slash (/) by default)
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    searchKey: '/'
+  }
+}
+\`\`\`
 
+You can allow web archive: (disallowed ( `true` ) by default)
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  noWebarchive: false
+}
+\`\`\`
+
+You can insert custom HTML code in `<head>`:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    insertInHTMLHead: '<!--   Your HTML code here   /-->'
+  }
+}
+\`\`\`
 
 _just: prev: /docs/generator/syntax
 _just: next: /docs/generator/troubleshooting
@@ -4097,6 +4128,8 @@ _just: next: /docs/generator/advanced-usage
 ```md
 _just: title: Troubleshooting
 # Troubleshooting
+
+> [!WARNING] This page is under construction
 
 _just: prev: /docs/generator/advanced-usage
 ```
@@ -4259,7 +4292,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -4403,7 +4436,7 @@ jobs:
 \`\`\`
 
 After generating the documentation, this mode uses the [Compressor mode](/docs/modes/compressor) to compress the generated website.
-Use Markdown (`.md`) files for documentation. You can also use HTML/CSS/JavaScript for custom pages, but remember that they will be compressed using the [Compressor mode](/docs/modes/compressor)!
+Use Markdown ( `.md` ) files for documentation. You can also use HTML/CSS/JavaScript for custom pages, but remember that they will be compressed using the [Compressor mode](/docs/modes/compressor)!
 
 ## How it works?
 It processes every Markdown file and generates HTML page for each of them.
