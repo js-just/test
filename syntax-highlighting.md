@@ -1,29 +1,29 @@
-## test
 ### test
 ## test
-## test
-### test
-### test
-### test
 ### test
 ### test
 ### test
 ## test
 ## test
-## test
-## test
+### test
 ### test
 ### test
 ## test
 ## test
 ## test
 ### test
-### test
+## test
+## test
+## test
 ## test
 ### test
 ## test
 ### test
+## test
+## test
 ### test
+## test
+## test
 ```js
 /*
 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -2020,7 +2020,7 @@ input[type="checkbox"] {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3251,7 +3251,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -3941,7 +3941,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
+## test
 ## test
 ```css
 * {
@@ -3999,8 +3999,8 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
-## test
-## test
+### test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -4021,6 +4021,9 @@ This will add buttons to the end of the page.
 Just an Ultimate Site Tool will automatically get the title of the previous and/or next pages and insert it into the generated button output.
 The output should look like this:
 ![Output](/img/generator-adv-prevnext.png)
+
+### The `just.config.js` file
+
 
 _just: prev: /docs/generator/syntax
 _just: next: /docs/generator/troubleshooting
@@ -4106,7 +4109,7 @@ This documentation assumes some familiarity with
 - GitHub Actions
 - GitHub Pages
 And some familiarity with these languages
-- JavaScript
+- JavaScript and JSON
 - YAML
 - HTML
 - CSS
@@ -4197,7 +4200,7 @@ Using `Generator` mode:
 module.exports = {
     type: "docs",
     docs_config: {
-        metatitle: "Documentation title", // Required. Replace with your documentation title.
+        title: "Documentation title", // Required. Replace with your documentation title.
         domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
     }
 }
@@ -4256,7 +4259,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -4344,11 +4347,11 @@ This mode requires the `just.config.js` file and the workflow file.
 -# `just.config.js`
 \`\`\`js
 module.exports = {
-    type: "docs",
-    docs_config: {
-        metatitle: "Documentation title", // Required. Replace with your documentation title.
-        domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
-    }
+  type: "docs",
+  docs_config: {
+    title: "Documentation title", // Required. Replace with your documentation title.
+    domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
+  }
 }
 \`\`\`
 
@@ -4405,6 +4408,144 @@ Use Markdown (`.md`) files for documentation. You can also use HTML/CSS/JavaScri
 ## How it works?
 It processes every Markdown file and generates HTML page for each of them.
 
+## Customizing your documentation website
+You can customize your documentation website with the `just.config.js` file.
+
+You can make the HTML title tag and `<meta property="og:title">` differ from `title` by adding the `metatitle`:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    metatitle: 'This text will be inserted in HTML <title> and <meta property="og:title"> tags'
+  }
+}
+\`\`\`
+You can also make the `<meta property="og:title">` differ from `metatitle` by adding the `og` and `og.title`:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    og: {
+      title: 'This text will be inserted in HTML <meta property="og:title"> tag'
+    }
+  }
+}
+\`\`\`
+
+You can add a description to your documentation website:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    description: 'This text will be inserted in HTML <meta name="description"> and <meta name="og:description"> tags'
+  }
+}
+\`\`\`
+You can make the `<meta name="og:description">` differ from `description` by adding the `og` and `og.description`:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    og: {
+      // ...
+      description: 'This text will be inserted in HTML <meta name="og:description"> tag'
+    }
+  }
+}
+\`\`\`
+
+You can add `<meta name="keywords">` HTML tag by adding the `keywords`:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    keywords: 'Your,website,keywords,here'
+  }
+}
+\`\`\`
+
+You can add footer text by adding the `footer`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    footer: 'This text will be footer text'
+  }
+}
+\`\`\`
+
+You can change the `<meta property="twitter:card">` by adding the `twitter` and the `twitter.card` in `docs_config`. `summary_large_image` by default.
+
+You can add buttons and links to header/navbar:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    links: [
+      ["a link", "https://example.com/", "_blank"] // [ " link title " , " URL " , " HTML <a> target " ]
+    ],
+    buttons: [
+      ["a button", "https://example.com/", "_blank"] // [ " button title " , " URL " , " HTML <a> target " ]
+    ]
+  }
+}
+\`\`\`
+
+### Icon
+To add an icon to your documentation pages, you can insert your custom HTML in `<head>` by adding the `insertInHTMLHead`:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    insertInHTMLHead: '<!--   Your HTML code here   /-->'
+  }
+}
+\`\`\`
+To add an icon to header/navbar in generated documentation pages, you can specify image URL by adding the `logo`:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    logo: 'http://example.com/logo.png'
+  }
+}
+\`\`\`
+
+### Third-party services
+Currently, Just an Ultimate Site Tool supports only adding these third-party services:
+- Google Analytics
+- Google Site Verification
+- Yandex Site Verification
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    google: 'google site verification',
+    googleAnalytics: 'google analytics', // example: 'G-..........'
+    yandex: 'yandex site verification'
+  }
+}
+\`\`\`
+
 _just: prev: /docs/getting-started
 _just: next: /docs/generator/syntax
 ```
@@ -4427,7 +4568,7 @@ Required directories are:
 -# `just.config.js`
 \`\`\`js
 module.exports = {
-    type: "postprocessor"
+  type: "postprocessor"
 }
 \`\`\`
 -# `.github/workflows/WORKFLOW_NAME.yml`
@@ -4543,6 +4684,10 @@ You can try fixing them by switching the postprocessor version in your workflow 
 \`\`\`
 Available postprocessor versions are: `"24"`, `"26"` (default), `"32"`.
 
+---
+
+-# You can support Just an Ultimate Site Tool by setting the `watermark` to `true` in the `module.exports` of the `just.config.js` file. This will add two comments about the Just an Ultimate Site Tool to every HTML file. Thank you.
+
 _just: prev: /docs/getting-started
 ```
 ```md
@@ -4556,10 +4701,10 @@ This mode requires only the `just.config.js` file, (except for the workflow file
 `just.config.js`
 \`\`\`js
 module.exports = {
-    type: "redirect", 
-    redirect_config: {
-        url: "https://example.com/" // Required. Replace with destination URL.
-    }
+  type: "redirect", 
+  redirect_config: {
+    url: "https://example.com/" // Required. Replace with destination URL.
+  }
 }
 \`\`\`
 > [!TIP] Do not use this mode if you can make server-side `HTTP 3XX` redirects.
@@ -4567,38 +4712,38 @@ module.exports = {
 You can add `params{}`:
 \`\`\`js
 module.exports = {
-    type: "redirect", 
-    redirect_config: {
-        url: "https://example.com/", // Required. Replace with destination URL.
-        params: { // Optional.
-            title: "redirect website title here", // Optional. Replace with any title you want. Recommended.
-            description: "redirect website description here", // Optional. Replace with any description you want.
-            keywords: "some, keywords, here", // Optional. Replace with any keywords you want. Separate keywords by commas.
-            htmlLang: "en", // Optional. <html lang="${htmlLang}">
-            robots: "index", // Optional. <meta name="robots" content="${robots}">
-            charset: "utf-8", // Optional. "utf-8" by default. <meta charset="${charset}"> and file charset.
-            viewport: "width=device-width, initial-scale=1.0", // Optional. "width=device-width, initial-scale=1.0" by default. <meta name="viewport" content="${viewport}">
-            yandex: "", // Optional. Put your Yandex verification string here. <meta name="yandex-verification" content="${yandex}">
-            google: "", // Optional. Put your Google verification string here. <meta name="google-site-verification" content="${google}">
-            googleAnalytics: "" // Optional. Put your Google Analytics ID here.
-        }
+  type: "redirect", 
+  redirect_config: {
+    url: "https://example.com/", // Required. Replace with destination URL.
+    params: { // Optional.
+      title: "redirect website title here", // Optional. Replace with any title you want. Recommended.
+      description: "redirect website description here", // Optional. Replace with any description you want.
+      keywords: "some, keywords, here", // Optional. Replace with any keywords you want. Separate keywords by commas.
+      htmlLang: "en", // Optional. <html lang="${htmlLang}">
+      robots: "index", // Optional. <meta name="robots" content="${robots}">
+      charset: "utf-8", // Optional. "utf-8" by default. <meta charset="${charset}"> and file charset.
+      viewport: "width=device-width, initial-scale=1.0", // Optional. "width=device-width, initial-scale=1.0" by default. <meta name="viewport" content="${viewport}">
+      yandex: "", // Optional. Put your Yandex verification string here. <meta name="yandex-verification" content="${yandex}">
+      google: "", // Optional. Put your Google verification string here. <meta name="google-site-verification" content="${google}">
+      googleAnalytics: "" // Optional. Put your Google Analytics ID here.
     }
+  }
 }
 \`\`\`
 You can also add `content{}` in `params{}` if you want to modify HTML content.
 \`\`\`js
 module.exports = {
-    type: "redirect", 
-    redirect_config: {
-        url: "https://example.com/", // Required. Replace with destination URL.
-        params: { // Optional.
-            content: { // Optional.
-                text1: "Redirecting...", // Optional. "Redirecting...<br>" + generated content ("<small>to <a ...>...</a></small>") by default.
-                text2: "Didn’t get redirected?", // Optional. "Didn’t get redirected?" by default.
-                text3: "Click here!" // Optional. "Click here!" by default. <a ...>${text3}</a>
-            }
-        }
+  type: "redirect", 
+  redirect_config: {
+    url: "https://example.com/", // Required. Replace with destination URL.
+    params: { // Optional.
+      content: { // Optional.
+        text1: "Redirecting...", // Optional. "Redirecting...<br>" + generated content ("<small>to <a ...>...</a></small>") by default.
+        text2: "Didn’t get redirected?", // Optional. "Didn’t get redirected?" by default.
+        text3: "Click here!" // Optional. "Click here!" by default. <a ...>${text3}</a>
+      }
     }
+  }
 }
 \`\`\`
 > [!NOTE] `\\n` and tabs/4 spaces will be removed. Use `<br>` instead of `\\n`.
@@ -4653,28 +4798,28 @@ jobs:
 You may add `paths[]` in `redirect_config{}` to create custom redirect paths.
 \`\`\`js
 module.exports = {
-    type: "redirect", 
-    redirect_config: {
-        url: "https://example.com/", // Required. Replace with destination URL.
-        paths: [ // Optional
-            {
-                path_: "example", // Required. Replace with path.
-                url: "https://example.com/", // Required. Replace with path destination URL.
-                params: { // Optional.
-                    title: "redirect website title here", // Optional. Replace with any title you want. Recommended.
-                    description: "redirect website description here", // Optional. Replace with any description you want.
-                    keywords: "some, keywords, here", // Optional. Replace with any keywords you want. Separate keywords by commas.
-                    htmlLang: "en", // Optional. <html lang="${htmlLang}">
-                    robots: "index", // Optional. <meta name="robots" content="${robots}">
-                    charset: "utf-8", // Optional. "utf-8" by default. <meta charset="${charset}"> and file charset.
-                    viewport: "width=device-width, initial-scale=1.0", // Optional. "width=device-width, initial-scale=1.0" by default. <meta name="viewport" content="${viewport}">
-                    yandex: "", // Optional. Put your Yandex verification string here. <meta name="yandex-verification" content="${yandex}">
-                    google: "", // Optional. Put your Google verification string here. <meta name="google-site-verification" content="${google}">
-                    googleAnalytics: "" // Optional. Put your Google Analytics ID here.
-                }
-            }
-        ]
-    }
+  type: "redirect", 
+  redirect_config: {
+    url: "https://example.com/", // Required. Replace with destination URL.
+    paths: [ // Optional
+      {
+        path_: "example", // Required. Replace with path.
+        url: "https://example.com/", // Required. Replace with path destination URL.
+        params: { // Optional.
+          title: "redirect website title here", // Optional. Replace with any title you want. Recommended.
+          description: "redirect website description here", // Optional. Replace with any description you want.
+          keywords: "some, keywords, here", // Optional. Replace with any keywords you want. Separate keywords by commas.
+          htmlLang: "en", // Optional. <html lang="${htmlLang}">
+          robots: "index", // Optional. <meta name="robots" content="${robots}">
+          charset: "utf-8", // Optional. "utf-8" by default. <meta charset="${charset}"> and file charset.
+          viewport: "width=device-width, initial-scale=1.0", // Optional. "width=device-width, initial-scale=1.0" by default. <meta name="viewport" content="${viewport}">
+          yandex: "", // Optional. Put your Yandex verification string here. <meta name="yandex-verification" content="${yandex}">
+          google: "", // Optional. Put your Google verification string here. <meta name="google-site-verification" content="${google}">
+          googleAnalytics: "" // Optional. Put your Google Analytics ID here.
+        }
+      }
+    ]
+  }
 }
 \`\`\`
 
@@ -4695,165 +4840,165 @@ This mode generates client-side redirects that only support browsers!
 ## `module.exports` JSON Schema
 \`\`\`json
 {
-    "$id": "https://just.is-a.dev/schema/r.json",
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "description": "_just just.config.js module.exports Redirector mode",
-    "type": "object",
-    "properties": {
-        "type": {
-            "type": "string"
+  "$id": "https://just.is-a.dev/schema/r.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "_just just.config.js module.exports Redirector mode",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "redirect_config": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
         },
-        "redirect_config": {
-            "type": "object",
-            "properties": {
+        "params": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "keywords": {
+              "type": "string"
+            },
+            "htmlLang": {
+              "type": "string"
+            },
+            "robots": {
+              "type": "string"
+            },
+            "charset": {
+              "type": "string"
+            },
+            "viewport": {
+              "type": "string"
+            },
+            "yandex": {
+              "type": "string"
+            },
+            "google": {
+              "type": "string"
+            },
+            "googleAnalytics": {
+              "type": "string"
+            },
+            "content": {
+              "type": "object",
+              "properties": {
+                "text1": {
+                  "type": "string"
+                },
+                "text2": {
+                  "type": "string"
+                },
+                "text3": {
+                  "type": "string"
+                }
+              },
+              "required": []
+            },
+            "og": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": []
+            },
+            "twitter": {
+              "type": "object",
+              "properties": {
+                "card": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "card"
+              ]
+            }
+          },
+          "required": []
+        },
+        "paths": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "path_": {
+                  "type": "string"
+                },
                 "url": {
-                    "type": "string"
+                  "type": "string"
                 },
                 "params": {
-                    "type": "object",
-                    "properties": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "keywords": {
+                      "type": "string"
+                    },
+                    "htmlLang": {
+                      "type": "string"
+                    },
+                    "og": {
+                      "type": "object",
+                      "properties": {
                         "title": {
-                            "type": "string"
+                          "type": "string"
                         },
                         "description": {
-                            "type": "string"
-                        },
-                        "keywords": {
-                            "type": "string"
-                        },
-                        "htmlLang": {
-                            "type": "string"
-                        },
-                        "robots": {
-                            "type": "string"
-                        },
-                        "charset": {
-                            "type": "string"
-                        },
-                        "viewport": {
-                            "type": "string"
-                        },
-                        "yandex": {
-                            "type": "string"
-                        },
-                        "google": {
-                            "type": "string"
-                        },
-                        "googleAnalytics": {
-                            "type": "string"
-                        },
-                        "content": {
-                            "type": "object",
-                            "properties": {
-                                "text1": {
-                                    "type": "string"
-                                },
-                                "text2": {
-                                    "type": "string"
-                                },
-                                "text3": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": []
-                        },
-                        "og": {
-                            "type": "object",
-                            "properties": {
-                                "title": {
-                                    "type": "string"
-                                },
-                                "description": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": []
-                        },
-                        "twitter": {
-                            "type": "object",
-                            "properties": {
-                                "card": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "card"
-                            ]
+                          "type": "string"
                         }
+                      },
+                      "required": []
                     },
-                    "required": []
-                },
-                "paths": {
-                    "type": "array",
-                    "items": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "path_": {
-                                    "type": "string"
-                                },
-                                "url": {
-                                    "type": "string"
-                                },
-                                "params": {
-                                    "type": "object",
-                                    "properties": {
-                                        "title": {
-                                            "type": "string"
-                                        },
-                                        "description": {
-                                            "type": "string"
-                                        },
-                                        "keywords": {
-                                            "type": "string"
-                                        },
-                                        "htmlLang": {
-                                            "type": "string"
-                                        },
-                                        "og": {
-                                            "type": "object",
-                                            "properties": {
-                                                "title": {
-                                                    "type": "string"
-                                                },
-                                                "description": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "required": []
-                                        },
-                                        "twitter": {
-                                            "type": "object",
-                                            "properties": {
-                                                "card": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "required": [
-                                                "card"
-                                            ]
-                                        }
-                                    },
-                                    "required": []
-                                }
-                            },
-                            "required": [
-                                "path_",
-                                "url"
-                            ]
+                    "twitter": {
+                      "type": "object",
+                      "properties": {
+                        "card": {
+                          "type": "string"
                         }
-                    ]
+                      },
+                      "required": [
+                        "card"
+                      ]
+                    }
+                  },
+                  "required": []
                 }
-            },
-            "required": [
-                "url"
-            ]
+              },
+              "required": [
+                  "path_",
+                  "url"
+              ]
+            }
+          ]
         }
-    },
-    "required": [
-        "type",
-        "redirect_config"
-    ]
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "redirect_config"
+  ]
 }
 \`\`\`
 
