@@ -1,27 +1,27 @@
-## test
-## test
-## test
-### test
-## test
-### test
-### test
-## test
-## test
-## test
 ### test
 ### test
 ## test
 ## test
 ### test
+### test
+### test
 ## test
 ## test
+## test
+## test
+## test
+## test
+## test
+### test
+### test
+### test
+### test
 ### test
 ### test
 ## test
 ## test
 ### test
-## test
-## test
+### test
 ### test
 ## test
 ```js
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -3251,7 +3251,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -3942,7 +3942,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ## test
-### test
+## test
 ```css
 * {
     margin: 0;
@@ -4004,6 +4004,19 @@ h4 {
 ```md
 _just: title: Advanced usage
 # Advanced usage
+### Markdown files
+You can specify the page title by adding `_just: title: ...` in the first line of the Markdown file.
+-# Example:
+\`\`\`
+_just: title: This is text will be page title
+\`\`\`
+
+You can also specify the previous and next pages:
+\`\`\`
+_just: prev: /path/to/previous/page
+_just: next: /path/to/next/page
+\`\`\`
+> The path to the page should start with a slash (/). <br>This path is a relative path from the root directory of your website, which you’ve specified in the workflow file. <br>The path to the page should not end with a file extension name (e.g., `.md`).
 
 _just: prev: /docs/generator/syntax
 _just: next: /docs/generator/troubleshooting
@@ -4012,38 +4025,38 @@ _just: next: /docs/generator/troubleshooting
 _just: title: Supported markdown syntax
 # Markdown support
 ### Supported elements
-- Headings (Alternate headings aren’t supported.)
-- Line Breaks
-- Bold (Use asterisks. Underscores aren’t supported.)
-- Italic
-- Blockquotes
-- Ordered Lists (Nested lists aren’t supported.)
-- Unordered Lists (Nested lists aren’t supported.)
-- Code (To escape backticks (\`) use backslash (\\))
-- Horizontal Rules
-- Links
-- Images
-- Fenced Code Blocks (Use triple backticks (\`\`\`). Spaces/Tabs aren’t supported.)
-- Syntax Highlighting
-- Heading IDs (Automatically generated.)
-- Strikethrough
-- Task Lists
-- Emoji (copy and paste)
-- Highlight
-- Subscript
-- Superscript
-- Automatic URL Linking
-- Disabling Automatic URL Linking (You can also use backslash (\\) before protocol to disable Automatic URL Linking)
-- HTML
+- [Headings](https://www.markdownguide.org/basic-syntax/#headings) (Alternate headings aren’t supported.)
+- [Line Breaks](https://www.markdownguide.org/basic-syntax/#line-breaks)
+- [Bold](https://www.markdownguide.org/basic-syntax/#bold) (Use asterisks. Underscores aren’t supported.)
+- [Italic](https://www.markdownguide.org/basic-syntax/#italic)
+- [Blockquotes](https://www.markdownguide.org/basic-syntax/#blockquotes-1)
+- [Ordered Lists](https://www.markdownguide.org/basic-syntax/#ordered-lists) (Nested lists aren’t supported.)
+- [Unordered Lists](https://www.markdownguide.org/basic-syntax/#unordered-lists) (Nested lists aren’t supported.)
+- [Code](https://www.markdownguide.org/basic-syntax/#code) (To escape backticks (\`) use backslash (\\))
+- [Horizontal Rules](https://www.markdownguide.org/basic-syntax/#horizontal-rules)
+- [Links](https://www.markdownguide.org/basic-syntax/#links)
+- [Images](https://www.markdownguide.org/basic-syntax/#images-1)
+- [Fenced Code Blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) (Use triple backticks (\`\`\`). Spaces/Tabs aren’t supported.)
+- [Syntax Highlighting](https://www.markdownguide.org/extended-syntax/#syntax-highlighting)
+- [Heading IDs](https://www.markdownguide.org/extended-syntax/#heading-ids) (Automatically generated.)
+- [Strikethrough](https://www.markdownguide.org/extended-syntax/#strikethrough)
+- [Task Lists](https://www.markdownguide.org/extended-syntax/#task-lists)
+- [Emoji (copy and paste)](https://www.markdownguide.org/extended-syntax/#copying-and-pasting-emoji)
+- [Highlight](https://www.markdownguide.org/extended-syntax/#highlight)
+- [Subscript](https://www.markdownguide.org/extended-syntax/#subscript)
+- [Superscript](https://www.markdownguide.org/extended-syntax/#superscript)
+- [Automatic URL Linking](https://www.markdownguide.org/extended-syntax/#automatic-url-linking)
+- [Disabling Automatic URL Linking](https://www.markdownguide.org/extended-syntax/#disabling-automatic-url-linking) (You can also use backslash (\\) before protocol to disable Automatic URL Linking)
+- [HTML](https://www.markdownguide.org/basic-syntax/#html)
 
 ### Not supported elements
-- Paragraphs
-- Footnotes
-- Definition Lists
+- [Paragraphs](https://www.markdownguide.org/basic-syntax/#paragraphs-1)
+- [Footnotes](https://www.markdownguide.org/extended-syntax/#footnotes)
+- [Definition Lists](https://www.markdownguide.org/extended-syntax/#definition-lists)
 - Abbreviation
 
 ### Planned
-- Emoji (shortcodes)
+- [Emoji (shortcodes)](https://www.markdownguide.org/extended-syntax/#using-emoji-shortcodes)
 
 ## Support for Additional Syntax Elements
 - Note, tip, important, warning, caution blockquotes:
@@ -4066,6 +4079,10 @@ __This text will be underlined.__
 \`\`\`md
 -# This line will be made smaller and greyed out.
 \`\`\`
+
+## Escaping
+To escape any element or character, use a backslash (\\).
+To insert a backslash in your text, use two backslashes (\\\\).
 
 _just: prev: /docs/modes/generator
 _just: next: /docs/generator/advanced-usage
@@ -4933,6 +4950,20 @@ Some code here
 
 > [!NOTE] `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` and `[!CAUTION]` are should be in one line. You can add \<br> tags to break the line for HTML. <br> > `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` and `[!CAUTION]` cannot have nested blockquotes.
 
+> Multi <br>Line <br>(\<br>)
+
+> Multi
+> 
+> Line
+>
+> (\\n + > + space + \\n)
+
+> Multi
+>
+> Line
+>
+> (\\n + > + \\n)
+
 # Headers test (h1)
 ## h2
 ### h3
@@ -5361,7 +5392,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
