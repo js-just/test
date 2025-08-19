@@ -1,28 +1,28 @@
 ### test
 ## test
 ### test
-## test
 ### test
 ## test
 ### test
-## test
-## test
-## test
 ### test
-## test
-## test
 ## test
 ### test
 ## test
 ### test
 ## test
 ## test
+### test
+### test
+## test
+### test
 ## test
 ## test
 ## test
 ## test
 ### test
-## test
+### test
+### test
+### test
 ## test
 ```js
 /*
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3110,7 +3110,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3251,7 +3251,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4000,7 +4000,7 @@ h4 {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -4092,6 +4092,7 @@ _just: title: Supported markdown syntax
 - [Footnotes](https://www.markdownguide.org/extended-syntax/#footnotes)
 - [Definition Lists](https://www.markdownguide.org/extended-syntax/#definition-lists)
 - Abbreviation
+- [Tables](https://www.markdownguide.org/extended-syntax/#tables)
 
 ### Planned
 - [Emoji (shortcodes)](https://www.markdownguide.org/extended-syntax/#using-emoji-shortcodes)
@@ -5063,7 +5064,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-## test
+### test
 ```png
 �PNG
 
