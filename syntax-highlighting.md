@@ -1,15 +1,10 @@
-### test
-## test
-### test
-### test
-## test
-## test
 ## test
 ### test
 ### test
 ### test
-## test
 ### test
+## test
+## test
 ### test
 ## test
 ## test
@@ -21,8 +16,13 @@
 ### test
 ### test
 ### test
+### test
+### test
+## test
+### test
 ## test
 ## test
+### test
 ### test
 ```js
 /*
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -1887,6 +1887,7 @@ main nav li ul li:has(strong) {
         border-radius: 50px;
         opacity: 0.5;
         margin-bottom: calc(0px - var(--liheight));
+        transition: 300ms;
     }
 }
 
@@ -2415,21 +2416,25 @@ const updateNavRight = () => {
 };
 let lhc = 0;
 wndw_.addEventListener('scroll', () => {
-    let headerIndex_=false;
+    let headerIndex_ = false;
     checkElement([dcmnt.querySelector(".navbar")]);
-    if (dcmnt.body.scrollTop > 150 || dcmnt.documentElement.scrollTop > 150) {
+
+    const scrollPosition = wndw_.scrollY || dcmnt.documentElement.scrollTop;
+
+    if (scrollPosition > 150) {
         dcmnt.querySelector(".navbar").classList.add("scroll");
     } else {
         headerIndex_ = true;
         dcmnt.querySelector(".navbar").classList.remove("scroll");
     };
 
-    localStorage.setItem('s' + page_, convertbase(dcmnt.documentElement.scrollTop.toString(10),10,64));
+    localStorage.setItem('s' + page_, convertbase(scrollPosition.toString(10), 10, 64));
 
     const elements = dcmnt.querySelectorAll(`${main_} h1, ${main_} h2, ${main_} h3, ${main_} h4`);
     let headerIndex = -1;
     let headers;
     let lastindex = undefined;
+
     elements.forEach((element, index_) => {
         const rect = element.getBoundingClientRect();
         const isInView = (rect.top + rect.height / 2) <= (wndw_.innerHeight / 2);
@@ -2460,7 +2465,11 @@ wndw_.addEventListener('scroll', () => {
     const nr = 'REPLACE_NR';
     const _hc = 'REPLACE_CHC';
     dcmnt.body.style.setProperty('--hc', hc_);
-    try{dcmnt.getElementById(`${nr}${lhc}`).classList.remove(_hc);dcmnt.getElementById(`${nr}${hc_}`).classList.add(_hc);lhc = hc_;}catch(__e){};
+    try {
+        dcmnt.getElementById(`${nr}${lhc}`).classList.remove(_hc);
+        dcmnt.getElementById(`${nr}${hc_}`).classList.add(_hc);
+        lhc = hc_;
+    } catch (__e) {}
     updateNavRight();
 });
 
@@ -2830,14 +2839,16 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const container = document.querySelector('.left');
-    if (container) {
-        const listItems = container.querySelectorAll('li');
-        listItems.forEach(li => {
-            const height = li.offsetHeight;
-            li.style.setProperty('REPLACE_NLCSSHV', `${height - 10}px`);
-        });
-    }
+    setTimeout(()=>{
+        const container = document.querySelector('.left');
+        if (container) {
+            const listItems = container.querySelectorAll('li');
+            listItems.forEach(li => {
+                const height = li.offsetHeight;
+                li.style.setProperty('REPLACE_NLCSSHV', `${height - 10}px`);
+            });
+        }
+    },100);
 
     updateSD(false);updateMinHeight();updateWidth();fetch(searchurl);updateNavRight();
 });
@@ -3123,7 +3134,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3264,7 +3275,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4012,8 +4023,8 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
-### test
-### test
+## test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5077,7 +5088,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-### test
+## test
 ```png
 �PNG
 
