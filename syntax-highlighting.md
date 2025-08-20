@@ -1,29 +1,29 @@
 ### test
-### test
-## test
-### test
-## test
-## test
-### test
-### test
 ## test
 ### test
 ### test
 ## test
 ## test
 ## test
+### test
+### test
+### test
 ## test
+### test
+### test
+## test
+## test
+## test
+## test
+### test
+## test
+### test
+### test
 ### test
 ### test
 ## test
 ## test
 ### test
-## test
-### test
-## test
-### test
-## test
-## test
 ```js
 /*
 
@@ -2025,7 +2025,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2430,19 +2430,19 @@ wndw_.addEventListener('scroll', () => {
     let headerIndex = -1;
     let headers;
     let lastindex = undefined;
-    elements.forEach((element, index) => {
+    elements.forEach((element, index_) => {
         const rect = element.getBoundingClientRect();
         const isInView = (rect.top + rect.height / 2) <= (wndw_.innerHeight / 2);
 
         if (lastindex === undefined) {
-            lastindex = index;
-        } else if (index > lastindex) {
-            lastindex = index;
-            headers = index;
+            lastindex = index_;
+        } else if (index_ > lastindex) {
+            lastindex = index_;
+            headers = index_;
         }
 
         if (isInView) {
-            headerIndex = index;
+            headerIndex = index_;
         }
     });
 
@@ -3123,7 +3123,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3264,7 +3264,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -3882,7 +3882,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -3955,7 +3955,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ## test
-### test
+## test
 ```css
 * {
     margin: 0;
@@ -4013,7 +4013,7 @@ h4 {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
