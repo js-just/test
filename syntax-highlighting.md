@@ -1,27 +1,27 @@
 ### test
-### test
 ## test
-## test
-## test
-## test
-### test
-### test
-### test
-### test
-## test
-### test
 ## test
 ## test
 ### test
 ## test
 ### test
+### test
 ## test
 ## test
+### test
+### test
+### test
 ### test
 ## test
 ### test
 ## test
+## test
 ### test
+## test
+## test
+## test
+### test
+## test
 ### test
 ## test
 ```js
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -2038,7 +2038,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2868,8 +2868,8 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseover', (event) => {
         const target_ = event.target;
         
-        if (target_.closest('code.code')) {
-            const codeEl = target_.closest('code.code');
+        const codeEl = target_.closest('code.code');
+        if (codeEl) {
             codeEl.style.setProperty('--codewidth', codeEl.offsetWidth + 'px');
             codeEl.style.setProperty('--codeheight', codeEl.offsetHeight + 'px');
 
@@ -2887,7 +2887,11 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                     div.style.opacity = '1';
                 });
             } else {
-                clearTimeout(removeTimeouts.get(div));
+                const timeoutId = removeTimeouts.get(div);
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                    removeTimeouts.delete(div);
+                }
                 div.style.opacity = '1';
             }
         }
@@ -4385,7 +4389,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -5156,7 +5160,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -5737,7 +5741,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
