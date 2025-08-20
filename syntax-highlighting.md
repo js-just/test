@@ -1,17 +1,12 @@
-## test
-## test
 ### test
 ### test
 ## test
-## test
-## test
-### test
-### test
 ### test
 ## test
 ## test
 ### test
 ### test
+## test
 ### test
 ### test
 ## test
@@ -20,10 +15,15 @@
 ## test
 ### test
 ### test
-### test
+## test
+## test
 ### test
 ## test
 ### test
+## test
+### test
+## test
+## test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -1907,6 +1907,10 @@ input[type="checkbox"] {
     height: 13px;
 }
 
+main nav.left li {
+    overflow-y: hidden;
+}
+
 ```
 ```css
 #search {
@@ -2514,12 +2518,7 @@ const autotheme = () => {
                     dcmnt.documentElement.classList.remove('l');
                 }
             break;
-            case 'light':
-                if (checkTheme() == 'a') {
-                    dcmnt.documentElement.classList.add('l');
-                }
-            break;
-            default:
+            case 'light': default:
                 if (checkTheme() == 'a') {
                     dcmnt.documentElement.classList.add('l');
                 }
@@ -2814,7 +2813,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                 setTimeout(()=>{updateSD(st)},301);
                 for (const [id, data_] of Object.entries(searchdata)) {
                     sd.innerHTML += SETTINGS.searchV2 ? 
-                        `<a href="${data_[0]}" target="_self"><strong>${('REPLACE_DATAARRAY'.find(item => item[0] === data_[0]) || [])[1] || data_[0]}</strong><span>${data_[1].replaceAll('\n',' ').replaceAll(' - ','')}</span></a>` : 
+                        `<a href="${data_[0]}" target="_self"><strong>${('REPLACE_DATAARRAY'.find(item => item[0] === data_[0]) || [])[1] || data_[0]}</strong><span>${data_[1].replaceAll('\n',' ').replaceAll(' - ','').replaceAll('<br>',' ')}</span></a>` : 
                         `<a href="${data_[0]}" target="_self">${data_[1].replaceAll('\n',' ').replaceAll(' - ','')}</a>`;
                 }
             }
@@ -2906,7 +2905,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
     display: none;
 }
 
-.search span {
+.search span, .search strong {
     color: #f0f0f0 !important;
 }
 
@@ -3124,7 +3123,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3883,7 +3882,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -3955,7 +3954,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
+## test
 ### test
 ```css
 * {
@@ -4013,7 +4012,7 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
-## test
+### test
 ## test
 ```md
 _just: title: Advanced usage
@@ -5078,7 +5077,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -5620,7 +5619,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
