@@ -1,28 +1,28 @@
-## test
-### test
-### test
 ### test
 ### test
 ## test
-## test
-### test
-## test
-## test
-## test
-## test
-### test
-## test
 ### test
 ### test
-### test
-### test
+## test
+## test
 ### test
 ### test
 ## test
 ### test
 ## test
+### test
 ## test
 ### test
+### test
+### test
+### test
+### test
+### test
+## test
+## test
+### test
+## test
+## test
 ### test
 ```js
 /*
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -2844,8 +2844,8 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
         if (container) {
             const listItems = container.querySelectorAll('li');
             listItems.forEach(li => {
-                const height = li.offsetHeight;
-                li.style.setProperty('REPLACE_NLCSSHV', `${height - 10}px`);
+                const height_ = li.offsetHeight;
+                li.style.setProperty('REPLACE_NLCSSHV', `${height_ - 10}px`);
             });
         }
     },100);
@@ -3893,7 +3893,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -3965,8 +3965,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
-## test
+### test
+### test
 ```css
 * {
     margin: 0;
@@ -4023,8 +4023,8 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
-## test
-## test
+### test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5088,7 +5088,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -5630,7 +5630,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
