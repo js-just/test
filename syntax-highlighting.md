@@ -1,29 +1,29 @@
 ### test
-## test
+### test
 ## test
 ## test
 ## test
 ## test
 ### test
 ### test
-## test
-## test
-## test
-## test
-## test
-## test
 ### test
+### test
+## test
 ### test
 ## test
 ## test
 ### test
 ## test
 ### test
+## test
+## test
 ### test
+## test
 ### test
 ## test
 ### test
 ### test
+## test
 ```js
 /*
 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -1914,11 +1914,11 @@ main nav.left li {
 
 .copycode {
     position: fixed;
-    translate: calc(var(--codewidth) - 34px) calc(calc(0px - var(--codeheight)) + 32px);
+    translate: calc(var(--codewidth) - 26px) calc(calc(0px - var(--codeheight)) + 4px);
     display: inline-block;
-    height: 34px;
+    height: 25px;
     border-radius: 10px;
-    overflow: hidden
+    overflow: hidden;
 }
 .copycode svg {
     padding: 5px;
@@ -2038,7 +2038,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2870,12 +2870,14 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
         
         if (target_.closest('code.code')) {
             const codeEl = target_.closest('code.code');
+            codeEl.style.setProperty('--codewidth', codeEl.offsetWidth + 'px');
+            codeEl.style.setProperty('--codeheight', codeEl.offsetHeight + 'px');
 
             let div = codeEl.querySelector('.copycode');
             if (!div) {
                 div = document.createElement('div');
                 div.className = 'copycode';
-                div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#f0f0f0" alt="Copy" title="Click to copy"><g><rect fill="none" height="24" width="24"/></g><g><path d="M15,20H5V7c0-0.55-0.45-1-1-1h0C3.45,6,3,6.45,3,7v13c0,1.1,0.9,2,2,2h10c0.55,0,1-0.45,1-1v0C16,20.45,15.55,20,15,20z M20,16V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9C19.1,18,20,17.1,20,16z M18,16H9V4h9V16z"/></g></svg>';
+                div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="15px" viewBox="0 0 24 24" width="15px" fill="#f0f0f0" alt="Copy" title="Click to copy"><g><rect fill="none" height="24" width="24"/></g><g><path d="M15,20H5V7c0-0.55-0.45-1-1-1h0C3.45,6,3,6.45,3,7v13c0,1.1,0.9,2,2,2h10c0.55,0,1-0.45,1-1v0C16,20.45,15.55,20,15,20z M20,16V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9C19.1,18,20,17.1,20,16z M18,16H9V4h9V16z"/></g></svg>';
 
                 div.style.opacity = '0';
 
@@ -3341,7 +3343,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4089,7 +4091,7 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
-### test
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -4383,7 +4385,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
