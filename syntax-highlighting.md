@@ -1,22 +1,13 @@
-### test
-## test
-### test
-### test
-## test
-### test
-### test
-## test
-### test
-## test
-### test
 ## test
 ## test
 ### test
 ### test
 ## test
+## test
+## test
 ### test
-## test
-## test
+### test
+### test
 ## test
 ## test
 ### test
@@ -24,6 +15,15 @@
 ### test
 ### test
 ## test
+## test
+## test
+## test
+### test
+### test
+### test
+### test
+## test
+### test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -1724,6 +1724,7 @@ mark {
 }
 .main img {
     max-width: 100%;
+    border-radius: 5px;
 }
 
 input[type="checkbox"] {
@@ -2830,6 +2831,15 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const container = document.querySelector('.left');
+    if (container) {
+        const listItems = container.querySelectorAll('li');
+        listItems.forEach(li => {
+            const height = li.offsetHeight;
+            li.style.setProperty('REPLACE_NLCSSHV', `${height - 10}px`);
+        });
+    }
+
     updateSD(false);updateMinHeight();updateWidth();fetch(searchurl);updateNavRight();
 });
 
@@ -2889,11 +2899,15 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
     top: 0px;
     width: 5px;
     height: 3px;
-    background-color: var(--cl);
+    background-color: #f0f0f0;
     translate: 10px 10px;
 }
 .searchactive .search a span strong:after {
     display: none;
+}
+
+.search span {
+    color: #f0f0f0 !important;
 }
 
 ```
@@ -3110,7 +3124,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3251,7 +3265,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -3869,7 +3883,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -3999,8 +4013,8 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
-### test
-### test
+## test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -4293,7 +4307,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -5064,7 +5078,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-### test
+## test
 ```png
 �PNG
 
