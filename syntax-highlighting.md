@@ -2,16 +2,7 @@
 ## test
 ## test
 ## test
-## test
 ### test
-## test
-## test
-## test
-### test
-### test
-## test
-## test
-## test
 ## test
 ## test
 ## test
@@ -19,6 +10,15 @@
 ## test
 ### test
 ## test
+## test
+### test
+### test
+## test
+## test
+## test
+### test
+### test
+### test
 ## test
 ### test
 ### test
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -1912,6 +1912,18 @@ main nav.left li {
     overflow-y: hidden;
 }
 
+.copycode {
+    position: fixed;
+    translate: calc(var(--codewidth) - 34px) calc(calc(0px - var(--codeheight)) + 32px);
+    display: inline-block;
+    height: 34px;
+    border-radius: 10px;
+    overflow: hidden
+}
+.copycode svg {
+    padding: 5px;
+}
+
 ```
 ```css
 #search {
@@ -2026,7 +2038,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2822,7 +2834,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                 setTimeout(()=>{updateSD(st)},301);
                 for (const [id, data_] of Object.entries(searchdata)) {
                     sd.innerHTML += SETTINGS.searchV2 ? 
-                        `<a href="${data_[0]}" target="_self"><strong>${('REPLACE_DATAARRAY'.find(item => item[0] === data_[0]) || [])[1] || data_[0]}</strong><span>${data_[1].replaceAll('\n',' ').replaceAll(' - ','').replaceAll('<br>',' ')}</span></a>` : 
+                        `<a href="${data_[0]}" target="_self"><strong>${('REPLACE_DATAARRAY'.find(item => item[0] === data_[0]) || [])[1] || data_[0]}</strong><span>${data_[1].replaceAll('\n',' ').replaceAll(' - ',' ').replaceAll('<br>',' ')}</span></a>` : 
                         `<a href="${data_[0]}" target="_self">${data_[1].replaceAll('\n',' ').replaceAll(' - ','')}</a>`;
                 }
             }
@@ -2849,6 +2861,60 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
             });
         }
     },100);
+
+
+
+    const removeTimeouts = new WeakMap();
+    document.addEventListener('mouseover', (event) => {
+        const target = event.target;
+        
+        if (target.closest('code.code')) {
+            const codeEl = target.closest('code.code');
+
+            let div = codeEl.querySelector('.copycode');
+            if (!div) {
+                div = document.createElement('div');
+                div.className = 'copycode';
+                div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#f0f0f0" alt="Copy" title="Click to copy"><g><rect fill="none" height="24" width="24"/></g><g><path d="M15,20H5V7c0-0.55-0.45-1-1-1h0C3.45,6,3,6.45,3,7v13c0,1.1,0.9,2,2,2h10c0.55,0,1-0.45,1-1v0C16,20.45,15.55,20,15,20z M20,16V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9C19.1,18,20,17.1,20,16z M18,16H9V4h9V16z"/></g></svg>';
+
+                div.style.opacity = '0';
+
+                codeEl.appendChild(div);
+
+                requestAnimationFrame(() => {
+                    div.style.opacity = '1';
+                });
+            } else {
+                clearTimeout(removeTimeouts.get(div));
+                div.style.opacity = '1';
+            }
+        }
+    });
+    document.addEventListener('mouseout', (event) => {
+        const target = event.target;
+        const codeEl = target.closest('code.code');
+        if (codeEl) {
+            const related = event.relatedTarget;
+            if (related && codeEl.contains(related)) {
+                return;
+            }
+
+            const div = codeEl.querySelector('.copycode');
+            if (div) {
+                div.style.opacity = '0';
+
+                const timeoutId = setTimeout(() => {
+                    if (div.parentNode) {
+                        div.remove();
+                    }
+                    removeTimeouts.delete(div);
+                }, 300);
+                removeTimeouts.set(div, timeoutId);
+            }
+        }
+    });
+
+
 
     updateSD(false);updateMinHeight();updateWidth();fetch(searchurl);updateNavRight();
 });
@@ -3134,7 +3200,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3275,7 +3341,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -3966,7 +4032,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ## test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -5088,7 +5154,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -5259,7 +5325,7 @@ _just: title: Syntax highlighting test
 {
     "hello": "world",
     "number": 1234567890,
-    "array": []
+    "array": [null, true, false]
 }
 \`\`\`
 \`\`\`json
@@ -5268,12 +5334,50 @@ _just: title: Syntax highlighting test
 ]
 \`\`\`
 \`\`\`js
+import {abc as cba} from '../test.js';
+const abc = require('../../test.js');
+
+class test {
+    constructor () {
+        return true
+    }
+}
+
 console.log('hello world');
 console.warn(1 + 1);
 alert(false);
 const abc = true;
 for (i = 1; i <= 4; i++) {
     // do something
+};
+switch (abc) {
+    case true:
+        window.location.replace('https://juststudio.is-a.dev/');
+        break;
+    default:
+        document.body.classList.add('a');
+        break;
+}
+function a (b) {
+    return b + 1;
+}
+let c = (d) => {
+    return a(d) / 2;
+}
+var e = (f) => f + f;
+if (typeof abc != 'boolean') {
+    throw new Error('error');
+} else if (.2 != 0.2) {
+    console.error('what');
+} else {
+    try {
+        new test();
+    } catch (_ee) {
+        const fewuhfuiwfuiweifuweiewhfiew = globalThis.localStorage.getItem('KEY');
+        console.log(fewuhfuiwfuiweifuweiewhfiew);
+    } finally {
+        fetch();
+    }
 }
 \`\`\`
 \`\`\`html
@@ -5345,50 +5449,7 @@ end
 + added
 - removed
 \`\`\`
-\`\`\`diff
-    *** lao     Sat Jan 26 23:30:39 1991   
-    --- tzu     Sat Jan 26 23:30:50 1991   
-    ****************   
-    *** 1,5 ****   
-    - The Way that can be told of is not the eternal Way;   
-    - The name that can be named is not the eternal name.   
-      The Nameless is the origin of Heaven and Earth;      
-    ! The Named is the mother of all things.   
-      Therefore let there always be non-being,   
-    --- 1,4 ----    
-      The Nameless is the origin of Heaven and Earth;      
-    ! The named is the mother of all things.   
-    !    
-      Therefore let there always be non-being,   
-    ***************   
-    *** 11 ****   
-    --- 10,13 ----    
-        they have different names.        
-    + They both may be called deep and profound.   
-    + Deeper and more profound,   
-    + The door of all subtleties! 
-\`\`\`
-\`\`\`diff
-      --- lao   Sat Jan 26 23:30:39 1991   
-      +++ tzu   Sat Jan 26 23:30:50 1991   
-      @@ -1,7 +1,6 @@   
-      -The Way that can be told of is not the eternal Way;   
-      -The name that can be named is not the eternal name.   
-       The Nameless is the origin of Heaven and Earth;   
-      -The Named is the mother of all things.   
-      +The named is the mother of all things.   
-      +   
-       Therefore let there always be non-being,   
-         so we may see their subtlety,   
-       And let there always be being,   
-      @@ -9,3 +8,6 @@   
-       The two are the same,   
-       But after they are produced,   
-         they have different names.   
-      +They both may be called deep and profound.   
-      +Deeper and more profound,   
-      +The door of all subtleties!
-\`\`\`
+
 ```
 ```md
 _just: title: Mattcone's Markdown Test
