@@ -5,25 +5,25 @@
 ## test
 ## test
 ## test
-## test
-## test
-### test
-## test
-## test
-### test
-### test
-## test
-### test
-## test
-## test
 ### test
 ### test
 ### test
 ### test
 ## test
+### test
 ## test
 ### test
 ### test
+### test
+### test
+### test
+### test
+### test
+### test
+## test
+### test
+## test
+## test
 ```js
 /*
 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -1924,6 +1924,28 @@ main nav.left li {
     padding: 5px;
 }
 
+@keyframes s-shake {
+    10%, 90% {
+        transform: translateX(-0.5px)
+    }
+
+    20%, 80% {
+        transform: translateX(1px)
+    }
+
+    30%, 50%, 70% {
+        transform: translateX(-2px)
+    }
+
+    40%, 60% {
+        transform: translateX(2px)
+    }
+}
+
+.s-shake {
+    animation: s-shake 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) both
+}
+
 ```
 ```css
 #search {
@@ -2038,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2919,6 +2941,15 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                 }, 150);
             };
             wndw_.navigator.clipboard.writeText(outputText).then(()=>{changeColor('#2A8C2E')}).catch((_ee)=>{console.warn(_ee);changeColor('#8C2A2A')});
+        } else {
+            div_.style.backgroundColor = '#8C2A2A';
+            div_.classList.add('s-shake');
+            setTimeout(()=>{
+                if (div_) {
+                    div_.style.backgroundColor = null;
+                    div_.classList.remove('s-shake');
+                }
+            }, 150);
         }
     };
     dcmnt.addEventListener('mouseover', (event) => {
@@ -3261,7 +3292,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4092,8 +4123,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
 ## test
+### test
 ```css
 * {
     margin: 0;
@@ -4151,7 +4182,7 @@ h4 {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5215,7 +5246,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-## test
+### test
 ```png
 �PNG
 
