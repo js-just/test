@@ -2,6 +2,10 @@
 ## test
 ### test
 ### test
+### test
+### test
+### test
+## test
 ## test
 ## test
 ### test
@@ -10,10 +14,6 @@
 ### test
 ## test
 ## test
-## test
-### test
-### test
-## test
 ### test
 ## test
 ## test
@@ -21,9 +21,9 @@
 ### test
 ## test
 ## test
+## test
+## test
 ### test
-## test
-## test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -2038,7 +2038,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2517,16 +2517,20 @@ dcmnt.addEventListener('touchend', function(event) {
     }
 }, false);
 
+let currentTheme = 1;
 const getnsettheme = () => {
     try {
         const darkThemeMq = () => wndw_?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
         if (darkThemeMq()) {
             dcmnt.documentElement.classList.remove('l');
+            currentTheme = 0;
         } else {
             dcmnt.documentElement.classList.add('l');
+            currentTheme = 1;
         }
     } catch {
         dcmnt.documentElement.classList.add('l');
+        currentTheme = 1;
     }
 };
 const checkTheme = () => localStorage.getItem('t');
@@ -2535,11 +2539,13 @@ const autotheme = () => {
     const setColorScheme = (scheme) => {
         switch(scheme){
             case 'dark':
+                currentTheme = 0;
                 if (checkTheme() == 'a') {
                     dcmnt.documentElement.classList.remove('l');
                 }
             break;
             case 'light': default:
+                currentTheme = 1;
                 if (checkTheme() == 'a') {
                     dcmnt.documentElement.classList.add('l');
                 }
@@ -2577,12 +2583,14 @@ const autotheme = () => {
 };
 
 if (theme && theme == 'l') {
+    currentTheme = 1;
     dcmnt.documentElement.classList.add('l');
     dcmnt.documentElement.classList.remove('a');
 } else if (theme && theme == 'a') {
     dcmnt.documentElement.classList.add('a');
     autotheme()
 } else {
+    currentTheme = 0;
     dcmnt.documentElement.classList.remove('a');
     getnsettheme()
 };
@@ -2852,7 +2860,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
     });
 
     setTimeout(()=>{
-        const container = document.querySelector('.left');
+        const container = dcmnt.querySelector('.left');
         if (container) {
             const listItems = container.querySelectorAll('li');
             listItems.forEach(li => {
@@ -2863,21 +2871,57 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
     },100);
 
     const removeTimeouts = new WeakMap();
+    const addStyle= ' style="background:transparent"';
+    const copySVG = () => `<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="15px" viewBox="0 0 24 24" width="15px" fill="${currentTheme === 0 ? '#f0f0f0' : '#121212'}" alt="Copy" title="Click to copy"${addStyle}><g${addStyle}><rect fill="none" height="24" width="24"${addStyle}/></g><g${addStyle}><path d="M15,20H5V7c0-0.55-0.45-1-1-1h0C3.45,6,3,6.45,3,7v13c0,1.1,0.9,2,2,2h10c0.55,0,1-0.45,1-1v0C16,20.45,15.55,20,15,20z M20,16V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9C19.1,18,20,17.1,20,16z M18,16H9V4h9V16z"${addStyle}/></g></svg>`;
+    const doneSVG = () => `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="${currentTheme === 0 ? '#f0f0f0' : '#121212'}" alt="Done"${addStyle.slice(0,-1)};opacity:0"><path d="M0 0h24v24H0V0z" fill="none" ${addStyle}/><path d="M9 16.17L5.53 12.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0L9 16.17z" ${addStyle}/></svg>`;
+    let cooldown1 = [];
     const copyCode = (event) => {
         const div_ = event.currentTarget;
         const codeEl = div_.closest('code.code');
-        if (codeEl) {
+        if (codeEl && !cooldown1.includes(codeEl)) {
+            cooldown1.push(codeEl);
             const outputText = codeEl.innerText.replace(codeEl.getAttribute('data-lang') || '', '').trim();
+            const unpush = () => {
+                cooldown1 = cooldown1.filter(item => item !== codeEl);
+            };
+            const runfunc = (checkthis, func, timeouts) => {
+                if (checkthis) {
+                    func()
+                } else if (Array.isArray(timeouts)) {
+                    timeouts.forEach(timeout => {
+                        clearTimeout(timeout)
+                    });
+                    unpush()
+                } else {
+                    unpush()
+                }
+            };
             const changeColor = (color) => {
                 div_.style.backgroundColor = color;
-                setTimeout(()=>{
-                    div_.style.backgroundColor = null;
+                div_.querySelector('svg').style.opacity = 0;
+                const to1 = setTimeout(()=>{
+                    runfunc(div_, ()=>{
+                        div_.innerHTML = copySVG();
+                        unpush()
+                    }, undefined)
+                }, 600);
+                const to0 = setTimeout(()=>{
+                    runfunc(div_, ()=>{
+                        div_.style.backgroundColor = null;
+                        div_.querySelector('svg').style.opacity = 0
+                    }, [to1])
                 }, 450);
+                setTimeout(()=>{
+                    runfunc(div_, ()=>{
+                        div_.innerHTML = doneSVG();
+                        div_.querySelector('svg').style.opacity = 1
+                    }, [to0, to1])
+                }, 150);
             };
             wndw_.navigator.clipboard.writeText(outputText).then(()=>{changeColor('#2A8C2E')}).catch((_ee)=>{console.warn(_ee);changeColor('#8C2A2A')});
         }
     };
-    document.addEventListener('mouseover', (event) => {
+    dcmnt.addEventListener('mouseover', (event) => {
         const target_ = event.target;
         
         const codeEl = target_.closest('code.code');
@@ -2887,9 +2931,9 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
 
             let div = codeEl.querySelector('.copycode');
             if (!div) {
-                div = document.createElement('div');
+                div = dcmnt.createElement('div');
                 div.className = 'copycode';
-                div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="15px" viewBox="0 0 24 24" width="15px" fill="#f0f0f0" alt="Copy" title="Click to copy"><g><rect fill="none" height="24" width="24"/></g><g><path d="M15,20H5V7c0-0.55-0.45-1-1-1h0C3.45,6,3,6.45,3,7v13c0,1.1,0.9,2,2,2h10c0.55,0,1-0.45,1-1v0C16,20.45,15.55,20,15,20z M20,16V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9C19.1,18,20,17.1,20,16z M18,16H9V4h9V16z"/></g></svg>';
+                div.innerHTML = copySVG();
 
                 div.style.opacity = '0';
                 div.addEventListener('click', copyCode);
@@ -2908,7 +2952,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    document.addEventListener('mouseout', (event) => {
+    dcmnt.addEventListener('mouseout', (event) => {
         const target_ = event.target;
         const codeEl = target_.closest('code.code');
         if (codeEl) {
@@ -3217,7 +3261,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3358,7 +3402,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -3976,7 +4020,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4049,7 +4093,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ## test
-### test
+## test
 ```css
 * {
     margin: 0;
@@ -4107,7 +4151,7 @@ h4 {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -4400,7 +4444,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -5171,7 +5215,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -5752,7 +5796,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
