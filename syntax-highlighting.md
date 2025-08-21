@@ -3,21 +3,21 @@
 ### test
 ### test
 ## test
-### test
-### test
-### test
-### test
 ## test
 ### test
 ### test
 ### test
 ### test
-### test
-### test
+## test
+## test
+## test
 ### test
 ### test
 ## test
 ### test
+## test
+## test
+## test
 ### test
 ## test
 ## test
@@ -2038,7 +2038,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2862,9 +2862,21 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
         }
     },100);
 
-
-
     const removeTimeouts = new WeakMap();
+    const copyCode = (event) => {
+        const div_ = event.currentTarget;
+        const codeEl = div_.closest('code.code');
+        if (codeEl) {
+            const outputText = codeEl.innerText.replace(codeEl.getAttribute('data-lang') || '', '').trim();
+            const changeColor = (color) => {
+                div_.style.backgroundColor = color;
+                setTimeout(()=>{
+                    div_.style.backgroundColor = null;
+                }, 450);
+            };
+            wndw_.navigator.clipboard.writeText(outputText).then(()=>{changeColor('#2A8C2E')}).catch((_ee)=>{console.warn(_ee);changeColor('#8C2A2A')});
+        }
+    };
     document.addEventListener('mouseover', (event) => {
         const target_ = event.target;
         
@@ -2880,7 +2892,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                 div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="15px" viewBox="0 0 24 24" width="15px" fill="#f0f0f0" alt="Copy" title="Click to copy"><g><rect fill="none" height="24" width="24"/></g><g><path d="M15,20H5V7c0-0.55-0.45-1-1-1h0C3.45,6,3,6.45,3,7v13c0,1.1,0.9,2,2,2h10c0.55,0,1-0.45,1-1v0C16,20.45,15.55,20,15,20z M20,16V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9C19.1,18,20,17.1,20,16z M18,16H9V4h9V16z"/></g></svg>';
 
                 div.style.opacity = '0';
-
+                div.addEventListener('click', copyCode);
                 codeEl.appendChild(div);
 
                 requestAnimationFrame(() => {
@@ -2907,6 +2919,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
 
             const div = codeEl.querySelector('.copycode');
             if (div) {
+                div.removeEventListener('click', copyCode);
                 div.style.opacity = '0';
 
                 const timeoutId = setTimeout(() => {
@@ -2919,8 +2932,6 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-
 
     updateSD(false);updateMinHeight();updateWidth();fetch(searchurl);updateNavRight();
 });
@@ -3965,7 +3976,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4389,7 +4400,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -5741,7 +5752,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
