@@ -1,22 +1,18 @@
-### test
-### test
-### test
-## test
-### test
 ## test
 ## test
 ### test
-## test
+### test
 ### test
 ### test
 ### test
 ## test
 ## test
 ### test
-### test
+## test
 ## test
 ### test
 ### test
+## test
 ## test
 ### test
 ### test
@@ -24,6 +20,10 @@
 ### test
 ### test
 ### test
+## test
+## test
+### test
+## test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -2891,7 +2891,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                 if (timeoutId) {
                     clearTimeout(timeoutId);
                     removeTimeouts.delete(div);
-                }
+                };
                 div.style.opacity = '1';
             }
         }
@@ -3965,7 +3965,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4037,8 +4037,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4096,7 +4096,7 @@ h4 {
 }
 ```
 ## test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
