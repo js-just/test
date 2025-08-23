@@ -1,3 +1,9 @@
+## test
+## test
+### test
+## test
+### test
+## test
 ### test
 ### test
 ### test
@@ -6,24 +12,18 @@
 ## test
 ## test
 ### test
-### test
+## test
 ### test
 ### test
 ## test
 ### test
-## test
-### test
-### test
-### test
-### test
-### test
-### test
 ### test
 ### test
 ## test
+## test
 ### test
 ## test
-## test
+### test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2900,11 +2900,13 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
     const copyCode = (event) => {
         const div_ = event.currentTarget;
         const codeEl = div_.closest('code.code');
+        div_.style.cursor = null;
         if (codeEl && !cooldown1.includes(codeEl)) {
             cooldown1.push(codeEl);
             const outputText = codeEl.innerText.replace(codeEl.getAttribute('data-lang') || '', '').trim();
             const unpush = () => {
                 cooldown1 = cooldown1.filter(item => item !== codeEl);
+                div_.style.cursor = 'pointer';
             };
             const runfunc = (checkthis, func, timeouts) => {
                 if (checkthis) {
@@ -2924,7 +2926,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                 const to1 = setTimeout(()=>{
                     runfunc(div_, ()=>{
                         div_.innerHTML = copySVG();
-                        unpush()
+                        unpush();
                     }, undefined)
                 }, 600);
                 const to0 = setTimeout(()=>{
@@ -2948,6 +2950,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                 if (div_) {
                     div_.style.backgroundColor = null;
                     div_.classList.remove('s-shake');
+                    div_.style.cursor = 'pointer';
                 }
             }, 150);
         }
@@ -2965,6 +2968,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                 div = dcmnt.createElement('div');
                 div.className = 'copycode';
                 div.innerHTML = copySVG();
+                div.style.cursor = 'pointer';
 
                 div.style.opacity = '0';
                 div.addEventListener('click', copyCode);
@@ -2980,6 +2984,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
                     removeTimeouts.delete(div);
                 };
                 div.style.opacity = '1';
+                div.style.cursor = 'pointer';
             }
         }
     });
@@ -2996,6 +3001,7 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
             if (div) {
                 div.removeEventListener('click', copyCode);
                 div.style.opacity = '0';
+                div.style.cursor = null;
 
                 const timeoutId = setTimeout(() => {
                     if (div.parentNode) {
@@ -3292,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3433,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4051,7 +4057,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4123,7 +4129,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ### test
 ```css
 * {
@@ -4182,7 +4188,7 @@ h4 {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
