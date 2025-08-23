@@ -2,15 +2,8 @@
 ### test
 ### test
 ### test
+## test
 ### test
-### test
-### test
-## test
-## test
-## test
-## test
-## test
-## test
 ### test
 ### test
 ## test
@@ -21,7 +14,14 @@
 ## test
 ## test
 ## test
+## test
+## test
+## test
 ### test
+## test
+## test
+### test
+## test
 ## test
 ### test
 ```js
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4057,7 +4057,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4129,8 +4129,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4191,11 +4191,15 @@ h4 {
 {
     "README": {
         " CODES ": {
-            "                OK ": " 0000 - 0099 ",
-            "             CRASH ": " 0100 - 0199 ",
-            "           WARNING ": " 0200 - 0299 ",
-            " CLIENT-SIDE CRASH ": " 0300 - 0399 ",
-            "          RESERVED ": " 0400 - 9999 "
+            "                OK ": "               0000 - 0099               ",
+            "             CRASH ": "               0100 - 0199               ",
+            "           WARNING ": "               0200 - 0299               ",
+            " CLIENT-SIDE CRASH ": "               0300 - 0399               ",
+            "          RESERVED ": "               0400 - 9999               "
+        },
+        " DATA  ": {
+            "                MG ": " Message generated when throwing an error",
+            "                 I ": "        Information / How to fix         "
         }
     },
     "important_dirs": [
@@ -4203,31 +4207,51 @@ h4 {
             "code": "0106",
             "message": "Your repository has a deploy directory in the root directory. Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>deploy</code> directory from the root directory"
+            }
         },
         {
             "code": "0107",
             "message": "Your repository has a _just_data directory in the root directory. Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_just_data</code> directory from the root directory"
+            }
         },
         {
             "code": "0121",
             "message": "Your repository has a _just directory in the root directory. Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_just</code> directory from the root directory"
+            }
         },
         {
             "code": "0124",
             "message": "Your repository has a _just directory in the selected directory (inputs.path). Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_just</code> directory from the directory that you've selected in your workflow file, in a step that uses the Just an Ultimate Site tool, in the <code>inputs.path</code>"
+            }
         },
         {
             "code": "0125",
             "message": "Your repository has a _just_data directory in the selected directory (inputs.path). Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_just_data</code> directory from the directory that you've selected in your workflow file, in a step that uses the Just an Ultimate Site tool, in the <code>inputs.path</code>"
+            }
         }
     ],
     "global": [
@@ -4235,20 +4259,28 @@ h4 {
             "code": "0209",
             "message": "( UNSTABLE CONFIG )",
             "crashed": false,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "Your configuration file contains an unstable configuration."
+            }
         },
         {
             "code": "0126",
             "message": "( UNKNOWN TLD )",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "Invalid domain name: Invalid TLD. <br>Please check your <code>module.exports</code> of the <code>just.config.js</code> file."
+            }
         }
     ],
     "index.sh": [
         {
             "code": "0204",
             "message": "Attempt to use \"Just an Ultimate Site Tool\" as a postprocessor in the wrond way. This may not work correctly. Please read the documentation (coming soon).",
-            "crashed": true,
+            "crashed": false,
             "link": ""
         }
     ],
@@ -4257,43 +4289,71 @@ h4 {
             "code": "0108",
             "message": "The just.config.js file in the root directory is missing.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "create the <code>just.config.js</code> file in the root directory and please read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>"
+            }
         },
         {
             "code": "0109",
             "message": "The just.config.js file cannot be parsed.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "Just an Ultimate Site Tool is unable to parse your <code>just.config.js</code> file in the root directory."
+            }
         },
         {
             "code": "0110",
             "message": "Unable to get value of property \"type\" in just.config.js.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "The <code>module.exports</code> is missing or the property <code>type</code> either has an invalid value or is missing. <br>Please read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>."
+            }
         },
         {
             "code": "0111",
             "message": "Invalid value of property \"type\" in just.config.js. It must be one of: \"postprocessor\", \"redirect\", \"compress\", \"docs\".",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "_0110"
+            }
         },
         {
             "code": "0112",
             "message": "The just.config.js' \"module.exports\" cannot be parsed as json.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": null
+            }
         },
         {
             "code": "0113",
             "message": "Your repository has a just.config.json file in the root directory. Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>just.config.json</code> file from the root directory"
+            }
         },
         {
             "code": "0127",
             "message": "Your repository has a _just_error file in the root directory. Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_just_error</code> file from the root directory"
+            }
         },
         {
             "code": "0205",
@@ -4345,7 +4405,11 @@ h4 {
             "code": "0102",
             "message": "Your website has an API directory in the root directory. Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>API</code> directory from the root directory"
+            }
         }
     ],
     "postprocessor/modify_deployment.sh": [
@@ -4353,25 +4417,41 @@ h4 {
             "code": "0103",
             "message": "Your website has a _just directory in the root directory. Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_just</code> directory from the root directory"
+            }
         },
         {
             "code": "0104",
             "message": "Inserting files in _just directory is not allowed.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_just</code> directory from the <code>_just/dangerously-insert-files</code> directory"
+            }
         },
         {
             "code": "0105",
-            "message": "Inserting files in _next directory is not allowed..",
+            "message": "Inserting files in _next directory is not allowed.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_next</code> directory from the <code>_just/dangerously-insert-files</code> directory"
+            }
         },
         {
             "code": "0201",
             "message": "( FAILED TO INSERT A FILE )",
             "crashed": false,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "Just an Ultimate Site Tool is unable to insert a file."
+            }
         }
     ],
     "postprocessor/override_deployment.sh": [
@@ -4391,47 +4471,71 @@ h4 {
     "redirect/checks.sh": [
         {
             "code": "0114",
-            "message": "Missing \"url\" in \"redirect_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "message": "Missing \"url\" in \"redirect_config\" in \"module.exports\" of \"just.config.js\" file.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "add the <code>url</code> to the <code>redirect_config</code> in the <code>module.exports</code> of the <code>just.config.js</code> file"
+            }
         },
         {
             "code": "0115",
             "message": "( MISSING URL IN {} IN PATHS[] IN REDIRECT_CONFIG{} IN MODULE.EXPORTS AT JUST.CONFIG.JS )",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "add the <code>url</code> to your redirect path in the <code>redirect_config</code> in the <code>module.exports</code> of the <code>just.config.js</code> file"
+            }
         },
         {
             "code": "0116",
             "message": "( MISSING PATH_ IN {} IN PATHS[] IN REDIRECT_CONFIG{} IN MODULE.EXPORTS AT JUST.CONFIG.JS )",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "add the <code>path_</code> to your redirect path in the <code>redirect_config</code> in the <code>module.exports</code> of the <code>just.config.js</code> file"
+            }
         },
         {
             "code": "0117",
-            "message": "Missing \"redirect_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "message": "Missing \"redirect_config\" in \"module.exports\" of \"just.config.js\" file.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "add the <code>redirect_config</code> to the <code>module.exports</code> of the <code>just.config.js</code> file and please read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>"
+            }
         }
     ],
     "docs/checks.sh": [
         {
             "code": "0118",
-            "message": "Missing \"docs_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "message": "Missing \"docs_config\" in \"module.exports\" of \"just.config.js\" file.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "add the <code>docs_config</code> to the <code>module.exports</code> of the <code>just.config.js</code> file and please read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>"
+            }
         },
         {
             "code": "0119",
-            "message": "Missing \"metatitle\" in \"docs_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "message": "Missing \"metatitle\" in \"docs_config\" in \"module.exports\" of \"just.config.js\" file.",
             "crashed": true,
             "link": ""
         },
         {
             "code": "0120",
-            "message": "Missing \"domain\" in \"docs_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "message": "Missing \"domain\" in \"docs_config\" in \"module.exports\" of \"just.config.js\" file.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "add the <code>domain</code> to the <code>docs_config</code> in the <code>module.exports</code> of the <code>just.config.js</code> file"
+            }
         }
     ],
     "docs/index.js": [
@@ -4439,25 +4543,41 @@ h4 {
             "code": "0122",
             "message": "( WRONG DOMAIN NAME )",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "Invalid domain name. <br>Please check your <code>module.exports</code> of the <code>just.config.js</code> file."
+            }
         },
         {
             "code": "0123",
             "message": "( .IS-A.DEV SUBDOMAIN DOES NOT EXIST )",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "Invalid domain name: Invalid <a href=\"https://is-a.dev/\" target=\"_blank\"><code>.is-a.dev</code></a> subdomain. <br>The subdomain you specified does not exist. Please register it first."
+            }
         },
         {
             "code": "0128",
             "message": "( UNKNOWN CODEID )",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "Invalid CODEID. This error can be caused either by an internal Just an Ultimate Site Tool error or by a Markdown fenced code block with the \"CODEID\" language."
+            }
         },
         {
             "code": "0206",
             "message": "( FAILED TO FETCH RAW.IS-A.DEV/V2.JSON )",
             "crashed": false,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": true,
+                "i": "Just an Ultimate Site Tool is unable to fetch <a href=\"https://raw.is-a.dev/v2.json\" target=\"_blank\"><code>https://raw.is-a.dev/v2.json</code></a>."
+            }
         }
     ]
 }
@@ -4818,7 +4938,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6222,7 +6342,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
