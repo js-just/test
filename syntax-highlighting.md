@@ -1,9 +1,3 @@
-## test
-## test
-### test
-## test
-### test
-## test
 ### test
 ### test
 ### test
@@ -12,14 +6,20 @@
 ## test
 ## test
 ### test
-## test
 ### test
-### test
-## test
 ### test
 ### test
 ### test
 ## test
+### test
+### test
+### test
+### test
+## test
+## test
+### test
+### test
+### test
 ## test
 ### test
 ## test
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2211,7 +2211,7 @@ main nav.left li {
                 margin-right: 5px;
             }
             html:after {
-                content: 'Couldn\'t load the website. (0302)';
+                content: 'Couldn’t load the website. (0302)';
                 position: fixed;
                 top: calc(50% + 24px);
                 width: 100%;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4187,8 +4187,283 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
-### test
+```json
+{
+    "README": {
+        " CODES ": {
+            "                OK ": " 0000 - 0099 ",
+            "             CRASH ": " 0100 - 0199 ",
+            "           WARNING ": " 0200 - 0299 ",
+            " CLIENT-SIDE CRASH ": " 0300 - 0399 ",
+            "          RESERVED ": " 0400 - 9999 "
+        }
+    },
+    "important_dirs": [
+        {
+            "code": "0106",
+            "message": "Your repository has a deploy directory in the root directory. Please remove it.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0107",
+            "message": "Your repository has a _just_data directory in the root directory. Please remove it.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0121",
+            "message": "Your repository has a _just directory in the root directory. Please remove it.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0124",
+            "message": "Your repository has a _just directory in the selected directory (inputs.path). Please remove it.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0125",
+            "message": "Your repository has a _just_data directory in the selected directory (inputs.path). Please remove it.",
+            "crashed": true,
+            "link": ""
+        }
+    ],
+    "global": [
+        {
+            "code": "0209",
+            "message": "( UNSTABLE CONFIG )",
+            "crashed": false,
+            "link": ""
+        },
+        {
+            "code": "0126",
+            "message": "( UNKNOWN TLD )",
+            "crashed": true,
+            "link": ""
+        }
+    ],
+    "index.sh": [
+        {
+            "code": "0204",
+            "message": "Attempt to use \"Just an Ultimate Site Tool\" as a postprocessor in the wrond way. This may not work correctly. Please read the documentation (coming soon).",
+            "crashed": true,
+            "link": ""
+        }
+    ],
+    "run.sh": [
+        {
+            "code": "0108",
+            "message": "The just.config.js file in the root directory is missing.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0109",
+            "message": "The just.config.js file cannot be parsed.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0110",
+            "message": "Unable to get value of property \"type\" in just.config.js.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0111",
+            "message": "Invalid value of property \"type\" in just.config.js. It must be one of: \"postprocessor\", \"redirect\", \"compress\", \"docs\".",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0112",
+            "message": "The just.config.js' \"module.exports\" cannot be parsed as json.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0113",
+            "message": "Your repository has a just.config.json file in the root directory. Please remove it.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0127",
+            "message": "Your repository has a _just_error file in the root directory. Please remove it.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0205",
+            "message": "Error occurred during Node.js installation. Retrying to install Node.js with console output enabled... (Attempt #4)",
+            "crashed": false,
+            "link": ""
+        },
+        {
+            "code": "0207",
+            "message": "Error occurred during Node.js installation. Retrying to install Node.js with console output enabled... (Attempt #2)",
+            "crashed": false,
+            "link": ""
+        },
+        {
+            "code": "0208",
+            "message": "Error occurred during Node.js installation. Retrying to install Node.js... (Attempt #3)",
+            "crashed": false,
+            "link": ""
+        },
+        {
+            "code": "0210",
+            "message": "Error occurred during TypeScript compiler installation. Retrying to install TypeScript compiler... (Attempt #2)",
+            "crashed": false,
+            "link": ""
+        }
+    ],
+    "postprocessor/checks.sh": [
+        {
+            "code": "0100",
+            "message": "( DIRECTORY IS MISSING )",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0101",
+            "message": "The _just/404.html file is missing.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0200",
+            "message": "The _just/404.html file is missing. So, the 404 page will be an \"Just an Ultimate Site Tool\" postprocessor's error 404 template page.",
+            "crashed": false,
+            "link": ""
+        }
+    ],
+    "postprocessor/create_api_endpoints.sh": [
+        {
+            "code": "0102",
+            "message": "Your website has an API directory in the root directory. Please remove it.",
+            "crashed": true,
+            "link": ""
+        }
+    ],
+    "postprocessor/modify_deployment.sh": [
+        {
+            "code": "0103",
+            "message": "Your website has a _just directory in the root directory. Please remove it.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0104",
+            "message": "Inserting files in _just directory is not allowed.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0105",
+            "message": "Inserting files in _next directory is not allowed..",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0201",
+            "message": "( FAILED TO INSERT A FILE )",
+            "crashed": false,
+            "link": ""
+        }
+    ],
+    "postprocessor/override_deployment.sh": [
+        {
+            "code": "0202",
+            "message": "Your website already has a 404.html file, _just/404.html won't be inserted.",
+            "crashed": false,
+            "link": ""
+        },
+        {
+            "code": "0203",
+            "message": "Your website already has a 404.html file, \"Just an Ultimate Site Tool\" postprocessor's error 404 template page file won't be inserted.",
+            "crashed": false,
+            "link": ""
+        }
+    ],
+    "redirect/checks.sh": [
+        {
+            "code": "0114",
+            "message": "Missing \"url\" in \"redirect_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0115",
+            "message": "( MISSING URL IN {} IN PATHS[] IN REDIRECT_CONFIG{} IN MODULE.EXPORTS AT JUST.CONFIG.JS )",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0116",
+            "message": "( MISSING PATH_ IN {} IN PATHS[] IN REDIRECT_CONFIG{} IN MODULE.EXPORTS AT JUST.CONFIG.JS )",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0117",
+            "message": "Missing \"redirect_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "crashed": true,
+            "link": ""
+        }
+    ],
+    "docs/checks.sh": [
+        {
+            "code": "0118",
+            "message": "Missing \"docs_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0119",
+            "message": "Missing \"metatitle\" in \"docs_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0120",
+            "message": "Missing \"domain\" in \"docs_config\" in \"module.exports\" at \"just.config.js\" file.",
+            "crashed": true,
+            "link": ""
+        }
+    ],
+    "docs/index.js": [
+        {
+            "code": "0122",
+            "message": "( WRONG DOMAIN NAME )",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0123",
+            "message": "( .IS-A.DEV SUBDOMAIN DOES NOT EXIST )",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0128",
+            "message": "( UNKNOWN CODEID )",
+            "crashed": true,
+            "link": ""
+        },
+        {
+            "code": "0206",
+            "message": "( FAILED TO FETCH RAW.IS-A.DEV/V2.JSON )",
+            "crashed": false,
+            "link": ""
+        }
+    ]
+}
+```
 ## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -4244,6 +4519,15 @@ module.exports = {
 }
 \`\`\`
 
+You can enable debug logs:
+-# `just.config.js`:
+\`\`\`js
+module.exports = {
+  // ...
+  debug: true
+}
+\`\`\`
+
 _just: prev: /docs/generator/syntax
 _just: next: /docs/generator/troubleshooting
 ```
@@ -4258,7 +4542,7 @@ _just: title: Supported markdown syntax
 - [Blockquotes](https://www.markdownguide.org/basic-syntax/#blockquotes-1)
 - [Ordered Lists](https://www.markdownguide.org/basic-syntax/#ordered-lists) (Nested lists aren’t supported.)
 - [Unordered Lists](https://www.markdownguide.org/basic-syntax/#unordered-lists) (Nested lists aren’t supported.)
-- [Code](https://www.markdownguide.org/basic-syntax/#code) (To escape backticks (\`) use backslash (\\))
+- [Code](https://www.markdownguide.org/basic-syntax/#code) (To escape backticks (\`) use backslash (\\). Double backticks (\`\`) aren’t supported.)
 - [Horizontal Rules](https://www.markdownguide.org/basic-syntax/#horizontal-rules)
 - [Links](https://www.markdownguide.org/basic-syntax/#links)
 - [Images](https://www.markdownguide.org/basic-syntax/#images-1)
@@ -4318,7 +4602,60 @@ _just: next: /docs/generator/advanced-usage
 _just: title: Troubleshooting
 # Troubleshooting
 
-> [!WARNING] This page is under construction
+## `Node.js` errors
+### Invalid string length error at `logs.js`
+The error looks like this:
+\`\`\`
+RangeError: Invalid string length
+  at /home/runner/work/_actions/js-just/_just/main/src/documentation/logs.js:XX:XXX
+  at FSReqCallback.oncomplete (node:fs:XXX:XX)
+\`\`\`
+-# Note that after an error, there may be some Just an Ultimate Site Tool logs, so the error may not be at the end of the logs.
+
+To fix that error you can disable debug lods in `module.exports` of the `just.config.js` file.
+\`\`\`js
+module.exports = {
+  // ...
+  debug: false
+}
+\`\`\`
+
+## Generated content errors
+### Couldn’t load the website. (0302)
+<div id="0302"></div>
+This error looks like this:
+![Error](/img/0302.png)
+
+This error can be caused by various reasons:
+- Poor Internet connection.
+- Other reasons that are not related to Just an Ultimate Site Tool.
+- Just an Ultimate Site Tool paths/directories error - this means that Just an Ultimate Site Tool did not determine the file paths correctly, and browsers are unable to load scripts and styles.
+
+**To fix the paths/directories error:**
+- If you are inserting generated website into another directory, for example you have made the website in the root of the repository and then moved it to another directory in a different repository, try adding the `fix-path` input in your workflow file:
+\`\`\`yml
+      - name: Generate with _just
+        uses: js-just/_just@main
+        with:
+          # ...
+          fix-path: example # path to directory that your generated website will be moved to
+\`\`\`
+-# If that doesn’t help, you can also try adding these options:
+- Otherwise, you can try adding these options in the `docs_config` in `module.exports` of the `just.config.js` file:
+\`\`\`js
+module.exports = {
+  // ...
+  docs_config: {
+    // ...
+    usePathInput: true,
+    usePathInputInHTML: true,
+    usePathInputInJS: true
+    /*
+      Try different configurations by setting these options to true or false until the problem is fixed.
+    */
+  }
+}
+\`\`\`
 
 _just: prev: /docs/generator/advanced-usage
 ```
@@ -4481,7 +4818,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -5253,6 +5590,58 @@ Currently it have 4 modes:
 _just: next: /docs/getting-started
 ```
 ### test
+```png
+�PNG
+
+   IHDR  &   �   ���;   IDATx�y��E��g��]X�@Qlq#�
+-
+YA����1AM�T��$".��B#� "���lZ�-P�Mi�.�A~�L;����s�������;����|�����9�nBx�$��|��=�{����~��$ 	H@�'`�#%�0)1�% 	H@h�I��ڰ$ ��0"	���¤Մm_��$ ��	(L�F��$P>F$	t�I����H@�����¤����G��$ 	�:�I����K@��JD@aR��,_(F$	H@�F@a�o#n���$ �.&�0i��ؕ$ 	H@CP���R	H@���H�a�F/�J��$ �� �0�a6H	H@�9}�¤Oް% 	H@�H@aҍ��O���G��$P�I]�4��$ 	H�&��l�@��$�
+��`�Q	H@��FC@a2j֑@��$ �� �0�a�		H@�� �0���|�H��z��¤'�M�% 	H@�$�0�q�K	H@�@_P���0�$ 	H�7tF�����$ 	H��&mnw��$ �V���&�<z�.	H@(�I��p$ 	�����I?���J@�����¤�H�$ ��0"	H�6�Im6�H@��$�f
+�6�;	���I@h�I�Xڒ$ 	H@P�4���#`D��$�9
+�α�g	H@��*(L*���ш$ 	H@�C@a�;c����$ ���9aR�1@	H@�@P�����$ 	H��@�&��$ 	H P�d^% 	H�|���(Lzn�tX��$P^
+�򎭑I@�#`D(=�I�� % 	H@�C@a�;c��(#��$PA@aR�G	H@��:G@a�9��\>F$	H@P�4����$ 	4��¤y,�גI@���L@a�f�v'	H@�@m�$LjS�D��$ �� �0�a�		H@�@�h��
+��p�	H@���@@a��6!	H@�#`D�!�0�w{��$ 	H�
+�I(fI@(#�@oP���8�$ 	H�/(L�b�R�#`D�@9	(L�9�F%	H@�I
+��6�.#��$ (L�`��$ 	H�+(L�b��I@��FC@a2j֑�$ 	H�%&ua�H��$ �vP����}H@��$P�@�DaR��$ 	H@�%�0�,{��$ ��0�(L�gU	H@���K@a�\��&	H�|�Hm$�0i#l���$ 	H`h
+���X*	���I@]L@a�Ń�k��$ �~#�0�7��0"	H@%"�0)�`�$ 	H��	(Lz}��I@�@P�����$ 	H��(LZ="�/	H@�@�&u��P��$ �V�0i�?�/	H@�@P�����$ 	t�Q����$ 	H�k(L�f(tD�@��FJ@a2Rb�K@��$�2
+����a	H�|�Hh5�I�	۾$ 	H@uP�ԍJC	t����^{-�뮻nD��V֝6mZX�bEjwÆaƌ#j��ĐY̛7o�.+17��Q;aE	H (L|H@��$�5&]3:�8[��$ �^'�0���	H@�@�(L�x0uM��$�o&�6��+	T%�nݺ��/V-3Sh�6
+��eO�@��m�Gy$<�����:�����������N:餦tt�QG�[n�%�������A,<��#�v�~��~򓟄U�V�W^y%�E�˖-W_}u3fLU�����fJ@m#�0ij;�@�8��3_�}׻�v�u�@�1�;6s�1a�ܹa���)�/���7��w�>�я�׿��a�vHM�øq��ԩS�7��뮀�H�5^v�m�p����3g�}��7l���ɒ68��p�E%A5y��_|A��UᜇP��^%�J�¤$ih6VN;�����a�ڵ��;�s��	?�px饗Rw��K�ԧ>�DE���7�����}.	�����}��?�E, ,N>���ӟ����Yy9�C��/��x�p��7'�r�ʴrco{���W\����
+�c�3׬Y�o�J@m$�0i#l��@�x��Wï��p�A�SN9%�{��裏���gºu�R8��{8���H^X!��'?v�y�$}��0}���>���"F1����_>d7l�\x���xG���?�8�𖷼%�s�=��c8���ñ�;d;v���)�I��aK���|��7nd���(p���c8����Q���>��c�Tg�ҥ����O�%)c��"2n���$*ؚ��?X�j2���˕W^~��ʧNSlM�8q����?��λ�_$ ��P����I�w�J�y&�j^/^�8.�l�}��Rw��
+[*T������-Z�cՄ��[+�������\ �
+���?���_�h�wx`�/�p�7?�s^CW+K@uP�ԅI#	��M�6�%K���� y�f%��a�΁�D��?�8�5�w��j[?�VhX�%�������:�1��9'|�s-&�M�@{	(L����$PŁ��b����w@P��3�<�Lb��oxC�o�K^�a��駟nv�'	�A@aR$M$��^���u�{U}�|�)U���k�u�i"	� �I�.��@�5�z�����k����n�M�6��\�*�a���5��� �J���+V����X��/~�Sl�t�B	��I�!�� ��0h���H^a�����p��]���Ud����~������_��mY>3�|�d�mYO���u{-�+9��AN~��sΩ+b~��NØC���_�m{�P�s�=��e[�#�H��^�:�0aT��y��'�}�_8�S�۶=	H�>
+��8i%��"��C�<��?>�[#Yp�r�m~=u��������k��.��[�Ϗ����N]𫮧�zj��3��`�ˇ?�ᐿ��*����͹��磌�J?��������% ��l�j8�N�ۿ$0��o��0����c1����w_�?������8tJClS��W��c�?���Ϧ�'M�~���m��i��믿>�~��!�X��\��T�	H�t&�R�_���ÂR�1��v�o~��wm��oŰ*�~�����s�Q��}�ǎ�_���_�ek&���5D�A7�tSZ�yꩧ�j���l�c�=���o��gV�8TK?�y�浤�@7�&�&�4�"���R�Yw&P�U�m�=��3v�a�ս�Mo
+.�1R֯_�����??=w���_�r'�'|�u�]ӪɌ3?=�7�b��f-lY7�&	H��&�W��L��}�{��g����.��Z��
+����VVN~����S���|�+]E�?����/����l�� �#�|��p��$^�L����L@a�ˣ���J`�ܹ�3�H�����;��1��AW��r衇�Y�f��h���q����1�0v��0gΜ͹�����K�N;���2eJu�:s93��_�0l�1�>~����w�{H?fΜ�|�1�O<1�?��1&��h[�=���*��^h��ה-I@�@+ئ���¤�F�X% 	H@]N@a���{(#��$P��¤6K$ 	H@h3�I���]��$ 	4��¤y,mI��$ �	(LX��F$	H@��a�	?rdz-�M9�������|��=0�0�1�xQ��w�>�(�e�b�A�2�Q1v/�a�I�s�Y��$ �.'�t�&MGj���$ 	����d��'	H@�#`D'�0���$ 	H@���$��*	H�|�H=G@a�sC����$ ��P��wl�L�#`D�@�	(LJ?��.��G����f4ݴ6{�p�e���f̘6l���2l�M�J���,,Ñ@�	(LJ?���iӦ�+V�q�ƅ�ӧ	��   IDAT����ٳ��y�i�iu�v؈ڛ9sf;vl�3gΈ���1�v���w޹��G	H�@@aR��*	��i��½��;P|饗���?y�I�x#	H@P�4��ʃ���o|c�i���Fv�'&�R\q`��w4xΕYaa����oO�,َm�\��X����-�iӦ��$�O��/�0���K.	<�O�g�}��|}�}�����<�V���Q�}N�],��'S�J;��%��3���<�������}p�W�I�K�js�m��&L�&O���e9�<���2_I�P�cŧ�O��C�{�C����rRe?��e$ʱ�Z�;��N@aR�6��̟??09TN��e�:��c�<1�t噉�h�I'�k��&m�s�=i�dR*�1��	���_�Vhb�iK��%&;&u���_^~���'Ϲ�b_�0Q�W.��N�:5�}���7��{�×���3b�Ｍ�~��p�A�W�<���)�CIW��>b/�! �RZ�lY����?�-�A~2��R+6��駟V�\-Z��x�zW�'Ϥ}��7����}]�z5�)��ŋ�)S��3=�\�|yʋ1��A+i�8~��d�5k���胆i�s���XPf�@�P��qK$��_̚5+lܸ1	>͒*?#&M������j�=K�.�a�č����GY� �<���D��o}�촥����s�Iy�^���|��i�>��k�����'��z衁	����@�y[�+�Hl����,Y���${��[��{9��;.� ���+��<�Oy2��Be�oC=�a���1�,h��%�y�ĉ�,�����/��x㍛�����ӟ����ͯ0�|	�w�����a��c���'�|r�9� Q�*�"�>#�0�7ܑ��+��c��UZ3fL�馛+<�IvժU<$&5V��KA�87�t^-����0|JgB�e��w_+y����Z�V���o9/_����V�s�5��A��'eQ��gl�/�a�S~Ϋ,�46��K��z�0�]�ʂBb�K�s=�5<S����y$� ��y�z<��R�C=T4�^%$P=$�Iu.�J�*>��Ӓ<�hY%a%cFq�&�Y��Vjrb��f���v�`W�,D�<&u��}�ger�\�JC�d�f\;N�"䥗^
+p��"�/E�Q�_⩖o�$0:
+��q��­�ޚ(�
+����/&K�JJ���{&����w-�'���N������w���"ȃ+$���olm�1�/V��VG�m�E$�A�<�BLU�bT돺��+WR�٘W.F�
+��p���`�&2�bybe�+��I��<�q?�Ķ� ��+�shr$�5b���~Q|�8��[!�z�)�$�����*e�QX�#qbG�5#�-�w�j3��t�1�/� �k��J
+⃺l�d|�I�+)����m9V�r�^%�O&�4��:b���������|�,��IeR�[;\�v�#�<��n�@L~6e˨���/|��k�������#��M���a���j�ϖ�ha���,
+��s�@yԥ�9r��g�F8�v��*	�6�!���X�Z���&���\+�'�ay���!�7�I�8�ڟ�Q�!�0�w{�L�����/�r֡�����h�{&U�C`Ǖ����|���+���~��o��?�O���*y�HĈak	?胳6\�JyKfَ�m�JL·W�#��%�g��y�ϓ{��+�B���P^�W�%ƆsG�����ذ���W�S-�6�g�h!v�w2%V��*�A%#�0)ـN�	0a���~��k�q��dR��g��m�x8O�M���m1ٱ�Q-/�-m�~�v�'/����6�S����\V�li�r�I�Ÿ��&�D�Ƞ�V��c��m�8�7��+e1n�#�x�e���Ŷ�?�-�QcL?�G9�x%���z\����}�?1n�ҦZ=ڦ_��m��6�o�]wM�b��`�-�\y6I���+k`�%	4� �|��[�wT��\���^�'�V+!ŕ.��ݖ�J��-i!�rP��c����?`>ѳ����#PHL�l3�)~�����5�\8GS�h��F�5%�]&�5z#��&��D�[�b�Cn�tu ]������]��H�-�kK/v"�aX,	H@���
+&	H@�����¤%�`���$ 	����d4Ԭ#	H@�@K�%LZҳ�J@��$ �
+
+�
+ >J@���L��
+&�J@��$�Y
+���w	H@�#`Dh��¤xV�Mx`��g?�������/~1���oo(�Y�f��^e#�K���zje��36�����	'����l������]2�j>�G_4�߰�v����Ā��{�G�h_��8�������C>y$ƌ�&�r���	��2�|��Q��'�&	��I���q&����}(lڴ)�&�F�>����I�������k?��,GN=������ߞ�#GuTx�'7ޘ~�6��c�9&�^�=E9v�*c�/�R�Xv�ǆ�kצ�"eؒ����c����y&	��I?��1x�[ߚ&��ϙL8��<�I�O�L0|��|z-~�e��Smn'_?�Q���9;P��e�A_����χ�v�-0��We�Jԣ>�}�3�"��������:+��dJ�x�A�0���|�U���$����J=X���}��/X�7���z��<�_���G>W���'� �p�˰'�<�k%�"-Z�(�����W_�����O?�D�^{��A�^r��y̘1ɖ:��w�$�Ee����g�`o�@�P���Hg"�����?%�?�)c��
+� �Ƀ�р�`��j:�Q����.]���$D1�2���ɓ�G�w�ygx���/������:�i(��'L��Ν�>�?�쳁>h���?�?ws٣�>:�/�IL�O=�TX�fM�'�ä�Ϭ4�2@>��U����&Z��,'8rO$�w�e.����h�?�xZ��B�z�=�\�������O��C9����Ɠ8���z��\m�'NL�˖-KW|~�W�{��u��%���sN��~���ܼu'l)'b?~<���So
+�/_v�}�$|x6I�(L�a��q��7z.>�	�O�Lt��I�I%OP���$� arY�`��$F=&&k��4L�H�P>",.���4a�n1V&��+W������i��f�T�g��=1Kn�r�e�}&j�ƞ����D&^�;������<�q<XY:���)Hĝ��@f����P%���#��WL�ê�G2kb�=T��v��ö����A��_��y(#�IG��bq�L6�*Q�D�˙*�y�+�P��l���k�V�P>扑U��C�P~aS+�3���m|+�Ä�aBG��j�қ��洕TNL�s�y�8R�����J�=���L��S��N�4�����9��}�+�^}����	B�Uƛ���<D	��,�r�W	��I��x��˧r&=&�"
+&eQ��)�(T�u*'a�Ꙅ�k$�c>8ɶ6��ń9���H�.��S�U��}C��_|1��D_y��l�v������1��y<��YC��l���/��T)D�a��A���q�u�f���ﱥ��Ĕ�F� �X�a�	����¤�F_ZJ�m&�)䎘�j`e���/�-`�'P��֡�	&���LB�L�4)��m5�l?��p>�6�1 �g�9���"4�2N�d�qW���mܸqi�?���� 0غ�5u�ì��L����d��Yl�'1N��}e"�8.C�[���+N���!�Uڥ�-��3�3��J�`K�ǖ���Zg�#D[��z&	���¤�#l|�0Aq0�ɎO�$&�����$�r:�eL.lP�O�LL�w\�&����p����;�$(L�)���d�}��Ve()#6���L����ץ9���3�Tk>�I�m��R�`k&+���M�&ok��舉  
+IDAT��C|pO��:�IC&f��9|���2��ʰ��v8D�-�L�!�ń `���o�Q�_bŦX�{�qE�r�_��������}��Θ����:ԥ�Bh��#!p���(��C�<�$�Z-L���1���� � i���Q����<��*`�elU������\!���b�����~70A�x�;��}N�E�$�s>Wl��}-�C���-���}�F.���m感�`�}�>��g[�%q��+�����ǫ��js������?���\F��i�|����R�5��L<�ن�苔Ws�/��y$���&U��-���h�:9���r�VYh[����¤_F�8% �Q@Q�m��Jl7��.�I���j?��[aR�15"	H��X����M�l�}�t�	���¤���J���&`�&�$ 	H@�
+��
+���G��$ ��P�������$ 	���¤ehmX�#`D��ZM@a�j¶/	H@�@�&u�Ұ|�H�����¤�FD$ 	H@}L@aR��7	H@�@�P����$ 	H�D�X�����H@��$P�I]�4��$ 	��@���0�ҁ�-	H@�@?P����$ ��0��P��d C��$P
+�2��1H@�#`D�S
+�>xÖ�$ 	t#�I7��>I�|�H�@]&ua�H��$ �vP����}���I@�@K(LZ��F% 	H@��h����I@�����¤+�A'$ 	H@�@9�	��$ 	H@�9
+��2��$ 	t�@+{W����mK@��$0"
+���X���G�����¤�FC_$ 	H@}N@a��o ×��G��$��&�<z�.	H@(�I��p$P>F$	��I?���J@�����¤�H��G��$ 	H�6�Im6�H@��$�f
+�6/_wF$	H@h�I�Xڒ$ 	H@P�T �Q��$ ��P�t��=K@�������*L�E��$ 	H@�"�0ii���$ ��0��P�4�J@��$0Z
+�ђ��$ ��0"	t��¤�C���$ 	d
+�L«$P>F$	��I��K@���K@aRޱ5��0"	H@�'�0)��$ 	H�w(Lzg���I@��*(L*��(	H@�@�(L��ޖ$ 	H@h��¤A�V��$ 	H�yj���aK��$ 	H�.
+��0i$	H@h.[�N@aR�����$ 	t��¤��R�@���C@a���"	H@�@(L� �&$ ��0"	H�3&��n���$ 	T!�0��,	���I@�
+��'���$ 	��I_s��4"	H@('�I9�ը$ 	H@=I@a�æ��$ 	@@a�$ 	H@]A�%¤+"�		H@��z��¤�L�% 	H��	�:|�I����$ 	H@�E@a�[㥷���G��$P �0)��V��$ ���0�6mZX�bE�7o^G<���^{-���ǉ��/6�I����iV	H@��'	4@`�¤���^v�eaÆ��@f7�y�a���)qO�PU�'O�$ D���p��믿>�}��aƌCֱP��$ ���0���{�~��N<���{3L�S�NM�����^ziX�|y �Z5��g�}�	k׮�f2�w��G���̙n�����q�7P�����K@h#���V�L�\�9�V x���iӦMi���.�(�3&\|��)ۜX� �g��}��a���q��������|�;�#�H��ʲ�L<�ƍ�W��Y�:q��t�E��$ ���0��5�i����\b��Ո.� �\�2\s�5a�ƍ��+�L+�6z���
+��gEa�*	�EQ������_�j1k��e˖�rD�'=�RF�$	H@]L�e�w�i�p�grfΜ�����SF������RX�8��C��w�=h�$�"	H@�@��L��b1k֬���V��ES�$�y����	&$�,Vx(n��)k$��[;���ֺv&	H@(��	!2Ǝb�iKgҤI�0��|����ճ�:+�)��m�T�ö��
+N�����So;�I@��$�8���ɒ%K�����r_<��3��Y�j��R��<	VO:�p뭷�<^,�?�m��Q�H�\_=�\�9�S�U�Fڶ�$ 	H@�hH���������[5'�pB:�J�|�����e��KR�M7��x�t��H��o�`_L�b,^�8�Y�&`��h���G�<��#Xx*U�r�����^�؆j�2	H@�@��~��k�E~�$Ƙ�k>��t����v�Ƹ�,�8��'~%Ƙ�b[�hl�e�Ǹ�M�sBb��N�'�q�>�g;eʔC��}�=�$ 	H@�#0ja����-K@�@}�*�m�	[!��`k�Z���~����H��$��&����Gbܲ]�����o��	[']�NH@(���&"��$ 	H@�"�0�y��@0D	H@#%�0)1�% 	H@h�I���p��$ 	����  ���d�   IDAT ��(L�RR    IEND�B`�
+```
 ```png
 �PNG
 
