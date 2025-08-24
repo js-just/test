@@ -1,17 +1,6 @@
-### test
-## test
 ## test
 ### test
-## test
-## test
-## test
 ### test
-## test
-## test
-## test
-## test
-### test
-## test
 ## test
 ## test
 ### test
@@ -21,9 +10,20 @@
 ## test
 ### test
 ### test
+## test
+### test
+## test
+## test
+## test
+## test
 ### test
 ### test
 ### test
+## test
+### test
+## test
+## test
+## test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4134,7 +4134,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
+## test
 ## test
 ```css
 * {
@@ -5386,7 +5386,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6526,30 +6526,58 @@ function checkFirstLetterCase(text) {
     const code = params.get('c');
     const codes = await getCodes();
 
+    const h1 = document.querySelector('.exit');
+    function updh1() {
+        h1.classList.remove('exit');
+        h1.classList.add('code');
+    };
+    const elem = (id) => document.getElementById(id);
+    elem('e').style.display = 'none';
+    function animElemE() {
+        setInterval(()=>{
+            elem('e').style.display = elem('e').style.display === 'none' ? null : 'none'
+        }, 500)
+    };
     if (code != null && codes.nums.includes(code)) {
         const codedata = getCodeData(code, codes.data);
-        const elem = (id) => document.getElementById(id);
         if (codedata.crashed || code.startsWith('03')) {
             elem('a').classList.add('error');
         } else if (code.startsWith('02')) {
+            updh1();
             elem('a').classList.add('warn');
         } else {
             elem('a').classList.add('ok');
+        };
+        if (code.startsWith('03')) {
+            updh1();
         };
         const info = codedata.data.i||'';
         const check = checkFirstLetterCase(info);
         animateTyping('a', code, 200, ()=>{
             animateTyping('b', !codedata.data.mg?codedata.message:'', 50, ()=>{
+                if (codedata.data.mg) {
+                    elem('b').remove();
+                };
                 if (check===true) {
                     elem('c').classList.add('info');
                 } else {
                     elem('c').classList.add('tip');
-                }
+                };
                 animateTyping('c', check===false?`To fix it, ${info}.`:check===true?info:''||'', 50, ()=>{
-                    animateTyping('d', 'Do you want to redirect to the docs? (y/n)');
+                    animateTyping('d', 'Do you want to redirect to the docs? (y/n)', 25, ()=>{
+                        animElemE();
+                    });
                 });
             });
         });
+    } else {
+        updh1();
+        elem('a').remove();
+        elem('b').remove();
+        elem('c').remove();
+        animateTyping('d', 'Enter the code...', 25, ()=>{
+            animElemE();
+        })
     }
 })();
 
