@@ -1,29 +1,29 @@
-## test
-### test
-### test
 ### test
 ## test
 ### test
 ### test
 ### test
-## test
-## test
 ### test
 ## test
 ### test
 ## test
-## test
-## test
+### test
+### test
+### test
 ## test
 ## test
 ## test
 ### test
 ## test
 ## test
+## test
+### test
+## test
+### test
+## test
 ### test
 ## test
 ## test
-### test
 ```js
 /*
 
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3839,13 +3839,18 @@ elif [ -z "$INPUT_PATH" ]; then
 fi
 
 chmod +x "$GITHUB_ACTION_PATH/src/last-commit.py"
+chmod +x "$GITHUB_ACTION_PATH/src/latest.py"
 LAST_COMMIT=$(python3 "$GITHUB_ACTION_PATH/src/last-commit.py")
+LATEST_VER=$(python3 "$GITHUB_ACTION_PATH/src/latest.py")
 COMMIT_SHA=$(cat "$GITHUB_ACTION_PATH/data/generated/sha.txt")
 VERSION=$(echo "$GITHUB_ACTION_PATH" | grep -oP '(?<=/v)[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?' || echo "$COMMIT_SHA")
 if [[ "$VERSION" != "$COMMIT_SHA" && "$VERSION" != v* ]]; then
     VERSION="v$VERSION"
 elif [[ "$VERSION" == "$COMMIT_SHA" && "$COMMIT_SHA" == "$LAST_COMMIT" ]]; then
     VERSION="@main $VERSION"
+fi
+if [[ "$VERSION" == v* && "$VERSION" == "$LATEST_VER" ]]; then
+    VERSION="/latest $VERSION"
 fi
 msg1=$(_justMessage "$_BLUE Running$_LIGHTPURPLE Just an Ultimate Site Tool$_RESET $VERSION")
 msg2=$(_justMessage "$_BLUE Installing Node.js$_RESET...")
@@ -4057,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4129,8 +4134,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
-## test
+### test
+### test
 ```css
 * {
     margin: 0;
@@ -4187,6 +4192,22 @@ h4 {
     translate: 0% calc(100% + 9px);
 }
 ```
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Just an Ultimate Site Tool</title>
+    </head>
+    <body>
+        <span id="a"></span>
+        <span id="b"></span>
+        <span id="c"></span>
+        <script src="/js/code.js"></script>
+    </body>
+</html>
+
+```
+### test
 ```json
 {
     "README": {
@@ -4582,7 +4603,203 @@ h4 {
     ]
 }
 ```
-### test
+```json
+{
+    "plaintext": "",
+    "1c": "1C",
+    "abnf": "ABNF",
+    "accesslog": "Access logs",
+    "actionscript": "ActionScript",
+    "ada": "Ada",
+    "angelscript": "AngelScript",
+    "apache": "Apache",
+    "applescript": "AppleScript",
+    "arcade": "Arcade",
+    "arduino": "Arduino",
+    "armasm": "ARM assembler",
+    "asciidoc": "AsciiDoc",
+    "aspectj": "AspectJ",
+    "autohotkey": "AutoHotkey",
+    "autoit": "AutoIt",
+    "avrasm": "AVR assembler",
+    "awk": "Awk",
+    "bash": "Bash",
+    "basic": "BASIC",
+    "bnf": "BNF",
+    "brainfuck": "Brainfuck",
+    "c": "C",
+    "cal": "C/AL",
+    "csharp": "C#",
+    "cpp": "C++",
+    "cos": "Cache Object Script",
+    "capnproto": "Cap’n Proto",
+    "ceylon": "Ceylon",
+    "clean": "Clean",
+    "clojure": "Clojure",
+    "clojure-repl": "Clojure REPL",
+    "cmake": "CMake",
+    "coffeescript": "CoffeeScript",
+    "coq": "Coq",
+    "crmsh": "Crmsh",
+    "crystal": "Crystal",
+    "csp": "CSP",
+    "css": "CSS",
+    "d": "D",
+    "dart": "Dart",
+    "delphi": "Delphi",
+    "dts": "Device Tree",
+    "diff": "Diff",
+    "django": "Django",
+    "dns": "DNS Zone",
+    "dockerfile": "Dockerfile",
+    "dos": "DOS",
+    "dsconfig": "dsconfig",
+    "dust": "Dust",
+    "ebnf": "EBNF",
+    "elixir": "Elixir",
+    "elm": "Elm",
+    "erb": "Embedded Ruby",
+    "erlang": "Erlang",
+    "erlang-repl": "Erlang REPL",
+    "excel": "Excel",
+    "fsharp": "F#",
+    "fix": "FIX",
+    "flix": "Flix",
+    "fortran": "Fortran",
+    "gcode": "G-Code",
+    "gams": "Gams",
+    "gauss": "GAUSS",
+    "gherkin": "Gherkin",
+    "gml": "gml",
+    "go": "Go",
+    "golo": "Golo",
+    "gradle": "Gradle",
+    "graphql": "GraphQL",
+    "groovy": "Groovy",
+    "haml": "Haml",
+    "handlebars": "Handlebars",
+    "haskell": "Haskell",
+    "haxe": "Haxe",
+    "hsp": "hsp",
+    "http": "HTTP",
+    "hy": "Hy",
+    "inform7": "Inform7",
+    "ini": "INI",
+    "irpf90": "IRPF90",
+    "isbl": "ISBL",
+    "java": "Java",
+    "javascript": "JavaScript",
+    "jboss-cli": "JBoss CLI",
+    "json": "JSON",
+    "julia": "Julia",
+    "julia-repl": "Julia REPL",
+    "kotlin": "Kotlin",
+    "lasso": "Lasso",
+    "latex": "LaTeX",
+    "ldif": "LDIF",
+    "leaf": "Leaf",
+    "less": "LESS",
+    "lisp": "Lisp",
+    "livecodeserver": "LiveCode Server",
+    "livescript": "LiveScript",
+    "llvm": "LLVM",
+    "lsl": "LSL",
+    "lua": "Lua",
+    "makefile": "Makefile",
+    "markdown": "Markdown",
+    "mathematica": "Mathematica",
+    "matlab": "Matlab",
+    "maxima": "Maxima",
+    "mel": "Maya Embedded Language",
+    "mercury": "Mercury",
+    "mipsasm": "MIPS Assembler",
+    "mizar": "Mizar",
+    "mojolicious": "Mojolicious",
+    "monkey": "Monkey",
+    "moonscript": "Moonscript",
+    "n1ql": "N1QL",
+    "nestedtext": "NestedText",
+    "nginx": "Nginx",
+    "nim": "Nim",
+    "nix": "Nix",
+    "node-repl": "Node.js REPL",
+    "nsis": "NSIS",
+    "objectivec": "Objective-C",
+    "ocaml": "OCaml",
+    "glsl": "OpenGL Shading Language",
+    "openscad": "OpenSCAD",
+    "ruleslanguage": "Oracle Rules Language",
+    "oxygene": "Oxygene",
+    "parser3": "Parser3",
+    "perl": "Perl",
+    "pf": "PF",
+    "php-template": "PHP",
+    "php": "PHP",
+    "pony": "Pony",
+    "pgsql": "PostgreSQL",
+    "powershell": "PowerShell",
+    "processing": "Processing",
+    "prolog": "Prolog",
+    "properties": "Properties",
+    "protobuf": "Protocol Buffers",
+    "puppet": "Puppet",
+    "purebasic": "PureBasic",
+    "python": "Python",
+    "profile": "Python profiler results",
+    "python-repl": "Python REPL",
+    "q": "Q",
+    "qml": "QML",
+    "r": "R",
+    "reasonml": "ReasonML",
+    "rib": "RenderMan RIB",
+    "rsl": "RenderMan RSL",
+    "roboconf": "Roboconf",
+    "routeros": "RouterOS",
+    "ruby": "Ruby",
+    "rust": "Rust",
+    "sas": "SAS",
+    "scala": "Scala",
+    "scheme": "Scheme",
+    "scilab": "Scilab",
+    "scss": "SCSS",
+    "shell": "Shell",
+    "smali": "Smali",
+    "smalltalk": "Smalltalk",
+    "sml": "SML",
+    "sqf": "SQF",
+    "sql": "SQL",
+    "stan": "Stan",
+    "stata": "Stata",
+    "step21": "step21",
+    "stylus": "Stylus",
+    "subunit": "SubUnit",
+    "swift": "Swift",
+    "taggerscript": "Tagger Script",
+    "tcl": "Tcl",
+    "tap": "Test Anything Protocol",
+    "thrift": "Thrift",
+    "tp": "TP",
+    "twig": "Twig",
+    "typescript": "TypeScript",
+    "vala": "Vala",
+    "vbnet": "VB.Net",
+    "vbscript-html": "VBScript",
+    "vbscript": "VBScript",
+    "verilog": "Verilog",
+    "vhdl": "VHDL",
+    "vim": "Vim Script",
+    "wasm": "WebAssembly",
+    "wren": "Wren",
+    "axapta": "X++",
+    "x86asm": "x86 Assembly",
+    "xl": "XL",
+    "xml": "XML",
+    "xquery": "XQuery",
+    "yaml": "YAML",
+    "zephir": "Zephir"
+}
+```
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -5709,7 +5926,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -5923,6 +6140,80 @@ https://just.is-a.dev
 
 _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
+
+```
+## test
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+async function getCodes() {
+    const responce = await fetch('https://test.just.is-a.dev/codes.json').then((r)=>{
+        return r.json();
+    });
+    let[data,nums]=[[],[]];
+    for (const[key,val]of Object.entries(responce)) {
+        if (key !== 'README') {
+            val.forEach((item)=>{
+                data.push(item);
+                nums.push(item.code);
+            });
+        }
+    };
+    data = data.filter(item=>item.data);
+    return {
+        data,nums:nums.filter((item)=>{
+            let output = false;
+            data.forEach((code)=>{
+                output=!output?code.code===item:output;
+            });
+            return output;
+        })
+    }
+}
+function getCodeData(code, data) {
+    let output = null;
+    data.forEach((item)=>{
+        if (item.code === code) {
+            output = item;
+        }
+    });
+    return output;
+}
+
+const params = new URLSearchParams(window.location.search);
+const code = params.get('c');
+const codes = await getCodes();
+
+if (code != null && codes.nums.includes(code)) {
+    const codedata = getCodeData(code, codes.data);
+    document.getElementById('a').innerText=code;
+    document.getElementById('b').innerText=!codedata.data.mg?codedata.message:'';
+    document.getElementById('c').innerHTML=codedata.data.i||'';
+}
 
 ```
 ```md
