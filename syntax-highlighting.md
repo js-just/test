@@ -1,17 +1,21 @@
 ### test
 ## test
+## test
+### test
+## test
+## test
+## test
+### test
+## test
+## test
+## test
+## test
 ### test
 ## test
 ## test
 ## test
 ### test
 ## test
-## test
-### test
-## test
-## test
-### test
-## test
 ### test
 ### test
 ## test
@@ -19,10 +23,6 @@
 ### test
 ### test
 ### test
-## test
-### test
-### test
-## test
 ### test
 ```js
 /*
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4134,8 +4134,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
 ### test
+## test
 ```css
 * {
     margin: 0;
@@ -4425,7 +4425,10 @@ pre {
     border-radius: 10px;
 }
 pre span {
-    margin-left: -3px
+    margin-left: 4px;
+}
+pre div {
+    margin-inline: 1rem;
 }
 
 .s { /* Screen */
@@ -4435,7 +4438,7 @@ pre span {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -4521,7 +4524,7 @@ pre span {
             "link": "",
             "data": {
                 "mg": true,
-                "i": "Invalid domain name: Invalid TLD. <br>Please check your <code>module.exports</code> of the <code>just.config.js</code> file."
+                "i": "Invalid domain name: Invalid TLD. \nPlease check your <code>module.exports</code> of the <code>just.config.js</code> file."
             }
         }
     ],
@@ -4561,7 +4564,7 @@ pre span {
             "link": "",
             "data": {
                 "mg": false,
-                "i": "The <code>module.exports</code> is missing or the property <code>type</code> either has an invalid value or is missing. <br>Please read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>."
+                "i": "The <code>module.exports</code> is missing or the property <code>type</code> either has an invalid value or is missing. \nPlease read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>."
             }
         },
         {
@@ -4571,7 +4574,7 @@ pre span {
             "link": "",
             "data": {
                 "mg": false,
-                "i": "_0110"
+                "i": "The <code>module.exports</code> is missing or the property <code>type</code> either has an invalid value or is missing. \nPlease read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>."
             }
         },
         {
@@ -4795,7 +4798,7 @@ pre span {
             "link": "",
             "data": {
                 "mg": true,
-                "i": "Invalid domain name. <br>Please check your <code>module.exports</code> of the <code>just.config.js</code> file."
+                "i": "Invalid domain name. \nPlease check your <code>module.exports</code> of the <code>just.config.js</code> file."
             }
         },
         {
@@ -4805,7 +4808,7 @@ pre span {
             "link": "",
             "data": {
                 "mg": true,
-                "i": "Invalid domain name: Invalid <a href=\"https://is-a.dev/\" target=\"_blank\"><code>.is-a.dev</code></a> subdomain. <br>The subdomain you specified does not exist. Please register it first."
+                "i": "Invalid domain name: Invalid <a href=\"https://is-a.dev/\" target=\"_blank\"><code>.is-a.dev</code></a> subdomain. \nThe subdomain you specified does not exist. Please register it first."
             }
         },
         {
@@ -5028,7 +5031,7 @@ pre span {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5383,7 +5386,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6538,9 +6541,9 @@ function checkFirstLetterCase(text) {
         animateTyping('a', code, 200, ()=>{
             animateTyping('b', !codedata.data.mg?codedata.message:'', 50, ()=>{
                 if (check===true) {
-                    elem('c').classList.add('tip');
-                } else {
                     elem('c').classList.add('info');
+                } else {
+                    elem('c').classList.add('tip');
                 }
                 animateTyping('c', check===false?`To fix it, ${info}.`:check===true?info:''||'', 50, ()=>{
                     animateTyping('d', 'Do you want to redirect to the docs? (y/n)');
@@ -6972,7 +6975,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
