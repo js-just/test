@@ -1,5 +1,20 @@
 ## test
 ### test
+### test
+### test
+### test
+## test
+## test
+### test
+### test
+## test
+## test
+## test
+### test
+### test
+## test
+## test
+## test
 ## test
 ### test
 ### test
@@ -8,21 +23,6 @@
 ## test
 ## test
 ## test
-## test
-## test
-## test
-### test
-## test
-## test
-### test
-## test
-## test
-### test
-## test
-### test
-### test
-### test
-### test
 ## test
 ```js
 /*
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4134,8 +4134,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
-## test
+### test
+### test
 ```css
 * {
     margin: 0;
@@ -4216,7 +4216,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -5038,7 +5038,7 @@ pre #text {
 }
 ```
 ## test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5393,7 +5393,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6425,6 +6425,7 @@ SOFTWARE.
 */
 
 const APIURL = 'https://test.just.is-a.dev/data/codes.json';
+const none = 'none';
 /**
  * @param {string} elementId 
  * @param {string} text 
@@ -6540,7 +6541,7 @@ function checkFirstLetterCase(text) {
         h1.classList.add('code');
     };
     const elem = (id) => document.getElementById(id);
-    elem('e').style.display = 'none';
+    elem('e').style.display = none;
     function redirect(to) {
         try{window.location.replace(to)}catch(e){};try{window.location.href=to}catch(e){};try{window.location.assign(to)}catch(e){}
     }
@@ -6599,7 +6600,7 @@ function checkFirstLetterCase(text) {
     function animElemE(oncommand, onlyYorN = false) {
         if (interval) clearInterval(interval);
         interval = setInterval(()=>{
-            elem('e').style.display = elem('e').style.display === 'none' ? null : 'none'
+            elem('e').style.display = elem('e').style.display === none ? null : none
         }, 500);
         let input = '';
         function updInp() {
