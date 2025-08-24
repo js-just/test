@@ -1,29 +1,29 @@
 ### test
 ### test
-## test
-### test
-### test
-### test
-### test
-### test
-## test
-## test
-### test
-## test
 ### test
 ### test
 ## test
 ### test
 ### test
+### test
 ## test
+## test
+### test
+### test
+## test
+## test
+## test
+## test
+### test
 ### test
 ## test
 ### test
 ## test
-### test
+## test
 ## test
 ### test
 ## test
+### test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4134,8 +4134,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4216,7 +4216,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -6180,7 +6180,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -6468,6 +6468,7 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
             element.innerHTML += text.charAt(index);
             index++;
         };
+        element.innerHTML = element.innerHTML.replaceAll('\n', '<br>');
         setTimeout(type, speed);
     };
     type();
@@ -6553,12 +6554,17 @@ function checkFirstLetterCase(text) {
         'y', 'yes', 'ye', 'yeah', 'yep', 'sure', 'ok', 'k'
     ];
     async function codecmd(cmd) {
-        if (cmd.length===4&&(await getCodes()).nums.includes(cmd)) {
+        if ((await getCodes()).nums.includes(cmd)) {
             window.location.search = `?c=${cmd}`;
-        } else {
+        } else if (!(await getCodes()).nums.includes(cmd)) {
             elem('d').innerText = 'No code found and unknown command.';
             setTimeout(()=>{
                 animateTyping('d', 'Enter the code...');
+                if (code != null && codes.nums.includes(code)) {
+                    redirect('https://just.is-a.dev/code')
+                } else {
+                    window.location.reload()
+                }
             }, 1000)
         }
     };
