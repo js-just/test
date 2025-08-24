@@ -3,27 +3,27 @@
 ### test
 ## test
 ## test
-### test
 ## test
 ### test
 ### test
 ## test
-### test
-### test
-## test
-### test
 ## test
 ## test
-## test
-## test
-### test
-### test
 ### test
 ## test
 ### test
 ## test
 ## test
+### test
 ## test
+## test
+## test
+## test
+## test
+### test
+## test
+## test
+### test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4134,7 +4134,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ## test
 ```css
 * {
@@ -4438,7 +4438,7 @@ pre div {
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -6173,7 +6173,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -6389,7 +6389,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -6536,7 +6536,36 @@ function checkFirstLetterCase(text) {
     function animElemE() {
         setInterval(()=>{
             elem('e').style.display = elem('e').style.display === 'none' ? null : 'none'
-        }, 500)
+        }, 500);
+        let input = '';
+        function updInp() {
+            if (input === '') {
+                elem('text')?.remove();
+                elem('e').insertAdjacentHTML('beforebegin', '<span id="text"></span>');
+            } else if (elem('text')) {
+                elem('text').innerText = ` ${input}`;
+            } else {
+                elem('e').insertAdjacentHTML('beforebegin', `<span id="text"> ${input}</span>`);
+            }
+        }
+        window.addEventListener('keydown', (event)=>{
+            if (event.key.toLowerCase() === 'c' && event.ctrlKey) {
+                event.preventDefault();
+            } else if (/^[a-zA-Z0-9]$/.test(event.key)) {
+                event.preventDefault();
+                input += event.key;
+                updInp()
+            } else if (event.key.toLowerCase() === 'Enter'.toLowerCase()) {
+                event.preventDefault();
+                console.log(input);
+                input = '';
+                updInp();
+            } else if (event.key.toLowerCase() === 'Backspace'.toLowerCase()) {
+                event.preventDefault();
+                input = input.slice(0,-1);
+                updInp();
+            }
+        })
     };
     if (code != null && codes.nums.includes(code)) {
         const codedata = getCodeData(code, codes.data);
