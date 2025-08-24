@@ -1,28 +1,28 @@
 ## test
-### test
-### test
 ## test
-### test
 ## test
-### test
-## test
-### test
-## test
-### test
 ## test
 ### test
 ### test
-## test
-### test
-## test
-## test
 ## test
 ### test
 ### test
 ### test
 ### test
 ### test
+### test
+### test
 ## test
+### test
+## test
+## test
+## test
+## test
+## test
+### test
+### test
+### test
+### test
 ## test
 ```js
 /*
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -4196,15 +4196,161 @@ h4 {
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet">
         <title>Just an Ultimate Site Tool</title>
     </head>
     <body>
+        <h1 class="bg lz cw beta agt">Just an Ultimate Site Tool</h1>
         <span id="a"></span>
         <span id="b"></span>
         <span id="c"></span>
         <script src="/js/code.js"></script>
     </body>
 </html>
+
+```
+## test
+```css
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+:root {
+    --a: 5s ease-in-out infinite; /* Animation */
+    --g: 0px 0px 12px rgba(255,255,255,0.4); /* Glow */
+}
+
+html {
+    font-family: "Rubik", monospace;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.rmo { /* Rubik Mono One */
+    font-family: "Rubik Mono One", "Rubik", monospace;
+}
+.scp { /* Source Code Pro */
+    font-family: "Source Code Pro", monospace;
+}
+.lz { /* Lexend Zetta */
+    font-family: "Lexend Zetta", sans-serif;
+}
+
+h1 {
+    margin: 0;
+    padding: 50px 10px;
+    text-align: center;
+    animation: gt var(--a);
+    -webkit-animation: gt var(--a);
+}
+.demo::after {
+    content: 'Demo';
+    margin-left: 20px;
+    padding: 0px 10px;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    animation: g var(--a);
+    -webkit-animation: g var(--a);
+    animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+}
+.beta::after {
+    content: 'Beta';
+    margin-left: 20px;
+    padding: 0px 10px;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    animation: g var(--a);
+    -webkit-animation: g var(--a);
+    animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+}
+
+.cw { /* Color - White */
+    color: white;
+}
+.bb { /* Background - Black */
+    background-color: black;
+}
+.fi { /* Filter - Invert */
+    filter: invert(1);
+    -webkit-filter: invert(1);
+}
+
+.ag { /* Animation Glow */
+    animation: g var(--a);
+    -webkit-animation: g var(--a);
+}
+.agt { /* Animation Glow (Text) */
+    animation: gt var(--a);
+    -webkit-animation: gt var(--a);
+}
+
+@keyframes g { /* Glow */
+    0%, 100% {
+        filter: none;
+        -webkit-filter: none;
+    }
+    40% {
+        filter: drop-shadow(var(--g));
+        -webkit-filter: drop-shadow(var(--g));
+    }
+}
+@-webkit-keyframes g {
+    0%, 100% {
+        filter: none;
+        -webkit-filter: none;
+    }
+    40% {
+        filter: drop-shadow(var(--g));
+        -webkit-filter: drop-shadow(var(--g));
+    }
+}
+@keyframes gt { /* Glow (Text) */
+    0%, 100% {
+        text-shadow: none;
+    }
+    40% {
+        text-shadow: var(--g);
+    }
+}
+@-webkit-keyframes gt {
+    0%, 100% {
+        text-shadow: none;
+    }
+    40% {
+        text-shadow: var(--g);
+    }
+}
 
 ```
 ### test
@@ -4799,7 +4945,7 @@ h4 {
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -5925,6 +6071,22 @@ Currently it have 4 modes:
 -# _just uses Node.js, but _just does not require you to use Node.js/npm/pnpm/Yarn/related packages stuff.
 
 _just: next: /docs/getting-started
+```
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet">
+        <title>Just an Ultimate Site Tool</title>
+    </head>
+    <body>
+        <h1 class="bg lz cw beta agt">Just an Ultimate Site Tool</h1>
+    </body>
+</html>
+
 ```
 ### test
 ```png
