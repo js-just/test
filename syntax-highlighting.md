@@ -1,29 +1,29 @@
-## test
-## test
 ### test
-## test
-### test
-### test
-## test
-## test
-### test
-### test
-## test
-### test
-## test
-### test
-## test
 ### test
 ## test
 ## test
 ## test
 ### test
 ## test
-### test
+## test
+## test
 ## test
 ### test
 ## test
 ## test
+## test
+### test
+### test
+## test
+## test
+### test
+## test
+## test
+## test
+## test
+## test
+### test
+### test
 ```js
 /*
 
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4135,7 +4135,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -4466,7 +4466,7 @@ pre #text {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5058,7 +5058,7 @@ pre #text {
     "zephir": "Zephir"
 }
 ```
-## test
+### test
 ### test
 ```md
 _just: title: Advanced usage
@@ -5414,7 +5414,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6201,7 +6201,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -6447,6 +6447,7 @@ SOFTWARE.
 
 const APIURL = 'https://test.just.is-a.dev/data/codes.json';
 const none = 'none';
+const entr = 'Enter the code or command, or type "help" and press "Enter"...';
 /**
  * @param {string} elementId 
  * @param {string} text 
@@ -6584,7 +6585,7 @@ function checkFirstLetterCase(text) {
     function enableD() {
         elem('f')?.remove();
         elem('d').style.display = null;
-        animateTyping('d', 'Enter the code...');
+        animateTyping('d', entr);
     };
     async function codecmd(cmd) {
         const codess=await getCodes();
@@ -6653,7 +6654,7 @@ function checkFirstLetterCase(text) {
                     if (yescmds.includes(inpt)) {
                         oncommand();
                     } else {
-                        animateTyping('d', 'Enter the code...', 25, ()=>{animElemE(codecmd)});
+                        animateTyping('d', entr, 25, ()=>{animElemE(codecmd)});
                     }
                 } else if (helpcmds.includes(inpt)) {
                     helpcmd();
@@ -6709,7 +6710,7 @@ function checkFirstLetterCase(text) {
         elem('a').remove();
         elem('b').remove();
         elem('c').remove();
-        animateTyping('d', 'Enter the code...', 25, ()=>{
+        animateTyping('d', entr, 25, ()=>{
             animElemE(codecmd);
         })
     }
@@ -7137,7 +7138,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
