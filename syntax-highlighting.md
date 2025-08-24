@@ -4,6 +4,10 @@
 ## test
 ## test
 ### test
+### test
+### test
+### test
+### test
 ## test
 ## test
 ### test
@@ -12,13 +16,9 @@
 ## test
 ## test
 ## test
-### test
 ## test
 ## test
-### test
-### test
 ## test
-### test
 ## test
 ### test
 ## test
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -5028,7 +5028,7 @@ pre span {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6430,27 +6430,35 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
     let index = 0;
     element.innerHTML = '';
     function type() {
-        if (index < text.length) {
-            const char = text.charAt(index); 
-            if (char=='<') {
-                let tag = '';
-                let two = false;
-                while (char != '>' && !two) {
-                    tag += char;
-                    if (char == '>') {
-                        two = true;
-                    }
-                }
-                element.innerHTML += tag;
-                index=index+tag.length;
-            } else {
-                element.innerHTML += char;
-                index++;
-            };
-            setTimeout(type, speed);
-        } else {
+        if (index >= text.length) {
             if (callback) callback();
-        }
+            return;
+        };
+        if (text.charAt(index) === '<') {
+            let endIdx = -1;
+            const openTagMatch = text.substring(index).match(/^<([a-zA-Z0-9]+)[^>]*>/);
+            if (openTagMatch) {
+                const tagName = openTagMatch[1];
+                const closeTagStr = `</${tagName}>`;
+                const closeIdx = text.indexOf(closeTagStr, index);
+                if (closeIdx !== -1) {
+                    endIdx = closeIdx + closeTagStr.length;
+                    const fullTagBlock = text.substring(index, endIdx);
+                    element.innerHTML += fullTagBlock;
+                    index = endIdx;
+                } else {
+                    element.innerHTML += '<';
+                    index++;
+                }
+            } else {
+                element.innerHTML += '<';
+                index++;
+            }
+        } else {
+            element.innerHTML += text.charAt(index);
+            index++;
+        };
+        setTimeout(type, speed);
     };
     type();
 };
