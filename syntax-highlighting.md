@@ -1,29 +1,29 @@
-### test
-### test
-## test
-## test
-## test
-### test
 ## test
 ## test
 ## test
 ### test
 ## test
 ### test
-## test
 ### test
-## test
-## test
 ## test
 ### test
 ### test
 ### test
 ## test
+### test
+### test
+### test
+## test
+### test
+## test
 ## test
 ### test
 ### test
 ## test
-## test
+### test
+### test
+### test
+### test
 ```js
 /*
 
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4216,7 +4216,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4445,7 +4445,7 @@ pre #text {
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5038,7 +5038,7 @@ pre #text {
 }
 ```
 ## test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5393,7 +5393,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6396,7 +6396,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -6557,24 +6557,21 @@ function checkFirstLetterCase(text) {
         const codess=await getCodes();
         if (codess.nums.includes(cmd)) {
             window.location.search = `?c=${cmd}`;
-        }/* else {
+        } else {
             elem('d').innerText = 'No code found and unknown command.';
             setTimeout(()=>{
                 animateTyping('d', 'Enter the code...');
-                if (code != null && codes.nums.includes(code)) {
-                    redirect('https://just.is-a.dev/code')
-                } else {
-                    window.location.reload()
-                }
             }, 1000)
-        }*/
+        }
     };
+    let interval;
     /**
      * @param {Function} oncommand 
      * @param {boolean?} onlyYorN
      */
     function animElemE(oncommand, onlyYorN = false) {
-        const interval = setInterval(()=>{
+        if (interval) clearInterval(interval);
+        interval = setInterval(()=>{
             elem('e').style.display = elem('e').style.display === 'none' ? null : 'none'
         }, 500);
         let input = '';
@@ -6598,7 +6595,6 @@ function checkFirstLetterCase(text) {
                 updInp()
             } else if (event.key.toLowerCase() === 'Enter'.toLowerCase()) {
                 event.preventDefault();
-                clearInterval(interval);
                 const inpt = input;
                 input = '';
                 updInp();
