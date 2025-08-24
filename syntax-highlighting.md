@@ -1,4 +1,3 @@
-### test
 ## test
 ### test
 ### test
@@ -7,22 +6,23 @@
 ## test
 ### test
 ## test
-### test
-### test
-### test
-## test
-## test
-## test
-### test
-## test
 ## test
 ## test
 ### test
 ## test
 ### test
+### test
+### test
 ## test
 ### test
 ## test
+## test
+### test
+## test
+## test
+## test
+## test
+### test
 ## test
 ```js
 /*
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4134,8 +4134,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4799,7 +4799,7 @@ h4 {
     "zephir": "Zephir"
 }
 ```
-## test
+### test
 ### test
 ```md
 _just: title: Advanced usage
@@ -5926,7 +5926,7 @@ Currently it have 4 modes:
 
 _just: next: /docs/getting-started
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -6142,7 +6142,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -6169,51 +6169,52 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-
-async function getCodes() {
-    const responce = await fetch('https://test.just.is-a.dev/codes.json').then((r)=>{
-        return r.json();
-    });
-    let[data,nums]=[[],[]];
-    for (const[key,val]of Object.entries(responce)) {
-        if (key !== 'README') {
-            val.forEach((item)=>{
-                data.push(item);
-                nums.push(item.code);
-            });
+(async()=>{
+    async function getCodes() {
+        const responce = await fetch('https://test.just.is-a.dev/codes.json').then((r)=>{
+            return r.json();
+        });
+        let[data,nums]=[[],[]];
+        for (const[key,val]of Object.entries(responce)) {
+            if (key !== 'README') {
+                val.forEach((item)=>{
+                    data.push(item);
+                    nums.push(item.code);
+                });
+            }
+        };
+        data = data.filter(item=>item.data);
+        return {
+            data,nums:nums.filter((item)=>{
+                let output = false;
+                data.forEach((code)=>{
+                    output=!output?code.code===item:output;
+                });
+                return output;
+            })
         }
-    };
-    data = data.filter(item=>item.data);
-    return {
-        data,nums:nums.filter((item)=>{
-            let output = false;
-            data.forEach((code)=>{
-                output=!output?code.code===item:output;
-            });
-            return output;
-        })
     }
-}
-function getCodeData(code, data) {
-    let output = null;
-    data.forEach((item)=>{
-        if (item.code === code) {
-            output = item;
-        }
-    });
-    return output;
-}
+    function getCodeData(code, data) {
+        let output = null;
+        data.forEach((item)=>{
+            if (item.code === code) {
+                output = item;
+            }
+        });
+        return output;
+    }
 
-const params = new URLSearchParams(window.location.search);
-const code = params.get('c');
-const codes = await getCodes();
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('c');
+    const codes = await getCodes();
 
-if (code != null && codes.nums.includes(code)) {
-    const codedata = getCodeData(code, codes.data);
-    document.getElementById('a').innerText=code;
-    document.getElementById('b').innerText=!codedata.data.mg?codedata.message:'';
-    document.getElementById('c').innerHTML=codedata.data.i||'';
-}
+    if (code != null && codes.nums.includes(code)) {
+        const codedata = getCodeData(code, codes.data);
+        document.getElementById('a').innerText=code;
+        document.getElementById('b').innerText=!codedata.data.mg?codedata.message:'';
+        document.getElementById('c').innerHTML=codedata.data.i||'';
+    }
+})();
 
 ```
 ```md
