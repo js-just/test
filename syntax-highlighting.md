@@ -1,16 +1,9 @@
 ### test
 ## test
 ### test
-### test
-### test
-### test
 ## test
-### test
-### test
 ## test
-### test
 ## test
-### test
 ### test
 ## test
 ## test
@@ -18,12 +11,19 @@
 ## test
 ### test
 ### test
-## test
 ### test
 ## test
 ## test
 ## test
 ## test
+## test
+### test
+## test
+### test
+### test
+## test
+## test
+### test
 ```js
 /*
 
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4134,7 +4134,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ## test
 ```css
 * {
@@ -4445,7 +4445,7 @@ pre #text {
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5038,7 +5038,7 @@ pre #text {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6562,7 +6562,7 @@ function checkFirstLetterCase(text) {
      * @param {boolean?} onlyYorN
      */
     function animElemE(oncommand, onlyYorN = false) {
-        setInterval(()=>{
+        const interval = setInterval(()=>{
             elem('e').style.display = elem('e').style.display === 'none' ? null : 'none'
         }, 500);
         let input = '';
@@ -6592,8 +6592,11 @@ function checkFirstLetterCase(text) {
                     if (yescmds.includes(input.toLowerCase())) {
                         oncommand();
                     } else {
+                        clearInterval(interval);
+                        input = '';
+                        updInp();
                         animateTyping('d', 'Enter the code...', 25, ()=>{animElemE(codecmd)});
-                        return;
+                        return
                     }
                 } else {
                     oncommand(input.toLowerCase());
