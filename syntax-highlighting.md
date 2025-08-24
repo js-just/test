@@ -1,19 +1,9 @@
 ## test
-### test
-### test
-### test
-### test
 ## test
+### test
 ## test
 ### test
 ### test
-## test
-## test
-## test
-### test
-### test
-## test
-## test
 ## test
 ## test
 ### test
@@ -21,7 +11,17 @@
 ## test
 ### test
 ## test
+### test
 ## test
+### test
+## test
+## test
+## test
+### test
+## test
+### test
+## test
+### test
 ## test
 ## test
 ```js
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4135,7 +4135,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-### test
+## test
 ```css
 * {
     margin: 0;
@@ -4216,7 +4216,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -4424,6 +4424,7 @@ pre {
     background-color: black;
     height: 100%;
     border-radius: 10px;
+    overflow: auto;
 }
 pre span {
     margin-left: 4px;
@@ -4442,6 +4443,26 @@ pre div {
 pre #text {
     margin-right: -7px;
     padding-left: 3px;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px
+}
+
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0)
+}
+
+::-webkit-scrollbar-thumb {
+    background: #f0f0f0;
+    border: 2px solid #121212;
+    border-radius: 10px
 }
 
 ```
@@ -6396,7 +6417,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -6590,7 +6611,7 @@ function checkFirstLetterCase(text) {
     };
     function listcmd() {
         disableD();
-        animateTyping('f', `<strong>Command list:</strong>\n${codes.nums.join('\n')}`, 40, timeoutED)
+        animateTyping('f', `<strong>List of codes:</strong>\n${codes.nums.join('\n')}`, 40, timeoutED)
     };
     let interval;
     /**
