@@ -1,29 +1,29 @@
 ### test
-### test
-## test
-## test
-## test
-### test
-### test
-### test
-### test
-### test
-## test
 ## test
 ### test
 ## test
 ## test
 ## test
+### test
 ## test
 ## test
-## test
-## test
+### test
 ## test
 ## test
 ### test
 ## test
 ### test
+### test
 ## test
+### test
+### test
+### test
+### test
+## test
+### test
+### test
+## test
+### test
 ```js
 /*
 
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4216,7 +4216,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -5028,7 +5028,7 @@ pre span {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6462,6 +6462,19 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
     };
     type();
 };
+function checkFirstLetterCase(text) {
+    if (!text || typeof text !== 'string') {
+        return undefined;
+    }
+    const firstChar = text.charAt(0);
+    if (firstChar === firstChar.toUpperCase() && firstChar !== firstChar.toLowerCase()) {
+        return true;
+    } else if (firstChar === firstChar.toLowerCase() && firstChar !== firstChar.toUpperCase()) {
+        return false;
+    } else {
+        return null;
+    }
+};
 
 (async()=>{
     /**
@@ -6520,9 +6533,16 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
         } else {
             elem('a').classList.add('ok');
         };
-        animateTyping('a', code, 100, ()=>{
-            animateTyping('b', !codedata.data.mg?codedata.message:'', 100, ()=>{
-                animateTyping('c', codedata.data.i||'', 100, ()=>{
+        const info = codedata.data.i||'';
+        const check = checkFirstLetterCase(info);
+        animateTyping('a', code, 200, ()=>{
+            animateTyping('b', !codedata.data.mg?codedata.message:'', 50, ()=>{
+                if (check===true) {
+                    elem('c').classList.add('tip');
+                } else {
+                    elem('c').classList.add('info');
+                }
+                animateTyping('c', check===false?`To fix it, ${info}.`:check===true?info:''||'', 50, ()=>{
                     animateTyping('d', 'Do you want to redirect to the docs? (y/n)');
                 });
             });
@@ -6952,7 +6972,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
