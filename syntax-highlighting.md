@@ -1,29 +1,29 @@
 ## test
 ## test
-## test
-## test
-### test
 ### test
 ## test
-### test
-### test
-### test
-### test
+## test
 ### test
 ### test
 ### test
 ## test
 ### test
+### test
+### test
 ## test
 ## test
+### test
+## test
+### test
+### test
 ## test
 ## test
 ## test
 ### test
-### test
-### test
+## test
 ### test
 ## test
+### test
 ```js
 /*
 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -1702,7 +1702,7 @@ h1, h2, h3 {
 }
 .firefox .search, .ios .search {
     backdrop-filter: blur(4px) brightness(0.3) !important;
-    -wenkit-backdrop-filter: blur(4px) brightness(0.3) !important;
+    -webkit-backdrop-filter: blur(4px) brightness(0.3) !important;
 }
 .ios .search {
     background-color: var(--bg);
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4202,17 +4202,21 @@ h4 {
         <link href="/css/styles.css" rel="stylesheet">
         <title>Just an Ultimate Site Tool</title>
     </head>
-    <body>
-        <h1 class="bg lz cw beta agt">Just an Ultimate Site Tool</h1>
-        <span id="a"></span>
-        <span id="b"></span>
-        <span id="c"></span>
+    <body class="s">
+        <h1 class="bg lz cw exit agt">Just an Ultimate Site Tool</h1>
+        <pre>
+            <span id="a" class="rmo"></span>
+            <span id="b" class="scp"></span>
+            <span id="c"></span>
+            <div id="d"></div>
+            <span id="e">|</span>
+        </pre>
         <script src="/js/code.js"></script>
     </body>
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4243,6 +4247,7 @@ SOFTWARE.
 :root {
     --a: 5s ease-in-out infinite; /* Animation */
     --g: 0px 0px 12px rgba(255,255,255,0.4); /* Glow */
+    --scp: "Source Code Pro", monospace; /* Source Code Pro */
 }
 
 html {
@@ -4257,7 +4262,7 @@ body {
     font-family: "Rubik Mono One", "Rubik", monospace;
 }
 .scp { /* Source Code Pro */
-    font-family: "Source Code Pro", monospace;
+    font-family: var(--scp);
 }
 .lz { /* Lexend Zetta */
     font-family: "Lexend Zetta", sans-serif;
@@ -4270,8 +4275,8 @@ h1 {
     animation: gt var(--a);
     -webkit-animation: gt var(--a);
 }
-.demo::after {
-    content: 'Demo';
+
+.demo::after, .beta::after, .code::after, .exit::after {
     margin-left: 20px;
     padding: 0px 10px;
     background-color: white;
@@ -4282,17 +4287,17 @@ h1 {
     animation-delay: 0.2s;
     -webkit-animation-delay: 0.2s;
 }
+.demo::after {
+    content: 'Demo';
+}
 .beta::after {
     content: 'Beta';
-    margin-left: 20px;
-    padding: 0px 10px;
-    background-color: white;
-    color: black;
-    border-radius: 15px;
-    animation: g var(--a);
-    -webkit-animation: g var(--a);
-    animation-delay: 0.2s;
-    -webkit-animation-delay: 0.2s;
+}
+.code::after {
+    content: 'Code';
+}
+.exit::after {
+    content: 'Exit code';
 }
 
 .cw { /* Color - White */
@@ -4350,6 +4355,83 @@ h1 {
     40% {
         text-shadow: var(--g);
     }
+}
+
+.bg {
+    background: #b2e3f7;
+    background: -webkit-linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
+    background: -moz-linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
+    background: linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#B2E3F7", endColorstr="#6B36D6", GradientType=0);
+}
+
+#a,#b,#c {
+    display: block;
+    padding-inline: 1rem;
+    width: calc(100% - 2rem);
+}
+#c {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.ok::before,.warn::before,.error::before,.tip::before,.info::before {
+    font-family: var(--scp);
+    padding-inline: 5px;
+    margin-right: 5px;
+    border-radius: 6px;
+    color: white;
+}
+.ok::before {
+    content: 'OK';
+    background-color: #63ff9b;
+    color: black;
+}
+.warn::before {
+    content: 'Warning';
+    background-color: #ed9b45f5;
+}
+.error::before {
+    content: 'Error';
+    background-color: #ff6e63;
+}
+.tip::before, .info::before {
+    font-family: inherit;
+}
+.tip::before {
+    content: 'Tip';
+    background-color: #5e9dee;
+}
+.info::before {
+    content: 'Info';
+    background-color: #6367ff;
+}
+
+code {
+    background-color: #dbdbdb;
+    color: black;
+    font-family: var(--scp);
+    padding-inline: 5px;
+    border-radius: 10px;
+}
+pre {
+    margin-inline: 1rem;
+    padding-inline: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    font-family: var(--scp);
+    color: white;
+    background-color: black;
+    height: 100%;
+    border-radius: 10px;
+}
+pre span {
+    margin-left: -3px
+}
+
+.s { /* Screen */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 ```
@@ -5301,7 +5383,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6331,9 +6413,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
+
+const APIURL = 'https://test.just.is-a.dev/data/codes.json';
+/**
+ * @param {string} elementId 
+ * @param {string} text 
+ * @param {number?} speed 
+ * @param {Function?} callback 
+ * @returns {void}
+ */
+function animateTyping(elementId, text, speed = 100, callback = null) {
+    const element = document.getElementById(elementId);
+    if (!element) {
+        return;
+    };
+    let index = 0;
+    element.innerHTML = '';
+    function type() {
+        if (index < text.length) {
+            element.innerHTML += text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+        } else {
+            if (callback) callback();
+        }
+    };
+    type();
+};
+
 (async()=>{
+    /**
+     * @returns {Promise<{data:any[],nums:any[]}>}
+     */
     async function getCodes() {
-        const responce = await fetch('https://test.just.is-a.dev/data/codes.json').then((r)=>{
+        const responce = await fetch(APIURL).then((r)=>{
             return r.json();
         });
         let[data,nums]=[[],[]];
@@ -6356,6 +6469,11 @@ SOFTWARE.
             })
         }
     }
+    /**
+     * @param {text} code 
+     * @param {any[]} data 
+     * @returns {{code: String, message: String, crashed: Boolean, data?: {mg: boolean, i: string | null}} | null}
+     */
     function getCodeData(code, data) {
         let output = null;
         data.forEach((item)=>{
@@ -6372,9 +6490,14 @@ SOFTWARE.
 
     if (code != null && codes.nums.includes(code)) {
         const codedata = getCodeData(code, codes.data);
-        document.getElementById('a').innerText=code;
-        document.getElementById('b').innerText=!codedata.data.mg?codedata.message:'';
-        document.getElementById('c').innerHTML=codedata.data.i||'';
+        const elem = (id) => document.getElementById(id);
+        animateTyping(elem('a'), code, 100, ()=>{
+            animateTyping(elem('b'), !codedata.data.mg?codedata.message:'', 100, ()=>{
+                animateTyping(elem('c'), codedata.data.i||'', 100, ()=>{
+                    animateTyping(elem('d'), 'Do you want to redirect to the docs? (y/n)');
+                });
+            });
+        });
     }
 })();
 
@@ -6419,6 +6542,10 @@ switch (abc) {
         document.body.classList.add('a');
         break;
 }
+/**
+ * @param {number} b
+ * @returns {number}
+ */
 function a (b) {
     return b + 1;
 }
