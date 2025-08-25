@@ -2,28 +2,28 @@
 ## test
 ### test
 ## test
-### test
-### test
 ## test
-### test
-### test
-### test
-## test
-## test
-## test
-### test
 ### test
 ## test
 ## test
 ### test
 ## test
-### test
-### test
+## test
+## test
+## test
+## test
 ## test
 ### test
 ### test
 ### test
 ## test
+### test
+### test
+### test
+### test
+## test
+## test
+### test
 ```js
 /*
 
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -3441,7 +3441,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4064,7 +4064,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4136,7 +4136,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ### test
 ```css
 * {
@@ -4219,7 +4219,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -4282,8 +4282,8 @@ h1 {
 .demo::after, .beta::after, .code::after, .exit::after {
     margin-left: 20px;
     padding: 0px 10px;
-    background-color: white;
-    color: black;
+    background-color: #fff;
+    color: #000;
     border-radius: 15px;
     animation: g var(--a);
     -webkit-animation: g var(--a);
@@ -4305,10 +4305,10 @@ h1 {
 }
 
 .cw { /* Color - White */
-    color: white;
+    color: #fff;
 }
 .bb { /* Background - Black */
-    background-color: black;
+    background-color: #000;
 }
 .fi { /* Filter - Invert */
     filter: invert(1);
@@ -4383,12 +4383,12 @@ h1 {
     padding-inline: 5px;
     margin-right: 5px;
     border-radius: 6px;
-    color: white;
+    color: #fff;
 }
 .ok::before {
     content: 'OK';
     background-color: #63ff9b;
-    color: black;
+    color: #000;
 }
 .warn::before {
     content: 'Warning';
@@ -4412,7 +4412,7 @@ h1 {
 
 code {
     background-color: #dbdbdb;
-    color: black;
+    color: #000;
     font-family: var(--scp);
     padding-inline: 5px;
     border-radius: 10px;
@@ -4423,8 +4423,8 @@ pre {
     padding-top: 2rem;
     padding-bottom: 2rem;
     font-family: var(--scp);
-    color: white;
-    background-color: black;
+    color: #fff;
+    background-color: #000;
     height: 100%;
     overflow: auto;
     margin: 0;
@@ -4475,11 +4475,11 @@ pre #text {
 
 pre a {
     color: #2ad2ff;
-    text-decoration-color: black;
+    text-decoration-color: #000;
 }
 
 
-.t {
+.t { /* Transition */
     padding-bottom: 100px;
     box-shadow: inset 0px -50px 50px #00000082;
     width: calc(100%);
@@ -4546,6 +4546,22 @@ pre a {
         --2: 150%;
         --3: 160%;
     }
+}
+
+.b { /* Blur */
+    z-index: 1;
+    filter: blur(50px);
+    top: 19px;
+}
+
+.z { /* idk */
+    z-index: 2;
+    -webkit-mask-image: linear-gradient(to bottom, #000000 70%, transparent);
+    mask-image: linear-gradient(to bottom, #000000 70%, transparent);
+}
+
+.bgb { /* bg - black */
+    background-color: #000000;
 }
 
 ```
@@ -5142,7 +5158,7 @@ pre a {
 }
 ```
 ## test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6278,13 +6294,13 @@ _just: next: /docs/getting-started
         <link href="/css/styles.css" rel="stylesheet">
         <title>Just an Ultimate Site Tool</title>
     </head>
-    <body>
-        <h1 class="bg lz cw beta agt t">Just an Ultimate Site Tool</h1>
+    <body class="bgb">
+        <h1 class="bg lz cw beta agt t z">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b">Beta</h1>
     </body>
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
