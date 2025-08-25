@@ -6,23 +6,23 @@
 ### test
 ### test
 ## test
-### test
-### test
 ## test
 ### test
 ## test
 ## test
-### test
 ## test
-## test
-### test
-### test
-### test
-## test
-### test
 ## test
 ## test
 ### test
+### test
+### test
+### test
+### test
+### test
+### test
+### test
+## test
+## test
 ### test
 ```js
 /*
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -4134,8 +4134,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4471,8 +4471,83 @@ pre #text {
     background-color: #ff2b1b
 }
 
+pre a {
+    color: #2ad2ff;
+    text-decoration-color: black;
+}
+
+
+.t {
+    padding-bottom: 100px;
+    box-shadow: inset 0px -50px 50px #00000082;
+    width: calc(100%);
+    position: fixed;
+    translate: -50px 0px;
+    padding-inline: 50px;
+}
+@property --1 {
+    syntax: '<percentage>';
+    initial-value: -60%;
+    inherits: false
+}
+@property --2 {
+    syntax: '<percentage>';
+    initial-value: -50%;
+    inherits: false
+}
+@property --3 {
+    syntax: '<percentage>';
+    initial-value: 0%;
+    inherits: false
+}
+.t::before {
+    content: '';
+    position: fixed;
+    top: calc(100% - 50px);
+    left: 0px;
+    width: 100%;
+    height: 3px;
+    background-color: #ffffff14;
+        background: RGBA(255, 255, 255, 20);
+        background: -webkit-linear-gradient(148deg, rgba(255, 255, 255, 0.2) var(--1), rgba(255, 255, 255, 1) var(--2), rgba(255, 255, 255, 0.2) var(--3));
+        background: -moz-linear-gradient(148deg, rgba(255, 255, 255, 0.2) var(--1), rgba(255, 255, 255, 1) var(--2), rgba(255, 255, 255, 0.2) var(--3));
+        background: linear-gradient(148deg, rgba(255, 255, 255, 0.2) var(--1), rgba(255, 255, 255, 1) var(--2), rgba(255, 255, 255, 0.2) var(--3));
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#FFFFFF", endColorstr="#FFFFFF14", GradientType=0);
+    animation: t var(--a);
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    opacity: 0.5;
+}
+@keyframes t {
+    0% {
+        --1: -60%;
+        --2: -50%;
+        --3: 0%;
+    }
+    25% {
+        --1: -50%;
+        --2: 0%;
+        --3: 50%;
+    }
+    50% {
+        --1: 0%;
+        --2: 50%;
+        --3: 100%;
+    }
+    75% {
+        --1: 50%;
+        --2: 100%;
+        --3: 110%;
+    }
+    100% {
+        --1: 100%;
+        --2: 150%;
+        --3: 160%;
+    }
+}
+
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -6202,7 +6277,7 @@ _just: next: /docs/getting-started
         <title>Just an Ultimate Site Tool</title>
     </head>
     <body>
-        <h1 class="bg lz cw beta agt">Just an Ultimate Site Tool</h1>
+        <h1 class="bg lz cw beta agt t">Just an Ultimate Site Tool</h1>
     </body>
 </html>
 
@@ -6423,7 +6498,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -7225,7 +7300,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
