@@ -1,21 +1,10 @@
-### test
-### test
-### test
+## test
+## test
+## test
+## test
 ### test
 ## test
 ### test
-### test
-## test
-### test
-### test
-### test
-### test
-### test
-### test
-## test
-### test
-## test
-## test
 ### test
 ### test
 ### test
@@ -24,6 +13,17 @@
 ### test
 ## test
 ### test
+## test
+## test
+## test
+## test
+### test
+## test
+### test
+### test
+## test
+### test
+## test
 ```js
 /*
 
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4134,7 +4134,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ### test
 ```css
 * {
@@ -5414,7 +5414,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6201,7 +6201,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -6417,7 +6417,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -6449,6 +6449,7 @@ const APIURL = 'https://test.just.is-a.dev/data/codes.json';
 const none = 'none';
 const entr = 'Enter the code or command, or type "help" and press "Enter"...';
 let cooldown = false;
+let loadingerr = false;
 /**
  * @param {string} elementId 
  * @param {string} text 
@@ -6520,7 +6521,7 @@ function checkFirstLetterCase(text) {
     async function getCodes() {
         const responce = await fetch(APIURL).then((r)=>{
             return r.json();
-        });
+        }).catch((_e)=>{loadingerr=true});
         let[data,nums]=[[],[]];
         for (const[key,val]of Object.entries(responce)) {
             if (key !== 'README') {
@@ -6566,7 +6567,9 @@ function checkFirstLetterCase(text) {
         try{window.location.replace(to)}catch(e){};try{window.location.href=to}catch(e){};try{window.location.assign(to)}catch(e){}
     }
     function close_() {
-        redirect('https://just.is-a.dev/');
+        const url_ = 'https://just.is-a.dev/';
+        elem('d').innerHTML = `Redirecting to "<a href="${url_}" target="_self">${url_}</a>"...`;
+        redirect(url_)
     };
     const closecmds = [
         'kill', 'exit', 'home', 'e'
@@ -6642,29 +6645,34 @@ function checkFirstLetterCase(text) {
                 event.preventDefault();
                 input += event.key;
                 updInp()
-            } else if (event.key.toLowerCase() === 'Enter'.toLowerCase() && enterKeyCooldown === false) {
+            } else if (event.key.toLowerCase() === 'Enter'.toLowerCase() && !enterKeyCooldown) {
                 event.preventDefault();
                 enterKeyCooldown = true;
+                const uncooldown=()=>{setTimeout(()=>{enterKeyCooldown=false},300)};
                 const inpt = input.trim().toLowerCase();
                 input = '';
                 updInp();
                 if (closecmds.includes(inpt) && !onlyYorN) {
                     close_();
-                    enterKeyCooldown = false;
+                    uncooldown()
                 } else if (onlyYorN) {
                     if (yescmds.includes(inpt)) {
                         oncommand();
-                        enterKeyCooldown = false;
+                        uncooldown()
                     } else {
-                        animateTyping('d', entr, 25, ()=>{animElemE((cmd)=>{codecmd(cmd); enterKeyCooldown = false})});
+                        animateTyping('d', entr, 25, () => {
+                            animElemE((cmd)=>{codecmd(cmd);uncooldown()});
+                        })
                     }
                 } else if (helpcmds.includes(inpt)) {
                     helpcmd();
+                    uncooldown()
                 } else if (listcmds.includes(inpt)) {
                     listcmd();
+                    uncooldown()
                 } else {
                     oncommand(inpt);
-                    enterKeyCooldown = false;
+                    uncooldown()
                 };
                 return
             } else if (event.key.toLowerCase() === 'Backspace'.toLowerCase()) {
@@ -6676,7 +6684,7 @@ function checkFirstLetterCase(text) {
     };
     animateTyping('loader', `<small>Initializing</small> Just an Ultimate Site Tool helper terminal <small>...</small>\n${' '.repeat(20)}\nDone.`, 50, ()=>{
         setTimeout(()=>{
-            if (code != null && codes.nums.includes(code)) {
+            if (code != null && codes.nums.includes(code) && !loadingerr) {
                 elem('loader').innerText = `> ${code}\n\n`;
                 const codedata = getCodeData(code, codes.data);
                 if (codedata.crashed || code.startsWith('03')) {
@@ -6701,12 +6709,24 @@ function checkFirstLetterCase(text) {
                         animateTyping('c', check===false?`To fix it, ${info}.`:check===true?info:''||'', 50, ()=>{
                             animateTyping('d', 'Do you want to redirect to the docs? (y/n)', 25, ()=>{
                                 animElemE(()=>{
-                                    redirect('https://just.is-a.dev/docs')
+                                    const url_ = 'https://just.is-a.dev/docs';
+                                    elem('d').innerHTML = `Redirecting to "<a href="${url_}" target="_self">${url_}</a>"...`;
+                                    redirect(url_)
                                 }, true);
                             });
                         });
                     });
                 });
+            } else if (loadingerr) {
+                elem('a').remove();
+                elem('b').remove();
+                elem('c').remove();
+                animateTyping('d', 'Press any key to retry...', 25, ()=>{
+                    window.addEventListener('keydown', ()=>{
+                        elem('d').innerHTML = 'Reloading window... <small>The window didn\'t reload? Check your internet connection and try to reload the window manually.</small>';
+                        window.location.reload()
+                    })
+                })
             } else {
                 elem('loader').remove();
                 elem('a').remove();
