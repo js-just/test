@@ -1,26 +1,26 @@
 ### test
 ## test
-### test
 ## test
 ### test
 ## test
 ## test
-## test
-## test
-### test
-### test
-### test
 ### test
 ## test
-### test
 ## test
 ### test
 ### test
 ### test
 ## test
 ### test
+### test
 ## test
 ### test
+## test
+### test
+### test
+## test
+## test
+## test
 ### test
 ## test
 ## test
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4135,7 +4135,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -4204,6 +4204,7 @@ h4 {
     </head>
     <body class="s">
         <pre>
+            <noscript><style>#e{display:none}</style><span class="fatal">Please enable JavaScript in your browser settings to run Just an Ultimate Site Tool helper terminal</span></noscript>
             <span id="loader"></span>
             <span id="a" class="rmo"></span>
             <span id="b" class="scp"></span>
@@ -4216,7 +4217,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -5064,7 +5065,7 @@ pre #text {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5419,7 +5420,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6455,6 +6456,7 @@ const none = 'none';
 const entr = 'Enter the code or command, or type "help" and press "Enter"...';
 let cooldown = false;
 let loadingerr = false;
+let aTerr = false;
 /**
  * @param {string} elementId 
  * @param {string} text 
@@ -6473,6 +6475,10 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
     function type() {
         if (index >= text.length) {
             cooldown = false;
+            if (element.innerHTML !== text) {
+                aTerr = true;
+                return
+            };
             if (callback) callback();
             return;
         };
@@ -6502,6 +6508,10 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
         };
         element.innerHTML = element.innerHTML.replaceAll('\n', '<br>');
         setTimeout(type, speed);
+    };
+    if (speed === 0) {
+        index = text.length + 1;
+        element.innerHTML = text;
     };
     type();
 };
@@ -6572,9 +6582,10 @@ function checkFirstLetterCase(text) {
     function redirect(to) {
         try{window.location.replace(to)}catch(e){};try{window.location.href=to}catch(e){};try{window.location.assign(to)}catch(e){}
     }
+    const redirecting = (to) => `Redirecting to "<a href="${to}" target="_self">${to}</a>"...`;
     function close_() {
         const url_ = 'https://just.is-a.dev/';
-        elem('d').innerHTML = `Redirecting to "<a href="${url_}" target="_self">${url_}</a>"...`;
+        elem('d').innerHTML = redirecting(to);
         redirect(url_)
     };
     const closecmds = [
@@ -6597,7 +6608,9 @@ function checkFirstLetterCase(text) {
     async function codecmd(cmd) {
         const codess=await getCodes();
         if (codess.nums.includes(cmd)) {
-            window.location.search = `?c=${cmd}&i=y`;
+            const url_ = `?c=${cmd}&i=y`;
+            elem('f').innerHTML = redirecting(`https://just.is-a.dev/code${url_}`);
+            window.location.search = url_
         } else {
             disableD();
             elem('f').innerText = 'No code found and unknown command.';
@@ -6613,11 +6626,32 @@ function checkFirstLetterCase(text) {
     function timeoutED() {
         setTimeout(enableD, 3000)
     };
+    function fatal(err) {
+        elem('loader').classList.add('fatal');
+        elem('loader').innerText = err;
+        elem('a').remove();
+        elem('b').remove();
+        elem('c').remove();
+        animateTyping('d', 'Press any key to retry...', 25, ()=>{
+            window.addEventListener('keydown', ()=>{
+                elem('d').innerHTML = 'Reloading window... <small>The window didn\'t reload? Check your internet connection and try to reload the window manually.</small>';
+                window.location.reload()
+            })
+        });
+        throw new Error(err)
+    }
+    function animErr() {
+        if (aTerr) {
+            fatal('Something went wrong.')
+        }
+    }
     function helpcmd() {
+        animErr();
         disableD();
         animateTyping('f', '<strong>Command list:</strong>\nhelp - help command / command list\nhome - redirect to home page\nlist - list of codes', 30, timeoutED)
     };
     function listcmd() {
+        animErr();
         disableD();
         animateTyping('f', `<strong>List of codes:</strong>\n${codes.nums.join('\n')}`, 40, timeoutED)
     };
@@ -6631,12 +6665,14 @@ function checkFirstLetterCase(text) {
      */
     function animElemE(oncommand, onlyYorN = false) {
         const runid = aEEid++;
+        animErr();
         if (interval) clearInterval(interval);
         interval = setInterval(()=>{
             elem('e').style.display = elem('e').style.display === none ? null : none
         }, 500);
         let input = '';
         function updInp() {
+            animErr();
             if (input === '') {
                 elem('text')?.remove();
                 elem('e').insertAdjacentHTML('beforebegin', '<span id="text"></span>');
@@ -6647,7 +6683,9 @@ function checkFirstLetterCase(text) {
             }
         }
         const keydownListener=(event)=>{
-            if (runid === aEEid - 1) {
+            if (aTerr) {
+                s
+            } else if (runid === aEEid - 1) {
                 if ((event.key.toLowerCase() === 'c' || event.key.toLowerCase() === 'd') && event.ctrlKey) {
                     event.preventDefault();
                     close_()
@@ -6724,7 +6762,7 @@ function checkFirstLetterCase(text) {
                             animateTyping('d', 'Do you want to redirect to the docs? (y/n)', 25, ()=>{
                                 animElemE(()=>{
                                     const url_ = 'https://just.is-a.dev/docs';
-                                    elem('d').innerHTML = `Redirecting to "<a href="${url_}" target="_self">${url_}</a>"...`;
+                                    elem('d').innerHTML = redirecting(url_);
                                     redirect(url_)
                                 }, true);
                             });
@@ -6732,17 +6770,7 @@ function checkFirstLetterCase(text) {
                     });
                 });
             } else if (loadingerr) {
-                elem('loader').classList.add('fatal');
-                elem('loader').innerText = 'Failed to fetch codes';
-                elem('a').remove();
-                elem('b').remove();
-                elem('c').remove();
-                animateTyping('d', 'Press any key to retry...', 25, ()=>{
-                    window.addEventListener('keydown', ()=>{
-                        elem('d').innerHTML = 'Reloading window... <small>The window didn\'t reload? Check your internet connection and try to reload the window manually.</small>';
-                        window.location.reload()
-                    })
-                })
+                fatal('Failed to fetch codes.')
             } else {
                 elem('loader').remove();
                 elem('a').remove();
