@@ -1,20 +1,17 @@
 ## test
-## test
-## test
-## test
-## test
-### test
 ### test
 ## test
 ## test
 ### test
+### test
 ## test
-## test
-## test
-## test
+### test
 ## test
 ### test
 ### test
+### test
+## test
+## test
 ### test
 ### test
 ### test
@@ -22,8 +19,11 @@
 ### test
 ### test
 ## test
-## test
 ### test
+### test
+### test
+## test
+## test
 ```js
 /*
 
@@ -75,6 +75,8 @@ async function serializeRules(rules) {
                 props.push(`${key}:${value}`);
             }
             return `${rule.selectors.join(',')}{${props.join(';')}}`;
+        } else if (rule.type === 'insert') {
+            return rule.text;
         }
         return '';
     };
@@ -282,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -659,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3439,7 +3441,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4135,7 +4137,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ## test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -4217,7 +4219,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4547,7 +4549,7 @@ pre a {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -6282,7 +6284,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
