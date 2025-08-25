@@ -1,17 +1,10 @@
 ### test
 ### test
-## test
-## test
 ### test
 ### test
 ## test
-### test
-### test
 ## test
-### test
-### test
-### test
-### test
+## test
 ## test
 ### test
 ### test
@@ -22,7 +15,14 @@
 ### test
 ## test
 ### test
+## test
+## test
 ### test
+### test
+## test
+## test
+### test
+## test
 ## test
 ```js
 /*
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4135,7 +4135,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -4466,7 +4466,7 @@ pre #text {
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5414,7 +5414,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6201,7 +6201,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -6417,7 +6417,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -6618,6 +6618,7 @@ function checkFirstLetterCase(text) {
         animateTyping('f', `<strong>List of codes:</strong>\n${codes.nums.join('\n')}`, 40, timeoutED)
     };
     let interval;
+    let enterKeyCooldown = false;
     /**
      * @param {Function} oncommand 
      * @param {boolean?} onlyYorN
@@ -6646,18 +6647,21 @@ function checkFirstLetterCase(text) {
                 event.preventDefault();
                 input += event.key;
                 updInp()
-            } else if (event.key.toLowerCase() === 'Enter'.toLowerCase()) {
+            } else if (event.key.toLowerCase() === 'Enter'.toLowerCase() && !enterKeyCooldown) {
                 event.preventDefault();
+                enterKeyCooldown = true;
                 const inpt = input.trim().toLowerCase();
                 input = '';
                 updInp();
                 if (closecmds.includes(inpt) && !onlyYorN) {
                     close_();
+                    enterKeyCooldown = false;
                 } else if (onlyYorN) {
                     if (yescmds.includes(inpt)) {
                         oncommand();
+                        enterKeyCooldown = false;
                     } else {
-                        animateTyping('d', entr, 25, ()=>{animElemE(codecmd)});
+                        animateTyping('d', entr, 25, ()=>{animElemE((cmd)=>{codecmd(cmd); enterKeyCooldown = false})});
                     }
                 } else if (helpcmds.includes(inpt)) {
                     helpcmd();
@@ -6665,6 +6669,7 @@ function checkFirstLetterCase(text) {
                     listcmd();
                 } else {
                     oncommand(inpt);
+                    enterKeyCooldown = false;
                 };
                 return
             } else if (event.key.toLowerCase() === 'Backspace'.toLowerCase()) {
@@ -7141,7 +7146,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
