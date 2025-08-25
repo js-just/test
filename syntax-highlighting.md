@@ -3,25 +3,25 @@
 ### test
 ### test
 ## test
-## test
-## test
-## test
-### test
-### test
-### test
-### test
-### test
-### test
-### test
-## test
 ### test
 ## test
 ## test
 ### test
+## test
+## test
+## test
+## test
+### test
+## test
+### test
+### test
+### test
+## test
 ### test
 ## test
 ## test
 ### test
+## test
 ## test
 ## test
 ```js
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4203,8 +4203,8 @@ h4 {
         <title>Just an Ultimate Site Tool</title>
     </head>
     <body class="s">
-        <h1 class="bg lz cw exit agt">Just an Ultimate Site Tool</h1>
         <pre>
+            <span id="loader"></span>
             <span id="a" class="rmo"></span>
             <span id="b" class="scp"></span>
             <span id="c"></span>
@@ -4466,7 +4466,7 @@ pre #text {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5059,7 +5059,7 @@ pre #text {
 }
 ```
 ## test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5414,7 +5414,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6417,7 +6417,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -6560,11 +6560,6 @@ function checkFirstLetterCase(text) {
     const code = params.get('c');
     const codes = await getCodes();
 
-    const h1 = document.querySelector('.exit');
-    function updh1() {
-        h1.classList.remove('exit');
-        h1.classList.add('code');
-    };
     const elem = (id) => document.getElementById(id);
     elem('e').style.display = none;
     function redirect(to) {
@@ -6647,7 +6642,7 @@ function checkFirstLetterCase(text) {
                 event.preventDefault();
                 input += event.key;
                 updInp()
-            } else if (event.key.toLowerCase() === 'Enter'.toLowerCase() && !enterKeyCooldown) {
+            } else if (event.key.toLowerCase() === 'Enter'.toLowerCase() && enterKeyCooldown === false) {
                 event.preventDefault();
                 enterKeyCooldown = true;
                 const inpt = input.trim().toLowerCase();
@@ -6679,49 +6674,49 @@ function checkFirstLetterCase(text) {
             }
         })
     };
-    if (code != null && codes.nums.includes(code)) {
-        const codedata = getCodeData(code, codes.data);
-        if (codedata.crashed || code.startsWith('03')) {
-            elem('a').classList.add('error');
-        } else if (code.startsWith('02')) {
-            updh1();
-            elem('a').classList.add('warn');
-        } else {
-            elem('a').classList.add('ok');
-        };
-        if (code.startsWith('03')) {
-            updh1();
-        };
-        const info = codedata.data.i||'';
-        const check = checkFirstLetterCase(info);
-        animateTyping('a', code, 200, ()=>{
-            animateTyping('b', !codedata.data.mg?codedata.message:'', 50, ()=>{
-                if (codedata.data.mg) {
-                    elem('b').remove();
-                };
-                if (check===true) {
-                    elem('c').classList.add('info');
+    animateTyping('loader', `<small>Initializing</small> Just an Ultimate Site Tool helper terminal <small>...</small>\n${' '.repeat(20)}\nDone.`, 50, ()=>{
+        setTimeout(()=>{
+            elem('loader').remove();
+            if (code != null && codes.nums.includes(code)) {
+                const codedata = getCodeData(code, codes.data);
+                if (codedata.crashed || code.startsWith('03')) {
+                    elem('a').classList.add('error');
+                } else if (code.startsWith('02')) {
+                    elem('a').classList.add('warn');
                 } else {
-                    elem('c').classList.add('tip');
+                    elem('a').classList.add('ok');
                 };
-                animateTyping('c', check===false?`To fix it, ${info}.`:check===true?info:''||'', 50, ()=>{
-                    animateTyping('d', 'Do you want to redirect to the docs? (y/n)', 25, ()=>{
-                        animElemE(()=>{
-                            redirect('https://just.is-a.dev/docs')
-                        }, true);
+                const info = codedata.data.i||'';
+                const check = checkFirstLetterCase(info);
+                animateTyping('a', code, 200, ()=>{
+                    animateTyping('b', !codedata.data.mg?codedata.message:'', 50, ()=>{
+                        if (codedata.data.mg) {
+                            elem('b').remove();
+                        };
+                        if (check===true) {
+                            elem('c').classList.add('info');
+                        } else {
+                            elem('c').classList.add('tip');
+                        };
+                        animateTyping('c', check===false?`To fix it, ${info}.`:check===true?info:''||'', 50, ()=>{
+                            animateTyping('d', 'Do you want to redirect to the docs? (y/n)', 25, ()=>{
+                                animElemE(()=>{
+                                    redirect('https://just.is-a.dev/docs')
+                                }, true);
+                            });
+                        });
                     });
                 });
-            });
-        });
-    } else {
-        updh1();
-        elem('a').remove();
-        elem('b').remove();
-        elem('c').remove();
-        animateTyping('d', entr, 25, ()=>{
-            animElemE(codecmd);
-        })
-    }
+            } else {
+                elem('a').remove();
+                elem('b').remove();
+                elem('c').remove();
+                animateTyping('d', entr, 25, ()=>{
+                    animElemE(codecmd);
+                })
+            }
+        }, 234)
+    })
 })();
 
 ```
@@ -7146,7 +7141,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
