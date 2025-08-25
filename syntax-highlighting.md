@@ -1,18 +1,14 @@
-## test
-## test
-## test
-## test
 ### test
-## test
-### test
-## test
-### test
-## test
 ### test
 ### test
 ## test
+## test
 ### test
 ### test
+### test
+### test
+### test
+## test
 ## test
 ### test
 ## test
@@ -21,8 +17,12 @@
 ## test
 ## test
 ### test
+### test
+### test
+## test
 ## test
 ### test
+## test
 ## test
 ```js
 /*
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -4471,7 +4471,7 @@ pre #text {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5419,7 +5419,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6206,7 +6206,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -6422,7 +6422,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -6686,6 +6686,7 @@ function checkFirstLetterCase(text) {
                 updInp()
             }
         };
+        window.removeEventListener('keydown',keydownListener);
         window.addEventListener('keydown',keydownListener)
     };
     animateTyping('loader', `<small>Initializing</small> Just an Ultimate Site Tool helper terminal <small>...</small>\n${' '.repeat(20)}\n${loadingerr ? 'Error' : 'Done.'}`, 50, ()=>{
