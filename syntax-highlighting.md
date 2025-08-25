@@ -1,9 +1,3 @@
-### test
-## test
-## test
-## test
-### test
-## test
 ## test
 ### test
 ### test
@@ -12,15 +6,21 @@
 ## test
 ## test
 ### test
+### test
+## test
+## test
+### test
+## test
+## test
+### test
+## test
+## test
 ## test
 ## test
 ### test
 ### test
 ### test
-## test
 ### test
-## test
-## test
 ### test
 ### test
 ## test
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4135,7 +4135,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ## test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -4217,7 +4217,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4472,7 +4472,7 @@ pre #text {
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5064,8 +5064,8 @@ pre #text {
     "zephir": "Zephir"
 }
 ```
-### test
 ## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5420,7 +5420,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6629,9 +6629,9 @@ function checkFirstLetterCase(text) {
     function fatal(err) {
         elem('loader').classList.add('fatal');
         elem('loader').innerText = err;
-        elem('a').remove();
-        elem('b').remove();
-        elem('c').remove();
+        elem('a')?.remove();
+        elem('b')?.remove();
+        elem('c')?.remove();
         animateTyping('d', 'Press any key to retry...', 25, ()=>{
             window.addEventListener('keydown', ()=>{
                 elem('d').innerHTML = 'Reloading window... <small>The window didn\'t reload? Check your internet connection and try to reload the window manually.</small>';
