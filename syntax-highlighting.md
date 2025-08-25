@@ -1,6 +1,13 @@
 ### test
 ## test
 ## test
+## test
+### test
+## test
+## test
+### test
+### test
+### test
 ### test
 ## test
 ## test
@@ -12,17 +19,10 @@
 ### test
 ## test
 ### test
-### test
-## test
-### test
-## test
-### test
-### test
-## test
 ## test
 ## test
 ### test
-## test
+### test
 ## test
 ```js
 /*
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4134,8 +4134,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4217,7 +4217,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -4472,7 +4472,7 @@ pre #text {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -6207,7 +6207,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -6423,7 +6423,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -6477,7 +6477,7 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
             cooldown = false;
             if (element.innerHTML !== text) {
                 aTerr = true;
-                return
+                console.warn(`"${element.innerHTML}" !== "${text}"`)
             };
             if (callback) callback();
             return;
