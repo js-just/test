@@ -4,15 +4,11 @@
 ### test
 ## test
 ### test
-## test
-## test
 ### test
 ## test
-## test
-## test
-## test
 ### test
-## test
+### test
+### test
 ### test
 ### test
 ### test
@@ -21,9 +17,13 @@
 ## test
 ## test
 ### test
+### test
+### test
 ## test
 ## test
+### test
 ## test
+### test
 ```js
 /*
 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4062,7 +4062,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4134,7 +4134,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
+## test
 ### test
 ```css
 * {
@@ -4216,7 +4216,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -4423,8 +4423,8 @@ pre {
     color: white;
     background-color: black;
     height: 100%;
-    border-radius: 10px;
     overflow: auto;
+    margin: 0;
 }
 pre span {
     margin-left: 4px;
@@ -5059,7 +5059,7 @@ pre #text {
 }
 ```
 ## test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5414,7 +5414,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6676,8 +6676,8 @@ function checkFirstLetterCase(text) {
     };
     animateTyping('loader', `<small>Initializing</small> Just an Ultimate Site Tool helper terminal <small>...</small>\n${' '.repeat(20)}\nDone.`, 50, ()=>{
         setTimeout(()=>{
-            elem('loader').remove();
             if (code != null && codes.nums.includes(code)) {
+                elem('loader').innerText = `> ${code}\n\n`;
                 const codedata = getCodeData(code, codes.data);
                 if (codedata.crashed || code.startsWith('03')) {
                     elem('a').classList.add('error');
@@ -6708,6 +6708,7 @@ function checkFirstLetterCase(text) {
                     });
                 });
             } else {
+                elem('loader').remove();
                 elem('a').remove();
                 elem('b').remove();
                 elem('c').remove();
