@@ -2,28 +2,28 @@
 ### test
 ## test
 ## test
-## test
 ### test
-## test
-## test
-## test
-## test
 ### test
-## test
-## test
 ## test
 ### test
 ### test
 ## test
-## test
 ### test
-## test
-## test
-## test
-## test
+### test
+### test
+### test
 ## test
 ### test
 ### test
+### test
+### test
+### test
+### test
+### test
+## test
+### test
+### test
+## test
 ```js
 /*
 
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4135,7 +4135,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-### test
+## test
 ```css
 * {
     margin: 0;
@@ -4216,7 +4216,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -5058,7 +5058,7 @@ pre #text {
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -6417,7 +6417,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -6448,6 +6448,7 @@ SOFTWARE.
 const APIURL = 'https://test.just.is-a.dev/data/codes.json';
 const none = 'none';
 const entr = 'Enter the code or command, or type "help" and press "Enter"...';
+let cooldown = false;
 /**
  * @param {string} elementId 
  * @param {string} text 
@@ -6457,13 +6458,15 @@ const entr = 'Enter the code or command, or type "help" and press "Enter"...';
  */
 function animateTyping(elementId, text, speed = 100, callback = null) {
     const element = document.getElementById(elementId);
-    if (!element) {
+    if (!element || (text === entr && cooldown)) {
         return;
     };
+    cooldown = true;
     let index = 0;
     element.innerHTML = '';
     function type() {
         if (index >= text.length) {
+            cooldown = false;
             if (callback) callback();
             return;
         };
@@ -7138,7 +7141,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
