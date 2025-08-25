@@ -5,21 +5,21 @@
 ### test
 ## test
 ### test
-### test
-### test
-### test
-## test
 ## test
 ### test
 ## test
 ### test
+### test
 ## test
+### test
+### test
 ## test
+### test
 ## test
 ## test
 ### test
 ## test
-### test
+## test
 ### test
 ## test
 ### test
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -2060,7 +2060,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3439,7 +3439,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4134,8 +4134,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4216,7 +4216,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4375,7 +4375,7 @@ h1 {
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
-.ok::before,.warn::before,.error::before,.tip::before,.info::before {
+.ok::before,.warn::before,.error::before,.tip::before,.info::before,.fatal::before {
     font-family: var(--scp);
     padding-inline: 5px;
     margin-right: 5px;
@@ -4465,8 +4465,13 @@ pre #text {
     border-radius: 10px
 }
 
+.fatal::before {
+    content: 'Fatal';
+    background-color: #ff2b1b
+}
+
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5058,8 +5063,8 @@ pre #text {
     "zephir": "Zephir"
 }
 ```
-## test
 ### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6637,7 +6642,7 @@ function checkFirstLetterCase(text) {
                 elem('e').insertAdjacentHTML('beforebegin', `<span id="text">${input}</span>`);
             }
         }
-        window.addEventListener('keydown', (event)=>{
+        const keydownListener=(event)=>{
             if ((event.key.toLowerCase() === 'c' || event.key.toLowerCase() === 'd') && event.ctrlKey) {
                 event.preventDefault();
                 close_()
@@ -6680,9 +6685,10 @@ function checkFirstLetterCase(text) {
                 input = input.slice(0,-1);
                 updInp()
             }
-        })
+        };
+        window.addEventListener('keydown',keydownListener)
     };
-    animateTyping('loader', `<small>Initializing</small> Just an Ultimate Site Tool helper terminal <small>...</small>\n${' '.repeat(20)}\nDone.`, 50, ()=>{
+    animateTyping('loader', `<small>Initializing</small> Just an Ultimate Site Tool helper terminal <small>...</small>\n${' '.repeat(20)}\n${loadingerr ? 'Error' : 'Done.'}`, 50, ()=>{
         setTimeout(()=>{
             if (code != null && codes.nums.includes(code) && !loadingerr) {
                 elem('loader').innerText = `> ${code}\n\n`;
@@ -6718,6 +6724,8 @@ function checkFirstLetterCase(text) {
                     });
                 });
             } else if (loadingerr) {
+                elem('loader').classList.add('fatal');
+                elem('loader').innerText = 'Failed to fetch codes';
                 elem('a').remove();
                 elem('b').remove();
                 elem('c').remove();
@@ -6737,6 +6745,11 @@ function checkFirstLetterCase(text) {
                 })
             }
         }, 234)
+    });
+    window.addEventListener('keydown',(event)=>{
+        if (event.key.toLowerCase()==='Enter'.toLowerCase()) {
+            setTimeout(()=>{enterKeyCooldown=false},350)
+        }
     })
 })();
 
@@ -7162,7 +7175,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
