@@ -1,6 +1,9 @@
 ## test
+## test
+## test
+## test
 ### test
-### test
+## test
 ### test
 ### test
 ## test
@@ -9,8 +12,6 @@
 ### test
 ## test
 ## test
-### test
-## test
 ## test
 ### test
 ## test
@@ -18,12 +19,11 @@
 ## test
 ## test
 ### test
-### test
-### test
-### test
+## test
 ### test
 ### test
 ## test
+### test
 ```js
 /*
 
@@ -282,7 +282,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -659,7 +659,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -3298,7 +3298,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4134,7 +4134,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ### test
 ```css
 * {
@@ -5064,7 +5064,7 @@ pre #text {
     "zephir": "Zephir"
 }
 ```
-## test
+### test
 ### test
 ```md
 _just: title: Advanced usage
@@ -5420,7 +5420,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6207,7 +6207,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -6475,9 +6475,9 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
     function type() {
         if (index >= text.length) {
             cooldown = false;
-            if (element.innerHTML !== text) {
+            if (element.innerHTML !== text.replaceAll('\n', '<br>')) {
                 aTerr = true;
-                console.warn(`"${element.innerHTML}" !== "${text}"`)
+                console.warn(`"${element.innerHTML}" !== "${text.replaceAll('\n', '<br>')}"`)
             };
             if (callback) callback();
             return;
@@ -6642,7 +6642,7 @@ function checkFirstLetterCase(text) {
     }
     function animErr() {
         if (aTerr) {
-            fatal('Something went wrong.')
+            fatal('Unexpected behavior')
         }
     }
     function helpcmd() {
@@ -6770,7 +6770,7 @@ function checkFirstLetterCase(text) {
                     });
                 });
             } else if (loadingerr) {
-                fatal('Failed to fetch codes.')
+                fatal('Failed to fetch codes')
             } else {
                 elem('loader').remove();
                 elem('a').remove();
