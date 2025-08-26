@@ -1,29 +1,29 @@
-### test
-### test
-## test
-### test
-## test
-### test
-### test
 ## test
 ## test
+### test
 ### test
 ## test
 ### test
 ### test
 ## test
 ### test
+## test
+## test
+### test
+### test
+## test
+## test
+## test
+### test
+### test
+### test
+### test
 ### test
 ### test
 ### test
 ## test
 ### test
 ### test
-### test
-### test
-## test
-## test
-## test
 ```js
 /*
 
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3441,7 +3441,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4064,7 +4064,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4136,8 +4136,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
-## test
+### test
+### test
 ```css
 * {
     margin: 0;
@@ -4607,6 +4607,50 @@ pre a {
     position: absolute;
     translate: 0px -58.5px;
     right: 0px;
+}
+
+.p .tl {
+    translate: 0px -125px;
+}
+.p .bl {
+    translate: 0px 11px;
+}
+.p .tl, .p .bl {
+    position: absolute;
+    width: calc(50% - 52px - 515px);
+}
+
+.p .d {
+    width: 2px !important;
+    height: 20px !important;
+    position: absolute;
+    left: 50%;
+    translate: -50% -6px;
+}
+.p span {
+    font-family: var(--scp);
+    padding-inline: 5px;
+    background-color: #47474770;
+    border-radius: 5px;
+    border: 2px solid #3f3f3f;
+    left: 50%;
+    translate: -50% 13px;
+    display: block;
+    width: max-content;
+    position: absolute;
+    color: #fff;
+}
+
+.pjs div {
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+}
+
+@media (max-width: 900px) {
+    .p, .pjs {
+        display: none;
+    }
 }
 
 ```
@@ -5218,7 +5262,7 @@ pre a {
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -5596,7 +5640,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6385,12 +6429,18 @@ _just: next: /docs/getting-started
             <img class="btm" src="/img/line.svg">
             <div class="c"></div>
             <div class="r"></div>
+            <div class="tl"></div>
+            <div class="bl"></div>
+            <div class="d"></div>
+            <span></span>
         </div>
+        <div class="pjs"></div>
+        <script src="/js/p.js" defer></script>
     </body>
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -6635,6 +6685,55 @@ _just: next: /docs/getting-started
 
 ```
 ## test
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+const box = document.querySelector('.pjs');
+const processor = document.querySelector('.p');
+const inputs = [
+    processor.querySelector('.c')
+];
+const outputs = [
+    processor.querySelector('.r'),
+    processor.querySelector('.d')
+];
+const label = processor.querySelector('span');
+
+function create() {
+    const element = document.createElement('div');
+    element.id = 'abc';
+    element.style.top = `${inputs[0].offsetTop + inputs[0].offsetHeight / 2}px`;
+    element.style.left = '2px';
+    element.style.backgroundColor = 'white';
+    element.style.position = 'absolute';
+    box.appendChild(element);
+}
+
+```
 ```js
 /*
 
@@ -7445,7 +7544,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
