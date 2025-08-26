@@ -1,18 +1,15 @@
 ## test
 ## test
 ### test
+### test
+## test
 ## test
 ## test
 ### test
 ## test
 ## test
+## test
 ### test
-## test
-## test
-## test
-## test
-## test
-## test
 ### test
 ### test
 ### test
@@ -20,8 +17,11 @@
 ### test
 ### test
 ### test
+## test
+### test
 ### test
 ## test
+### test
 ## test
 ### test
 ```js
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3300,7 +3300,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4136,8 +4136,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4219,7 +4219,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4563,6 +4563,21 @@ pre a {
 .bgb { /* bg - black */
     background-color: #000000;
 }
+.xh {
+    overflow-x: hidden;
+}
+
+.p { /* Processor */
+    margin-top: -10px;
+}
+.p .l { /* Logo */
+    left: 50%;
+    translate: -50% 0%;
+    position: relative;
+    background-color: #47474770;
+    border-radius: 20px;
+    border: 2px solid #3f3f3f;
+}
 
 ```
 ### test
@@ -4711,7 +4726,7 @@ pre a {
             "link": "",
             "data": {
                 "mg": false,
-                "i": null
+                "i": "Just an Ultimate Site Tool is unable to parse <code>module.exports</code> of the <code>just.config.js</code> file in the root directory. \nPlease check your <code>module.exports</code> of the <code>just.config.js</code> file."
             }
         },
         {
@@ -4738,25 +4753,41 @@ pre a {
             "code": "0205",
             "message": "Error occurred during Node.js installation. Retrying to install Node.js with console output enabled... (Attempt #4)",
             "crashed": false,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "Just an Ultimate Site Tool is unable to install Node.js."
+            }
         },
         {
             "code": "0207",
             "message": "Error occurred during Node.js installation. Retrying to install Node.js with console output enabled... (Attempt #2)",
             "crashed": false,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "Just an Ultimate Site Tool is unable to install Node.js."
+            }
         },
         {
             "code": "0208",
             "message": "Error occurred during Node.js installation. Retrying to install Node.js... (Attempt #3)",
             "crashed": false,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "Just an Ultimate Site Tool is unable to install Node.js."
+            }
         },
         {
             "code": "0210",
             "message": "Error occurred during TypeScript compiler installation. Retrying to install TypeScript compiler... (Attempt #2)",
             "crashed": false,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "Just an Ultimate Site Tool is unable to install TypeScript compiler."
+            }
         }
     ],
     "postprocessor/checks.sh": [
@@ -5157,12 +5188,12 @@ pre a {
     "zephir": "Zephir"
 }
 ```
-## test
+### test
 ### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
-### Markdown files
+## Markdown files
 You can specify the page title by adding `_just: title: ...` in the first line of the Markdown file.
 -# Example:
 \`\`\`md
@@ -5180,7 +5211,7 @@ Just an Ultimate Site Tool will automatically get the title of the previous and/
 The output should look like this:
 ![Output](/img/generator-adv-prevnext.png)
 
-### The `just.config.js` file
+## The `just.config.js` file
 You can change search key: (slash (/) by default)
 -# `just.config.js`:
 \`\`\`js
@@ -5221,6 +5252,28 @@ module.exports = {
   // ...
   debug: true
 }
+\`\`\`
+
+## Custom HTML, CSS, JavaScript files
+### Theme
+Just an Ultimate Site Tool saves some data in `localStorage`. Please do not modify any variable with key that starts with `sp`, as these variables store scroll information in BASE-64.
+You can use the `t` (theme) variable to synchronize the theme between your custom pages and the generated documentation pages.
+\`\`\`js
+localStorage.getItem('t');
+\`\`\`
+You can set the `t` variable to update the theme, but the value must be one of: `l` (light), `d` (dark), `a` (auto / sync with device).
+\`\`\`js
+localStorage.setItem('t', 'a');
+\`\`\`
+
+### Search
+You can make custom documentation search in your custom pages:
+1. Fetch `/_just/` or `/_just/index.json`, it’ll return a JSON that has a `"json"` key.
+2. Fetch `/_just/( put the "json" value here ).json`, this will return a JSON, where the key is the page URL and the value is the content of the page.
+-# Example:
+\`\`\`js
+const _just_data = await fetch('/_just/').then(r=>r.json());
+const docssearch = await fetch(`/_just/${_just_data.json}.json`).then(r=>r.json());
 \`\`\`
 
 _just: prev: /docs/generator/syntax
@@ -5513,7 +5566,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -5527,7 +5580,7 @@ This mode requires only the `just.config.js` file and the workflow file.
 -# `just.config.js`
 \`\`\`js
 module.exports = {
-    type: "compress"
+  type: "compress"
 }
 \`\`\`
 
@@ -5949,7 +6002,7 @@ _just: title: Redirector Mode
 # Redirector mode
 **- Client-side redirect.**
 
-> This mode redirects your static website, such as your `.github.io` website, to a specified URL.
+> This mode redirects your static website, such as your `.github.io` website, to a specified URL. <br>This mode creates the `deploy` directory and outputs files into it.
 
 This mode requires only the `just.config.js` file, (except for the workflow file).
 `just.config.js`
@@ -6034,7 +6087,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: deploy
 
   deploy:
     environment:
@@ -6273,7 +6326,7 @@ Currently it have 4 modes:
 - `Generator`: Generates documentation website using Markdown.
 
 > [!WARNING] Just an Ultimate Site Tool is still in development at the **alpha** stage. Expect regular updates, possible bugs, and changes. If you have found a bug, please [report it here](https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md).
-> [!CAUTION] The docs are under construction!
+> [!NOTE] Just an Ultimate Site Tool assumes that a modern browser and a modern operating system are used.
 > [!TIP] Do not use `Redirector` if you can make server-side `HTTP 3XX` redirects.
 
 ## Why _just?
@@ -6294,8 +6347,12 @@ _just: next: /docs/getting-started
         <link href="/css/styles.css" rel="stylesheet">
         <title>Just an Ultimate Site Tool</title>
     </head>
-    <body class="bgb">
-        <h1 class="bg lz cw beta agt t z">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b">Beta</h1>
+    <body class="bgb xh">
+        <h1 class="bg lz cw beta agt t z" style="position: relative;">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b">Beta</h1>
+        <div class="p">
+            <img class="l" src="/img/logo.svg" height="100" width="100">
+            <img class="1" src="/img/line.svg">
+        </div>
     </body>
 </html>
 
@@ -6382,6 +6439,34 @@ S�NU���v.�C9t�z�ܤI��~�z�_������bΜ9X�|
 ��v~0�N[	L&Sv�Y������8p� |>_v���҂��zu*Չx�駱u�V�b1����f�����/�+'"�����f��P�(�9�� �ÇglFDDcG���/:�eee@���\�*9�(��s��랈�Ʈp8���fDD�t����8`���S�:<+{�y""""":7ɲ��M2��ܑ<D�Q���j!""""�s[�m���7��	�H���D��鐟���LDDDDD���|�t:D"x<���a�< u2o2���b����N&""""�s����bA2�DWWWv�r
 "��zT��f�&""""�s����f ��nD"��,#�)x@��t a�ZQ\\I����YD�$��+���Oxʐ�<E�eBE$	���j�6�V�������v#
 eg�٨����ө�H����z����H$�����h`6�a�Z��j �@ ��x<;���P�f2�`�ۡ���k�`�P�H�X�� �<�G�A�(��j�����eyyyjz4Eoo/�@��N�Ii&�	f�9���F0���?eAC�)	�$I�,�0��t�j��h4!;+��d2�D"�X,�h4�p8�P(t�ӓ�rJ�"""""�rު�������o�����('�����('�����('�����('�����('�yN��ې�    IEND�B`�
+```
+```svg
+<!-- 
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+\-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><path xmlns="http://www.w3.org/2000/svg" d="M0,200 s248.9-.13 300-70" fill="none" stroke="#3f3f3f" stroke-width="0.6" stroke-linecap="round"/></svg>
 ```
 ```svg
 <!-- 
@@ -6753,7 +6838,16 @@ function exitFullscreen() {
     function listcmd() {
         animErr();
         disableD();
-        animateTyping('f', `<strong>List of codes:</strong>\n${codes.nums.join('\n')}`, 40, timeoutED)
+        animateTyping('f', `<strong>List of codes:</strong>\n${
+            codes.nums.sort((a,b)=>{
+                a = parseInt(a);
+                b = parseInt(b);
+                if (isNaN(a) || isNaN(b)) {
+                    return -1
+                };
+                return a > b ? 1 : -1
+            }).join('\n')
+        }`, 40, timeoutED)
     };
     let interval;
     let enterKeyCooldown = false;
