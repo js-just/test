@@ -1,27 +1,27 @@
-## test
-## test
 ### test
 ### test
 ## test
 ### test
 ## test
-## test
-### test
 ### test
 ### test
 ## test
 ## test
-## test
-## test
-## test
+### test
 ## test
 ### test
 ### test
+## test
 ### test
 ### test
 ### test
 ### test
+## test
 ### test
+### test
+### test
+### test
+## test
 ## test
 ## test
 ```js
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3300,7 +3300,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4136,7 +4136,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
+## test
 ## test
 ```css
 * {
@@ -4219,7 +4219,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4579,17 +4579,17 @@ pre a {
     border: 2px solid #3f3f3f;
 }
 
-.p .t, .p .b {
+.p .top, .p .btm {
     position: absolute;
     right: calc(50% + 52px);
     z-index: -1;
     width: 515px;
 }
-.p .t {
+.p .top {
     top: 0px;
     transform: rotateX(60deg);
 }
-.p .b {
+.p .btm {
     top: -50px;
     transform: rotateX(240deg);
 }
@@ -4606,10 +4606,11 @@ pre a {
 .p .r {
     position: absolute;
     translate: 0px -58.5px;
+    right: 0px;
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5218,7 +5219,7 @@ pre a {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5595,7 +5596,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6380,8 +6381,8 @@ _just: next: /docs/getting-started
         <h1 class="bg lz cw beta agt t z" style="position: relative;">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b">Beta</h1>
         <div class="p">
             <img class="l" src="/img/logo.svg" height="100" width="100">
-            <img class="t" src="/img/line.svg">
-            <img class="b" src="/img/line.svg">
+            <img class="top" src="/img/line.svg">
+            <img class="btm" src="/img/line.svg">
             <div class="c"></div>
             <div class="r"></div>
         </div>
@@ -6389,7 +6390,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -6633,7 +6634,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -7444,7 +7445,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
