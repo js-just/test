@@ -3,27 +3,27 @@
 ### test
 ### test
 ## test
-## test
-## test
 ### test
 ## test
-## test
-## test
-### test
-### test
-### test
-### test
 ## test
 ### test
 ### test
 ### test
 ## test
+## test
+## test
+## test
+## test
+## test
+### test
+### test
+### test
+### test
+### test
 ### test
 ### test
 ## test
-### test
 ## test
-### test
 ```js
 /*
 
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -4136,7 +4136,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ## test
 ```css
 * {
@@ -4219,7 +4219,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -4577,6 +4577,35 @@ pre a {
     background-color: #47474770;
     border-radius: 20px;
     border: 2px solid #3f3f3f;
+}
+
+.p .t, .p .b {
+    position: absolute;
+    right: calc(50% + 52px);
+    z-index: -1;
+    width: 515px;
+}
+.p .t {
+    top: 0px;
+    transform: rotateX(60deg);
+}
+.p .b {
+    top: -50px;
+    transform: rotateX(240deg);
+}
+
+.p div {
+    width: calc(50% - 52px);
+    height: 2px;
+    background-color: #3f3f3f;
+}
+.p .c {
+    position: relative;
+    translate: 0px -56.5px;
+}
+.p .r {
+    position: absolute;
+    translate: 0px -58.5px;
 }
 
 ```
@@ -5189,7 +5218,7 @@ pre a {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5566,7 +5595,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6351,13 +6380,16 @@ _just: next: /docs/getting-started
         <h1 class="bg lz cw beta agt t z" style="position: relative;">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b">Beta</h1>
         <div class="p">
             <img class="l" src="/img/logo.svg" height="100" width="100">
-            <img class="1" src="/img/line.svg">
+            <img class="t" src="/img/line.svg">
+            <img class="b" src="/img/line.svg">
+            <div class="c"></div>
+            <div class="r"></div>
         </div>
     </body>
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -6466,7 +6498,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 \-->
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><path xmlns="http://www.w3.org/2000/svg" d="M0,200 s248.9-.13 300-70" fill="none" stroke="#3f3f3f" stroke-width="0.6" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><path xmlns="http://www.w3.org/2000/svg" d="M0,200 s248.9-.13 300-70" fill="none" stroke="#3f3f3f" stroke-width="2" stroke-linecap="round"/></svg>
 ```
 ```svg
 <!-- 
@@ -6601,7 +6633,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -7412,7 +7444,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
