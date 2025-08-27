@@ -6,22 +6,22 @@
 ### test
 ### test
 ### test
+### test
+### test
+## test
+## test
+## test
+### test
+## test
+## test
+### test
 ## test
 ### test
 ### test
 ### test
 ## test
-### test
 ## test
 ## test
-### test
-### test
-## test
-### test
-### test
-### test
-### test
-### test
 ### test
 ### test
 ```js
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -2175,7 +2175,7 @@ main nav.left li {
     const navbar = dcmnt.querySelector('[data-just="navbar"]');
     const style = document.createElement('style');
     const css = await fetch('/_just/REPLACE_CSS.css').then(r => r.text());
-    style.innerHTML = css;
+    style.innerHTML = css + '@media(min-width:700px){[data-just="navbar"] div:has(a){left:50% !important;translate:-50% !important}}';
     dcmnt.head.appendChild(style);
     navbar.innerHTML = 'REPLACE_NAVBAR';
 
@@ -3473,7 +3473,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4171,8 +4171,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4254,7 +4254,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -4715,7 +4715,7 @@ pre a {
 }
 
 @media (max-width: 900px) {
-    .p, .pjs {
+    .p, .pjs, h2 {
         display: none;
     }
 }
@@ -4728,6 +4728,7 @@ h2 {
     color: transparent;
     text-align: center;
     height: 30px;
+    white-space: nowrap;
 }
 h2 span {
     background-image: linear-gradient(148deg, rgba(255, 255, 255, 0) var(--1), rgba(255, 255, 255, 0.4) var(--2), rgba(255, 255, 255, 0) var(--3));
@@ -4802,7 +4803,7 @@ h2 span {
 
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5410,7 +5411,7 @@ h2 span {
     "zephir": "Zephir"
 }
 ```
-## test
+### test
 ## test
 ```md
 _just: title: Advanced usage
