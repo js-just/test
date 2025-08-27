@@ -1,21 +1,7 @@
 ## test
-## test
 ### test
 ### test
 ## test
-### test
-### test
-### test
-## test
-### test
-### test
-## test
-## test
-## test
-## test
-## test
-### test
-### test
 ### test
 ### test
 ### test
@@ -23,7 +9,21 @@
 ## test
 ### test
 ### test
+### test
 ## test
+### test
+## test
+## test
+### test
+### test
+## test
+### test
+### test
+### test
+### test
+### test
+### test
+### test
 ```js
 /*
 
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2180,7 +2180,7 @@ main nav.left li {
     navbar.innerHTML = 'REPLACE_NAVBAR';
 
     'REPLACE_THEME';
-    
+
     'REPLACE_BUTTONS';
 })()
 ```
@@ -3473,7 +3473,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4099,7 +4099,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4171,7 +4171,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ### test
 ```css
 * {
@@ -4254,7 +4254,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4802,7 +4802,7 @@ h2 span {
 
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5410,7 +5410,7 @@ h2 span {
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ## test
 ```md
 _just: title: Advanced usage
@@ -5782,7 +5782,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6563,12 +6563,12 @@ _just: next: /docs/getting-started
         <link href="/css/styles.css" rel="stylesheet">
         <title>Just an Ultimate Site Tool</title>
     </head>
-    <body class="bgb xh">
+    <body class="bgb xh t50">
         <div data-just="navbar"></div>
         <script src="/_just/static/navbar.js"></script>
 
         <h1 class="bg lz cw beta agt t z" style="position:relative" id="h">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b" style="position:absolute">Beta</h1>
-        <script>document.getElementById('h').style.translate='0px 0px';document.body.classList.add('t50')</script>
+        <script>document.getElementById('h').style.translate='0px 0px'</script>
 
         <h2 class="lz">A GitHub action to <span class="lz">enhance</span> your static website.</h2>
 
