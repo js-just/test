@@ -1,3 +1,14 @@
+## test
+### test
+## test
+### test
+## test
+### test
+## test
+### test
+## test
+### test
+## test
 ### test
 ### test
 ## test
@@ -5,20 +16,9 @@
 ## test
 ## test
 ## test
-### test
-## test
-## test
 ## test
 ### test
-### test
-### test
-### test
 ## test
-### test
-### test
-## test
-## test
-### test
 ### test
 ### test
 ### test
@@ -3045,14 +3045,14 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
 ```js
 const _just_THEME = class {
     constructor () {
-        return (i)=>{ // input
+        return (i)=>{ /* input */
             const wndw = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
             const doct = wndw["document"];
             i = String(i).toLowerCase();
-            function e(t) { // error ( text )
+            function e(t) { /* error ( text ) */
                 throw new Error(`Just an Ultimate Site Tool: Generator mode: theme.js: ${t}.`)
             };
-            function c(t) { // check ( theme )
+            function c(t) { /* check ( theme ) */
                 switch(t) {
                     case 'l': case 'd': case 'a':
                         return t;break;
@@ -3521,7 +3521,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4148,7 +4148,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4303,7 +4303,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4886,7 +4886,7 @@ h2 span {
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5495,7 +5495,7 @@ h2 span {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5866,7 +5866,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6685,7 +6685,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -6929,7 +6929,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
