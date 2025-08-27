@@ -1,21 +1,13 @@
+## test
+## test
 ### test
+### test
+## test
 ### test
 ### test
 ### test
 ## test
 ### test
-## test
-### test
-### test
-### test
-### test
-## test
-## test
-### test
-## test
-### test
-### test
-## test
 ### test
 ## test
 ## test
@@ -24,6 +16,14 @@
 ## test
 ### test
 ### test
+### test
+### test
+### test
+### test
+## test
+### test
+### test
+## test
 ```js
 /*
 
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -2180,6 +2180,8 @@ main nav.left li {
     navbar.innerHTML = 'REPLACE_NAVBAR';
 
     'REPLACE_THEME';
+    
+    'REPLACE_BUTTONS';
 })()
 ```
 ```html
@@ -4097,7 +4099,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4169,7 +4171,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
+## test
 ### test
 ```css
 * {
@@ -4598,6 +4600,9 @@ pre a {
 }
 .xh {
     overflow-x: hidden;
+}
+.t50 { /* padding Top - 50px */
+    padding-top: 50px;
 }
 
 .p { /* Processor */
@@ -5405,8 +5410,8 @@ h2 span {
     "zephir": "Zephir"
 }
 ```
-## test
 ### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5777,7 +5782,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6562,9 +6567,10 @@ _just: next: /docs/getting-started
         <div data-just="navbar"></div>
         <script src="/_just/static/navbar.js"></script>
 
-        <h1 class="bg lz cw beta agt t z" style="position:relative">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b" style="position: absolute">Beta</h1>
-        
-        <h2 class="lz">A GitHub action to <span>enhance</span> your static website.</h2>
+        <h1 class="bg lz cw beta agt t z" style="position:relative" id="h">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b" style="position:absolute">Beta</h1>
+        <script>document.getElementById('h').style.translate='0px 0px';document.body.classList.add('t50')</script>
+
+        <h2 class="lz">A GitHub action to <span class="lz">enhance</span> your static website.</h2>
 
         <div class="p">
             <img class="l" src="/img/logo.svg" height="100" width="100">
@@ -6578,6 +6584,7 @@ _just: next: /docs/getting-started
             <span></span>
         </div>
         <div class="pjs"></div>
+        <script>document.querySelector('.p').style.width='100%'</script>
 
         <div class="btns">
             <a href="/docs/getting-started" target="_self" class="bg">Get Started</a>
@@ -6833,7 +6840,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
