@@ -1,28 +1,28 @@
 ### test
 ### test
-## test
-## test
-## test
-### test
-### test
-## test
-## test
 ### test
 ### test
 ## test
 ### test
 ## test
-## test
+### test
+### test
+### test
 ### test
 ## test
 ## test
 ### test
 ## test
+### test
+### test
+## test
+### test
+## test
+## test
 ## test
 ## test
 ## test
 ### test
-## test
 ### test
 ```js
 /*
@@ -2165,6 +2165,23 @@ main nav.left li {
 }
 
 ```
+```js
+(async()=>{
+    const fcrt_ = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
+    const wndw_ = fcrt_;
+    const dcmnt = fcrt_["document"];
+    const theme = localStorage.getItem('t');
+
+    const navbar = dcmnt.querySelector('[data-just="navbar"]');
+    const style = document.createElement('style');
+    const css = await fetch('/_just/REPLACE_CSS.css').then(r => r.text());
+    style.innerHTML = css;
+    dcmnt.head.appendChild(style);
+    navbar.innerHTML = 'REPLACE_NAVBAR';
+
+    'REPLACE_THEME';
+})()
+```
 ```html
 <!DOCTYPE html>
 <html>
@@ -2541,83 +2558,7 @@ dcmnt.addEventListener('touchend', function(event) {
     }
 }, false);
 
-let currentTheme = 1;
-const getnsettheme = () => {
-    try {
-        const darkThemeMq = () => wndw_?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
-        if (darkThemeMq()) {
-            dcmnt.documentElement.classList.remove('l');
-            currentTheme = 0;
-        } else {
-            dcmnt.documentElement.classList.add('l');
-            currentTheme = 1;
-        }
-    } catch {
-        dcmnt.documentElement.classList.add('l');
-        currentTheme = 1;
-    }
-};
-const checkTheme = () => localStorage.getItem('t');
-let listeningforcolorscheme = false;
-const autotheme = () => {
-    const setColorScheme = (scheme) => {
-        switch(scheme){
-            case 'dark':
-                currentTheme = 0;
-                if (checkTheme() == 'a') {
-                    dcmnt.documentElement.classList.remove('l');
-                }
-            break;
-            case 'light': default:
-                currentTheme = 1;
-                if (checkTheme() == 'a') {
-                    dcmnt.documentElement.classList.add('l');
-                }
-            break;
-        }
-    };
-
-    const getPreferredColorScheme = () => {
-        if (wndw_.matchMedia) {
-            if(wndw_.matchMedia('(prefers-color-scheme: dark)').matches){
-                return 'dark';
-            } else {
-                return 'light';
-            }
-        }
-        return 'light';
-    };
-
-    const updateColorScheme=()=>{
-        setColorScheme(getPreferredColorScheme());
-    };
-
-    if(wndw_.matchMedia && !listeningforcolorscheme){
-        const colorSchemeQuery = wndw_.matchMedia('(prefers-color-scheme: dark)');
-        if (colorSchemeQuery.addEventListener) {
-            colorSchemeQuery.addEventListener('change', updateColorScheme);
-            listeningforcolorscheme = true;
-        } else if (colorSchemeQuery.addListener) {
-            colorSchemeQuery.addListener(updateColorScheme);
-            listeningforcolorscheme = true;
-        }
-    };
-
-    updateColorScheme();
-};
-
-if (theme && theme == 'l') {
-    currentTheme = 1;
-    dcmnt.documentElement.classList.add('l');
-    dcmnt.documentElement.classList.remove('a');
-} else if (theme && theme == 'a') {
-    dcmnt.documentElement.classList.add('a');
-    autotheme()
-} else {
-    currentTheme = 0;
-    dcmnt.documentElement.classList.remove('a');
-    getnsettheme()
-};
+'REPLACE_THEME';
 
 const updateMinHeight = () => {
     try {
@@ -3087,6 +3028,95 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
 }
 
 ```
+```js
+(async()=>{
+    const fcrt_ = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
+    const wndw_ = fcrt_;
+    const dcmnt = fcrt_["document"];
+    const theme = localStorage.getItem('t');
+
+    'REPLACE_THEME';
+})()
+```
+```js
+let currentTheme = 1;
+const getnsettheme = () => {
+    try {
+        const darkThemeMq = () => wndw_?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
+        if (darkThemeMq()) {
+            dcmnt.documentElement.classList.remove('l');
+            currentTheme = 0;
+        } else {
+            dcmnt.documentElement.classList.add('l');
+            currentTheme = 1;
+        }
+    } catch {
+        dcmnt.documentElement.classList.add('l');
+        currentTheme = 1;
+    }
+};
+const checkTheme = () => localStorage.getItem('t');
+let listeningforcolorscheme = false;
+const autotheme = () => {
+    const setColorScheme = (scheme) => {
+        switch(scheme){
+            case 'dark':
+                currentTheme = 0;
+                if (checkTheme() == 'a') {
+                    dcmnt.documentElement.classList.remove('l');
+                }
+            break;
+            case 'light': default:
+                currentTheme = 1;
+                if (checkTheme() == 'a') {
+                    dcmnt.documentElement.classList.add('l');
+                }
+            break;
+        }
+    };
+
+    const getPreferredColorScheme = () => {
+        if (wndw_.matchMedia) {
+            if(wndw_.matchMedia('(prefers-color-scheme: dark)').matches){
+                return 'dark';
+            } else {
+                return 'light';
+            }
+        }
+        return 'light';
+    };
+
+    const updateColorScheme=()=>{
+        setColorScheme(getPreferredColorScheme());
+    };
+
+    if(wndw_.matchMedia && !listeningforcolorscheme){
+        const colorSchemeQuery = wndw_.matchMedia('(prefers-color-scheme: dark)');
+        if (colorSchemeQuery.addEventListener) {
+            colorSchemeQuery.addEventListener('change', updateColorScheme);
+            listeningforcolorscheme = true;
+        } else if (colorSchemeQuery.addListener) {
+            colorSchemeQuery.addListener(updateColorScheme);
+            listeningforcolorscheme = true;
+        }
+    };
+
+    updateColorScheme();
+};
+
+if (theme && theme == 'l') {
+    currentTheme = 1;
+    dcmnt.documentElement.classList.add('l');
+    dcmnt.documentElement.classList.remove('a');
+} else if (theme && theme == 'a') {
+    dcmnt.documentElement.classList.add('a');
+    autotheme()
+} else {
+    currentTheme = 0;
+    dcmnt.documentElement.classList.remove('a');
+    getnsettheme()
+};
+```
 ```py
 # MIT License
 # 
@@ -3441,7 +3471,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4025,6 +4055,9 @@ elif [ "$TYPE" == "docs" ]; then
     HTML=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/page.html") && \
     CSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/base.css") && \
     JS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/page.js") && \
+    JST=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/themePart.js") && \
+    JSIT=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/theme.js") && \
+    JSIN=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/navbar.js") && \
     HIGHLIGHTCSS=$(cat "$HLJSCSS/_just_default_dark.css") && \
     HIGHLIGHTJSON=$(hljsstyles) && \
     BUTTONSCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/buttons.css") && \
@@ -4055,7 +4088,7 @@ elif [ "$TYPE" == "docs" ]; then
     HLJSLANGS=$(cat "$GITHUB_ACTION_PATH/data/hljslangs.json") && \
     LANGS=$(cat "$GITHUB_ACTION_PATH/data/langs.json") && \
     LANGSTEXT=$(cat "$GITHUB_ACTION_PATH/data/langstext.json") && \
-    node "$INDEXJS0" "$HTML" "$CSS" "$JS" "$INPUT_PATH" "$GITHUB_REPOSITORY" "$GITHUB_REPOSITORY_OWNER" "$CUSTOMCSS" "$HLJSLANGS" "$LANGS" "$HIGHLIGHTCSS" "$LANGSTEXT" "$VERSION" "$BUTTONSCSS" "$SEARCHCSS" "$HIGHLIGHTJSON" "$INPUT_FIXPATH" || jserr && \
+    node "$INDEXJS0" "$HTML" "$CSS" "$JS" "$INPUT_PATH" "$GITHUB_REPOSITORY" "$GITHUB_REPOSITORY_OWNER" "$CUSTOMCSS" "$HLJSLANGS" "$LANGS" "$HIGHLIGHTCSS" "$LANGSTEXT" "$VERSION" "$BUTTONSCSS" "$SEARCHCSS" "$HIGHLIGHTJSON" "$INPUT_FIXPATH" "$JST" "$JSIT" "$JSIN" || jserr && \
     node $GITHUB_ACTION_PATH/src/compress.js "$INPUT_PATH" && \
     node "$GITHUB_ACTION_PATH/src/documentation/logs.js" "$INPUT_PATH" && \
     TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
@@ -4064,7 +4097,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4136,7 +4169,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ### test
 ```css
 * {
@@ -4361,7 +4394,7 @@ h1 {
     }
 }
 
-.bg {
+.bg, .btns a::after, .btns a.bg:hover::after, .btns a:not(.bg):hover {
     background: #b2e3f7;
     background: -webkit-linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
     background: -moz-linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
@@ -4569,6 +4602,7 @@ pre a {
 
 .p { /* Processor */
     margin-top: -10px;
+    margin-bottom: 50px;
 }
 .p .l { /* Logo */
     left: 50%;
@@ -4681,8 +4715,89 @@ pre a {
     }
 }
 
+h2 {
+    background-image: linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-align: center;
+    height: 30px;
+}
+h2 span {
+    background-image: linear-gradient(148deg, rgba(255, 255, 255, 0) var(--1), rgba(255, 255, 255, 0.4) var(--2), rgba(255, 255, 255, 0) var(--3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: t var(--a);
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-delay: 1s;
+}
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 1rem;
+}
+.btns a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: 300ms;
+    outline: 2px solid transparent;
+    transition-timing-function: ease-in-out;
+    font-weight: 500;
+    stroke: #0000006b;
+    stroke-width: .5px;
+    stroke-linejoin: round;
+    -webkit-text-stroke: #0000006b .5px;
+    font-size: 18px;
+}
+.btns a:hover {
+    outline: 2px solid #000;
+}
+.btns a.bg:hover {
+    outline: 2px solid #00000085;
+    box-shadow: 0px 0px 20px 0px #ffffffad;
+}
+.btns a.bg:not(:hover), .btns a:not(.bg):hover {
+    text-shadow: 2px 3px 4px #434343;
+}
+.btns a::after, btns a::before {
+    content: '';
+    width: calc(100% + 1rem + 4px);
+    height: calc(100% + 1rem + 4px);
+    display: block;
+    position: relative;
+    top: calc(-100% - 0.5rem - 2px);
+    left: calc(-0.5rem - 2px);
+    z-index: -1;
+    border-radius: 11px;
+    transition: 300ms;
+    transition-timing-function: ease-in-out;
+}
+.btns a:hover::after {
+    width: calc(100% + 1rem + 8px);
+    height: calc(100% + 1rem + 8px);
+    top: calc(-100% - 0.5rem - 4px);
+    left: calc(-0.5rem - 4px);
+    border-radius: 13px;
+}
+.btns a.bg:not(:hover)::after, .btns a.bg:hover {
+    background: #f6f6f6 !important;
+    color: #000;
+}
+.btns a:not(.bg):hover::after, .btns a:not(.bg):not(:hover) {
+    background: #f6f6f6 !important;
+    color: #000;
+}
+
+
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5290,8 +5405,8 @@ pre a {
     "zephir": "Zephir"
 }
 ```
-### test
 ## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5645,14 +5760,8 @@ module.exports = {
   type: "(postprocessor/redirect/compress/docs)"
 }
 \`\`\`
-Using multiple modes:
--# Currently available only combining generator and compressor.
-\`\`\`js
-module.exports = {
-  type: ["docs", "compress"]
-}
-\`\`\`
-- Read the documentation for the mode/modes that you’ve chosen.
+
+- Read the documentation for the mode that you’ve chosen.
 
 ## Modes documentation
 - [Postprocessor](/docs/modes/postprocessor)
@@ -5668,7 +5777,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6450,19 +6559,31 @@ _just: next: /docs/getting-started
         <title>Just an Ultimate Site Tool</title>
     </head>
     <body class="bgb xh">
-        <h1 class="bg lz cw beta agt t z" style="position: relative;">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b">Beta</h1>
+        <div data-just="navbar"></div>
+        <script src="/_just/static/navbar.js"></script>
+
+        <h1 class="bg lz cw beta agt t z" style="position:relative">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b" style="position: absolute">Beta</h1>
+        
+        <h2 class="lz">A GitHub action to <span>enhance</span> your static website.</h2>
+
         <div class="p">
             <img class="l" src="/img/logo.svg" height="100" width="100">
-            <img class="top" src="/img/line.svg">
-            <img class="btm" src="/img/line.svg">
+            <img class="top" src="/img/line.svg" style="display:none">
+            <img class="btm" src="/img/line.svg" style="display:none">
             <div class="c"></div>
             <div class="r"></div>
-            <div class="tl"></div>
-            <div class="bl"></div>
+            <div class="tl" style="display:none"></div>
+            <div class="bl" style="display:none"></div>
             <div class="d"></div>
             <span></span>
         </div>
         <div class="pjs"></div>
+
+        <div class="btns">
+            <a href="/docs/getting-started" target="_self" class="bg">Get Started</a>
+            <a href="https://github.com/js-just/_just" target="_blank" class="gh">Repository</a>
+        </div>
+        
         <script src="/js/p.js" defer></script>
     </body>
 </html>
@@ -6744,7 +6865,9 @@ const box = document.querySelector('.pjs');
 const processor = document.querySelector('.p');
 const process = processor.querySelector('.l');
 const inputs = [
-    processor.querySelector('.c')
+    processor.querySelector('.c'),
+    processor.querySelector('.tl'),
+    processor.querySelector('.bl'),
 ];
 const outputs = [
     processor.querySelector('.r'),
@@ -7812,7 +7935,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
