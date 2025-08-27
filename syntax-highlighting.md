@@ -1,7 +1,6 @@
 ## test
 ### test
 ### test
-## test
 ### test
 ### test
 ### test
@@ -11,16 +10,17 @@
 ## test
 ## test
 ## test
-### test
 ## test
 ## test
 ### test
 ## test
 ### test
-### test
+## test
 ### test
 ## test
-## test
+### test
+### test
+### test
 ## test
 ### test
 ### test
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3039,6 +3039,53 @@ dcmnt.addEventListener('DOMContentLoaded', () => {
 
     'REPLACE_THEME';
 })()
+
+```
+```js
+const _just_THEME = class {
+    constructor () {
+        return (i)=>{ // input
+            const wndw = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
+            const doct = wndw["document"];
+            i = String(i).toLowerCase();
+            function e(t) { // error ( text )
+                throw new Error(`Just an Ultimate Site Tool: Generator mode: theme.js: ${t}.`)
+            };
+            function c(t) { // check ( theme )
+                switch(t) {
+                    case 'l': case 'd': case 'a':
+                        return t;break;
+                    default:
+                        e('Invalid theme');
+                        break
+                }
+            };
+            switch(i) {
+                case 'get':
+                    return c(wndw.localStorage.getItem('t'));
+                    break;
+                case 'light':
+                    wndw.localStorage.setItem('t','l');
+                    doct.documentElement.classList.add('l');
+                    doct.documentElement.classList.remove('a');
+                    break;
+                case 'dark':
+                    wndw.localStorage.setItem('t','d');
+                    doct.documentElement.classList.remove('l');
+                    doct.documentElement.classList.remove('a');
+                    break;
+                case 'auto':
+                    wndw.localStorage.setItem('t','a');
+                    wndw.location.reload();
+                    break;
+                default: 
+                    e('Invalid input');
+                    break
+            }
+        };
+    }
+};
+
 ```
 ```js
 let currentTheme = 1;
@@ -3473,7 +3520,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4060,6 +4107,7 @@ elif [ "$TYPE" == "docs" ]; then
     JST=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/themePart.js") && \
     JSIT=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/theme.js") && \
     JSIN=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/navbar.js") && \
+    JSTC=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/themeClass.js") && \
     HIGHLIGHTCSS=$(cat "$HLJSCSS/_just_default_dark.css") && \
     HIGHLIGHTJSON=$(hljsstyles) && \
     BUTTONSCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/buttons.css") && \
@@ -4090,7 +4138,7 @@ elif [ "$TYPE" == "docs" ]; then
     HLJSLANGS=$(cat "$GITHUB_ACTION_PATH/data/hljslangs.json") && \
     LANGS=$(cat "$GITHUB_ACTION_PATH/data/langs.json") && \
     LANGSTEXT=$(cat "$GITHUB_ACTION_PATH/data/langstext.json") && \
-    node "$INDEXJS0" "$HTML" "$CSS" "$JS" "$INPUT_PATH" "$GITHUB_REPOSITORY" "$GITHUB_REPOSITORY_OWNER" "$CUSTOMCSS" "$HLJSLANGS" "$LANGS" "$HIGHLIGHTCSS" "$LANGSTEXT" "$VERSION" "$BUTTONSCSS" "$SEARCHCSS" "$HIGHLIGHTJSON" "$INPUT_FIXPATH" "$JST" "$JSIT" "$JSIN" || jserr && \
+    node "$INDEXJS0" "$HTML" "$CSS" "$JS" "$INPUT_PATH" "$GITHUB_REPOSITORY" "$GITHUB_REPOSITORY_OWNER" "$CUSTOMCSS" "$HLJSLANGS" "$LANGS" "$HIGHLIGHTCSS" "$LANGSTEXT" "$VERSION" "$BUTTONSCSS" "$SEARCHCSS" "$HIGHLIGHTJSON" "$INPUT_FIXPATH" "$JST" "$JSIT" "$JSIN" "$JSTC" || jserr && \
     node $GITHUB_ACTION_PATH/src/compress.js "$INPUT_PATH" && \
     node "$GITHUB_ACTION_PATH/src/documentation/logs.js" "$INPUT_PATH" && \
     TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
@@ -4099,7 +4147,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4171,8 +4219,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
-## test
+### test
+### test
 ```css
 * {
     margin: 0;
@@ -4254,7 +4302,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -4601,8 +4649,9 @@ pre a {
 .xh {
     overflow-x: hidden;
 }
-.t50 { /* padding Top - 50px */
+.h { /* Home */
     padding-top: 50px;
+    padding-bottom: 25px;
 }
 
 .p { /* Processor */
@@ -4716,7 +4765,7 @@ pre a {
 
 @media (max-width: 900px) {
     .p, .pjs, h2 {
-        display: none;
+        display: none !important;
     }
 }
 
@@ -4801,9 +4850,42 @@ h2 span {
     color: #000;
 }
 
+.c { /* Copyright */
+    opacity: 1;
+    position: fixed;
+    bottom: 0px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(8px) brightness(0.25);
+    z-index: 2;
+    padding-block: 5px;
+}
+.c a {
+    opacity: 0.5;
+}
+
+/* Updates */
+.u0 {
+    position: absolute;
+    top: calc(50vh - 110px - 2rem);
+}
+.u1 {
+    position: absolute;
+    top: 50vh;
+    translate: 0% 50%;
+}
+.u2 {
+    position: absolute;
+    top: calc(100vh - 50px);
+    translate: 0% -100%;
+}
+.u3 {
+    margin-top: 100vh;
+}
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5411,7 +5493,7 @@ h2 span {
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ## test
 ```md
 _just: title: Advanced usage
@@ -5783,7 +5865,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6564,16 +6646,16 @@ _just: next: /docs/getting-started
         <link href="/css/styles.css" rel="stylesheet">
         <title>Just an Ultimate Site Tool</title>
     </head>
-    <body class="bgb xh t50">
+    <body class="bgb xh h">
         <div data-just="navbar"></div>
         <script src="/_just/static/navbar.js"></script>
 
         <h1 class="bg lz cw beta agt t z" style="position:relative" id="h">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b" style="position:absolute">Beta</h1>
         <script>document.getElementById('h').style.translate='0px 0px'</script>
 
-        <h2 class="lz">A GitHub action to <span class="lz">enhance</span> your static website.</h2>
+        <h2 class="lz u0">A GitHub action to <span class="lz">enhance</span> your static website.</h2>
 
-        <div class="p">
+        <div class="p u1">
             <img class="l" src="/img/logo.svg" height="100" width="100">
             <img class="top" src="/img/line.svg" style="display:none">
             <img class="btm" src="/img/line.svg" style="display:none">
@@ -6587,17 +6669,22 @@ _just: next: /docs/getting-started
         <div class="pjs"></div>
         <script>document.querySelector('.p').style.width='100%'</script>
 
-        <div class="btns">
+        <div class="btns u2">
             <a href="/docs/getting-started" target="_self" class="bg">Get Started</a>
             <a href="https://github.com/js-just/_just" target="_blank" class="gh">Repository</a>
         </div>
-        
+
+        <strong class="u3">Just an Ultimate Site Tool is <a href="https://github.com/js-just/_just" target="_blank">open-source</a>.</strong>
+        <span>Licensed under the MIT License</span>
+
+        <small class="c"><a href="https://github.com/js-just/_just/blob/main/LICENSE" target="_blank">Copyright &copy; 2025 &#171;JustStudio.&#187;</a></small>
+
         <script src="/js/p.js" defer></script>
     </body>
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -7943,7 +8030,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
