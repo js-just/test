@@ -1,29 +1,29 @@
 ## test
-### test
-## test
-### test
-## test
-### test
-## test
-### test
-## test
-### test
 ## test
 ### test
 ### test
 ## test
-### test
-## test
-## test
 ## test
 ## test
 ### test
+## test
 ## test
 ### test
 ### test
 ### test
 ### test
 ### test
+## test
+## test
+### test
+## test
+## test
+### test
+## test
+## test
+### test
+## test
+## test
 ```js
 /*
 
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3521,7 +3521,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4148,7 +4148,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4220,8 +4220,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4731,6 +4731,9 @@ pre a {
     width: max-content;
     position: absolute;
     color: #fff;
+    height: 25px;
+    min-width: 200px;
+    text-align: center;
 }
 
 .p *:not(.l) {
@@ -4851,7 +4854,7 @@ h2 span {
     color: #000;
 }
 
-.c { /* Copyright */
+.copy { /* Copyright */
     opacity: 1;
     position: fixed;
     bottom: 0px;
@@ -4862,7 +4865,7 @@ h2 span {
     z-index: 2;
     padding-block: 5px;
 }
-.c a {
+.copy a {
     opacity: 0.5;
 }
 
@@ -4886,7 +4889,7 @@ h2 span {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5495,7 +5498,7 @@ h2 span {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5866,7 +5869,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6678,7 +6681,7 @@ _just: next: /docs/getting-started
         <strong class="u3">Just an Ultimate Site Tool is <a href="https://github.com/js-just/_just" target="_blank">open-source</a>.</strong>
         <span>Licensed under the MIT License</span>
 
-        <small class="c"><a href="https://github.com/js-just/_just/blob/main/LICENSE" target="_blank">Copyright &copy; 2025 &#171;JustStudio.&#187;</a></small>
+        <small class="copy"><a href="https://github.com/js-just/_just/blob/main/LICENSE" target="_blank">Copyright &copy; 2025 &#171;JustStudio.&#187;</a></small>
 
         <script src="/js/p.js" defer></script>
     </body>
@@ -6929,7 +6932,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
