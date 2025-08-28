@@ -1,27 +1,27 @@
 ## test
-## test
 ### test
 ## test
 ## test
 ### test
 ### test
-## test
-## test
-## test
-## test
 ### test
 ## test
 ## test
 ## test
 ## test
 ### test
+## test
+## test
+### test
+### test
+### test
+### test
+## test
 ### test
 ## test
 ### test
 ### test
 ### test
-## test
-## test
 ### test
 ### test
 ```js
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4148,7 +4148,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4221,7 +4221,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -4303,7 +4303,7 @@ h4 {
 </html>
 
 ```
-## test
+### test
 ```css
 /*
 
@@ -5501,7 +5501,7 @@ h2, .p, .p *, .btns, .copy {
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ## test
 ```md
 _just: title: Advanced usage
@@ -6936,7 +6936,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -6995,7 +6995,7 @@ function centerDot() {
  * @returns {string}
  */
 function yPos(track, offset) {
-    return `${(track.offsetTop + track.offsetHeight / 2 + 1) - offset - 1.5 + processor.offsetTop + 60}px`;
+    return `${(track.offsetTop + track.offsetHeight / 2 + 1) - offset - 1.5 + processor.offsetTop + 55}px`;
 }
 
 /**
@@ -7189,7 +7189,14 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
     type();
 };
 
+function time(ms) {
+    return ms > 999 ? `${Math.floor(ms/100)/10}s` : `${ms}ms`;
+};
+
+let canAnimate = true;
+
 function compressor() {
+    canAnimate = false;
     const variations = [
         ['white', '.html', '2kB', '0.9kB'],
         ['white', '.html', '14kB', '0.5kB'],
@@ -7216,10 +7223,17 @@ function compressor() {
     setTimeout(()=>{
         labelAnim();
         output(data[0], data[1], data[3]);
+        animateTyping(label.id, `Compressing completed (${time(offset)})`, 50, ()=>{
+            setTimeout(()=>{
+                labelAnim();
+                canAnimate = true
+            },1200)
+        })
     }, 5050+offset+1200);
 }
 
 function redirector() {
+    canAnimate = false;
     const offset = Math.random() / 2 + 0.700;
     labelAnim();
     label.id = `r${offset}`;
@@ -7233,6 +7247,12 @@ function redirector() {
         output('white', '.css');
         output('white', '.js');
         output('white', '.html');
+        animateTyping(label.id, `Generating completed (${time(offset)})`, 50, ()=>{
+            setTimeout(()=>{
+                labelAnim();
+                canAnimate = true
+            },1200)
+        })
     }, 2950+offset+1200);
 }
 
@@ -8047,7 +8067,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
