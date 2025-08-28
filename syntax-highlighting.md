@@ -1,16 +1,6 @@
 ## test
 ## test
-### test
-### test
 ## test
-## test
-## test
-### test
-## test
-## test
-### test
-### test
-### test
 ### test
 ### test
 ## test
@@ -19,10 +9,20 @@
 ## test
 ## test
 ### test
+### test
+## test
+### test
+## test
+### test
+### test
+## test
 ## test
 ## test
 ### test
 ## test
+## test
+## test
+### test
 ## test
 ```js
 /*
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -5497,7 +5497,7 @@ h2 span {
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -5869,7 +5869,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6688,7 +6688,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -6932,7 +6932,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -6986,13 +6986,22 @@ function centerDot() {
 }
 
 /**
+ * @param {HTMLElement} track 
+ * @param {number} offset 
+ * @returns {string}
+ */
+function yPos(track, offset) {
+    return `${(track.offsetTop + track.offsetHeight / 2 + 1) - offset - 1.5 + processor.offsetTop}px`;
+}
+
+/**
  * @param {String} c 
  * @param {String} t1 
  * @param {String?} t2 
  */
 function centerInput(c, t1, t2) {
     const [element, screen, offset] = centerDot();
-    const y = `${(inputs[0].offsetTop + inputs[0].offsetHeight / 2 + 1) - offset - 1.5}px`;
+    const y = yPos(inputs[0], offset);
     element.style.backgroundColor = c;
     element.style.boxShadow = `0px 0px 3px ${c}`;
     element.style.translate = `-${screen.x / 4}px ${y}`;
@@ -7041,7 +7050,7 @@ function output(c, t1, t2) {
     _outputs++;
     const offset2 = ((_outputs % 2 == 0 ? _outputs : -_outputs) - 1) * 35 - (_outputs % 2 == 0 ? 35 : 0);
     const [element, screen, offset] = centerDot();
-    const y = `${(inputs[0].offsetTop + inputs[0].offsetHeight / 2 + 1) - offset - 1.5}px`;
+    const y = yPos(inputs[0], offset);
     element.style.backgroundColor = 'transparent';
     element.style.translate = `${screen.x / 4}px ${y}`;
     box.appendChild(element);
