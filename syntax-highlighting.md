@@ -1,8 +1,6 @@
+## test
+## test
 ### test
-### test
-## test
-## test
-## test
 ## test
 ## test
 ### test
@@ -11,19 +9,21 @@
 ## test
 ## test
 ## test
-## test
-## test
+### test
 ## test
 ## test
 ## test
 ## test
 ### test
-## test
-## test
 ### test
 ## test
 ### test
+### test
+### test
 ## test
+## test
+### test
+### test
 ```js
 /*
 
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4221,7 +4221,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-### test
+## test
 ```css
 * {
     margin: 0;
@@ -4888,8 +4888,12 @@ h2 span {
     margin-top: 100vh;
 }
 
+h2, .p, .p *, .btns, .copy {
+    outline: none !important;
+}
+
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -6932,7 +6936,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -6991,7 +6995,7 @@ function centerDot() {
  * @returns {string}
  */
 function yPos(track, offset) {
-    return `${(track.offsetTop + track.offsetHeight / 2 + 1) - offset - 1.5 + processor.offsetTop + 50}px`;
+    return `${(track.offsetTop + track.offsetHeight / 2 + 1) - offset - 1.5 + processor.offsetTop + 60}px`;
 }
 
 /**
