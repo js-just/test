@@ -1,19 +1,13 @@
+### test
+### test
+## test
+### test
+### test
 ## test
 ### test
 ## test
 ## test
-### test
-### test
-### test
 ## test
-## test
-## test
-## test
-### test
-## test
-## test
-### test
-### test
 ### test
 ### test
 ## test
@@ -23,6 +17,12 @@
 ### test
 ### test
 ### test
+### test
+## test
+## test
+### test
+### test
+## test
 ### test
 ```js
 /*
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4220,8 +4220,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -4303,7 +4303,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -5501,7 +5501,7 @@ h2, .p, .p *, .btns, .copy {
     "zephir": "Zephir"
 }
 ```
-## test
+### test
 ## test
 ```md
 _just: title: Advanced usage
@@ -7212,7 +7212,7 @@ function compressor() {
         ['white', '.css', '24kB', '4.2kB'],
     ];
     const data = shuffleArray(variations)[0];
-    const offset = Math.random() / 2 + 0.700;
+    const offset = Math.ceil((Math.random() / 2 + 0.700) * 1000);
     labelAnim();
     label.id = `c${data[1]}${offset}`;
     animateTyping(label.id, 'Compressor', 75);
@@ -7234,7 +7234,7 @@ function compressor() {
 
 function redirector() {
     canAnimate = false;
-    const offset = Math.random() / 2 + 0.700;
+    const offset = Math.ceil((Math.random() / 2 + 0.700) * 1000);
     labelAnim();
     label.id = `r${offset}`;
     animateTyping(label.id, 'Redirector', 75);
@@ -7255,6 +7255,40 @@ function redirector() {
         })
     }, 2950+offset+1200);
 }
+
+function generator() {
+    canAnimate = false;
+    const offset = Math.ceil((Math.random() * 2 + 1.700) * 1000);
+    labelAnim();
+    label.id = `g${offset}`;
+    animateTyping(label.id, 'Generator', 75);
+    centerInput('white', '.md');
+    setTimeout(()=>{
+        labelAnim(true)
+    }, 2950);
+    setTimeout(()=>{
+        labelAnim();
+        output('white', '.css');
+        output('white', '.js');
+        output('white', '.html');
+        animateTyping(label.id, `Generating completed (${time(offset)})`, 50, ()=>{
+            setTimeout(()=>{
+                labelAnim();
+                canAnimate = true
+            },1200)
+        })
+    }, 2950+offset+1200);
+}
+
+function animate() {
+    labelAnim();
+    setInterval(()=>{
+        if (canAnimate) {
+            shuffleArray([compressor, redirector, generator])[0]()
+        }
+    },100)
+};
+animate()
 
 ```
 ```js
