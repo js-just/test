@@ -1,29 +1,29 @@
-### test
 ## test
 ### test
-## test
-## test
-## test
 ## test
 ### test
 ## test
 ### test
 ### test
 ## test
-### test
-### test
-## test
-## test
-## test
 ## test
 ### test
+## test
+### test
+## test
 ### test
 ### test
 ### test
+### test
+### test
 ## test
 ## test
+### test
 ## test
 ## test
+### test
+## test
+### test
 ```js
 /*
 
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4220,8 +4220,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
 ## test
+### test
 ```css
 * {
     margin: 0;
@@ -4698,11 +4698,13 @@ pre a {
 .p .c {
     position: relative;
     translate: 0px -56.5px;
+    overflow: hidden;
 }
 .p .r {
     position: absolute;
     translate: 0px -58.5px;
     right: 0px;
+    overflow: hidden;
 }
 
 .p .tl {
@@ -4749,7 +4751,7 @@ pre a {
     top: 0px;
     left: 0px;
 }
-.pjs div {
+.pjs div, .p .c div, .p .r div {
     height: 5px;
     width: 5px;
     border-radius: 50%;
@@ -4894,6 +4896,10 @@ h2 span {
 
 h2, .p, .p *, .btns, .copy {
     outline: none !important;
+}
+
+.p .c div {
+    filter: drop-shadow(0px 0px 5px red);
 }
 
 ```
@@ -5877,7 +5883,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6704,7 +6710,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -7067,7 +7073,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -7141,8 +7147,12 @@ function centerInput(c, t1, t2) {
     element.style.boxShadow = `0px 0px 3px ${c}`;
     element.style.translate = `-${screen.x / 4}px ${y}`;
     box.appendChild(element);
+    const element2 = element.cloneNode();
+    inputs[0].appendChild(element2);
     setTimeout(()=>{
-        element.style.translate = `${screen.x / 4}px ${y}`;
+        const pos=`${screen.x / 4}px ${y}`;
+        element.style.translate = translatee;
+        element2.style.translate = translatee;
     }, 100);
     const span = document.createElement('span');
     span.innerText = t1;
@@ -7166,10 +7176,13 @@ function centerInput(c, t1, t2) {
         time += 2100;
     }
     setTimeout(()=>{
-        element.style.translate = `${screen.x / 4 * 3}px ${y}`;
+        const pos = `${screen.x / 4 * 3}px ${y}`;
+        element.style.translate = pos;
+        element2.style.translate = pos;
     },3200+time);
     setTimeout(()=>{
         element.remove();
+        element2.remove();
         process.style.borderColor = '#6e3bf3';
         process.style.filter = 'drop-shadow(0px 0px 8px #6e3bf3)';
     },3450+time);
@@ -7411,14 +7424,15 @@ function generator() {
     }, 2950+offset+1200);
 }
 
-let lastanimation = undefined;
+let lastanimation = -1;
+const animations = [compressor, redirector, generator];
 function animate() {
     labelAnim();
     setInterval(()=>{
         if (canAnimate) {
             canAnimate = false;
-            const animation = shuffleArray([compressor, redirector, generator].filter(anim => anim != lastanimation))[0];
-            lastanimation = animation;
+            const animation = animations[shuffleArray([0, 1, 2].filter(anim => anim != lastanimation))[0]];
+            lastanimation = animations.indexOf(animation) || -1;
             setTimeout(animation, 500)
         }
     },100)
