@@ -1,10 +1,6 @@
 ### test
 ### test
-### test
 ## test
-## test
-## test
-### test
 ### test
 ## test
 ### test
@@ -12,18 +8,22 @@
 ### test
 ### test
 ## test
-## test
-### test
-## test
-### test
-## test
 ### test
 ## test
 ## test
-### test
+## test
 ## test
 ### test
 ### test
+## test
+## test
+## test
+## test
+## test
+### test
+### test
+## test
+## test
 ```js
 /*
 
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -4151,7 +4151,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4223,7 +4223,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ## test
 ```css
 * {
@@ -4302,6 +4302,15 @@ h4 {
         <meta name="color-scheme" content="dark">
         <meta property="twitter:card" content="summary">
         <meta property="og:site_name" content="_just">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL1YYL2EX0"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-EL1YYL2EX0');
+        </script>
     </head>
     <body class="s">
         <pre>
@@ -5152,7 +5161,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -6132,7 +6141,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -7270,7 +7279,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
