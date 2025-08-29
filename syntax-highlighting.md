@@ -1,29 +1,29 @@
-### test
-### test
-### test
-### test
-### test
-### test
-## test
-### test
-### test
-### test
-## test
-### test
 ## test
 ## test
-### test
 ## test
 ## test
 ## test
 ### test
 ### test
 ### test
+### test
+### test
+## test
+## test
+## test
+## test
+### test
+## test
+## test
+### test
+## test
 ## test
 ### test
 ### test
 ## test
 ## test
+### test
+### test
 ```js
 /*
 
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3521,7 +3521,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4220,7 +4220,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
+### test
 ## test
 ```css
 * {
@@ -4675,6 +4675,9 @@ pre a {
     -webkit-backdrop-filter: blur(8px);
     transition: 300ms;
 }
+.p .l, .jslogo {
+    -webkit-user-drag: none;
+}
 
 .p .top, .p .btm {
     position: absolute;
@@ -4871,8 +4874,9 @@ h2 span {
     z-index: 2;
     padding-block: 5px;
 }
-.copy a {
+.copy a:not(.jslink) {
     opacity: 0.5;
+    cursor: default;
 }
 
 /* Updates */
@@ -4893,6 +4897,9 @@ h2 span {
 .u3 {
     margin-top: 100vh;
 }
+.u4 {
+    margin-bottom: 40vh;
+}
 
 h2, .p, .p *, .btns, .copy {
     outline: none !important;
@@ -4902,8 +4909,37 @@ h2, .p, .p *, .btns, .copy {
     filter: drop-shadow(0px 0px 5px #fff);
 }
 
+.jslogo {
+    border-radius: 25px;
+    height: 100px;
+    width: 100px;
+}
+.js {
+    margin-bottom: -100px;
+    z-index: 1;
+}
+.jsblur {
+    margin-bottom: 10vh;
+    filter: blur(50px);
+    opacity: 0.5;
+}
+
+h1, h2, h3, a, strong, span, .p .l, .jslogo {
+    user-select: none;
+}
+
+.jslink {
+    color: transparent;
+    background-clip: text;
+    background-image: linear-gradient(45deg, #fff, #fff);
+}
+.jslink:hover {
+    filter: drop-shadow(0px 0px 6px #6e3bf385);
+    background-image: linear-gradient(45deg, #6e3bf3, #1437f3);
+}
+
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5511,8 +5547,8 @@ h2, .p, .p *, .btns, .copy {
     "zephir": "Zephir"
 }
 ```
-## test
-## test
+### test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5883,7 +5919,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6701,9 +6737,13 @@ _just: next: /docs/getting-started
         </div>
 
         <strong class="u3">Just an Ultimate Site Tool is <a href="https://github.com/js-just/_just" target="_blank">open-source</a>.</strong>
-        <span>Licensed under the MIT License</span>
+        <span class="u4">Licensed under the MIT License</span>
 
-        <small class="copy"><a href="https://github.com/js-just/_just/blob/main/LICENSE" target="_blank">Copyright &copy; 2025 &#171;JustStudio.&#187;</a></small>
+        <h3>Made by &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink">JustStudio.</a>&#187;</h3>
+        <img class="js jslogo" src="https://img.juststudio.is-a.dev/1714166971.392034-64C48F49-5339-42F4-92A8-E933FB0ABD54.png" height="100px" width="100px">
+        <img class="jslogo jsblur" src="https://img.juststudio.is-a.dev/1714166971.392034-64C48F49-5339-42F4-92A8-E933FB0ABD54.png" height="100px" width="100px">
+
+        <small class="copy"><a href="https://github.com/js-just/_just/blob/main/LICENSE" target="_blank">Copyright &copy; 2025 &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink">JustStudio.</a>&#187;</a></small>
 
         <script src="/js/p.js" defer></script>
     </body>
@@ -7073,7 +7113,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -7121,7 +7161,7 @@ const colors = {
     "js": "#f0db4f",
     "just.config.js": "#6c3cf4",
     "md": "#fff",
-}
+};
 
 /**
  * @returns {[HTMLDivElement, {x: number, y: number}, number]}
@@ -7508,9 +7548,12 @@ function animateTyping(elementId, text, speed = 100, callback = null) {
     function type() {
         if (index >= text.length) {
             cooldown = false;
-            if (element.innerHTML !== text.replaceAll('\n', '<br>')) {
+            function filter(txt) {
+                return txt.replaceAll('\n', '<br>').replaceAll('<br>', '').replace(/\s/g, '');
+            };
+            if (filter(element.innerHTML) !== filter(text)) {
                 aTerr = true;
-                console.warn(`"${element.innerHTML}" !== "${text.replaceAll('\n', '<br>')}"`)
+                console.warn(`"${filter(element.innerHTML)}" !== "${filter(text)}"`)
             };
             if (callback) callback();
             return;
