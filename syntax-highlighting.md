@@ -1,21 +1,3 @@
-## test
-### test
-### test
-### test
-### test
-### test
-### test
-## test
-## test
-## test
-### test
-## test
-### test
-### test
-### test
-### test
-### test
-## test
 ### test
 ### test
 ## test
@@ -24,6 +6,24 @@
 ### test
 ## test
 ### test
+### test
+### test
+### test
+## test
+## test
+### test
+## test
+### test
+## test
+### test
+## test
+### test
+## test
+### test
+### test
+## test
+## test
+## test
 ```js
 /*
 
@@ -4148,7 +4148,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4220,8 +4220,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
 ### test
+## test
 ```css
 * {
     margin: 0;
@@ -4364,6 +4364,8 @@ h1 {
     text-align: center;
     animation: gt var(--a);
     -webkit-animation: gt var(--a);
+    -moz-animation: gt var(--a);
+    -o-animation: gt var(--a);
 }
 
 .demo::after, .beta::after, .code::after, .exit::after {
@@ -4374,8 +4376,12 @@ h1 {
     border-radius: 15px;
     animation: g var(--a);
     -webkit-animation: g var(--a);
+    -moz-animation: g var(--a);
+    -o-animation: g var(--a);
     animation-delay: 0.2s;
     -webkit-animation-delay: 0.2s;
+    -moz-animation-delay: 0.2s;
+    -o-animation-delay: 0.2s;
     white-space: nowrap;
 }
 .demo::after {
@@ -4405,10 +4411,14 @@ h1 {
 .ag { /* Animation Glow */
     animation: g var(--a);
     -webkit-animation: g var(--a);
+    -moz-animation: g var(--a);
+    -o-animation: g var(--a);
 }
 .agt { /* Animation Glow (Text) */
     animation: gt var(--a);
     -webkit-animation: gt var(--a);
+    -moz-animation: gt var(--a);
+    -o-animation: gt var(--a);
 }
 
 @keyframes g { /* Glow */
@@ -4431,6 +4441,26 @@ h1 {
         -webkit-filter: drop-shadow(var(--g));
     }
 }
+@-moz-keyframes g {
+    0%, 100% {
+        filter: none;
+        -webkit-filter: none;
+    }
+    40% {
+        filter: drop-shadow(var(--g));
+        -webkit-filter: drop-shadow(var(--g));
+    }
+}
+@-o-keyframes g {
+    0%, 100% {
+        filter: none;
+        -webkit-filter: none;
+    }
+    40% {
+        filter: drop-shadow(var(--g));
+        -webkit-filter: drop-shadow(var(--g));
+    }
+}
 @keyframes gt { /* Glow (Text) */
     0%, 100% {
         text-shadow: none;
@@ -4440,6 +4470,22 @@ h1 {
     }
 }
 @-webkit-keyframes gt {
+    0%, 100% {
+        text-shadow: none;
+    }
+    40% {
+        text-shadow: var(--g);
+    }
+}
+@-moz-keyframes gt {
+    0%, 100% {
+        text-shadow: none;
+    }
+    40% {
+        text-shadow: var(--g);
+    }
+}
+@-o-keyframes gt {
     0%, 100% {
         text-shadow: none;
     }
@@ -4605,6 +4651,15 @@ pre a {
     animation: t var(--a);
     animation-timing-function: linear;
     animation-duration: 2s;
+    -webkit-animation: t var(--a);
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-duration: 2s;
+    -moz-animation: t var(--a);
+    -moz-animation-timing-function: linear;
+    -moz-animation-duration: 2s;
+    -o-animation: t var(--a);
+    -o-animation-timing-function: linear;
+    -o-animation-duration: 2s;
     opacity: 0.5;
 }
 @keyframes t {
@@ -4638,6 +4693,7 @@ pre a {
 .b { /* Blur */
     z-index: 1;
     filter: blur(50px);
+    -webkit-filter: blur(50px);
     top: 19px;
 }
 
@@ -4662,7 +4718,7 @@ pre a {
     margin-top: -10px;
     margin-bottom: 50px;
 }
-.p .l { /* Logo */
+.p .l, .p::before { /* Logo */
     left: 50%;
     translate: -50% 0%;
     position: relative;
@@ -4670,12 +4726,14 @@ pre a {
     border-radius: 20px;
     border: 2px solid #3f3f3f;
     z-index: 0;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     transition: 300ms;
 }
 .p .l, .jslogo {
     -webkit-user-drag: none;
+}
+.p .l {
+    backdrop-filter: url(#glass) brightness(50%) blur(8px);
+    -webkit-backdrop-filter: url(#glass) brightness(50%) blur(8px);
 }
 
 .p .top, .p .btm {
@@ -4799,6 +4857,18 @@ h2 span {
     animation-timing-function: linear;
     animation-duration: 2s;
     animation-delay: 1s;
+    -webkit-animation: t var(--a);
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 1s;
+    -moz-animation: t var(--a);
+    -moz-animation-timing-function: linear;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 1s;
+    -o-animation: t var(--a);
+    -o-animation-timing-function: linear;
+    -o-animation-duration: 2s;
+    -o-animation-delay: 1s;
 }
 
 .btns {
@@ -4870,6 +4940,7 @@ h2 span {
     width: 100%;
     text-align: center;
     backdrop-filter: blur(8px) brightness(0.25);
+    -webkit-backdrop-filter: blur(8px) brightness(0.25);
     z-index: 2;
     padding-block: 5px;
 }
@@ -4906,6 +4977,7 @@ h2, .p, .p *, .btns, .copy {
 
 .p .c div, .p .r div {
     filter: drop-shadow(0px 0px 5px #fff);
+    -webkit-filter: drop-shadow(0px 0px 5px #fff);
 }
 
 .jslogo {
@@ -4920,6 +4992,7 @@ h2, .p, .p *, .btns, .copy {
 .jsblur {
     margin-bottom: 10vh;
     filter: blur(50px);
+    -webkit-filter: blur(50px);
     opacity: 0.5;
 }
 
@@ -4934,6 +5007,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
 .jslink:hover {
     color: transparent;
     filter: drop-shadow(0px 0px 6px #6e3bf385);
+    -webkit-filter: drop-shadow(0px 0px 6px #6e3bf385);
     background-image: linear-gradient(45deg, #6e3bf3, #1437f3);
 }
 
@@ -4945,8 +5019,89 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     transition: none;
 }
 
+.p::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #6c3cf4;
+    animation: processor var(--a);
+    -webkit-animation: processor var(--a);
+    -moz-animation: processor var(--a);
+    -o-animation: processor var(--a);
+    border: none;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+    -o-animation-timing-function: linear;
+}
+@keyframes processor {
+    0%, 100% {
+        top: 20px;
+        left: calc(50% - 20px);
+    }
+    15%, 65% {
+        top: 30px;
+    }
+    35%, 85% {
+        left: calc(50%);
+    }
+    50% {
+        top: 40px;
+        left: calc(50% + 20px);
+    }
+}
+@-webkit-keyframes processor {
+    0%, 100% {
+        top: 20px;
+        left: calc(50% - 20px);
+    }
+    15%, 65% {
+        top: 30px;
+    }
+    35%, 85% {
+        left: calc(50%);
+    }
+    50% {
+        top: 40px;
+        left: calc(50% + 20px);
+    }
+}
+@-moz-keyframes processor {
+    0%, 100% {
+        top: 20px;
+        left: calc(50% - 20px);
+    }
+    15%, 65% {
+        top: 30px;
+    }
+    35%, 85% {
+        left: calc(50%);
+    }
+    50% {
+        top: 40px;
+        left: calc(50% + 20px);
+    }
+}
+@-o-keyframes processor {
+    0%, 100% {
+        top: 20px;
+        left: calc(50% - 20px);
+    }
+    15%, 65% {
+        top: 30px;
+    }
+    35%, 85% {
+        left: calc(50%);
+    }
+    50% {
+        top: 40px;
+        left: calc(50% + 20px);
+    }
+}
+
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5555,7 +5710,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5926,7 +6081,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6753,6 +6908,15 @@ _just: next: /docs/getting-started
         <small class="copy"><span onclick="javascript:window.open('https://github.com/js-just/_just/blob/main/LICENSE','_blank')">Copyright &copy; 2025 &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink">JustStudio.</a>&#187;</span></small>
 
         <script src="/js/p.js" defer></script>
+        <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden;">
+            <defs>
+                <filter id="glass" x="0%" y="0%" width="100%" height="100%">
+                    <feTurbulence type="fractalNoise" baseFrequency="10 10" numOctaves="2" seed="92" result="noise"></feTurbulence>
+                    <feGaussianBlur in="noise" stdDeviation="20" result="blurred"></feGaussianBlur>
+                    <feDisplacementMap in="SourceGraphic" in2="blurred" scale="8000" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+                </filter>
+            </defs>
+        </svg>
     </body>
 </html>
 
