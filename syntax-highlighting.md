@@ -1,29 +1,29 @@
 ### test
+## test
+## test
+### test
+## test
+### test
+### test
+## test
 ### test
 ## test
 ### test
 ## test
 ## test
-## test
-## test
-## test
-## test
-### test
 ### test
 ## test
+### test
 ## test
+### test
 ## test
 ### test
 ### test
 ### test
 ## test
 ## test
-## test
 ### test
-## test
-## test
-## test
-## test
+### test
 ```js
 /*
 
@@ -4220,8 +4220,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-### test
+## test
+## test
 ```css
 * {
     margin: 0;
@@ -5113,10 +5113,16 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     background-color: #ffffff4a;
 }
 ._just_theme_light .p span, ._just_theme_light .copy span:has(.jslink:hover), .pjs * {
-    color: #000;
+    color: #000 !important;
 }
 ._just_theme_light .copy {
     background-color: #ffffffeb;
+}
+._just_theme_light .u0 {
+    text-shadow: 0 0 10px #00000038;
+}
+._just_theme_light .pjs div {
+    border: 1px solid #000;
 }
 
 ```
@@ -5729,7 +5735,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6100,7 +6106,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6941,7 +6947,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -8551,7 +8557,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
