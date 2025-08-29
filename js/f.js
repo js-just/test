@@ -1,0 +1,1 @@
+ const liElement = document.getElementsByTagName('li'); Array.from(liElement).find(li => { const aElement = li.getElementsByTagName('a')[0]; if (aElement) { const spanElement = aElement.getElementsByTagName('span')[0]; if (spanElement && spanElement.innerHTML === "Just an Ultimate Site Tool - Helper terminal") { li.parentNode.removeChild(li)} } })
