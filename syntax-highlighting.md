@@ -1,16 +1,13 @@
 ## test
-## test
-## test
+### test
 ## test
 ## test
 ### test
 ### test
-### test
-### test
-### test
 ## test
 ## test
-## test
+### test
+### test
 ## test
 ### test
 ## test
@@ -23,6 +20,9 @@
 ## test
 ## test
 ### test
+## test
+## test
+## test
 ### test
 ```js
 /*
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3521,7 +3521,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4148,7 +4148,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4220,7 +4220,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
+## test
 ## test
 ```css
 * {
@@ -4307,7 +4307,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -4874,7 +4874,7 @@ h2 span {
     z-index: 2;
     padding-block: 5px;
 }
-.copy a:not(.jslink) {
+.copy span {
     opacity: 0.5;
     cursor: default;
 }
@@ -4932,6 +4932,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     color: transparent;
     background-clip: text;
     background-image: linear-gradient(45deg, #fff, #fff);
+    transition: 500ms;
 }
 .jslink:hover {
     filter: drop-shadow(0px 0px 6px #6e3bf385);
@@ -5547,8 +5548,8 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     "zephir": "Zephir"
 }
 ```
-### test
-### test
+## test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -5919,7 +5920,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -6743,7 +6744,7 @@ _just: next: /docs/getting-started
         <img class="js jslogo" src="https://img.juststudio.is-a.dev/1714166971.392034-64C48F49-5339-42F4-92A8-E933FB0ABD54.png" height="100px" width="100px">
         <img class="jslogo jsblur" src="https://img.juststudio.is-a.dev/1714166971.392034-64C48F49-5339-42F4-92A8-E933FB0ABD54.png" height="100px" width="100px">
 
-        <small class="copy"><a href="https://github.com/js-just/_just/blob/main/LICENSE" target="_blank">Copyright &copy; 2025 &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink">JustStudio.</a>&#187;</a></small>
+        <small class="copy"><span>Copyright &copy; 2025 &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink">JustStudio.</a>&#187;</span></small>
 
         <script src="/js/p.js" defer></script>
     </body>
@@ -7113,7 +7114,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -7201,7 +7202,9 @@ function centerInput(c, t1, t2) {
     setTimeout(()=>{
         const pos=`${screen.x / 4}px `;
         element.style.translate = `${pos}${y}`;
-        element2.style.translate =`${pos}-25%`;
+        setTimeout(()=>{
+            element2.style.translate =`${pos}-25%`
+        }, 20)
     }, 100);
     const span = document.createElement('span');
     span.innerText = t1;
@@ -7227,7 +7230,9 @@ function centerInput(c, t1, t2) {
     setTimeout(()=>{
         const pos = `${screen.x / 4 * 3}px `;
         element.style.translate = `${pos}${y}`;
-        element2.style.translate =`${pos}-25%`;
+        setTimeout(()=>{
+            element2.style.translate =`${pos}-25%`
+        }, 20)
     },3200+time);
     setTimeout(()=>{
         element.remove();
@@ -7255,9 +7260,11 @@ function output(c, t1, t2) {
     element2.style.boxShadow = `0px 0px 20px 5px ${c}`;
     outputs[0].appendChild(element2);
     setTimeout(()=>{
-        const pos = `${screen.x / 4 * 3 + offset2}px `;
-        element.style.translate = `${pos}${y}`;
-        element2.style.translate =`${pos}-25%`;
+        const pos = screen.x / 4 * 3 + offset2;
+        element.style.translate = `${pos}px ${y}`;
+        setTimeout(()=>{
+            element2.style.translate =`${pos - screen.x / 2}px -25%`
+        },20)
     }, 100);
     setTimeout(()=>{
         process.style.borderColor = '#3f3f3f';
@@ -7287,9 +7294,11 @@ function output(c, t1, t2) {
         time += 2100;
     }
     setTimeout(()=>{
-        const pos = `${screen.x / 4 * 5}px `;
-        element.style.translate = `${pos}${y}`;
-        element2.style.translate =`${pos}-25%`;
+        const pos = screen.x / 4 * 5;
+        element.style.translate = `${pos}px ${y}`;
+        setTimeout(()=>{
+            element2.style.translate =`${pos - screen.x / 2}px -25%`
+        },20)
     },3200+time);
     setTimeout(()=>{
         element.remove();
@@ -8310,7 +8319,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
