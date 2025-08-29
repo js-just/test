@@ -1,28 +1,28 @@
 ### test
-### test
 ## test
 ## test
-### test
-### test
 ## test
-### test
-### test
-### test
+## test
 ### test
 ## test
 ## test
 ### test
 ## test
+## test
+## test
+## test
 ### test
+### test
+## test
+## test
 ## test
 ### test
 ## test
 ### test
 ## test
 ### test
+## test
 ### test
-## test
-## test
 ## test
 ```js
 /*
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3521,7 +3521,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4148,7 +4148,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4221,7 +4221,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -4592,7 +4592,7 @@ pre #text {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0)
+    background: rgb(0 0 0) !important
 }
 
 ::-webkit-scrollbar-thumb {
@@ -4705,6 +4705,7 @@ pre a {
 
 .bgb { /* bg - black */
     background-color: #000000;
+    background: radial-gradient(circle at 10% 65%, rgb(21 12 41) 0%, #000 30%);
 }
 .xh {
     overflow-x: hidden;
@@ -4759,12 +4760,16 @@ pre a {
     position: relative;
     translate: 0px -56.5px;
     overflow: hidden;
+    mask-image: linear-gradient(to left, #000000 70%, transparent);
+    -webkit-mask-image: linear-gradient(to left, #000000 70%, transparent);
 }
 .p .r {
     position: absolute;
     translate: 0px -58.5px;
     right: 0px;
     overflow: hidden;
+    mask-image: linear-gradient(to right, #000000 70%, transparent);
+    -webkit-mask-image: linear-gradient(to right, #000000 70%, transparent);
 }
 
 .p .tl {
@@ -4798,7 +4803,7 @@ pre a {
     position: absolute;
     color: #fff;
     height: 25px;
-    min-width: 200px;
+    min-width: 300px;
     text-align: center;
 }
 
@@ -4971,7 +4976,7 @@ h2 span {
     margin-bottom: 40vh;
 }
 
-h2, .p, .p *, .btns, .copy {
+h2, .p, .p *, .btns, .copy, h2 span {
     outline: none !important;
 }
 
@@ -5101,7 +5106,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5710,7 +5715,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6869,6 +6874,7 @@ _just: next: /docs/getting-started
         <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
+        <script src="/js/s.js"></script>
     </head>
     <body class="bgb xh h">
         <div data-just="navbar"></div>
@@ -6921,7 +6927,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -7284,7 +7290,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -7674,6 +7680,48 @@ function animate() {
     },100)
 };
 animate()
+
+```
+```js
+/*
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+let itWas = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > itWas) {
+        window.scrollTo(0, window.innerHeight)
+    } else if (currentScrollY < itWas) {
+        window.scrollTo(0, 0)
+    };
+
+    itWas = currentScrollY;
+});
 
 ```
 ```js
@@ -8489,7 +8537,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```

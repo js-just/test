@@ -1,0 +1,1 @@
+ let itWas = window.scrollY; window.addEventListener('scroll', () => { const currentScrollY = window.scrollY; if (currentScrollY > itWas) { window.scrollTo(0, window.innerHeight) } else if (currentScrollY < itWas) { window.scrollTo(0, 0) }; itWas = currentScrollY})
