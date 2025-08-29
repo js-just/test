@@ -1,27 +1,27 @@
-### test
-### test
 ## test
 ### test
-## test
-## test
 ### test
-## test
 ### test
-## test
 ### test
-## test
+### test
+### test
 ## test
 ## test
 ## test
 ### test
 ## test
+### test
+### test
+### test
+### test
+### test
 ## test
+### test
 ### test
 ## test
 ## test
 ### test
-## test
-## test
+### test
 ## test
 ### test
 ```js
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4220,8 +4220,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
 ## test
+### test
 ```css
 * {
     margin: 0;
@@ -5554,7 +5554,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     "zephir": "Zephir"
 }
 ```
-## test
+### test
 ### test
 ```md
 _just: title: Advanced usage
@@ -6757,7 +6757,7 @@ _just: next: /docs/getting-started
 </html>
 
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -7269,13 +7269,14 @@ function output(c, t1, t2) {
         const pos = screen.x / 4 * 3 + offset2;
         element.style.translate = `${pos}px ${y}`;
         setTimeout(()=>{
-            element2.style.translate =`${pos - screen.x / 2 - 52}px -25%`
+            element2.style.translate =`${pos - screen.x / 2 - 52 + 4}px -25%`
         },20)
     }, 100);
     setTimeout(()=>{
         process.style.borderColor = '#3f3f3f';
         process.style.filter = 'none';
         element.style.backgroundColor = c;
+        element2.style.backgroundColor = c;
         element.style.boxShadow = `0px 0px 3px ${c}`;
     }, 200);
     const span = document.createElement('span');
@@ -7303,7 +7304,7 @@ function output(c, t1, t2) {
         const pos = screen.x / 4 * 5;
         element.style.translate = `${pos}px ${y}`;
         setTimeout(()=>{
-            element2.style.translate =`${pos - screen.x / 2 - 52}px -25%`
+            element2.style.translate =`${pos - screen.x / 2 - 52 + 4}px -25%`
         },20)
     },3200+time);
     setTimeout(()=>{
