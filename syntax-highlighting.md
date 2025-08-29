@@ -1,29 +1,29 @@
-## test
-### test
-## test
-### test
-## test
-### test
 ### test
 ## test
 ## test
+## test
+### test
 ### test
 ## test
 ### test
 ## test
-### test
-### test
 ### test
 ### test
 ### test
 ## test
 ## test
 ### test
-## test
-## test
 ### test
 ## test
 ### test
+## test
+### test
+### test
+## test
+### test
+## test
+## test
+## test
 ```js
 /*
 
@@ -2062,7 +2062,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -4221,7 +4221,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ## test
-### test
+## test
 ```css
 * {
     margin: 0;
@@ -4307,7 +4307,7 @@ h4 {
 </html>
 
 ```
-### test
+## test
 ```css
 /*
 
@@ -4903,7 +4903,7 @@ h2, .p, .p *, .btns, .copy {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5511,8 +5511,8 @@ h2, .p, .p *, .btns, .copy {
     "zephir": "Zephir"
 }
 ```
-## test
-## test
+### test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -7073,7 +7073,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -7150,9 +7150,9 @@ function centerInput(c, t1, t2) {
     const element2 = element.cloneNode();
     inputs[0].appendChild(element2);
     setTimeout(()=>{
-        const pos=`${screen.x / 4}px ${y}`;
-        element.style.translate = translatee;
-        element2.style.translate = translatee;
+        const pos=`${screen.x / 4}px `;
+        element.style.translate = `${pos}${y}`;
+        element2.style.translate = `${pos}0px`;
     }, 100);
     const span = document.createElement('span');
     span.innerText = t1;
@@ -7176,9 +7176,9 @@ function centerInput(c, t1, t2) {
         time += 2100;
     }
     setTimeout(()=>{
-        const pos = `${screen.x / 4 * 3}px ${y}`;
-        element.style.translate = pos;
-        element2.style.translate = pos;
+        const pos = `${screen.x / 4 * 3}px `;
+        element.style.translate = `${pos}${y}`;
+        element2.style.translate = `${pos}0px`;
     },3200+time);
     setTimeout(()=>{
         element.remove();
@@ -8250,7 +8250,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
