@@ -1,29 +1,29 @@
-## test
 ### test
 ## test
-## test
-## test
-## test
-### test
 ### test
 ## test
 ### test
 ## test
 ## test
 ## test
+### test
+### test
+### test
 ## test
 ## test
 ## test
-## test
-## test
+### test
 ## test
 ## test
 ### test
 ### test
 ### test
-### test
+## test
 ### test
 ## test
+### test
+### test
+### test
 ```js
 /*
 
@@ -284,7 +284,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -3521,7 +3521,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -3625,6 +3625,8 @@ const path = require('path');
 const compress = (string) => string.replaceAll(`\n`,'').replaceAll('    ','');
 const filter = (input) => input ? input.replace(/[^a-zA-Z0-9]/g, (char) => `&#${char.charCodeAt(0)};`) : undefined;
 
+const vrsn = process.argv.slice(2);
+
 const config = JSON.parse(fs.readFileSync('just.config.json', 'utf-8'));
 const redirectConfig = config.redirect_config;
 
@@ -3712,6 +3714,7 @@ const generatePage = (url, params, path_) => {
         `${meta}"og:title" content="${ogTitle}">` +
         `${ogDescription ? `${meta}"og:description" content="${ogDescription}">` : ''}` +
         `${meta}"og:url" content="${URL}">${optionalstuff()}` +
+        `<meta name="generator" content="Just an Ultimate Site Tool (Redirector) ${vrsn}">` +
     '</head>' +
     '<body>' +
         `<h1>${title}</h1>` +
@@ -4090,7 +4093,7 @@ elif [ "$TYPE" == "redirect" ]; then
     mkdir -p deploy/_just && \
     installNodejs && \
     bash $GITHUB_ACTION_PATH/src/redirect/checks.sh && \
-    node $GITHUB_ACTION_PATH/src/redirect/index.js && \
+    node $GITHUB_ACTION_PATH/src/redirect/index.js "$VERSION" && \
     TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
     DONEIN=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME0" "$TIME3") && \
     echo -e "$msg5 ($DONEIN)"
@@ -4148,7 +4151,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4280,17 +4283,25 @@ h4 {
 ```
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Just an Ultimate Site Tool - Helper terminal</title>
+        <meta property="og:title" content="Just an Ultimate Site Tool - Helper terminal">
+        <meta property="og:type" content="website">
+        <meta name="keywords" content="Just, an, Ultimate, Site, Tool, Static, Website, GitHub, Action, Postprocessor, Compressor, Generator, Redirector, Markdown, Generate, Documentation, Docs, Exit, Code, OK, Warning, Error, Helper, Terminal">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
         <link href="/css.css" rel="stylesheet">
-        <title>Just an Ultimate Site Tool - Helper terminal</title>
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
+        <meta name="color-scheme" content="dark">
+        <meta property="twitter:card" content="summary">
+        <meta property="og:site_name" content="_just">
     </head>
     <body class="s">
         <pre>
@@ -5126,7 +5137,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5734,8 +5745,8 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     "zephir": "Zephir"
 }
 ```
-## test
 ### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6883,18 +6894,28 @@ _just: next: /docs/getting-started
 ```
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Just an Ultimate Site Tool</title>
+        <meta name="description" content="A GitHub action to enhance your static website.">
+        <meta property="og:title" content="Just an Ultimate Site Tool">
+        <meta property="og:description" content="A GitHub action to enhance your static website.">
+        <meta property="og:type" content="website">
+        <meta name="keywords" content="Just, an, Ultimate, Site, Tool, Static, Website, GitHub, Action, Postprocessor, Compressor, Generator, Redirector, Compress, Markdown, Redirect, Generate, Documentation, Docs">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
         <link href="/css.css" rel="stylesheet">
-        <title>Just an Ultimate Site Tool</title>
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
         <script src="/js/s.js"></script>
+        <meta name="color-scheme" content="dark light">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="og:site_name" content="_just">
     </head>
     <body class="bgb xh h">
         <div data-just="navbar"></div>
