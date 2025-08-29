@@ -1,28 +1,28 @@
 ### test
-## test
 ### test
 ## test
 ### test
-### test
 ## test
-### test
-### test
 ## test
-### test
-### test
-### test
+## test
+## test
+## test
+## test
 ### test
 ### test
 ## test
 ## test
 ## test
 ### test
+### test
+### test
 ## test
 ## test
 ## test
 ### test
 ## test
-### test
+## test
+## test
 ## test
 ```js
 /*
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -4148,7 +4148,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4221,7 +4221,7 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-## test
+### test
 ```css
 * {
     margin: 0;
@@ -4699,12 +4699,12 @@ pre a {
 
 .z { /* idk */
     z-index: 2;
-    -webkit-mask-image: linear-gradient(to bottom, #000000 70%, transparent);
-    mask-image: linear-gradient(to bottom, #000000 70%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
 }
 
 .bgb { /* bg - black */
-    background-color: #000000;
+    background-color: #000;
     background: radial-gradient(circle at 10% 65%, rgb(21 12 41) 0%, #000 30%);
 }
 .xh {
@@ -4760,16 +4760,16 @@ pre a {
     position: relative;
     translate: 0px -56.5px;
     overflow: hidden;
-    mask-image: linear-gradient(to left, #000000 70%, transparent);
-    -webkit-mask-image: linear-gradient(to left, #000000 70%, transparent);
+    mask-image: linear-gradient(to left, #000 70%, transparent);
+    -webkit-mask-image: linear-gradient(to left, #000 70%, transparent);
 }
 .p .r {
     position: absolute;
     translate: 0px -58.5px;
     right: 0px;
     overflow: hidden;
-    mask-image: linear-gradient(to right, #000000 70%, transparent);
-    -webkit-mask-image: linear-gradient(to right, #000000 70%, transparent);
+    mask-image: linear-gradient(to right, #000 70%, transparent);
+    -webkit-mask-image: linear-gradient(to right, #000 70%, transparent);
 }
 
 .p .tl {
@@ -5105,8 +5105,22 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     }
 }
 
+._just_theme_light .bgb {
+    background-color: #f3f3f3;
+    background: radial-gradient(circle at 10% 65%, rgb(230 219 255) 0%, #f3f3f3 30%);
+}
+._just_theme_light .p .l, ._just_theme_light .p span {
+    background-color: #ffffff4a;
+}
+._just_theme_light .p span, ._just_theme_light .copy span:has(.jslink:hover), .pjs * {
+    color: #000;
+}
+._just_theme_light .copy {
+    background-color: #ffffffeb;
+}
+
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5715,7 +5729,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -8537,7 +8551,7 @@ The HTML specification is maintained by the W3C.
 test
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
