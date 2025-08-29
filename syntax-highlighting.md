@@ -1,27 +1,27 @@
-### test
 ## test
-## test
-### test
-## test
-### test
-### test
-## test
-### test
 ## test
 ### test
 ## test
 ## test
 ### test
 ## test
-### test
 ## test
 ### test
-## test
 ### test
 ### test
 ### test
 ## test
 ## test
+### test
+## test
+### test
+### test
+### test
+### test
+### test
+## test
+### test
+### test
 ### test
 ### test
 ```js
@@ -661,7 +661,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3380,7 +3380,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4220,8 +4220,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
-## test
+### test
+### test
 ```css
 * {
     margin: 0;
@@ -5734,8 +5734,8 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     "zephir": "Zephir"
 }
 ```
-### test
-### test
+## test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -7310,7 +7310,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -7455,6 +7455,7 @@ function output(c, t1, t2) {
     const element2 = element.cloneNode();
     element2.style.boxShadow = `0px 0px 20px 5px ${c}`;
     outputs[0].appendChild(element2);
+    element.style.borderColor = 'transparent';
     setTimeout(()=>{
         const pos = screen.x / 4 * 3 + offset2;
         element.style.translate = `${pos}px ${y}`;
@@ -7468,6 +7469,7 @@ function output(c, t1, t2) {
         element.style.backgroundColor = c;
         element2.style.backgroundColor = c;
         element.style.boxShadow = `0px 0px 3px ${c}`;
+        element.style.borderColor = '#000';
     }, 200);
     const span = document.createElement('span');
     span.innerText = t1;
