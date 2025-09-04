@@ -1,6 +1,3 @@
-## test
-### test
-### test
 ### test
 ### test
 ### test
@@ -8,19 +5,22 @@
 ## test
 ## test
 ## test
+### test
+### test
+### test
+### test
+## test
 ## test
 ### test
 ## test
 ### test
 ## test
-### test
 ## test
-### test
-### test
-### test
-### test
-### test
-### test
+## test
+## test
+## test
+## test
+## test
 ## test
 ## test
 ### test
@@ -2168,7 +2168,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3627,7 +3627,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -4346,8 +4346,8 @@ print(out)
 ```
 ### test
 ## test
-## test
 ### test
+## test
 ```html
 <!-- 
 
@@ -5969,7 +5969,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 ```
 ## test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -7223,7 +7223,7 @@ B�����v�15���c�Pd�)��ɶ.]���C�gr���
 <���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
 ���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -7641,7 +7641,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const aElement = li.getElementsByTagName('a')[0];
         if (aElement) {
             const spanElement = aElement.getElementsByTagName('span')[0];
-            if (spanElement && spanElement.innerHTML === "Just an Ultimate Site Tool - Helper terminal") {
+            if (
+                spanElement && (
+                spanElement.innerHTML === "Just an Ultimate Site Tool - Helper terminal" ||
+                spanElement.innerHTML === "_just"
+            )){
                 li.parentNode.removeChild(li)
             }
         }
@@ -8927,7 +8931,7 @@ User-agent: *
 Disallow: /api-modules/
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
