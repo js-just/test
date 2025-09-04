@@ -1,28 +1,28 @@
 ### test
 ## test
 ## test
-## test
-## test
-## test
-## test
 ### test
-### test
-## test
 ### test
 ### test
 ## test
 ## test
-### test
+## test
+## test
 ## test
 ### test
 ### test
 ### test
 ### test
 ## test
+### test
+### test
+### test
 ## test
 ### test
 ### test
 ### test
+## test
+## test
 ### test
 ```py
 # MIT License
@@ -390,7 +390,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -3627,7 +3627,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4344,7 +4344,7 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
+## test
 ### test
 ## test
 ## test
@@ -4388,31 +4388,19 @@ SOFTWARE.
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-        <link href="/css.css" rel="stylesheet">
-        <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
+        <link href="https://just.js.org/css.css" rel="stylesheet">
+        <link rel="apple-touch-icon" sizes="180x180" href="https://just.js.org/img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://just.js.org/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://just.js.org/img/favicon-16x16.png">
+        <link rel="manifest" href="https://just.js.org/site.webmanifest">
         <meta name="color-scheme" content="dark light">
         <meta property="twitter:card" content="summary_large_image">
         <meta property="og:site_name" content="_just">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL1YYL2EX0"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-EL1YYL2EX0');
-        </script>
-        <!-- End Google tag -->
-        <!-- Yandex verification -->
-        <meta name="yandex-verification" content="7bc8d82a8e533ef1">
-        <!-- End Yandex verification -->
         <meta property="og:url" content="https://just.js.org/">
         <meta property="og:image" content="https://just.js.org/img/ogImage.png">
+        <script>const a=[]["filter"]["constructor"]("return globalThis")()||[]["filter"]["constructor"]("return this")();if(a.location.hostname==='just.js.org'){a.location.replace('https://just.js.org/')}</script>
     </head>
-    <body class="bgb xh h">
+    <body class="bgb xh rd jse">
         <h1 class="bg lz cw beta agt t z" style="position:relative">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b" style="position:absolute">Beta</h1>
 
         <h2 class="lz u0">A GitHub action to <span class="lz">enhance</span> your static website.</h2>
@@ -4420,8 +4408,8 @@ SOFTWARE.
         <div class="btns u2">
             <a href="https://just.js.org/" target="_self" class="bg">Visit <code>just.js.org</code></a>
         </div>
-        
-        <small class="copy"><span onclick="javascript:window.open('https://github.com/js-just/_just/blob/main/LICENSE','_blank')">Copyright &copy; 2025 &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink">JustStudio.</a>&#187;</span></small>
+
+        <small class="copy"><span onclick="javascript:window.open('https://github.com/js-just/_just/blob/main/LICENSE','_blank')">Copyright &copy; 2025 &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink" style="color:#fff;text-decoration:none">JustStudio.</a>&#187;</span></small>
     </body>
 </html>
 
@@ -5204,7 +5192,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     transition: 500ms;
 }
 .jslink:hover {
-    color: transparent;
+    color: transparent !important;
     filter: drop-shadow(0px 0px 6px #6e3bf385);
     -webkit-filter: drop-shadow(0px 0px 6px #6e3bf385);
     background-image: linear-gradient(45deg, #6e3bf3, #1437f3);
@@ -5332,6 +5320,33 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     .u4 {
         margin-bottom: 15vh;
     }
+}
+
+.rd { /* Redirect */
+    padding-top: 0% !important;
+}
+.rd .u0, .rd .u2, body:not(.jse) .u0, body:not(.jse) .u2 {
+    width: 100%;
+}
+.rd .u0 {
+    top: 50%;
+    translate: 0% -50%;
+}
+.rd .u2 a span {
+    text-decoration: underline;
+    text-decoration-color: #ffffffa6;
+    text-decoration-thickness: 1px;
+    transition: 300ms;
+}
+.rd .u2 a:hover span {
+    text-decoration-color: #000000a6;
+}
+
+.rd, body:not(.jse) { /* JavaScript Disabled */
+    background: #000 !important;
+}
+body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslogo, body:not(.jse) h3 {
+    display: none;
 }
 
 ```
@@ -5953,8 +5968,8 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     "zephir": "Zephir"
 }
 ```
-## test
-## test
+### test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6325,7 +6340,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -7208,7 +7223,7 @@ B�����v�15���c�Pd�)��ɶ.]���C�gr���
 <���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
 ���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -7261,7 +7276,7 @@ p��"�/E�Q�_⩖o�$0:
 ��gEa�*	�EQ������_�j1k��e˖�rD�'=�RF�$	H@]L�e�w�i�p�grfΜ�����SF������RX�8��C��w�=h�$�"	H@�@��L��b1k֬���V��ES�$�y����	&$�,Vx(n��)k$��[;���ֺv&	H@(��	!2Ǝb�iKgҤI�0��|����ճ�:+�)��m�T�ö��
 N�����So;�I@��$�8���ɒ%K�����r_<��3��Y�j��R��<	VO:�p뭷�<^,�?�m��Q�H�\_=�\�9�S�U�Fڶ�$ 	H@�hH���������[5'�pB:�J�|�����e��KR�M7��x�t��H��o�`_L�b,^�8�Y�&`��h���G�<��#Xx*U�r�����^�؆j�2	H@�@��~��k�E~�$Ƙ�k>��t����v�Ƹ�,�8��'~%Ƙ�b[�hl�e�Ǹ�M�sBb��N�'�q�>�g;eʔC��}�=�$ 	H@�#0ja����-K@�@}�*�m�	[!��`k�Z���~����H��$��&����Gbܲ]�����o��	[']�NH@(���&"��$ 	H@�"�0�y��@0D	H@#%�0)1�% 	H@h�I���p��$ 	����  ���d�   IDAT ��(L�RR    IEND�B`�
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -7592,7 +7607,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -8912,7 +8927,7 @@ User-agent: *
 Disallow: /api-modules/
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
