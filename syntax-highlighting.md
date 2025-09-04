@@ -1,8 +1,5 @@
-### test
 ## test
 ### test
-## test
-## test
 ### test
 ### test
 ### test
@@ -11,8 +8,6 @@
 ## test
 ## test
 ## test
-### test
-## test
 ## test
 ### test
 ## test
@@ -20,9 +15,14 @@
 ## test
 ### test
 ## test
+### test
+### test
+### test
+### test
+### test
+### test
 ## test
-### test
-### test
+## test
 ### test
 ```py
 # MIT License
@@ -3627,7 +3627,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4272,7 +4272,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4346,8 +4346,8 @@ print(out)
 ```
 ### test
 ## test
-### test
 ## test
+### test
 ```html
 <!-- 
 
@@ -4379,7 +4379,7 @@ SOFTWARE.
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Just an Ultimate Site Tool</title>
+        <title>_just</title>
         <meta name="description" content="A GitHub action to enhance your static website.">
         <meta property="og:title" content="Just an Ultimate Site Tool">
         <meta property="og:description" content="A GitHub action to enhance your static website.">
@@ -5350,7 +5350,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -5968,7 +5968,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -6340,7 +6340,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -7223,7 +7223,7 @@ B�����v�15���c�Pd�)��ɶ.]���C�gr���
 <���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
 ���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -7607,7 +7607,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
