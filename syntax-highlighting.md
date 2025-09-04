@@ -1,19 +1,9 @@
 ### test
 ## test
-### test
-## test
-## test
-## test
-### test
 ## test
 ## test
 ## test
 ## test
-## test
-## test
-### test
-### test
-### test
 ## test
 ### test
 ### test
@@ -22,6 +12,16 @@
 ### test
 ## test
 ## test
+### test
+## test
+### test
+### test
+### test
+### test
+## test
+## test
+### test
+### test
 ### test
 ### test
 ```py
@@ -390,7 +390,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -2168,7 +2168,7 @@ main nav.left li {
 }
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -4345,62 +4345,86 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
+### test
 ## test
-```css
-* {
-    margin: 0;
-}
-html {
-    color: #ffffff;
-    font-family: monospace;
-    text-align: center;
-}
-body {
-    background-color: #000000;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
-    height: auto;
-    width: 75%;
-}
-@property --angle1 {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false
-}
-h1 {
-    font-size: 30px;
-    -webkit-text-stroke-color: hsl(var(--angle1) 100% 50%);
-    -webkit-text-stroke-width: 0.5px;
-    filter: drop-shadow(0px 20px 50px hsl(var(--angle1) 100% 50%)) drop-shadow(10px 5px 5px hsl(var(--angle1) 100% 50% / 50%)) drop-shadow(400px -10px 50px hsl(var(--angle1) 100% 50% / 50%)) drop-shadow(-400px 20px 50px hsl(var(--angle1) 100% 50% / 50%));
-    animation: 3s rgb linear infinite;
-}
-@keyframes rgb {
-    from {
-        --angle1: 0deg
-    }
-    to {
-        --angle1: 360deg
-    }
-}
-span {
-    position: fixed;
-    translate: -50% 2px;
-    width: 100%;
-    background: hsl(0deg 0% 100% / 25%);
-    background: radial-gradient(circle, hsl(0deg 0% 100% / 25%) 0%, hsl(0deg 0% 0% / 0%) 100%);
-    background: -moz-radial-gradient(circle, hsl(0deg 0% 100% / 25%) 0%, hsl(0deg 0% 0% / 0%) 100%);
-    background: -webkit-radial-gradient(circle, hsl(0deg 0% 100% / 25%) 0%, hsl(0deg 0% 0% / 0%) 100%);
-    max-width: 700px;
-    color: hsl(0 0% 75%);
-    filter: saturate(0%);
-    opacity: 0.4;
-    padding-bottom: 5px;
-}
-h4 {
-    translate: 0% calc(100% + 9px);
-}
+## test
+```html
+<!-- 
+
+MIT License
+
+Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+\-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Just an Ultimate Site Tool</title>
+        <meta name="description" content="A GitHub action to enhance your static website.">
+        <meta property="og:title" content="Just an Ultimate Site Tool">
+        <meta property="og:description" content="A GitHub action to enhance your static website.">
+        <meta property="og:type" content="website">
+        <meta name="keywords" content="Just, an, Ultimate, Site, Tool, Static, Website, GitHub, Action, Postprocessor, Compressor, Generator, Redirector, Compress, Markdown, Redirect, Generate, Documentation, Docs">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        <link href="/css.css" rel="stylesheet">
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <meta name="color-scheme" content="dark light">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="og:site_name" content="_just">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL1YYL2EX0"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-EL1YYL2EX0');
+        </script>
+        <!-- End Google tag -->
+        <!-- Yandex verification -->
+        <meta name="yandex-verification" content="7bc8d82a8e533ef1">
+        <!-- End Yandex verification -->
+        <meta property="og:url" content="https://just.js.org/">
+        <meta property="og:image" content="https://just.js.org/img/ogImage.png">
+    </head>
+    <body class="bgb xh h">
+        <h1 class="bg lz cw beta agt t z" style="position:relative">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b" style="position:absolute">Beta</h1>
+
+        <h2 class="lz u0">A GitHub action to <span class="lz">enhance</span> your static website.</h2>
+
+        <div class="btns u2">
+            <a href="https://just.js.org/" target="_self" class="bg">Visit <code>just.js.org</code></a>
+        </div>
+        
+        <small class="copy"><span onclick="javascript:window.open('https://github.com/js-just/_just/blob/main/LICENSE','_blank')">Copyright &copy; 2025 &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink">JustStudio.</a>&#187;</span></small>
+    </body>
+</html>
+
 ```
 ```html
 <!-- 
@@ -4448,6 +4472,7 @@ SOFTWARE.
         <meta name="color-scheme" content="dark">
         <meta property="twitter:card" content="summary">
         <meta property="og:site_name" content="_just">
+        <meta name="robots" content="noindex, nofollow">
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL1YYL2EX0"></script>
         <script>
@@ -5928,7 +5953,7 @@ h1, h2, h3, a, strong, span, .p .l, .jslogo {
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ## test
 ```md
 _just: title: Advanced usage
@@ -6300,7 +6325,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -8884,10 +8909,10 @@ test
 
 Sitemap: https://just.js.org/sitemap.xml
 User-agent: *
-Disallow: /code
+Disallow: /api-modules/
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
