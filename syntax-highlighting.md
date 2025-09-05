@@ -1,26 +1,26 @@
 ### test
-## test
-## test
 ### test
 ## test
 ## test
-## test
-### test
 ### test
 ### test
 ### test
 ### test
 ### test
 ## test
+## test
+## test
 ### test
 ### test
 ## test
 ## test
+## test
+### test
 ### test
 ## test
 ### test
-## test
 ### test
+## test
 ### test
 ## test
 ### test
@@ -2168,7 +2168,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3486,7 +3486,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-## test
+### test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4205,10 +4205,17 @@ if [ -z "$(echo "$CONFIG_JSON" | jq -r '.module.exports')" ]; then
 fi
 
 TYPE=$(echo "$CONFIG_JSON" | jq -r '.type')
-USE_SASS=$(echo "$CONFIG_JSON" | jq -r '.install.sass')
+USE_TSC=$(echo "$CONFIG_JSON" | jq -r '.install.typescript_compiler')
+USE_SASS=$(echo "$CONFIG_JSON" | jq -r '.install.dart_sass')
+COMPILE_TS=$(echo "$CONFIG_JSON" | jq -r '.compile.ts')
+COMPILE_SASS=$(echo "$CONFIG_JSON" | jq -r '.compile.sass')
+COMPILE_SCSS=$(echo "$CONFIG_JSON" | jq -r '.compile.scss')
 if [ -z "$TYPE" ]; then
     ERROR_MESSAGE=$(ErrorMessage "run.sh" "0110")
     echo -e "::error::$ERROR_MESSAGE" && exit 1
+fi
+if [[ "${USE_TSC,,}" == "true" ]]; then
+    installTypeScriptCompiler
 fi
 if [[ "${USE_SASS,,}" == "true" ]]; then
     if [ -d "_just_temp" ]; then
@@ -4216,6 +4223,18 @@ if [[ "${USE_SASS,,}" == "true" ]]; then
         echo -e "::error::$ERROR_MESSAGE" && exit 1
     fi
     installHomebrew && installDartSass
+fi
+if [[ "${COMPILE_TS,,}" == "true" ]]; then
+    source $GITHUB_ACTION_PATH/lib/compile.sh
+    tojs "$INPUT_PATH"
+fi
+if [[ "${COMPILE_SASS,,}" == "true" ]]; then
+    source $GITHUB_ACTION_PATH/lib/compile.sh
+    tocss "$INPUT_PATH" "sass"
+fi
+if [[ "${COMPILE_SCSS,,}" == "true" ]]; then
+    source $GITHUB_ACTION_PATH/lib/compile.sh
+    tocss "$INPUT_PATH" "scss"
 fi
 
 if [[ "$TYPE" != "postprocessor" && "$TYPE" != "redirect" && "$TYPE" != "compress" && "$TYPE" != "docs" ]]; then
@@ -4330,7 +4349,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4402,10 +4421,10 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-### test
-## test
 ## test
 ### test
+### test
+## test
 ```html
 <!-- 
 
@@ -6079,7 +6098,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 ```
 ## test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6450,7 +6469,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -7333,7 +7352,7 @@ B�����v�15���c�Pd�)��ɶ.]���C�gr���
 <���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
 ���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -9041,7 +9060,7 @@ User-agent: *
 Disallow: /api-modules/
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
