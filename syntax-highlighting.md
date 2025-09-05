@@ -1,29 +1,29 @@
-### test
-### test
-### test
-### test
-## test
-## test
 ## test
 ### test
 ### test
 ### test
 ### test
-## test
-## test
 ### test
+### test
+### test
+### test
+### test
+## test
 ## test
 ### test
 ## test
 ## test
 ## test
 ## test
-## test
-## test
-## test
+### test
+### test
+### test
+### test
 ## test
 ## test
 ### test
+### test
+## test
 ```py
 # MIT License
 # 
@@ -92,7 +92,12 @@ import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 
 const deployDir = process.argv[2] || __dirname;
-import { JSON as css } from '../lib/ast/css.js';
+import { JSON as css, SASS } from '../lib/ast/css.js';
+
+const config = JSON.parse(readFileSync('just.config.json', 'utf8'));
+if (config.sass) {
+    SASS();
+}
 
 async function serializeRules(rules) {
     let result = '';
@@ -390,7 +395,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -2168,7 +2173,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3486,7 +3491,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -3627,7 +3632,7 @@ files.forEach(file => {
 console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -4346,8 +4351,8 @@ print(out)
 ```
 ### test
 ## test
-### test
 ## test
+### test
 ```html
 <!-- 
 
@@ -7276,7 +7281,7 @@ p��"�/E�Q�_⩖o�$0:
 ��gEa�*	�EQ������_�j1k��e˖�rD�'=�RF�$	H@]L�e�w�i�p�grfΜ�����SF������RX�8��C��w�=h�$�"	H@�@��L��b1k֬���V��ES�$�y����	&$�,Vx(n��)k$��[;���ֺv&	H@(��	!2Ǝb�iKgҤI�0��|����ճ�:+�)��m�T�ö��
 N�����So;�I@��$�8���ɒ%K�����r_<��3��Y�j��R��<	VO:�p뭷�<^,�?�m��Q�H�\_=�\�9�S�U�Fڶ�$ 	H@�hH���������[5'�pB:�J�|�����e��KR�M7��x�t��H��o�`_L�b,^�8�Y�&`��h���G�<��#Xx*U�r�����^�؆j�2	H@�@��~��k�E~�$Ƙ�k>��t����v�Ƹ�,�8��'~%Ƙ�b[�hl�e�Ǹ�M�sBb��N�'�q�>�g;eʔC��}�=�$ 	H@�#0ja����-K@�@}�*�m�	[!��`k�Z���~����H��$��&����Gbܲ]�����o��	[']�NH@(���&"��$ 	H@�"�0�y��@0D	H@#%�0)1�% 	H@h�I���p��$ 	����  ���d�   IDAT ��(L�RR    IEND�B`�
 ```
-## test
+### test
 ```png
 �PNG
 
