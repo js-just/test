@@ -2,28 +2,28 @@
 ## test
 ### test
 ## test
-## test
-## test
-## test
-## test
 ### test
 ### test
 ### test
 ## test
 ### test
 ### test
-### test
-## test
-## test
-## test
 ## test
 ### test
 ### test
 ### test
+## test
 ### test
+## test
+## test
 ### test
+## test
 ### test
+## test
+## test
 ### test
+## test
+## test
 ```py
 # MIT License
 # 
@@ -92,12 +92,7 @@ import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 
 const deployDir = process.argv[2] || __dirname;
-import { JSON as css, SASS } from '../lib/ast/css.js';
-
-const config = JSON.parse(readFileSync('just.config.json', 'utf8'));
-if (config.sass) {
-    SASS();
-}
+import { JSON as css } from '../lib/ast/css.js';
 
 async function serializeRules(rules) {
     let result = '';
@@ -395,7 +390,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -2173,7 +2168,7 @@ main nav.left li {
 }
 
 ```
-## test
+### test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -3491,7 +3486,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4072,46 +4067,54 @@ msg6=$(_justMessage "$_GREEN Compressing completed$_RESET")
 msg9=$(_justMessage "$_GREEN Generating completed$_RESET")
 msg10=$(_justMessage "$_BLUE Installing TypeScript compiler$_RESET...")
 msg11=$(_justMessage "$_BLUE Installed TypeScript compiler$_RESET")
+msg12=$(_justMessage "$_BLUE Installing Homebrew$_RESET...")
+msg13=$(_justMessage "$_BLUE Installed Homebrew$_RESET")
+msg14=$(_justMessage "$_BLUE Installing Dart Sass$_RESET...")
+msg15=$(_justMessage "$_BLUE Installed Dart Sass$_RESET")
 echo -e "$msg1"
 
 chmod +x "$GITHUB_ACTION_PATH/src/time.py" # use python to get current time in ms cuz yes
 TIME0=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+NODEJSINSTALLED="n"
 installNodejs() {
-    echo -e "$msg2"
-    local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-    if ! command -v node > /dev/null; then # attempt 0: nodejs installed before running _just
-        # attempt 1: install via curl
-        sudo apt-get remove -y nodejs npm > /dev/null 2>&1 || true
-        sudo apt-get update -qq > /dev/null 2>&1
-        curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - > /dev/null 2>&1
-        sudo apt-get install -y nodejs > /dev/null 2>&1
-        if ! command -v node > /dev/null; then
-            # attempt 2: install via curl with logs
-            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0207")
-            echo -e "$ERROR_MESSAGE"
-            sudo apt-get remove -y nodejs npm || true
-            sudo apt-get update -qq
-            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-            sudo apt-get install -y nodejs
+    if [ "$NODEJSINSTALLED" != "y" ]; then
+        echo -e "$msg2"
+        local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+        if ! command -v node > /dev/null; then # attempt 0: nodejs installed before running _just
+            # attempt 1: install via curl
+            sudo apt-get remove -y nodejs npm > /dev/null 2>&1 || true
+            sudo apt-get update -qq > /dev/null 2>&1
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - > /dev/null 2>&1
+            sudo apt-get install -y nodejs > /dev/null 2>&1
             if ! command -v node > /dev/null; then
-                # attempt 3: install via sudo apt install
-                local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0208")
+                # attempt 2: install via curl with logs
+                local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0207")
                 echo -e "$ERROR_MESSAGE"
-                sudo apt update -qq && sudo apt install -y nodejs npm > /dev/null 2>&1
-                if [ $? -ne 0 ]; then
-                    # attempt 4: install via sudo apt install with logs
-                    local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0205")
-                    echo -e "::error::$ERROR_MESSAGE"
-                    sudo apt update
-                    sudo apt install -y nodejs npm
+                sudo apt-get remove -y nodejs npm || true
+                sudo apt-get update -qq
+                curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+                sudo apt-get install -y nodejs
+                if ! command -v node > /dev/null; then
+                    # attempt 3: install via sudo apt install
+                    local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0208")
+                    echo -e "$ERROR_MESSAGE"
+                    sudo apt update -qq && sudo apt install -y nodejs npm > /dev/null 2>&1
+                    if [ $? -ne 0 ]; then
+                        # attempt 4: install via sudo apt install with logs
+                        local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0205")
+                        echo -e "::error::$ERROR_MESSAGE"
+                        sudo apt update
+                        sudo apt install -y nodejs npm
+                    fi
                 fi
             fi
         fi
+        NODEJSINSTALLED="y"
+        local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+        NODEVERSION=$(node --version)
+        NODESECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2") # use js to get nodejs installing duration cuz yes
+        echo -e "$msg3 $NODEVERSION ($NODESECONDS)"
     fi
-    local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-    NODEVERSION=$(node --version)
-    NODESECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2") # use js to get nodejs installing duration cuz yes
-    echo -e "$msg3 $NODEVERSION ($NODESECONDS)"
 }
 installTypeScriptCompiler() {
     echo -e "$msg10"
@@ -4134,6 +4137,48 @@ installTypeScriptCompiler() {
     TSCVERSION=$(tsc --version 2>/dev/null)
     TSCSECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2")
     echo -e "$msg11 $TSCVERSION ($TSCSECONDS)"
+}
+installHomebrew() {
+    installNodejs
+    echo -e "$msg12"
+    local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+    if ! command -v brew &> /dev/null; then # attempt 0: homebrew installed before running _just
+        # attempt 1: install without logs
+        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null 2>&1
+        if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc 2>/dev/null
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" 2>/dev/null
+        fi
+        if ! command -v brew &> /dev/null; then
+            # attempt 2: install with logs
+            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0211")
+            echo -e "$ERROR_MESSAGE"
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        fi
+    fi
+    local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+    HBVERSION=$(brew --version)
+    HBSECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2")
+    echo -e "$msg13 $HBVERSION ($HBSECONDS)"
+}
+installDartSass() {
+    echo -e "$msg14"
+    local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+    if ! command -v sass &> /dev/null; then # attempt 0: dart sass installed before running _just
+        # attempt 1: install without logs
+        brew install sass/sass/sass > /dev/null 2>&1
+        if ! command -v sass &> /dev/null; then
+            # attempt 2: install with logs
+            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0212")
+            echo -e "$ERROR_MESSAGE"
+            brew install sass/sass/sass
+        fi
+    fi
+    local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
+    DSSECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2")
+    echo -e "$msg15 ($DSSECONDS)"
 }
 
 if [ -f "$CONFIG_DATA" ]; then
@@ -4170,12 +4215,7 @@ if [[ "${USESASS,,}" == "true" ]]; then
         ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0106")
         echo -e "::error::$ERROR_MESSAGE" && exit 1
     fi
-    
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-    brew install sass/sass/sass
+    installHomebrew && installDartSass
 fi
 
 if [[ "$TYPE" != "postprocessor" && "$TYPE" != "redirect" && "$TYPE" != "compress" && "$TYPE" != "docs" ]]; then
@@ -4290,7 +4330,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -4362,8 +4402,8 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
-## test
+### test
+### test
 ## test
 ### test
 ```html
@@ -5368,7 +5408,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5437,9 +5477,13 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
         },
         {
             "code": "0130",
-            "message": "",
+            "message": "Your repository has a _just_temp directory in the root directory. Please remove it.",
             "crashed": true,
-            "link": ""
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "remove the <code>_just_temp</code> directory from the root directory"
+            }
         }
     ],
     "global": [
@@ -5591,6 +5635,26 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
             "data": {
                 "mg": false,
                 "i": "Just an Ultimate Site Tool is unable to install TypeScript compiler."
+            }
+        },
+        {
+            "code": "0211",
+            "message": "Error occurred during Homebrew installation. Retrying to install Homebrew... (Attempt #2)",
+            "crashed": false,
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "Just an Ultimate Site Tool is unable to install Homebrew."
+            }
+        },
+        {
+            "code": "0212",
+            "message": "Error occurred during Dart Sass installation. Retrying to install Dart Sass... (Attempt #2)",
+            "crashed": false,
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "Just an Ultimate Site Tool is unable to install Dart Sass."
             }
         }
     ],
@@ -5793,6 +5857,28 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
                 "i": "Just an Ultimate Site Tool is unable to fetch <a href=\"https://raw.is-a.dev/v2.json\" target=\"_blank\"><code>https://raw.is-a.dev/v2.json</code></a>."
             }
         }
+    ],
+    "ast/css.js": [
+        {
+            "code": "0131",
+            "message": "Invalid value of property \"css\" in \"parser\" in module.exports of just.config.js. It must be one of: \"CSS\", \"SCSS\", \"SASS\".",
+            "crashed": true,
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "The CSS parser you choose does not exist."
+            }
+        },
+        {
+            "code": "0132",
+            "message": "Dart Sass compilation error.",
+            "crashed": true,
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "look up for Dart Sass error in your terminal/console output and fix your .scss or .sass file"
+            }
+        }
     ]
 }
 ```
@@ -5993,7 +6079,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 ```
 ### test
-## test
+### test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -6364,7 +6450,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-### test
+## test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -7247,7 +7333,7 @@ B�����v�15���c�Pd�)��ɶ.]���C�gr���
 <���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
 ���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -7300,7 +7386,7 @@ p��"�/E�Q�_⩖o�$0:
 ��gEa�*	�EQ������_�j1k��e˖�rD�'=�RF�$	H@]L�e�w�i�p�grfΜ�����SF������RX�8��C��w�=h�$�"	H@�@��L��b1k֬���V��ES�$�y����	&$�,Vx(n��)k$��[;���ֺv&	H@(��	!2Ǝb�iKgҤI�0��|����ճ�:+�)��m�T�ö��
 N�����So;�I@��$�8���ɒ%K�����r_<��3��Y�j��R��<	VO:�p뭷�<^,�?�m��Q�H�\_=�\�9�S�U�Fڶ�$ 	H@�hH���������[5'�pB:�J�|�����e��KR�M7��x�t��H��o�`_L�b,^�8�Y�&`��h���G�<��#Xx*U�r�����^�؆j�2	H@�@��~��k�E~�$Ƙ�k>��t����v�Ƹ�,�8��'~%Ƙ�b[�hl�e�Ǹ�M�sBb��N�'�q�>�g;eʔC��}�=�$ 	H@�#0ja����-K@�@}�*�m�	[!��`k�Z���~����H��$��&����Gbܲ]�����o��	[']�NH@(���&"��$ 	H@�"�0�y��@0D	H@#%�0)1�% 	H@h�I���p��$ 	����  ���d�   IDAT ��(L�RR    IEND�B`�
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -7631,7 +7717,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -8955,7 +9041,7 @@ User-agent: *
 Disallow: /api-modules/
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
