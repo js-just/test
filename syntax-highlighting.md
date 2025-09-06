@@ -1,4 +1,9 @@
+## test
+## test
+## test
 ### test
+## test
+## test
 ### test
 ## test
 ## test
@@ -7,20 +12,15 @@
 ### test
 ### test
 ### test
-## test
-## test
-## test
-### test
 ### test
 ## test
 ## test
-## test
+### test
 ### test
 ### test
 ## test
 ### test
 ### test
-## test
 ### test
 ## test
 ### test
@@ -50,7 +50,7 @@
 #!/usr/bin/env python3
 import requests
 
-response = requests.get('https://raw.just.is-a.dev/v1/data/lastCommit.json', headers={'Accept': 'application/json'})
+response = requests.get('https://api.just.js.org/v1/data/lastCommit.json', headers={'Accept': 'application/json'})
 data = response.json()
 
 output = "N"
@@ -242,7 +242,7 @@ import requests
 import os
 import sys
 
-response = requests.get('https://raw.just.is-a.dev/v1/data/commit.json', headers={'Accept': 'application/json'})
+response = requests.get('https://api.just.js.org/v1/data/commit.json', headers={'Accept': 'application/json'})
 data = response.json()
 
 COMMIT_SHA = sys.argv[1]
@@ -378,7 +378,7 @@ console.log(num_.convertbase(String(id), 10, 62));
 
 #!/bin/bash
 mkdir -p demo && \
-DEMO_LATEST_ID=$(node -e "await fetch('https://raw.just.is-a.dev/v1/demo-id/').then(async resp => {return await resp.json()}).then(resp => {console.log(resp.value)})") && \
+DEMO_LATEST_ID=$(node -e "await fetch('https://api.just.js.org/v1/demo-id/').then(async resp => {return await resp.json()}).then(resp => {console.log(resp.value)})") && \
 DEMO_BUILT_ID=$(node "src/demo.js" "$INPUT_FILES" "$DEMO_LATEST_ID") && \
 DEMO_NEW_ID=$(node -e "console.log($DEMO_LATEST_ID + 1)") && \
 rm -f "just.config.js" && \
@@ -390,7 +390,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -767,7 +767,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-### test
+## test
 ```css
 :root {
     --bg: #121212;
@@ -3298,7 +3298,7 @@ if (theme && theme == 'l') {
 
 #!/usr/bin/env python3
 import requests
-response = requests.get('https://raw.just.is-a.dev/v1/last-commit/', headers={'Accept': 'application/json'})
+response = requests.get('https://api.just.js.org/v1/last-commit/', headers={'Accept': 'application/json'})
 data = response.json()
 print(data['value'])
 
@@ -3486,7 +3486,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4204,35 +4204,48 @@ if [ -z "$(echo "$CONFIG_JSON" | jq -r '.module.exports')" ]; then
     echo -e "::error::$ERROR_MESSAGE" && exit 1
 fi
 
+checkForDartSass() {
+    if ! command -v sass &> /dev/null; then
+        local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0134")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
+}
 TYPE=$(echo "$CONFIG_JSON" | jq -r '.type')
 USE_TSC=$(echo "$CONFIG_JSON" | jq -r '.install.typescript_compiler')
 USE_SASS=$(echo "$CONFIG_JSON" | jq -r '.install.dart_sass')
 COMPILE_TS=$(echo "$CONFIG_JSON" | jq -r '.compile.ts')
 COMPILE_SASS=$(echo "$CONFIG_JSON" | jq -r '.compile.sass')
 COMPILE_SCSS=$(echo "$CONFIG_JSON" | jq -r '.compile.scss')
+Y="true"
 if [ -z "$TYPE" ]; then
     ERROR_MESSAGE=$(ErrorMessage "run.sh" "0110")
     echo -e "::error::$ERROR_MESSAGE" && exit 1
 fi
-if [[ "${USE_TSC,,}" == "true" ]]; then
+if [[ "${USE_TSC,,}" == "$Y" ]]; then
     installTypeScriptCompiler
 fi
-if [[ "${USE_SASS,,}" == "true" ]]; then
+if [[ "${USE_SASS,,}" == "$Y" ]]; then
     if [ -d "_just_temp" ]; then
-        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0106")
+        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0130")
         echo -e "::error::$ERROR_MESSAGE" && exit 1
     fi
     installHomebrew && installDartSass
 fi
-if [[ "${COMPILE_TS,,}" == "true" ]]; then
+if [[ "${COMPILE_TS,,}" == "$Y" ]]; then
+    if ! command -v tsc > /dev/null; then
+        ERROR_MESSAGE=$(ErrorMessage "run.sh" "0133")
+        echo -e "::error::$ERROR_MESSAGE" && exit 1
+    fi
     source $GITHUB_ACTION_PATH/lib/compile.sh
     tojs "$INPUT_PATH"
 fi
-if [[ "${COMPILE_SASS,,}" == "true" ]]; then
+if [[ "${COMPILE_SASS,,}" == "$Y" ]]; then
+    checkForDartSass
     source $GITHUB_ACTION_PATH/lib/compile.sh
     tocss "$INPUT_PATH" "sass"
 fi
-if [[ "${COMPILE_SCSS,,}" == "true" ]]; then
+if [[ "${COMPILE_SCSS,,}" == "$Y" ]]; then
+    checkForDartSass
     source $GITHUB_ACTION_PATH/lib/compile.sh
     tocss "$INPUT_PATH" "scss"
 fi
@@ -4349,7 +4362,7 @@ elif [ "$TYPE" == "docs" ]; then
 fi
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -4421,10 +4434,10 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
 ### test
 ### test
 ## test
+### test
 ```html
 <!-- 
 
@@ -5427,7 +5440,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -5614,6 +5627,26 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
             "data": {
                 "mg": false,
                 "i": "Please use @version or /latest."
+            }
+        },
+        {
+            "code": "0133",
+            "message": "TypeScript compiler is not installed. Unable to compile TypeScript.",
+            "crashed": true,
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "install TypeScript compiler via <code>just.config.js</code> or manually before running Just an Ultimate Site Tool"
+            }
+        },
+        {
+            "code": "0134",
+            "message": "Dart Sass is not installed. Unable to compile SCSS/SASS.",
+            "crashed": true,
+            "link": "",
+            "data": {
+                "mg": false,
+                "i": "install Dart Sass via <code>just.config.js</code> or manually before running Just an Ultimate Site Tool"
             }
         },
         {
@@ -6097,8 +6130,8 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
     "zephir": "Zephir"
 }
 ```
-## test
 ### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -7352,7 +7385,7 @@ B�����v�15���c�Pd�)��ɶ.]���C�gr���
 <���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
 ���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -7736,7 +7769,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-## test
+### test
 ```js
 /*
 
@@ -9060,7 +9093,7 @@ User-agent: *
 Disallow: /api-modules/
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
