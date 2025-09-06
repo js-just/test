@@ -1,9181 +1,0 @@
-### test
-## test
-## test
-### test
-## test
-### test
-### test
-### test
-## test
-### test
-## test
-## test
-## test
-### test
-### test
-### test
-## test
-### test
-### test
-### test
-## test
-### test
-### test
-## test
-### test
-### test
-```py
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/usr/bin/env python3
-import requests
-
-response = requests.get('https://api.just.js.org/v1/data/lastCommit.json', headers={'Accept': 'application/json'})
-data = response.json()
-
-output = "N"
-
-if data['value']['allow']:
-    output = "Y"
-
-print(output)
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
-import { join } from 'path';
-
-const deployDir = process.argv[2] || __dirname;
-import { JSON as css } from '../lib/ast/css.js';
-
-async function serializeRules(rules) {
-    let result = '';
-
-    const ruleToString = async (rule) => {
-        if (!rule) return '';
-
-        if (rule.type === 'at-rule') {
-            let innerContent = '';
-            if (rule.rules && rule.rules.filter(Boolean).length > 0) {
-                innerContent = await serializeRules(rule.rules.filter(Boolean).sort((a, b) => a.id - b.id));
-            }
-            return `${rule.name}{${innerContent}}`;
-        } else if (rule.type === 'rule') {
-            const props = [];
-            for (const [key, value] of Object.entries(rule.properties)) {
-                props.push(`${key}:${value}`);
-            }
-            return `${rule.selectors.join(',')}{${props.join(';')}}`;
-        } else if (rule.type === 'insert') {
-            return rule.text;
-        }
-        return '';
-    };
-
-    for (const rule of rules) {
-        result += await ruleToString(rule);
-    }
-
-    return result;
-}
-
-async function compressFile(filePath) {
-    let content = readFileSync(filePath, 'utf8');
-    let done = false;
-    if (filePath.endsWith('.css')) {
-        content = await css(content);
-        const compressed = await serializeRules(content.sort((a, b) => a.id - b.id));
-        writeFileSync(filePath, compressed, 'utf8');
-        done = true;
-    } else if (filePath.endsWith('.json') || filePath.endsWith('.webmanifest')) {
-        try {
-            content = JSON.parse(content);
-            const compressed = JSON.stringify(content);
-            writeFileSync(filePath, compressed, 'utf8');
-            done = true;
-        } catch (_e) {}
-    }
-
-    if (done) {
-        return;
-    }
-
-    if (filePath.endsWith('.js')) {
-        content = content.replace(/(?<!["'`][\s\S]*)\/\/.*\n/g, '\n')
-                         .replace(/\/\*[\s\S]*?\*\//g, '');
-    }
-
-    if (filePath.endsWith('.html') || filePath.endsWith('.svg') || filePath.endsWith('.xml')) {
-        content = content.replace(/<!--[\s\S]*?-->/g, '');
-    }
-
-    if (filePath.endsWith('.js')) {
-        content = content
-        .replace(/(?<!['"`][\s\S]*)\btrue\b(?!['"`][\s\S]*)/g, '!0')
-        .replace(/(?<!['"`][\s\S]*)\bfalse\b(?!['"`][\s\S]*)/g, '!1')
-        .replace(/(?<!['"`][\s\S]*)\bundefined\b(?!['"`][\s\S]*)/g, '[][[]]')
-        .replace(/(?<!['"`][\s\S]*)\/\/(.*?)\n/g, '');
-    }    
-
-    content = content.replace(/(\s*["'`])([^"'\n`]*)(["'`]\s*)/g, (match, p1, p2, p3) => {
-        return p1 + p2.replace(/\s+/g, ' ') + p3;
-    });
-
-    content = content.replace(/\n\s*/g, ' ').replace(/\s+/g, ' ');
-
-    if (filePath.endsWith('.js')) {
-        content = content.replace(/;\s*}/g, '}').replace(/;\s*$/, '')
-                         .replace(/(?<!['"`][\s\S]*)\/\*(.*?)\*\/(?!['"`][\s\S]*)/g, '');
-    }
-
-    if (filePath.endsWith('.js') || filePath.endsWith('.json') || filePath.endsWith('.webmanifest')) {
-        content = content.replace(/,\s*}/g, '}').replace(/,\s*]}/g, ']');
-    }
-
-    writeFileSync(filePath, content, 'utf8');
-}
-
-async function findAndCompressFiles(dir) {
-    await readdirSync(dir).forEach(async file => {
-        const filePath = join(dir, file);
-        const stat = statSync(filePath);
-        if (stat.isDirectory()) {
-            await findAndCompressFiles(filePath);
-        } else if (
-            file.endsWith('.html') || 
-            file.endsWith('.svg') || 
-            file.endsWith('.xml') || 
-            file.endsWith('.css') || 
-            file.endsWith('.js') || 
-            file.endsWith('.json') || 
-            file.endsWith('.webmanifest')
-        ) {
-            await compressFile(filePath);
-        }
-    });
-}
-
-await findAndCompressFiles(deployDir);
-
-/*
-
-EXAMPLE just.config.js FILE to minify js, css, html files in your static website:
-
-module.exports = {
-    type: "compress"
-}
-
-*/
-
-```
-```py
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/usr/bin/env python3
-import requests
-import os
-import sys
-
-response = requests.get('https://api.just.js.org/v1/data/commit.json', headers={'Accept': 'application/json'})
-data = response.json()
-
-COMMIT_SHA = sys.argv[1]
-GITHUB_ACTOR_ID = int(os.environ.get('GITHUB_ACTOR_ID'))
-GITHUB_REPOSITORY_ID = int(os.environ.get('GITHUB_REPOSITORY_ID'))
-GITHUB_REPOSITORY_OWNER_ID = int(os.environ.get('GITHUB_REPOSITORY_OWNER_ID'))
-
-output = "N"
-
-def step234():
-    global output
-    
-    # Step 2
-    if GITHUB_REPOSITORY_OWNER_ID in data['value']['allowUsersOwner']:
-        output = "Y"
-    
-    # Step 3
-    if GITHUB_ACTOR_ID in data['value']['allowUsersActor']:
-        output = "Y"
-    
-    # Step 4
-    if GITHUB_REPOSITORY_ID in data['value']['allowRepos']:
-        output = "Y"
-
-# Step 1
-if data['value']['allowEveryone']:
-    if COMMIT_SHA not in data['value']['disallowCommits']:
-        output = "Y"
-    else:
-        step234()
-else:
-    step234()
-    
-    # Step 5
-    if COMMIT_SHA in data['value']['allowCommits']:
-        output = "Y"
-
-print(output)
-
-```
-```sh
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/bin/bash
-mkdir -p _lastcommit && \
-echo "$GITHUB_SHA" > _lastcommit/sha.txt
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const fs = require('fs');
-const path = require('path');
-const num_ = require('../lib/number.js');
-const [files, id] = process.argv.slice(2);
-const filess = JSON.parse(files);
-const types = [
-    "md", "html", "js", "css"
-];
-filess.forEach(file => {
-    fs.writeFileSync(path.join(process.cwd(), 'demo', `${file.name.replaceAll('.','')}.${types[file.type]}`), file.content, 'utf-8');
-});
-
-console.log(num_.convertbase(String(id), 10, 62));
-
-```
-```sh
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/bin/bash
-mkdir -p demo && \
-DEMO_LATEST_ID=$(node -e "await fetch('https://api.just.js.org/v1/demo-id/').then(async resp => {return await resp.json()}).then(resp => {console.log(resp.value)})") && \
-DEMO_BUILT_ID=$(node "src/demo.js" "$INPUT_FILES" "$DEMO_LATEST_ID") && \
-DEMO_NEW_ID=$(node -e "console.log($DEMO_LATEST_ID + 1)") && \
-rm -f "just.config.js" && \
-echo "$INPUT_CONFIG" > just.config.js && \
-echo "id=id/$DEMO_BUILT_ID" >> $GITHUB_OUTPUT && \
-mkdir -p demo-id && \
-source lib/tojson.sh && \
-CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
-echo "$CONTENT" > demo-id/index.json
-
-```
-## test
-```sh
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/bin/bash
-source $GITHUB_ACTION_PATH/lib/errmsg.sh
-config=$(cat just.config.json)
-
-docs_config=$(echo "$config" | jq -r '.docs_config')
-if ! echo "$config" | jq -e '.docs_config' > /dev/null; then
-    ERROR_MESSAGE=$(ErrorMessage "docs/checks.sh" "0118")
-    echo -e "::error::$ERROR_MESSAGE" && exit 1
-fi
-
-validate_docs_config() {
-    local metatitle=$(echo "$config" | jq -r '.docs_config.metatitle' > /dev/null)
-    if [[ -z "$metatitle" ]]; then
-        local ERROR_MESSAGE=$(ErrorMessage "docs/checks.sh" "0119")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-    local domain=$(echo "$config" | jq -r '.docs_config.domain' > /dev/null)
-    if [[ -z "$domain" ]]; then
-        local ERROR_MESSAGE=$(ErrorMessage "docs/checks.sh" "0120")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-}
-
-# validate_docs_config
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const baseregex = /(@_just base)/g;
-const baseregex2= /(@_just base;)/g;
-const coderegex = /(@_just highlight)/g;
-const coderegex2= /(@_just highlight;)/g;
-const btnsregex = /(@_just buttons)/g;
-const btnsregex2= /(@_just buttons;)/g;
-const srchregex = /(@_just search)/g;
-const srchregex2= /(@_just search;)/g;
-const classRegex= /\.([a-zA-Z0-9_-]+)/g;
-/**
- * @param {string} CSS 
- * @param {string?} CUSTOM
- * @param {string} CODE 
- * @param {boolean?} USECODE
- * @param {string} CSSBUTTONS
- * @param {string} CSSSEARCH
- * @returns {[string, boolean]}
- */
-exports.customcss = function (CSS, CUSTOM, CODE, USECODE = true, CSSBUTTONS, CSSSEARCH) {
-    const addcss = CSSBUTTONS + CSSSEARCH;
-    if (!CUSTOM) {
-        return [
-            USECODE ? CSS + CODE + addcss : CSS + addcss,
-            true,
-        ];
-    }
-    let usedcsssearch = false;
-    if (CUSTOM.replace(srchregex, CSSSEARCH).replace(srchregex2, CSSSEARCH) != CUSTOM) {
-        usedcsssearch = true;
-    }
-    const custom = CUSTOM
-        .replace(baseregex2,CSS)
-        .replace(baseregex, CSS)
-        .replace(coderegex2, USECODE ? CODE : '')
-        .replace(coderegex, USECODE ? CODE : '')
-        .replace(btnsregex, CSSBUTTONS)
-        .replace(btnsregex2, CSSBUTTONS)
-        .replace(srchregex, CSSSEARCH)
-        .replace(srchregex2, CSSSEARCH);
-    return [custom, usedcsssearch];
-}
-
-const savedclasses = {};
-let language_class;
-let prompt_class;
-let function_class;
-let classid = 0;
-/**
- * @param {string} TEMPLATE 
- * @param {string} CSS 
- * @param {string} HTML 
- * @param {string} DATANAME8 
- * @returns {string[]}
- */
-exports.highlightclasses = function (TEMPLATE, CSS, HTML, DATANAME8) {
-    const classes = [];
-    let match;
-    while ((match = classRegex.exec(TEMPLATE)) !== null) {
-        classes.push(match[1]);
-    }
-    const uniqueClasses = Array.from(new Set(classes.sort((a,b) => a.length - b.length))).filter(c => !savedclasses[c]).sort((a,b) => a.length - b.length);
-    uniqueClasses.forEach(class_ => {
-        savedclasses[class_] = `${DATANAME8}${classid++}`;
-        if (class_ == "language_") {language_class = savedclasses[class_]}
-        else if (class_ == "prompt_") {prompt_class= savedclasses[class_]}
-        else if (class_=="function_"){function_class=savedclasses[class_]}
-    });
-    for (const [class_, hlclass] of Object.entries(savedclasses)) {
-        CSS = CSS.replace(new RegExp(`.${class_}(?= |.|,)`, 'g'), `.${hlclass}`);
-        const regex = new RegExp(
-            `<([a-zA-Z0-9]+)([^>]*)\\sclass="([^"]*\\b${class_}\\b[^"]*)"([^>]*)>([\\s\\S]*?)</\\1>`,
-            'gm'
-        );
-        HTML = HTML.replace(regex, (match, tagName, beforeClassAttrs, classAttrValue, afterClassAttrs, innerContent) => {
-            const classes_ = classAttrValue.split(' ');
-            if (!classes_.includes(hlclass)) {
-                classes_.push(hlclass);
-            }
-            const newClassAttr = classes_.join(' ');
-            return `<${tagName}${beforeClassAttrs} class="${newClassAttr.replace(/(?<=\s|^| )hljs(.*?) (?=|$)/, '').replace("language_", language_class).replace("prompt_", prompt_class).replace("function_", function_class).replace(/(.*?) \1/, '$1')}"${afterClassAttrs}>${innerContent}</${tagName}>`;
-        });
-        //HTML = HTML.replace(new RegExp(`<(.*?) class="(.*?)${class_}(.*?)">(.*?)</\\1>`, 'gm'), `<$1 class="$2${hlclass}$3">$4</$1>`);
-    }
-    return [CSS, HTML];
-}
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const [light] = process.argv.slice(2);
-console.log(JSON.stringify({
-    "_just_light": light
-}));
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const _just = {};
-const [PATH] = process.argv.slice(2);
-_just.string = require('../../lib/string.js');
-
-const charset = "utf-8";
-const fs = require('fs');
-const path = require('path');
-const rootDirA = PATH || '.';
-const rootDirB = process.cwd();
-try {
-    const logs = fs.readFileSync(path.join(rootDirA !== '.' ? rootDirA : rootDirB, '_just_data', 'output.txt'), charset);
-    let logsstr = logs;
-    const outputlogs = logsstr !== '';
-    const l = ['\n\n','\n    ','\n        '];
-    logsstr += outputlogs? l[0] : '';
-    let newlogs = `COMPRESSED:`;
-
-    function findMarkdownFiles(dir) {
-        let results = [];
-        const list = fs.readdirSync(dir);
-        list.forEach(file => {
-            file = path.join(dir, file);
-            const stat = fs.statSync(file);
-            if (stat && stat.isDirectory()) {
-                results = results.concat(findMarkdownFiles(file));
-            } else if (file.endsWith('.md') || file.endsWith('.mdx')) {
-                results.push(file);
-            }
-        });
-        return results;
-    }
-    let fileID = 0;
-    let toobig = false;
-    findMarkdownFiles(rootDirB).forEach(file => {
-        fileID++;
-        if (newlogs.length >= 2 ** 28) {
-            if (!toobig) {
-                newlogs += '\n\n\nerror: logs are too big'
-            }
-            toobig = true;
-            return;
-        }
-        newlogs += toobig ? '' : `${l[1]}FILE #${fileID} "${_just.string.removeLast(_just.string.runnerPath(file), 'md')}html":`;
-        try {
-            const fileNameWithoutExt = path.basename(file, path.extname(file));
-            const outFilePath = (ext) => path.join(path.dirname(file), `${fileNameWithoutExt}.${ext}`);
-            const htmlsize = _just.string.fileSize(fs.statSync(outFilePath('html')).size);
-            newlogs += toobig ? '' : `${l[2]}SIZE: ${htmlsize} (html output)`;
-        } catch (err) {
-            newlogs += toobig ? '' : `${l[2]}ERROR: ${err}`;
-        }
-        let sl = false;
-        let fd = false;
-        try {
-            fs.unlink(file, function(err) {
-                if (!toobig) {newlogs += err ? `${l[2]}MARKDOWN FILE DELETED: NO. (${err}) (fs)` : newlogs += `${l[2]}MARKDOWN FILE DELETED: YES.`};
-                sl = true;
-                fd = true;
-            })
-        } catch (err) {
-            newlogs += sl || toobig ? '' : `${l[2]}MARKDOWN FILE DELETED: NO. (${err}) (tc)`; // tc here means try{}catch(){}
-            fd = true;
-        }
-    });
-
-    console.log(newlogs);
-    logsstr += outputlogs? newlogs : '';
-    fs.writeFileSync(path.join(rootDirA !== '.' ? rootDirA : rootDirB, '_just_data', 'output.txt'), logsstr, charset);
-} catch (eee) {
-    // debug disabled
-}
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const regex = /(?<=^|\n)_just: (prev|next): \/(.*?)(?=\n|$)/g;
-exports.regex = regex;
-
-/**
- * @param {string} text 
- * @returns {[
- *     string, 
- *     {
- *         "prev"?: string,
- *         "next"?: string
- *     }
- * ]}
- */
-exports.get = (text) => {
-    const data = {};
-    text.replace(regex, (a, b, c) => {
-        data[b] = c;
-        return '';
-    })
-    return [
-        text, 
-        data
-    ]
-}
-
-/**
- * 
- * @param {{
- *     "prev"?: string,
- *     "next"?: string
- * }} data 
- * @param {string} n0 
- * @param {string} n1 
- * @param {string} n2 
- * @param {string} pid 
- * @param {string} nid 
- * @param {[string[]]} pl
- * @returns {string}
- */
-exports.html = (data, n0, n1, n2, pid, nid, pl) => {
-    if (!data.prev && !data.next) {
-        return '';
-    } else {
-        const dataprev = '/' + data.prev;
-        const datanext = '/' + data.next;
-        const pl1 = [], pl2 = {};
-        for (const [id, p] of Object.entries(pl)) {
-            pl1.push(p[0]);
-            pl2[p[0]] = p[1];
-        }
-        return `<div class="${n0}"${data.next && !data.prev ? ' style="display:flex;flex-direction:column;"' :''}>${data.prev && pl1.includes(dataprev) ? `<button class="${n1}" id="${pid}"><small>Previous page</small><span>${pl2[dataprev] || data.prev}</span></button>` : ''}${data.next && pl1.includes(datanext) ? `<button class="${n2}" id="${nid}"${data.next && !data.prev ? ' style="align-self:flex-end;"' : ''}><small>Next page</small><span>${pl2[datanext] || data.next}</span></button>` : ''}</div>`;
-    }
-}
-```
-### test
-```css
-:root {
-    --bg: #121212;
-    --cl: #f0f0f0;
-    --kb: #2196F3;
-    --tf: 'Rubik', sans-serif;
-    --bh: 32px;
-    --bp: 0.5em;
-    --br: 6px;
-    --mp: 170px;
-    --mn: 10px;
-    --nh: center;
-    --ft: 10px;
-    --fr: 10px;
-    --md: #ffffff26;
-    --nt: #4964ff80;
-    --nb: #4964ff2b;
-    --tt: #4992ff80;
-    --tb: #4992ff2b;
-    --it: #6d49ff80;
-    --ib: #6d49ff2b;
-    --wt: #ffd84980;
-    --wb: #ffd8492b;
-    --ct: #ff624980;
-    --cb: #ff62492b;
-    --sb: 62px;
-}
-@media(min-width: 1250px) {
-    :root {
-        --mn: 50px;
-        --mp: 250px;
-        --nh: left;
-        --ft: 0px;
-        --fr: 50px;
-    }
-}
-@media(min-width: 1500px) {
-    :root {
-        --mn: 200px;
-        --mp: 400px;
-        --fr: calc(100% + 15px);
-    }
-}
-.l {
-    --bg: #f0f0f0;
-    --cl: #121212;
-    --md: #00000026;
-    --wt: #ffb00080;
-    --wb: #ffb0002b;
-}
-@media (prefers-color-scheme: light) {
-    .a {
-        --bg: #f0f0f0;
-        --cl: #121212;
-        --md: #00000026;
-        --wt: #ffb00080;
-        --wb: #ffb0002b;
-    }
-}
-.stb {
-    --sb: 0px;
-}
-
-* {
-    transition: 300ms;
-    color: var(--cl);
-    border-color: var(--cl);
-    font-family: var(--tf);
-    outline-color: transparent;
-    outline-width: 3px;
-    outline-offset: 3px;
-    outline-style: solid;
-}
-
-html {
-    width: 100%;
-    overflow-wrap: break-word;
-    scroll-behavior: smooth;
-}
-body {
-    background-color: var(--bg);
-    display: flex;
-    margin: 0px;
-    max-width: 100%;
-    gap: 5px;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-}
-
-::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-}
-::-webkit-scrollbar-button {
-    width: 0;
-    height: 0
-}
-::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0)
-}
-::-webkit-scrollbar-thumb {
-    background: var(--cl);
-    border: 2px solid var(--bg);
-    border-radius: 10px;
-}
-
-a, button {
-    cursor: pointer;
-    text-decoration: underline;
-    text-decoration-color: transparent;
-}
-button {
-    text-decoration-thickness: 3px;
-    opacity: 0.75;
-}
-a, button, input {
-    font-family: var(--tf);
-    border-radius: var(--br);
-}
-button, input {
-    height: var(--bh);
-    background-color: var(--cl);
-    color: var(--bg);
-    border: none;
-    margin: 0;
-    padding: 0;
-    padding-left: var(--bp);
-    padding-right: var(--bp);
-    font-family: var(--tf);
-    font-size: 14px;
-    font-weight: 400;
-}
-.l button, .l input {
-    background-color: var(--md);
-    color: var(--cl);
-}
-@media (prefers-color-scheme: light) {
-    .a button, .a input {
-        background-color: var(--md);
-        color: var(--cl);
-    }
-}
-button:hover, input:hover {
-    opacity: 0.85;
-}
-button:active {
-    opacity: 0.75 !important;
-    transition: 50ms;
-}
-a:focus-visible {
-    text-decoration-color: var(--cl);
-    outline-color: var(--kb);
-}
-button:focus-visible {
-    opacity: 1;
-    text-decoration-color: var(--bg);
-    outline-color: var(--kb);
-}
-input:placeholder-shown {
-    color: var(--md);
-    opacity: 0.9;
-}
-::placeholder { /* Fix Firefox */
-  color: #838383;
-  opacity: 1;
-}
-
-@keyframes line {
-    0%, 0.1% {
-        width: 0%;
-        left: 0%;
-    }
-    2% {
-        width: 75%;
-    }
-    3.5%, 98% {
-        width: 100%;
-        left: 0%;
-    }
-    100% {
-        width: 0%;
-        left: 100%;
-    }
-}
-@keyframes noline {
-    from {
-        width: 100%;
-    }
-    to {
-        width: 0%;
-    }
-}
-
-a#ext {
-    padding-right: 10px;
-}
-a#ext:after {
-    content: '\2197';
-    position: fixed;
-    top: 0%;
-    font-family: 'Murecho', var(--tf), monospace, sans-serif;
-    font-weight: 900;
-    font-size: 11px;
-    translate: 2px -20%;
-    opacity: 0.5;
-    transition: 200ms;
-}
-a#ext:hover:not(:focus):after {
-    translate: 2px -25%;
-}
-.navbar {
-    background-color: var(--bg);
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    width: calc(100% - 30px);
-    height: 50px;
-    padding: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
-    border-style: solid;
-    border-width: 0px;
-    border-bottom-width: 2px;
-    gap: 15px;
-    max-width: 100%;
-    overflow: hidden;
-    overflow-x: auto;
-    justify-content: space-between;
-    cursor: default;
-    user-select: none;
-    z-index: 2;
-}
-.navbar .heading {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
-    gap: 10px;
-    background-color: var(--bg);
-    z-index: 1;
-    filter: drop-shadow(20px 0px 5px var(--bg));
-    -webkit-filter: drop-shadow(20px 0px 5px var(--bg));
-}
-.navbar .heading img {
-    width: 35px;
-}
-.navbar .links {
-    position: fixed;
-    left: 50%;
-    translate: -50%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 10px;
-}
-.navbar .links a {
-    opacity: 0.6;
-    transition: 300ms;
-    filter: hue-rotate(1deg);
-    -webkit-filter: hue-rotate(1deg);
-}
-.navbar .links a:before {
-    content: '';
-    position: fixed;
-    width: 0%;
-    height: 1px;
-    left: 0%;
-    top: calc(100% + 2px);
-    background-color: var(--cl);
-    transition: 150ms;
-    z-index: -1;
-    animation: 300ms noline ease-out 1;
-}
-.navbar .links a:hover:not(:focus) {
-    opacity: 1;
-    filter: drop-shadow(0px 0px 2px);
-    -webkit-filter: drop-shadow(0px 0px 2px);
-    transition: 150ms;
-}
-.navbar .links a:hover:not(:focus):before {
-    width: 100%;
-    left: 0%;
-    animation: 6s line linear infinite;
-}
-.navbar .links a:focus {
-    opacity: 1;
-}
-.navbar .buttons {
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-    position: fixed;
-    right: 15px;
-    z-index: 1;
-}
-.navbar .buttons input {
-    position: absolute;
-    right: calc(100% + 10px);
-    display: none;
-    pointer-events: none;
-    user-select: none;
-    z-index: -1;
-}
-@media(max-width: 700px) {
-    .navbar {
-        padding-left: 30px;
-        padding-right: 30px;
-        width: calc(100% - 60px);
-    }
-    .navbar .buttons {
-        display: none;
-    }
-    .navbar:has(.buttons button) .links {
-        left: initial;
-        right: 30px;
-        translate: 0%;
-    }
-}
-@media(min-width: 1000px) {
-    .navbar .buttons input {
-        display: inline-block;
-        pointer-events: all;
-        user-select: all;
-        z-index: 0;
-    }
-    .navbar:has(.buttons button) .links {
-        left: 33%;
-        translate: 0%;
-    }
-}
-@media(min-width: 1200px) {
-    .navbar:has(.buttons button) .links {
-        left: 33%;
-        translate: 0%;
-    }
-}
-@media(min-width: 1600px) {
-    .navbar:has(.buttons button) .links {
-        left: 50%;
-        translate: -50%;
-    }
-}
-@media(max-width: 1000px) {
-    .navbar:not(:has(.buttons button)) {
-        padding-left: 30px;
-        padding-right: 30px;
-        width: calc(100% - 60px);
-    }
-    .navbar:not(:has(.buttons button)) .links {
-        left: initial;
-        right: 30px;
-        translate: 0;
-    }
-}
-@media(min-width: 1000px) {
-    .navbar:not(:has(.buttons button)) .links {
-        left: 50%;
-        translate: -50%;
-    }
-}
-.navbar.scroll {
-    border-bottom-right-radius: var(--br);
-}
-body.navbar-invert .navbar.scroll {
-    filter: invert();
-    -webkit-filter: invert();
-    border-block-width: 0px;
-}
-body.navbar-invert .navbar.scroll .links a:hover {
-    filter: hue-rotate(1deg);
-    -webkit-filter: hue-rotate(1deg);
-}
-body.navbar-invert:not(.navbar-noimginvert) .navbar.scroll .heading img {
-    filter: invert();
-    -webkit-filter: invert();
-}
-body.navbar-invert .navbar.scroll, .l .navbar .links a#ext:after {
-    opacity: 1;
-}
-body.navbar-invert .navbar.scroll, .l .navbar .links a:hover {
-    filter: hue-rotate(1deg);
-    -webkit-filter: hue-rotate(1deg);
-}
-@media (prefers-color-scheme: light) {
-    .a .navbar .links a#ext:after {
-        opacity: 1;
-    }
-    .a .navbar .links a:hover {
-        filter: hue-rotate(1deg);
-        -webkit-filter: hue-rotate(1deg);
-    }
-}
-.navbar .heading:not(:has(span)) {
-    width: auto;
-    height: auto;
-    min-height: 20px;
-    max-height: 35px;
-}
-.navbar .heading:not(:has(span)) img {
-    width: auto;
-    height: auto;
-    max-height: 32px;
-    min-height: 20px;
-}
-header {
-    height: 62px;
-    position: sticky;
-    z-index: 10;
-}
-
-main {
-    position: relative;
-    width: 100%;
-    z-index: 0;
-}
-main nav {
-    position: sticky;
-    top: 64px;
-    height: 0;
-    width: var(--mp);
-    z-index: 3;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    user-select: none;
-}
-nav.left {
-    padding-left: var(--mn);
-    width: calc(var(--mp) - 5px);
-}
-@media(max-width: 555px) {
-    nav.left {
-        translate: -100%;
-    }
-}
-.navleft nav.left {
-    translate: 0%;
-}
-nav.right {
-    padding-right: var(--mn);
-    left: 100%;
-    z-index: 2;
-}
-@media (max-width: 700px) {
-    nav.right {
-        display: none;
-    }
-}
-nav.right div {
-    width: calc(100% - 15px - var(--mn));
-    margin-top: 50px;
-    translate: calc(var(--fr) + 15px);
-}
-nav.right div span {
-    display: block;
-    position: relative;
-    height: 19px;
-    z-index: 3;
-}
-nav.right div > span {
-    pointer-events: none;
-}
-nav.right div ul {
-    padding-left: 10px;
-    z-index: 2;
-    position: relative;
-    background-color: var(--md);
-}
-nav.right div ul li {
-    height: 20px;
-    margin-top: 10px;
-    background-color: var(--bg);
-}
-nav.right div ul li.secondary {
-    translate: 10px;
-    width: calc(100% - 10px);
-}
-nav.right div ul li:after, nav.right div ul li:before {
-    content: '';
-    background-color: var(--bg);
-    width: 4px;
-    position: fixed;
-    height: 33px;
-    z-index: -1;
-    transition: 300ms;
-}
-nav.right div ul li:after {
-    right: 100%;
-    width: calc(100% + 4px);
-    translate: calc(100% - 3.8px) calc(-100% + 1px);
-}
-nav.right div ul li:not(.secondary):after {
-    left: 0%;
-    right: initial;
-    translate: 6px calc(-100% + 2px);
-}
-nav.right div ul li:before {
-    translate: -10px -10px;
-}
-nav.right div ul li.secondary:before {
-    height: 29px;
-    translate: -26px -7px;
-    width: 20px;
-}
-nav.right div ul li.secondary:after {
-    height: 38px;
-    translate: calc(100% - 3.8px) calc(-100% + 7px);
-}
-nav.right div ul li.secondary:has(+ .secondary):before {
-    height: 40px;
-}
-nav.right div ul li.secondary + li:not(.secondary):after {
-    height: 27px;
-}
-nav.right div ul span {
-    padding-left: 5px;
-    overflow: hidden;
-}
-nav.right div ul:after {
-    content: '';
-    position: fixed;
-    width: 5px;
-    height: 100%;
-    top: 0%;
-    left: 0%;
-    background-color: var(--bg);
-    translate: -1px;
-    transition: 300ms;
-}
-nav.right div .slider {
-    position: fixed;
-    z-index: 1;
-    top: 79px;
-    height: 20px;
-    width: 100%;
-    left: 0%;
-    background-color: var(--cl);
-    translate: 0px calc(var(--hc) * 30px);
-    padding: 0;
-}
-#main {
-    position: relative;
-    margin-top: -20px;
-    z-index: 1;
-}
-.main {
-    position: relative;
-    top: 4px;
-    padding-left: var(--mp);
-    padding-right: calc(var(--mp) - 10px);
-    z-index: 1;
-    translate: -5px;
-    padding-bottom: 50px;
-}
-@media(max-width: 700px) {
-    .main {
-        padding-right: 5px;
-    }
-}
-@media(max-width: 555px) {
-    .main {
-        padding-left: 5px;
-        translate: 0px;
-    }
-}
-.navleft .main {
-    padding-left: var(--mp);
-    translate: -5px;
-}
-main nav ul:has(ul) {
-    width: calc(100% - 10px - var(--mn));
-    gap: 30px;
-    display: flex;
-    flex-direction: column;
-    padding-top: 50px;
-    overflow-y: auto;
-    max-height: calc(100vh - 189px + var(--sb));
-}
-main nav ul {
-    margin: 0;
-    padding: 0;
-}
-main nav ul span strong {
-    display: block;
-    width: 100%;
-    text-align: var(--nh);
-    margin-bottom: 15px;
-    pointer-events: none;
-    user-select: none;
-    padding-right: var(--ft);
-    margin-left: calc(0px - var(--ft));
-}
-main nav ul a span {
-    opacity: 0.75; 
-}
-main nav ul a span:hover, .chc span {
-    opacity: 1;
-}
-main nav ul ul {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-main nav li {
-    display: block;
-}
-.ios .navbar .heading {
-    -webkit-filter: none;
-    filter: none;
-}
-nav.left > ul > li > span {
-    margin-bottom: 15px;
-}
-.ios nav.right {
-    display: none;
-}
-.ios .main {
-    padding-right: 5px;
-}
-
-.main:before {
-    content: '';
-    position: fixed;
-    top: -28px;
-    width: 1px;
-    height: calc(100% + 28px);
-    background-color: var(--md);
-    translate: -10px;
-    opacity: 0.5;
-}
-@media(max-width: 555px) {
-    .main:before {
-        opacity: 0;
-    }
-}
-.navleft .main:before {
-    opacity: 0.5;
-}
-blockquote {
-    display: block;
-    margin: 0;
-    margin-top: 10px;
-    border-color: var(--md);
-    border-style: solid;
-    border-width: 0;
-    border-left-width: 5px;
-    padding-left: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-blockquote blockquote {
-    opacity: 0.75;
-}
-blockquote:hover {
-    border-color: var(--cl);
-    opacity: 1;
-}
-code {
-    background-color: var(--md);
-    padding-left: 5px;
-    padding-right: 5px;
-    border-radius: 5px;
-}
-code, code span {
-    font-family: monospace;
-    cursor: text;
-}
-.line {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 5px;
-    background-color: var(--md);
-    margin-top: 20px;
-    margin-bottom: 1px;
-    overflow: hidden;
-}
-.line:after {
-    content: '';
-    position: relative;
-    display: block;
-    top: 0%;
-    left: -120%;
-    width: 100%;
-    height: 100%;
-    background-color: var(--cl);
-    transition: 1s;
-    transition-delay: 400ms;
-    transition-timing-function: ease-in-out;
-}
-.line, .line:after {
-    border-radius: 10px;
-}
-.line:hover:after {
-    left: 120%;
-    transition-delay: 0ms;
-}
-.code {
-    display: block;
-    width: calc(100% - 10px);
-    padding: 5px;
-    line-height: 18px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-.code:has(code) {
-    margin-top: 28px;
-    border-top-left-radius: 0px;
-}
-.code code {
-    position: relative;
-    display: block;
-    translate: -5px -23px;
-    margin-bottom: -20px;
-    width: max-content;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    pointer-events: none;
-    white-space: nowrap;
-    user-select: none;
-}
-.note, .ntip, .impr, .warn, .caut {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding-top: 35px;
-    line-height: 20px;
-    padding-right: 10px;
-}
-.note:before, .ntip:before, .impr:before, .warn:before, .caut:before {
-    position: fixed;
-    translate: 0px -25px;
-    font-weight: 500;
-    height: 20px;
-}
-.note {
-    background-color: var(--nb);
-    border-color: var(--nt) !important;
-}
-.note:before {
-    content: 'Note';
-    color: var(--nt);
-}
-.ntip {
-    background-color: var(--tb);
-    border-color: var(--tt) !important;
-}
-.ntip:before {
-    content: 'Tip';
-    color: var(--tt);
-}
-.impr {
-    background-color: var(--ib);
-    border-color: var(--it) !important;
-}
-.impr:before {
-    content: 'Important';
-    color: var(--it);
-}
-.warn {
-    background-color: var(--wb);
-    border-color: var(--wt) !important;
-}
-.warn:before {
-    content: 'Warning';
-    color: var(--wt);
-}
-.caut {
-    background-color: var(--cb);
-    border-color: var(--ct) !important;
-}
-.caut:before {
-    content: 'Caution';
-    color: var(--ct);
-}
-
-footer {
-    position: relative;
-    background-color: var(--bg);
-    z-index: 2;
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: space-between;
-    align-items: center;
-}
-footer * {
-    height: 20px;
-}
-footer div {
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    gap: 5px;   
-}
-footer div button {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background-color: var(--md);
-    padding: 0;
-    width: 20px;
-    max-width: 20px;
-    color: var(--cl);
-    font-family: var(--tf);
-    font-weight: 600;
-    overflow: hidden;
-}
-footer div button svg {
-    position: relative;
-    width: 20px;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
-    -webkit-translate: -50% -50%;
-    scale: 0.75;
-    opacity: 0.75;
-    fill: var(--cl);
-    transition: 700ms;
-}
-footer div button:hover svg {
-    transform: rotate(10deg);
-    -webkit-transform: rotate(10deg);
-}
-footer div button:focus-visible {
-    outline-offset: 0;
-    background-color: var(--kb);
-}
-footer div:has(button:focus-visible) {
-    outline-style: solid;
-    outline-width: 5px;
-    outline-offset: 5px;
-    outline-color: var(--cl);
-}
-footer div, footer button {
-    border: 1px solid var(--md);
-}
-footer:before {
-    content: '';
-    position: absolute;
-    bottom: 59px;
-    right: 0px;
-    width: 100%;
-    height: 1px;
-    background-color: var(--md);
-    opacity: 0.5;
-}
-html.l:not(.a) #l, html:not(.l):not(.a) #d, html.a #a{
-    border-color: var(--cl)
-}
-#l svg circle {
-    fill: var(--cl);
-    scale: 0.9;
-    translate: 5% 5%;
-}
-#d {
-    transform: rotate(5deg);
-    -webkit-transform: rotate(5deg);
-}
-#d svg {
-    scale: 0.7;
-}
-#a {
-    text-align: center;
-    vertical-align: middle;
-    align-content: center;
-    align-items: center;
-}
-.ios footer div:has(button) {
-    display: none;
-}
-#main small {
-    display: none;
-    opacity: 0.25;
-    width: 100%;
-    text-align: center;
-}
-@media(max-width: 555px) {
-    #main small {
-        display: block;
-    }
-}
-.navleft #main small {
-    display: none;
-}
-
-
-h1 {
-    display: block;
-    font-size: 2em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
-h2 {
-    display: block;
-    font-size: 1.5em;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
-h3 {
-    display: block;
-    font-size: 1.17em;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
-h4 {
-    display: block;
-    margin-block-start: 1.33em;
-    margin-block-end: 1.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
-h5 {
-    display: block;
-    font-size: 0.83em;
-    margin-block-start: 1.67em;
-    margin-block-end: 1.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
-h6 {
-    display: block;
-    font-size: 0.67em;
-    margin-block-start: 2.33em;
-    margin-block-end: 2.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
-p {
-    display: block;
-    margin-block-start: 0.5em;
-    margin-block-end: 0.5em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    unicode-bidi: isolate;
-}
-
-.debug * {
-    outline-color: #888888;
-    outline-offset: 0;
-    outline-width: 1px;
-    outline-style: dashed;
-}
-.debug .main {
-    z-index: 2;
-}
-.debug .main span {
-    background-color: blue;
-    width: 100%;
-    display: block;
-}
-.debug .left, .debug .right {
-    background-color: #ff000080;
-}
-.debug .left ul, .debug .right div {
-    background-color: red;
-}
-.debug .navbar {
-    background-color: green;
-}
-.debug nav.right div *:not(.slider), .debug nav.right div *:after, .debug nav.right div *:before {
-    background-color: transparent;
-    color: black;
-}
-
-h1, h2, h3 {
-    padding-top: 62px; margin-top: -62px;
-}
-.underline, .main a {
-    text-decoration: underline;
-}
-.main a {
-    color: var(--kb);
-}
-
-.search {
-    position: fixed;
-    padding-top: 16px;
-    padding-left: 7px;
-    padding-right: 7px;
-    padding-bottom: 6px;
-    translate: 0px -6px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: flex-start;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 10px;
-    background-color: var(--md);
-    backdrop-filter: blur(4px) url("#glass") brightness(0.3);
-    -webkit-backdrop-filter: blur(4px) url("#glass") brightness(0.3);
-    z-index: -1;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    overflow: hidden;
-    border: 1px solid var(--md);
-}
-.search a {
-    height: 19px;
-    overflow: hidden;
-}
-.search span {
-    opacity: 0.75;
-    width: 100%;
-    text-align: center;
-}
-.firefox .search, .ios .search {
-    backdrop-filter: blur(4px) brightness(0.3) !important;
-    -webkit-backdrop-filter: blur(4px) brightness(0.3) !important;
-}
-.ios .search {
-    background-color: var(--bg);
-}
-
-.line-through {
-    text-decoration: line-through;
-}
-mark {
-    background-color: var(--wt);
-    padding-left: 2px;
-    padding-right: 2px;
-    border-radius: 5px;
-}
-
-.main a#ext:after {
-    position: relative !important;
-    display: inline-block;
-}
-.main img {
-    max-width: 100%;
-    border-radius: 5px;
-}
-
-input[type="checkbox"] {
-    pointer-events: none;
-    accent-color: var(--kb) !important;
-    height: auto;
-    display: inline;
-}
-
-.code:has(code) span:has(div) {
-    padding-left: 15px;
-}
-.code:has(code) span div {
-    display: inline;
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    translate: -12.5px 3.5px;
-    border-radius: 50%;
-}
-.code, .code code, .code * {
-    background: #3c3c3c;
-    color: #ffffff;
-}
-.l .code, .l .code code, .l .code * {
-    background: #e5e5e5;
-    color: #000000;
-}
-@media (prefers-color-scheme: light) {
-    .a .code, .a .code code, .a .code * {
-        background: #e5e5e5;
-        color: #000000;
-    }
-}
-
-html:before, html:after, body:before, body:after {
-    content: none !important;
-}
-header, main {
-    display: block !important;
-}
-
-.error:before {
-    content: 'Uh oh!' !important;
-    font-size: 2em;
-    position: fixed;
-    top: 50%;
-    translate: 0 calc(-100% - 6px);
-    width: 50%;
-    text-align: center;
-    border-bottom: 1px solid white;
-    white-space: nowrap;
-}
-.error:after {
-    content: 'Something went wrong.' !important;
-    position: fixed;
-    top: 50%;
-}
-html:has(.error):before {
-    content: '_just' !important;
-    font-size: 13px;
-    position: fixed;
-    bottom: 5px;
-    left: 5px;
-    line-break: anywhere;
-    margin-right: 5px;
-}
-html:has(.error):after {
-    content: var(--edata) !important;
-    position: fixed;
-    top: calc(50% + 24px);
-    width: 100%;
-    text-align: center;
-    font-size: 12px;
-    opacity: 0.5;
-}
-.error * {
-    display: none !important;
-}
-
-#search {
-    display: none;
-}
-
-.small {
-    opacity: 0.5;
-    font-size: 12px;
-}
-
-html:has(.navleft) {
-    overflow: hidden;
-    touch-action: pan-y;
-}
-html:has(.navleft) .main {
-    pointer-events: none;
-    user-select: none;
-    filter: blur(3px) brightness(0.8);
-    -webkit-filter: blur(3px) brightness(0.8);
-}
-.navleft .navbar .links {
-    translate: calc(0px - calc(var(--mp) - 10px)) !important;
-}
-
-.main .linkspace {
-    margin-right: -12px;
-}
-.main .linkspace:after {
-    translate: 0px -20%;
-}
-.main .linkspace:hover:not(:focus):after {
-    translate: 0px -25%;
-}
-
-.main .linkmark {
-    margin-right: -17px;
-}
-.main .linkmark:after {
-    translate: -1px -70%;
-}
-.main .linkmark:hover:not(:focus) {
-    margin-right: -10px;
-}
-.main .linkmark:hover:not(:focus):after {
-    translate: 0px -25%;
-}
-
-.main #ext {
-    white-space: nowrap;
-}
-
-.main .linkdot {
-    margin-right: -17px;
-}
-.main .linkdot:after {
-    translate: 2px -40%;
-}
-.main .linkdot:hover:not(:focus):after {
-    translate: 2px -45%;
-}
-
-main nav li ul {
-    padding-top: 0px;
-    width: 100%;
-}
-main nav li ul li:has(strong) {
-    padding-top: 10px;
-}
-@media(min-width: 1250px) {
-    main nav li ul li:has(strong) {
-        padding-left: 10px;
-    }
-    main nav li ul li:has(strong):before {
-        content: '';
-        height: var(--liheight);
-        width: 3px;
-        background-color: var(--md);
-        display: block;
-        position: relative;
-        translate: -10px 0px;
-        border-radius: 50px;
-        opacity: 0.5;
-        margin-bottom: calc(0px - var(--liheight));
-        transition: 300ms;
-    }
-}
-
-nav.left:not(:has(strong)) > ul {
-    padding-top: 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#contents {
-    overflow-y: scroll;
-    height: calc(var(--contents) - 50px);
-    overflow-x: clip;
-}
-
-input[type="checkbox"] {
-    height: 13px;
-}
-
-main nav.left li {
-    overflow-y: hidden;
-}
-
-.copycode {
-    position: fixed;
-    translate: calc(var(--codewidth) - 26px) calc(calc(0px - var(--codeheight)) + 4px);
-    display: inline-block;
-    height: 25px;
-    border-radius: 10px;
-    overflow: hidden;
-}
-.copycode svg {
-    padding: 5px;
-}
-
-@keyframes s-shake {
-    10%, 90% {
-        transform: translateX(-0.5px)
-    }
-
-    20%, 80% {
-        transform: translateX(1px)
-    }
-
-    30%, 50%, 70% {
-        transform: translateX(-2px)
-    }
-
-    40%, 60% {
-        transform: translateX(2px)
-    }
-}
-
-.s-shake {
-    animation: s-shake 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) both
-}
-
-```
-```css
-#search {
-    background-color: var(--bg);
-    border: 2px solid var(--cl);
-    font-family: Monospace;
-    position: fixed;
-    z-index: 23;
-    display: block !important;
-    width: 20px;
-    height: 16px;
-    padding-bottom: 1px;
-    translate: calc(-100% - 5px) -50%;
-    text-align: center;
-    border-radius: 50px;
-    cursor: pointer;
-    user-select: none;
-    transition: none;
-}
-.ios #search {
-    display: none !important;
-}
-
-.next {
-    padding: 10px;
-    margin-top: 45px;
-    border: 2px solid var(--md);
-    border-radius: 20px;
-    max-width: 769px;
-    position: relative;
-    translate: -50% 0px;
-    left: 50%;
-}
-.next:before {
-    content: '';
-    background-color: var(--md);
-    opacity: 0.5;
-    width: calc(100% + 20px);
-    height: 1px;
-    display: block;
-    top: -30px;
-    position: relative;
-    left: -10px;
-}
-.next button {
-    width: 50%;
-    background-color: transparent;
-    color: var(--cl);
-    font-weight: bold;
-    opacity: 1;
-    border-radius: 20px;
-    overflow: hidden;
-}
-.next .next1 {
-    border-right: 1px solid var(--md);
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-.next .next2 {
-    border-left: 1px solid var(--md);
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
-.next button:hover {
-    scale: 101%;
-    background-color: #ffffff20;
-}
-.l .next button:hover {
-    background-color: #00000020;
-}
-@media (prefers-color-scheme: light) {
-    .a .next button:hover {
-        background-color: #00000020;
-    }
-}
-.next button small, .next button span {
-    display: block !important;
-    white-space: nowrap;
-}
-.next button small {
-    font-weight: normal;
-}
-.next button:hover small, .next button:hover span {
-    translate: 0px -50%;
-}
-.next button:hover small {
-    scale: 103%;
-    opacity: 0 !important;
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
-}
-@media (max-width: 450px) {
-    .next {
-        display: none;
-    }
-}
-
-.code {
-    cursor: default;
-    white-space: nowrap;
-    overflow-x: scroll;
-}
-.code::-webkit-scrollbar {
-    width: 5px;
-    height: 5px
-}
-.code::-webkit-scrollbar-thumb {
-    border: 1px solid var(--bg);
-}
-.code code {
-    position: absolute;
-}
-
-```
-### test
-```css
-.hljs-number, .hljs-bullet {
-    color: #eda31b;
-}
-.hljs-meta, .hljs-variable.language_, .language_, .hljs-params, .hljs-subst, .hljs-string .hljs-variable, .hljs-quote {
-    color: #d0d1ff;
-}
-.hljs-meta.prompt_, .hljs-selector-id, .prompt_, .hljs-doctag, .hljs-link {
-    color: #29d3a9;
-}
-.hljs-comment, .hljs-tag, .hljs-code {
-    color: #a2a2a2;
-}
-.hljs-keyword, .hljs-attr, .hljs-selector-class, .hljs-symbol {
-    color: #c3acff;
-}
-.hljs-name, .hljs-selector-tag, .hljs-title.function_, .function_, .hljs-property, .hljs-section, .hljs-strong, .hljs-emphasis {
-    color: #89a8f9;
-}
-.hljs-string, .hljs-type {
-    color: #afffaf;
-}
-.hljs-literal, .hljs-selector-pseudo, .hljs-function, .hljs-function .hljs-title {
-    color: #faadf9;
-}
-.hljs-built_in, .hljs-attribute, .hljs-regexp {
-    color: #aad7ff;
-}
-
-.hljs-strong {
-    font-weight: bolder;
-}
-.hljs-emphasis {
-    font-style: italic;
-}
-
-.hljs-addition, .hljs-deletion {
-    padding-left: 3px;
-    padding-right: 3px;
-    margin-left: -3px;
-    margin-right: -3px;
-    border-radius: 5px
-}
-.hljs-addition {
-    background-color: #2a8c2e80;
-}
-.hljs-deletion {
-    background-color: #8c2a2a80;
-}
-
-```
-```css
-.hljs-number, .hljs-bullet {
-    color: #eda31b;
-}
-.hljs-meta, .hljs-variable.language_, .language_, .hljs-params, .hljs-subst, .hljs-string .hljs-variable, .hljs-quote {
-    color: #4c50ff;
-}
-.hljs-meta.prompt_, .hljs-selector-id, .prompt_, .hljs-doctag, .hljs-link {
-    color: #05975e;
-}
-.hljs-comment, .hljs-tag, .hljs-code {
-    color: #a2a2a2;
-}
-.hljs-keyword, .hljs-attr, .hljs-selector-class, .hljs-symbol {
-    color: #723cff;
-}
-.hljs-name, .hljs-selector-tag, .hljs-title.function_, .function_, .hljs-property, .hljs-section, .hljs-strong, .hljs-emphasis {
-    color: #1e5cff;
-}
-.hljs-string, .hljs-type {
-    color: #00aa00;
-}
-.hljs-literal, .hljs-selector-pseudo, .hljs-function, .hljs-function .hljs-title {
-    color: #d745d5;
-}
-.hljs-built_in, .hljs-attribute, .hljs-regexp {
-    color: #2f9dff;
-}
-
-.hljs-strong {
-    font-weight: bolder;
-}
-.hljs-emphasis {
-    font-style: italic;
-}
-
-.hljs-addition, .hljs-deletion {
-    padding-left: 3px;
-    padding-right: 3px;
-    margin-left: -3px;
-    margin-right: -3px;
-    border-radius: 5px
-}
-.hljs-addition {
-    background-color: #95ec9980;
-}
-.hljs-deletion {
-    background-color: #e1868680;
-}
-
-```
-```js
-(async()=>{
-    const fcrt_ = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
-    const wndw_ = fcrt_;
-    const dcmnt = fcrt_["document"];
-    const theme = localStorage.getItem('t');
-
-    const navbar = dcmnt.querySelector('[data-just="navbar"]');
-    const style = document.createElement('style');
-    const css = await fetch('/_just/REPLACE_CSS.css').then(r => r.text());
-    style.innerHTML = css + '@media(min-width:700px){[data-just="navbar"] div:has(a){left:50% !important;translate:-50% !important}}';
-    dcmnt.head.appendChild(style);
-    navbar.innerHTML = 'REPLACE_NAVBAR';
-
-    'REPLACE_THEME';
-
-    'REPLACE_BUTTONS';
-})();
-
-```
-```html
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="REPLACE_CHARSET">
-        <meta name="viewport" content="REPLACE_VIEWPORT">
-        <title>REPLACE_TITLE</title>
-        <link rel="preload" href="/_just/REPLACE_CSS.css" as="style">
-        <link rel="preload" href="/_just/REPLACE_JS.js" as="script">
-        <link href="/_just/REPLACE_CSS.css" rel="stylesheet">
-        <script src="/_just/REPLACE_JS.js"></script>
-        REPLACE_DATA
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" as="style">
-        <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-        REPLACE_CUSTOM
-        <noscript>
-            <style>
-                html > body > header > nav:first-of-type > div:last-of-type, 
-                html > body > main > div:first-of-type > nav:last-of-type > div > div, 
-                html > body > main > footer > div {
-                    display: none;
-                }
-                html > body > header > nav:first-of-type > :nth-child(2):not(a) {
-                    left: 100% !important;
-                    translate: calc(-15px - 100%) !important;
-                    width: max-content;
-                    @media(max-width: 700px) {
-                        translate: calc(-30px - 100%) !important;
-                    }
-                }
-                html > body > main > div > small {
-                    display: none !important;
-                }
-            </style>
-        </noscript>
-        <style>
-            html:before {
-                content: '_just';
-                font-size: 13px;
-                position: fixed;
-                bottom: 5px;
-                left: 5px;
-                line-break: anywhere;
-                margin-right: 5px;
-            }
-            html:after {
-                content: 'Couldn’t load the website. (0302)';
-                position: fixed;
-                top: calc(50% + 24px);
-                width: 100%;
-                text-align: center;
-                font-size: 12px;
-                opacity: 0.5;
-            }
-            body:before {
-                content: 'Uh oh!';
-                font-size: 2em;
-                position: fixed;
-                top: 50%;
-                translate: 0 calc(-100% - 6px);
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid white;
-                white-space: nowrap;
-            }
-            body:after {
-                content: 'Something went wrong.';
-                position: fixed;
-                top: 50%;
-                width: 100%;
-                text-align: center;
-            }
-            html {
-                color: white;
-                background-color: black;
-            }
-            header, main {
-                display: none;
-            }
-        </style>
-    </head>
-    <body style="--hc: 0"><script>0</script>
-        <header>
-            <nav class="navbar">
-                <div class="heading">
-                    REPLACE_LOGO
-                    REPLACE_NAME
-                </div>
-                <div class="links">
-                    REPLACE_LINKS
-                </div>
-                <div class="buttons">
-                    REPLACE_BUTTONS
-                    <input placeholder="Search documentation" id="searchbar" disabled>
-                    <span id="search">REPLACE_SEARCHKEY</span>
-                    <div class="search"></div>
-                </div>
-            </nav>
-        </header>
-        <main>
-            <div id="main">
-                <nav class="left">
-                    <ul>
-                        REPLACE_PAGES
-                    </ul>
-                </nav>
-                <nav class="right">
-                    REPLACE_CONTENTS
-                </nav>
-                <article class="main">
-                    REPLACE_CONTENT
-                    REPLACE_PREVNEXT
-                </article>
-                <small>Swipe right to open the menu and swipe left to close it.</small>
-            </div>
-            <footer>
-                <div>
-                    <button id="l" title="Switch to Light Theme" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="4"></line>
-                            <line x1="12" y1="20" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"></line>
-                            <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="4" y2="12"></line>
-                            <line x1="20" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"></line>
-                            <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"></line>
-                        </svg>
-                    </button>
-                    <button id="d" title="Switch to Dark Theme" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px">
-                            <path d="M480-120q-151 0-255.5-104.5T120-480q0-138 90-239.5T440-838q13-2 23 3.5t16 14.5q6 9 6.5 21t-7.5 23q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q11-7 22.5-6.5T819-479q10 5 15.5 15t3.5 24q-14 138-117.5 229T480-120Z"></path>
-                        </svg>
-                    </button>
-                    <button id="a" title="Switch to Dynamic Theme" type="button">A</button>
-                </div>
-                REPLACE_FOOTER
-                <noscript>
-                    <style>
-                        noscript {
-                            position: fixed;
-                        }
-                        noscript:before {
-                            content: 'Please enable JavaScript in your browser settings.';
-                            position: fixed;
-                            left: 0px;
-                            translate: 0px 62px;
-                            font-weight: bolder;
-                            font-size: 2em;
-                            width: 100%;
-                            text-align: center;
-                            height: 100%;
-                            background-color: var(--cb);
-                            outline: 20px solid var(--ct);
-                        }
-                    </style>
-                </noscript>
-            </footer>
-        </main>
-        <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden;">
-            <defs>
-                <filter id="glass" x="0%" y="0%" width="100%" height="100%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise"></feTurbulence>
-                    <feGaussianBlur in="noise" stdDeviation="20" result="blurred"></feGaussianBlur>
-                    <feDisplacementMap in="SourceGraphic" in2="blurred" scale="30" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-                </filter>
-            </defs>
-        </svg>
-        <script>REPLACE_SCRIPT</script>
-    </body>
-</html>
-```
-```js
-const fcrt_ = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
-const wndw_ = fcrt_;
-const dcmnt = fcrt_["document"];
-const page_ = 'p' + wndw_.location.pathname;
-const scrll = localStorage.getItem('s' + page_);
-const theme = localStorage.getItem('t');
-const main_ = 'html > body > main > div#main > article.main';
-const IsIOS=()=>{
-    return (/iPad|iPhone|iPod/.test(wndw_.navigator.userAgent) && !wndw_.MSStream) || (/Mac/.test(wndw_.navigator.userAgent) && wndw_.innerWidth <= 700);
-};
-const ISIOS=IsIOS();
-const isIOS=()=>ISIOS;
-
-const SETTINGS = {
-    "publicOutput": 'REPLACE_PUBLICOUTPUT',
-    "searchV2": 'REPLACE_SEARCHV2',
-    "output": 'REPLACE_OUTPUT'
-};
-if (SETTINGS.output) {
-    console.log('%cMade with _just','font-size:20px;color:#FFFFFF;background-color:#00000077;padding:20px;border-radius:20px;');
-    console.log('%chttps://just.is-a.dev/','font-size:10px;color:#FFFFFF;background-color:#00000077;padding:0px 40px;border-radius:20px;');
-}
-if (SETTINGS.publicOutput) {
-    console.log(`_just output: ${wndw_.location.protocol}//${wndw_.location.hostname}/_just_data/output.txt`)
-};
-
-const throwError = (code) => {
-    const messages = {
-        '0301': 'Wayback Machine detected.'
-    };
-    dcmnt.body.classList.add('error');
-    dcmnt.documentElement.style.setProperty('--edata', `'${messages[code] || 'Just an Ultimate Site Tool: A client-side error has occurred.'} (${code})'`);
-    throw new Error(`REPLACE_ERRORPREFIX ${code}. For more information, visit https://just.is-a.dev/errors/${code}`);
-};
-
-const checkElement = (elements) => {
-    elements.forEach(elem => {
-        if (elem === null) {
-            throwError('0302');
-        }
-    });
-};
-
-const convertbase =(str,fromBase,toBase,DIGITS="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/")=>{
-    const cbadd = (x, y, base) => {
-        let z = [];
-        const n = Math.max(x.length, y.length);
-        let carry = 0;
-        let i = 0;
-        while (i < n || carry) {
-            const xi = i < x.length ? x[i] : 0;
-            const yi = i < y.length ? y[i] : 0;
-            const zi = carry + xi + yi;
-            z.push(zi % base);
-            carry = Math.floor(zi / base);
-            i++;
-        }
-        return z;
-    };
-
-    const multiplyByNumber = (num, x, base) => {
-        if (num < 0) return(null);
-        if (num == 0) return [];
-
-        let result = [];
-        let power = x;
-        while (true) {
-            num & 1 && (result = cbadd(result, power, base));
-            num = num >> 1;
-            if (num === 0) break;
-            power = cbadd(power, power, base);
-        }
-
-        return result;
-    };
-
-    const parseToDigitsArray = (str) => {
-        const digits = str.split('');
-        let arr = [];
-        for (let i = digits.length - 1; i >= 0; i--) {
-            const n = DIGITS.indexOf(digits[i]);
-            if (n == -1) return(null);
-            arr.push(n);
-        }
-        return arr;
-    };
-
-    const digits = parseToDigitsArray(str);
-    if (digits === (null)) return(null);
-
-    let outArray = [];
-    let power = [1];
-    for (let i = 0; i < digits.length; i++) {
-        digits[i] && (outArray = cbadd(outArray, multiplyByNumber(digits[i], power, toBase), toBase));
-        power = multiplyByNumber(fromBase, power, toBase);
-    };
-
-    let out = '';
-    for (let i = outArray.length - 1; i >= 0; i--){
-        out += DIGITS[outArray[i]]};
-
-    return out;
-};
-let stb_ = false;
-const updateNavRight = () => {
-    const navright = dcmnt.getElementById('contents');
-    const offset = stb_ ? -136 : -84;
-    navright.style.setProperty('--contents', `${wndw_.innerHeight + offset}px`);
-};
-let lhc = 0;
-wndw_.addEventListener('scroll', () => {
-    let headerIndex_ = false;
-    checkElement([dcmnt.querySelector(".navbar")]);
-
-    const scrollPosition = wndw_.scrollY || dcmnt.documentElement.scrollTop;
-
-    if (scrollPosition > 150) {
-        dcmnt.querySelector(".navbar").classList.add("scroll");
-    } else {
-        headerIndex_ = true;
-        dcmnt.querySelector(".navbar").classList.remove("scroll");
-    };
-
-    localStorage.setItem('s' + page_, convertbase(scrollPosition.toString(10), 10, 64));
-
-    const elements = dcmnt.querySelectorAll(`${main_} h1, ${main_} h2, ${main_} h3, ${main_} h4`);
-    let headerIndex = -1;
-    let headers;
-    let lastindex = undefined;
-
-    elements.forEach((element, index_) => {
-        const rect = element.getBoundingClientRect();
-        const isInView = (rect.top + rect.height / 2) <= (wndw_.innerHeight / 2);
-
-        if (lastindex === undefined) {
-            lastindex = index_;
-        } else if (index_ > lastindex) {
-            lastindex = index_;
-            headers = index_;
-        }
-
-        if (isInView) {
-            headerIndex = index_;
-        }
-    });
-
-    const { scrollHeight, scrollTop, clientHeight } = dcmnt.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight) {
-        dcmnt.body.classList.add('stb');
-        stb_ = true;
-        headerIndex = headers;
-    } else {
-        dcmnt.body.classList.remove('stb');
-        stb_ = false;
-    };
-
-    const hc_ = headerIndex_ ? 0 : headerIndex >= 0 ? headerIndex : 0;
-    const nr = 'REPLACE_NR';
-    const _hc = 'REPLACE_CHC';
-    dcmnt.body.style.setProperty('--hc', hc_);
-    try {
-        dcmnt.getElementById(`${nr}${lhc}`).classList.remove(_hc);
-        dcmnt.getElementById(`${nr}${hc_}`).classList.add(_hc);
-        lhc = hc_;
-    } catch (__e) {}
-    updateNavRight();
-});
-
-if (scrll) {
-    dcmnt.documentElement.scrollTo(0, convertbase(scrll,64,10));
-}
-
-let swipe;
-let navv = false;
-const handleSwipeLeft=()=>{
-    dcmnt.body.classList.remove('navleft');
-    navv = false;
-};
-const handleSwipeRight=()=>{
-    dcmnt.body.classList.add('navleft');
-    navv = true;
-};
-dcmnt.addEventListener('touchstart', function(event) {
-    swipe = [event.touches[0].clientX, event.touches[0].clientY];
-}, false);
-dcmnt.addEventListener('touchend', function(event) {
-    const endX = event.changedTouches[0].clientX;
-    const endY = event.changedTouches[0].clientY;
-    const distanceX = endX - swipe[0];
-    const distanceY = endY - swipe[1];
-
-    if (distanceY < 35 && distanceY > -35) {
-        if (distanceX > 35) {
-            handleSwipeRight();
-        } else if (distanceX < -35) {
-            handleSwipeLeft();
-        }
-    }
-}, false);
-
-'REPLACE_THEME';
-
-const updateMinHeight = () => {
-    try {
-        dcmnt.querySelector('.main').style.minHeight = `${wndw_.innerHeight-62*2-1}px`
-    } catch (err_) {}
-};
-const updateWidth = () => {
-    if (wndw_.innerWidth < 556) {
-        try {
-            dcmnt.querySelector('.main').style.width =(null);
-            dcmnt.querySelector('.main').style.width = `${dcmnt.querySelector('.main').offsetWidth - 10}px`
-        } catch (err_) {}
-    } else {
-        try {
-            dcmnt.querySelector('.main').style.width =(null);
-        } catch (err_) {}
-    }
-};
-updateMinHeight();updateWidth();
-wndw_.addEventListener('resize', ()=>{
-    updateMinHeight();
-    if (navv) {
-        handleSwipeLeft();
-    }
-    updateWidth();
-    updateNavRight();
-});
-
-let fun_function = false;
-const glass = 'url("#glass")';
-const i_want_liquid_glass = () => {
-    dcmnt.body.style.filter = glass;
-    dcmnt.body.style.webkitFilter = glass;
-    if (fun_function) {
-        dcmnt.querySelector('feDisplacementMap').scale.baseVal += 100;
-    };
-    fun_function = true;
-};
-
-const search1 = (data, searchTerm) => {
-  const lowerSearchTerm = searchTerm.toLowerCase();
-
-  for (const key in data) {
-    if (data.hasOwnProperty(key)) {
-      const value_ = data[key];
-      const lowerValue = value_.toLowerCase();
-      const index = lowerValue.indexOf(lowerSearchTerm);
-      
-      if (index !== -1) {
-        const start = Math.max(0, index - 6);
-        let end = SETTINGS.searchV2 ? value_.length : Math.min(value_.length, index + searchTerm.length + 9);
-        
-        let snippet = value_.substring(start, end);
-        
-        const regex = new RegExp(`(?<=\s|^|[.,!?;: \n])(${searchTerm})(?=\s|[.,!?;: \n]|$)`, 'gi');
-        
-        snippet = snippet.replace(regex, '<strong>$1</strong>');
-        if (start > 0) {snippet = '...'+snippet.slice(3)}
-        if (end < value_.length) {snippet = snippet.trim()+'...'};
-        
-        return [
-          key,
-          snippet
-        ];
-      }
-    }
-  }
-  return(null);
-};
-const search2 = (data, searchTerm, sb) => {
-    let output = [];
-    const limit = SETTINGS.searchV2 ? Math.floor((wndw_.innerHeight-(sb.offsetTop+sb.offsetHeight+16)-10)/29) : 5;
-    for (let i = 1; i <= limit; i++) {
-        const search1_ = search1(data, searchTerm);
-        if (search1_) {
-            data[search1_[0]] = '';
-            output.push(search1_);
-        }
-    }
-    return output;
-};
-
-let cooldown0 = false;
-const cooldown = (timems, cdvarid) => {
-    switch(cdvarid) {
-        case 0:    
-            cooldown0=true;
-            setTimeout(()=>{cooldown0=false;},timems);
-        default:
-            return true;
-    }
-};
-
-let searchurl = "/_just/search";
-dcmnt.addEventListener('DOMContentLoaded', () => {
-    checkElement([dcmnt.querySelector('.main')]);
-
-    let ltb = dcmnt.getElementById('l');
-    let dtb = dcmnt.getElementById('d');
-    let atb = dcmnt.getElementById('a');
-
-    const iosautotheme = () => {
-        if (isIOS()) {
-            dcmnt.body.classList.add('ios');
-            dcmnt.documentElement.classList.add('a');
-            localStorage.setItem('t', 'a');
-            autotheme();
-            return true;
-        } else {
-            return false;
-        };
-    };
-
-    if (ltb && dtb && atb) {
-        ltb.addEventListener('click', () => {
-            if (!iosautotheme()) {
-                dcmnt.documentElement.classList.add('l');
-                dcmnt.documentElement.classList.remove('a');
-                localStorage.setItem('t', 'l');
-            }
-        });
-
-        dtb.addEventListener('click', () => {
-            if (!iosautotheme()) {
-                dcmnt.documentElement.classList.remove('l');
-                dcmnt.documentElement.classList.remove('a');
-                localStorage.setItem('t', 'd');
-            }
-        });
-
-        atb.addEventListener('click', () => {
-            if (!iosautotheme()) {
-                dcmnt.documentElement.classList.add('a');
-                localStorage.setItem('t', 'a');
-                autotheme();
-            }
-        });
-    }
-
-    iosautotheme();
-    if (wndw_.navigator.userAgent.toLowerCase().includes('firefox')) {
-        dcmnt.body.classList.add('firefox');
-    };
-    const wm = dcmnt.getElementById('wm-ipp-base');
-    if(wm){wm.parentElement.removeChild(wm);}
-    if((wndw_.location.hostname==='web.archive.org'||wm)&&'REPLACE_NOWEBARCHIVE'){
-        throwError('0301');
-    }
-
-    const sb = dcmnt.getElementById("searchbar");
-    sb.style.cursor = 'text';
-    sb.disabled = false;
-    const sd = dcmnt.querySelector('.search');
-    const sk = dcmnt.getElementById("search");
-    checkElement([sb, sd, sk]);
-    sk.style.cursor = 'pointer';
-    const updateSD = (toggle = false) => {
-        let run = true;
-        if (cooldown0) run = false; else {
-            cooldown(300,0)
-        };
-        if (!toggle && run) {sd.innerHTML = ''};
-        const leftt = sb.offsetLeft + sb.parentElement.offsetLeft;
-        const toppp = sb.parentElement.offsetTop + sb.offsetHeight - (sb.parentElement.offsetWidth == 0 ? 15 : 0);
-        sd.style.left = run ? `${leftt}px` : sd.style.left;
-        sd.style.top = run ? `${toppp}px` : sd.style.top;
-        sd.style.width = run ? `${sb.offsetWidth - 8*2}px` : sd.style.width;
-        if (run) {
-            sd.style.opacity = toggle ? 1 : 0;
-            sd.style.pointerEvents = toggle ? 'all' : 'none';
-            sd.style.setProperty('--sdfix', `calc(-${leftt}px + ${sb.offsetLeft}px)`);
-        }
-
-        sk.style.left = `${leftt + sb.offsetWidth}px`;
-        sk.style.top = `${toppp - (sb.offsetHeight / 2)}px`;
-        sk.style.opacity = (!toggle && sb.offsetParent) ? 1 : 0;
-    };
-    const sbdp = sb.placeholder || 'Search documentation';
-    let sbi = undefined;
-    wndw_.addEventListener('resize', ()=>{updateSD(false)});
-    sb.addEventListener("focus", (event) => {
-        const target1 = event.target;
-        if (!target1.value || target1.value != '') {
-            target1.placeholder = '|';
-            sbi = setInterval(()=>{
-                target1.placeholder = target1.placeholder == '|' ? '' : '|';
-            },500);
-        }
-    });
-    sb.addEventListener("blur", (event) => {
-        event.target.placeholder = sbdp;
-        if (sbi) {
-            clearInterval(sbi);
-        }
-    });
-    wndw_.addEventListener('keydown', (key)=>{
-        if (key["key"] === 'REPLACE_SEARCHKEY') {
-            sb.focus();
-            key.preventDefault();
-        }
-    });
-    sk.addEventListener('click', ()=>{sb.focus()});
-
-    const searchString = (str) => {
-        if (!str) {
-            return false;
-        };
-        const trimmedStr = str.trim();
-        if (trimmedStr.length === 0) {
-            return false;
-        }
-        if(/^[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/.test(trimmedStr)){
-            return false;
-        }
-        return true;
-    };
-    let lastst = false;
-    sb.addEventListener("input", async () => {
-        const sv = sb.value;
-        const st = searchString(sv);
-        lastst = st;
-        sd.innerHTML = '<span>Loading...</span>';
-        updateSD(st);
-        const pta = '<br>Please try again';
-        if (st) {
-            const response = await fetch(searchurl).catch((err__)=>{
-                console.warn(err__);
-                sd.innerHTML = `<span>Failed to fetch.${pta}</span>`;
-                dcmnt.documentElement.classList.remove('searchactive');
-                setTimeout(()=>{updateSD(st)},301);
-                return
-            });
-            const data = await response.json().catch((err__)=>{
-                console.warn(err__);
-                sd.innerHTML = `<span>Something went wrong.${pta}</span>`;
-                dcmnt.documentElement.classList.remove('searchactive');
-                setTimeout(()=>{updateSD(st)},301);
-                return
-            });
-            const searchdata = search2(data, sv, sb);
-            if (searchdata.length == 0) {
-                sd.innerHTML = '<span>Nothing found.</span>';
-            } else {
-                sd.innerHTML = '';
-                dcmnt.documentElement.classList.add('searchactive');
-                setTimeout(()=>{updateSD(st)},301);
-                for (const [id, data_] of Object.entries(searchdata)) {
-                    sd.innerHTML += SETTINGS.searchV2 ? 
-                        `<a href="${data_[0]}" target="_self"><strong>${('REPLACE_DATAARRAY'.find(item => item[0] === data_[0]) || [])[1] || data_[0]}</strong><span>${data_[1].replaceAll('\n',' ').replaceAll(' - ',' ').replaceAll('<br>',' ')}</span></a>` : 
-                        `<a href="${data_[0]}" target="_self">${data_[1].replaceAll('\n',' ').replaceAll(' - ','')}</a>`;
-                }
-            }
-        } else {
-            dcmnt.documentElement.classList.remove('searchactive');
-            setTimeout(()=>{updateSD(st)},301);
-            setTimeout(()=>{if(!lastst){updateSD(st)}},602);
-        }
-    });
-    dcmnt.addEventListener("click", (event)=>{
-        if (lastst && !dcmnt.querySelector(".navbar").contains(event.target)) {
-            dcmnt.documentElement.classList.remove('searchactive');
-            setTimeout(()=>{updateSD(false)},301);
-        }
-    });
-
-    setTimeout(()=>{
-        const container = dcmnt.querySelector('.left');
-        if (container) {
-            const listItems = container.querySelectorAll('li');
-            listItems.forEach(li => {
-                const height_ = li.offsetHeight;
-                li.style.setProperty('REPLACE_NLCSSHV', `${height_ - 10}px`);
-            });
-        }
-    },100);
-
-    const removeTimeouts = new WeakMap();
-    const addStyle= ' style="background:transparent"';
-    const copySVG = () => `<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="15px" viewBox="0 0 24 24" width="15px" fill="${currentTheme === 0 ? '#f0f0f0' : '#121212'}" alt="Copy" title="Click to copy"${addStyle}><g${addStyle}><rect fill="none" height="24" width="24"${addStyle}/></g><g${addStyle}><path d="M15,20H5V7c0-0.55-0.45-1-1-1h0C3.45,6,3,6.45,3,7v13c0,1.1,0.9,2,2,2h10c0.55,0,1-0.45,1-1v0C16,20.45,15.55,20,15,20z M20,16V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9C19.1,18,20,17.1,20,16z M18,16H9V4h9V16z"${addStyle}/></g></svg>`;
-    const doneSVG = () => `<svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="15px" fill="${currentTheme === 0 ? '#f0f0f0' : '#121212'}" alt="Done"${addStyle.slice(0,-1)};opacity:0"><path d="M0 0h24v24H0V0z" fill="none" ${addStyle}/><path d="M9 16.17L5.53 12.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0L9 16.17z" ${addStyle}/></svg>`;
-    let cooldown1 = [];
-    const copyCode = (event) => {
-        const div_ = event.currentTarget;
-        const codeEl = div_.closest('code.code');
-        div_.style.cursor = null;
-        if (codeEl && !cooldown1.includes(codeEl)) {
-            cooldown1.push(codeEl);
-            const outputText = codeEl.innerText.replace(codeEl.getAttribute('data-lang') || '', '').trim();
-            const unpush = () => {
-                cooldown1 = cooldown1.filter(item => item !== codeEl);
-                div_.style.cursor = 'pointer';
-            };
-            const runfunc = (checkthis, func, timeouts) => {
-                if (checkthis) {
-                    func()
-                } else if (Array.isArray(timeouts)) {
-                    timeouts.forEach(timeout => {
-                        clearTimeout(timeout)
-                    });
-                    unpush()
-                } else {
-                    unpush()
-                }
-            };
-            const changeColor = (color) => {
-                div_.style.backgroundColor = color;
-                div_.querySelector('svg').style.opacity = 0;
-                const to1 = setTimeout(()=>{
-                    runfunc(div_, ()=>{
-                        div_.innerHTML = copySVG();
-                        unpush();
-                    }, undefined)
-                }, 600);
-                const to0 = setTimeout(()=>{
-                    runfunc(div_, ()=>{
-                        div_.style.backgroundColor = null;
-                        div_.querySelector('svg').style.opacity = 0
-                    }, [to1])
-                }, 450);
-                setTimeout(()=>{
-                    runfunc(div_, ()=>{
-                        div_.innerHTML = doneSVG();
-                        div_.querySelector('svg').style.opacity = 1
-                    }, [to0, to1])
-                }, 150);
-            };
-            wndw_.navigator.clipboard.writeText(outputText).then(()=>{changeColor('#2A8C2E')}).catch((_ee)=>{console.warn(_ee);changeColor('#8C2A2A')});
-        } else {
-            div_.style.backgroundColor = '#8C2A2A';
-            div_.classList.add('s-shake');
-            setTimeout(()=>{
-                if (div_) {
-                    div_.style.backgroundColor = null;
-                    div_.classList.remove('s-shake');
-                    div_.style.cursor = 'pointer';
-                }
-            }, 150);
-        }
-    };
-    dcmnt.addEventListener('mouseover', (event) => {
-        const target_ = event.target;
-        
-        const codeEl = target_.closest('code.code');
-        if (codeEl) {
-            codeEl.style.setProperty('--codewidth', codeEl.offsetWidth + 'px');
-            codeEl.style.setProperty('--codeheight', codeEl.offsetHeight + 'px');
-
-            let div = codeEl.querySelector('.copycode');
-            if (!div) {
-                div = dcmnt.createElement('div');
-                div.className = 'copycode';
-                div.innerHTML = copySVG();
-                div.style.cursor = 'pointer';
-
-                div.style.opacity = '0';
-                div.addEventListener('click', copyCode);
-                codeEl.appendChild(div);
-
-                requestAnimationFrame(() => {
-                    div.style.opacity = '1';
-                });
-            } else {
-                const timeoutId = removeTimeouts.get(div);
-                if (timeoutId) {
-                    clearTimeout(timeoutId);
-                    removeTimeouts.delete(div);
-                };
-                div.style.opacity = '1';
-                div.style.cursor = 'pointer';
-            }
-        }
-    });
-    dcmnt.addEventListener('mouseout', (event) => {
-        const target_ = event.target;
-        const codeEl = target_.closest('code.code');
-        if (codeEl) {
-            const related = event.relatedTarget;
-            if (related && codeEl.contains(related)) {
-                return;
-            };
-
-            const div = codeEl.querySelector('.copycode');
-            if (div) {
-                div.removeEventListener('click', copyCode);
-                div.style.opacity = '0';
-                div.style.cursor = null;
-
-                const timeoutId = setTimeout(() => {
-                    if (div.parentNode) {
-                        div.remove();
-                    };
-                    removeTimeouts.delete(div);
-                }, 300);
-                removeTimeouts.set(div, timeoutId);
-            }
-        }
-    });
-
-    updateSD(false);updateMinHeight();updateWidth();fetch(searchurl);updateNavRight();
-});
-
-```
-```css
-#search, #searchbar {
-    cursor: not-allowed;
-}
-
-.searchactive {
-    overflow-y: hidden;
-}
-.searchactive main {
-    filter: blur(3px) brightness(0.8);
-    -webkit-filter: blur(3px) brightness(0.8);
-    pointer-events: none;
-}
-.searchactive #searchbar {
-    position: fixed;
-    top: calc(62px + 10px);
-    left: 50%;
-    translate: -50%;
-    min-width: max-content;
-    width: 70%;
-}
-.searchactive:not(.ios) .search {
-    translate: calc(var(--sdfix) - 50%) 55px;
-    transition: 0ms;
-}
-
-.searchactive .search a {
-    display: flex;
-    gap: 30px;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-.searchactive .search a span {
-    opacity: 1;
-    width: auto;
-    text-align: left;
-    display: flex;
-    gap: 7px;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-start;
-    white-space: nowrap;
-}
-.searchactive .search a strong {
-    display: flex;
-    white-space: nowrap;
-}
-.searchactive .search a strong:after {
-    content: '';
-    position: relative;
-    top: 0px;
-    width: 5px;
-    height: 3px;
-    background-color: #f0f0f0;
-    translate: 10px 10px;
-}
-.searchactive .search a span strong:after {
-    display: none;
-}
-
-.search span, .search strong {
-    color: #f0f0f0 !important;
-}
-
-```
-```js
-(async()=>{
-    const fcrt_ = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
-    const wndw_ = fcrt_;
-    const dcmnt = fcrt_["document"];
-    const theme = localStorage.getItem('t');
-
-    'REPLACE_THEME';
-})();
-
-```
-```js
-const _just_THEME = class {
-    constructor () {
-        return (i)=>{ /* input */
-            const wndw = []["filter"]["constructor"]("return globalThis")() || []["filter"]["constructor"]("return this")();
-            const doct = wndw["document"];
-            i = String(i).toLowerCase();
-            function e(t) { /* error ( text ) */
-                throw new Error(`Just an Ultimate Site Tool: Generator mode: theme.js: ${t}.`)
-            };
-            function c(t) { /* check ( theme ) */
-                switch(t) {
-                    case 'l': case 'd': case 'a':
-                        return t;break;
-                    default:
-                        e('Invalid theme');
-                        break
-                }
-            };
-            switch(i) {
-                case 'get':
-                    return c(wndw.localStorage.getItem('t'));
-                    break;
-                case 'light':
-                    wndw.localStorage.setItem('t','l');
-                    doct.documentElement.classList.add('l');
-                    doct.documentElement.classList.remove('a');
-                    break;
-                case 'dark':
-                    wndw.localStorage.setItem('t','d');
-                    doct.documentElement.classList.remove('l');
-                    doct.documentElement.classList.remove('a');
-                    break;
-                case 'auto':
-                    wndw.localStorage.setItem('t','a');
-                    wndw.location.reload();
-                    break;
-                default: 
-                    e('Invalid input');
-                    break
-            }
-        };
-    }
-};
-
-```
-```js
-let currentTheme = 1;
-const getnsettheme = () => {
-    try {
-        const darkThemeMq = () => wndw_?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
-        if (darkThemeMq()) {
-            dcmnt.documentElement.classList.remove('l');
-            currentTheme = 0;
-        } else {
-            dcmnt.documentElement.classList.add('l');
-            currentTheme = 1;
-        }
-    } catch {
-        dcmnt.documentElement.classList.add('l');
-        currentTheme = 1;
-    }
-};
-const checkTheme = () => localStorage.getItem('t');
-let listeningforcolorscheme = false;
-const autotheme = () => {
-    const setColorScheme = (scheme) => {
-        switch(scheme){
-            case 'dark':
-                currentTheme = 0;
-                if (checkTheme() == 'a') {
-                    dcmnt.documentElement.classList.remove('l');
-                }
-            break;
-            case 'light': default:
-                currentTheme = 1;
-                if (checkTheme() == 'a') {
-                    dcmnt.documentElement.classList.add('l');
-                }
-            break;
-        }
-    };
-
-    const getPreferredColorScheme = () => {
-        if (wndw_.matchMedia) {
-            if(wndw_.matchMedia('(prefers-color-scheme: dark)').matches){
-                return 'dark';
-            } else {
-                return 'light';
-            }
-        }
-        return 'light';
-    };
-
-    const updateColorScheme=()=>{
-        setColorScheme(getPreferredColorScheme());
-    };
-
-    if(wndw_.matchMedia && !listeningforcolorscheme){
-        const colorSchemeQuery = wndw_.matchMedia('(prefers-color-scheme: dark)');
-        if (colorSchemeQuery.addEventListener) {
-            colorSchemeQuery.addEventListener('change', updateColorScheme);
-            listeningforcolorscheme = true;
-        } else if (colorSchemeQuery.addListener) {
-            colorSchemeQuery.addListener(updateColorScheme);
-            listeningforcolorscheme = true;
-        }
-    };
-
-    updateColorScheme();
-};
-
-if (theme && theme == 'l') {
-    currentTheme = 1;
-    dcmnt.documentElement.classList.add('l');
-    dcmnt.documentElement.classList.remove('a');
-} else if (theme && theme == 'a') {
-    dcmnt.documentElement.classList.add('a');
-    autotheme()
-} else {
-    currentTheme = 0;
-    dcmnt.documentElement.classList.remove('a');
-    getnsettheme()
-};
-```
-```py
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/usr/bin/env python3
-import requests
-response = requests.get('https://api.just.js.org/v1/last-commit/', headers={'Accept': 'application/json'})
-data = response.json()
-print(data['value'])
-
-```
-```sh
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/bin/bash
-mkdir -p _lastcommit && \
-source lib/tojson.sh && \
-CONTENT=$(toJSON "$GITHUB_SHA" "Last commit SHA") && \
-echo "$CONTENT" > _lastcommit/index.json
-
-```
-```py
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/usr/bin/env python3
-import requests
-response = requests.get('https://api.github.com/repos/js-just/_just/tags', headers={'Accept': 'application/vnd.github+json'})
-tags = response.json()
-print(tags[0]['name'])
-
-```
-```sh
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/bin/bash
-mkdir -p latest && \
-cp "LICENSE" "latest/LICENSE" && \
-cp "README.md" "latest/README.md" && \
-YMLTEMPLATE=$(cat "src/latest.yml") && \
-chmod +x "src/latest.py" && \
-LATEST=$(python3 "src/latest.py") && \
-YMLCONTENT=$(echo "$YMLTEMPLATE" | sed "s/@latest/@$LATEST/") && \
-YMLFIX=$(echo "$YMLCONTENT" | sed "s/@l/@latest/") && \
-echo "$YMLFIX" > "latest/action.yml" && \
-
-source lib/tojson.sh && \
-CONTENT=$(toJSON "$LATEST" "Latest version") && \
-echo "$CONTENT" > latest/index.json
-
-```
-```yml
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-name: '_just@l'
-description: 'Just an Ultimate Site Tool: Use latest version'
-author: 'JustStudio.'
-branding:
-  icon: 'edit-3'
-  color: 'purple'
-inputs:
-  path:
-    description: 'Website directory (compress/generate)'
-    required: false
-  fix-path:
-    description: 'Fix file path (generate)'
-    required: false
-  postprocessor-version:
-    description: 'Postprocessor version ("24" || "26" || "32") (postprocessor)'
-    required: false
-runs:
-  using: 'composite'
-  steps:
-    - name: Run _just
-      uses: js-just/_just@latest
-      with:
-        path: ${{ inputs.path }}
-        fix-path: ${{ inputs.fix-path }}
-        postprocessor-version: ${{ inputs.postprocessor-version }}
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-let [text] = process.argv.slice(2);
-text = text.split('\n');
-for (let i = 0; i < text.length; i++) {
-    text[i] = text[i].replaceAll('(__REPLACE_LINE__)',`(${i+1})`);
-};
-console.log(text.join('\n'));
-```
-### test
-```md
-> [!WARNING]
-> **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
-> The postprocessor source can be found here:
-> - https://github.com/js-just/_just/tree/v0.0.24/src;
-> - https://github.com/js-just/_just/tree/v0.0.26/src/postprocessor;
-> - https://github.com/js-just/_just/tree/v0.0.32/src/postprocessor.
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const fs = require('fs');
-const path = require('path');
-const config = JSON.parse(fs.readFileSync('just.config.json', 'utf8'));
-const errmsg = require('../../lib/errmsg.js');
-const [v] = process.argv.slice(2);
-console.log(v);
-
-const watermarkify = config.watermark ? config.watermark === true ? true : false : false;
-const throwerror = (a,b) => {
-    console.log('::error::'+a+': '+b);
-    errmsg.errormessage(a, b).then((e)=>{throw new Error('::error::'+e)});
-}
-
-if (config.watermark && typeof(config.watermark) !== 'boolean') {
-    throwerror('', `Invalid property type: watermark should be boolean.`);
-}
-if (v != '24' && v != '26' && v != '32' && v != '') {
-    throwerror('', `Invalid input value: postprocessor-version should be one of: "24", "26", "32".`);
-}
-
-function getFiles(dir) {
-    let results = [];
-    const list = fs.readdirSync(dir);
-    list.forEach(file => {
-        const filePath = path.join(dir, file);
-        const stat = fs.statSync(filePath);
-        if (stat && stat.isDirectory()) {
-            results = results.concat(getFiles(filePath));
-        } else if (path.extname(file) === '.html') {
-            results.push(filePath);
-        }
-    });
-    return results;
-}
-const files = getFiles('.');
-
-function fixHtmlString(str) {
-    const commentStart1 = "<!-- This website uses _just postprocessor /-->";
-    const commentStart2 = "<!-- Learn more here:(WEBSITE COMING SOON) /-->";
-
-    str = String(str);
-
-    function notag(tag) {
-        const index = [str.lastIndexOf(tag)];
-        if (index[0] === -1) return;
-        index.push(index[0] + tag.length);
-        str = `${str.slice(0,index[0])}${str.slice(index[1])}`;
-    }
-    function notags() {
-        notag('</body>');
-        notag('</html>');
-    }
-    notags();
-    if (v != '24') {
-        notags();
-    }
-
-    function replaceLastOccurrence(text, searchStr, replaceStr) {
-        const lastIndex = text.lastIndexOf(searchStr);
-        if (lastIndex === -1) return text;
-        return (
-            text.slice(0, lastIndex) +
-            replaceStr +
-            text.slice(lastIndex + searchStr.length)
-        );
-    }
-
-    str = replaceLastOccurrence(str, commentStart1, watermarkify ? "<!--   This website uses Just an Ultimate Site Tool   /-->" : '');
-    str = replaceLastOccurrence(str, commentStart2, watermarkify ? "<!--   Learn more here:      https://just.is-a.dev/   /-->" : '');
-
-    function extractPaths(htmlString) {
-        const scriptRegex = /<script\s+[^>]*src=["'](?:\/_just|_just)\/([^"']+)["'][^>]*><\/script>/gi;
-        const linkRegex = /<link\s+[^>]*href=["'](?:\/_just|_just)\/([^"']+)["'][^>]*\s+rel=["']stylesheet["'][^>]*>/gi;
-
-        const matches = [];
-
-        let match;
-
-        while ((match = scriptRegex.exec(htmlString)) !== null) {
-            matches.push([0,match[1]]);
-        }
-
-        while ((match = linkRegex.exec(htmlString)) !== null) {
-            matches.push([1,match[1]]);
-        }
-
-        return matches;
-    }
-    let preload = '';
-    extractPaths(str).forEach(urlpath => {
-        preload += `<link rel="preload" href="/_just/${urlpath[1]}" as="${urlpath[0] === 0 ? 'script' : 'style'}">`;
-    });
-
-    return `${str.replace('<head>', `<head>${preload}`)}</html></body>`;
-    }
-
-files.forEach(file => {
-    let content = fs.readFileSync(file);
-    fs.writeFileSync(file, fixHtmlString(content), 'utf8');
-});
-
-console.log('\x1B[2;45m\x1B[1;30m_just\x1B[0m:\x1B[0;36m INFO:\x1B[0m\x1B[0;32m Postprocessing completed\x1B[0m')
-
-```
-### test
-```sh
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/bin/bash
-source $GITHUB_ACTION_PATH/lib/errmsg.sh
-source $GITHUB_ACTION_PATH/lib/color.sh
-
-config=$(cat just.config.json)
-
-redirect_config_=$(echo "$config" | jq -r '.redirect_config')
-if ! echo "$config" | jq -e '.redirect_config' > /dev/null; then
-    local ERROR_MESSAGE=$(ErrorMessage "redirect/checks.sh" "0117")
-    echo -e "::error::$ERROR_MESSAGE" && exit 1
-fi
-
-validate_redirect_config() {
-    if ! echo "$config" | jq -e '.redirect_config.url' > /dev/null; then
-        local ERROR_MESSAGE=$(ErrorMessage "redirect/checks.sh" "0114")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-}
-
-validate_paths() {
-    local paths=$(echo "$config" | jq -c '.redirect_config.paths[]?')
-    if [[ -n "$paths" ]]; then
-        local countt=0
-        for path in $paths; do
-            if ! echo "$path" | jq -e '.url' > /dev/null; then
-                local ERROR_MESSAGE=$(customErrorMessage "Error" "0115" "Missing \"url\" in item #$countt in \"paths\" in \"redirect_config\" in \"module.exports\" at \"just.config.js\" file.")
-                echo -e "::error::$_RED$ERROR_MESSAGE$_RESET" && exit 1
-            fi
-
-            if ! echo "$path" | jq -e '.path_' > /dev/null; then
-                local ERROR_MESSAGE=$(customErrorMessage "Error" "0116" "Missing \"path_\" in item #$countt in \"paths\" in \"redirect_config\" in \"module.exports\" at \"just.config.js\" file.")
-                echo -e "::error::$_RED$ERROR_MESSAGE$_RESET" && exit 1
-            fi
-
-            countt=$((countt + 1))
-        done
-    fi
-}
-
-validate_redirect_config
-validate_paths
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const template = {
-    "title": (url) => `Redirecting to ${url}...`,
-    "viewport": "width=device-width, initial-scale=1.0",
-    "twitter": "summary_large_image"
-}
-const fs = require('fs');
-const path = require('path');
-const compress = (string) => string.replaceAll(`\n`,'').replaceAll('    ','');
-const filter = (input) => input ? input.replace(/[^a-zA-Z0-9]/g, (char) => `&#${char.charCodeAt(0)};`) : undefined;
-
-const vrsn = process.argv.slice(2);
-
-const config = JSON.parse(fs.readFileSync('just.config.json', 'utf-8'));
-const redirectConfig = config.redirect_config;
-
-const cssContent = compress(fs.readFileSync(path.join(__dirname, 'style.css'), 'utf-8'));
-fs.writeFileSync(`deploy/_just/style.css`, cssContent);
-
-const generatePage = (url, params, path_) => {
-    const URL = compress(`${url}`);
-    const PATH = (path_) => {
-        let output = compress(`${path_}`).toLowerCase();
-        if (output.startsWith('/')) {
-            output = output.slice(1);
-        }
-        if (output.endsWith('/')) {
-            output += 'index';
-        }
-        return output;
-    }
-
-    const tempTitle = template.title(URL);
-    const tempViewport = template.viewport;
-
-    const title = params ? params.title || tempTitle : tempTitle;
-    const description = params ? params.description || undefined : undefined;
-    const metaKeywords = params ? params.keywords || undefined : undefined;
-    const lang = params ? params.htmlLang || undefined : undefined;
-    const robots = params ? params.robots || undefined : undefined;
-    const charset = params ? params.charset || "UTF-8" : "UTF-8";
-    const viewport = params ? params.viewport || tempViewport : tempViewport;
-
-    const text1 = params && params.content ? filter(params.content.text1) || undefined : undefined;
-    const text2 = params && params.content ? filter(params.content.text2) || undefined : undefined;
-    const text3 = params && params.content ? filter(params.content.text3) || undefined : undefined;
-    
-    const ogTitle = params && params.og ? params.og.title || title : title;
-    const ogDescription = params && params.og ? params.og.description || description : description;
-    
-    const twitterCard = params && params.twitter ? params.twitter.card || template.twitter : template.twitter;
-
-    const yandexVerification = params ? params.yandex || undefined : undefined;
-
-    const googleAnalytics = params ? params.googleAnalytics || undefined : undefined;
-    const googleVerification = params ? params.google || undefined : undefined;
-
-    const page = path_ ? PATH() : "index";
-    const keywords = metaKeywords ? `<meta name="keywords" content="${metaKeywords}">` : '';
-    const htmlLang = lang ? ` lang="${`${lang}`.toLowerCase()}"` : '';
-    const optionalstuff = () => {
-        let output = '';
-        if (yandexVerification) {
-            output += `\n<meta name="yandex-verification" content="${yandexVerification}">`;
-        }
-        if (googleVerification) {
-            output += `\n<meta name="google-site-verification" content="${googleVerification}">`;
-        }
-        if (googleAnalytics) {
-            output += `\n<script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalytics}"></script>
-                        <script>
-                            window.dataLayer = window.dataLayer || [];
-                            function gtag() {
-                                dataLayer.push(arguments);
-                            }
-                            gtag('js', new Date());
-                            gtag('config', '${googleAnalytics}');
-                        </script>`
-        }
-        if (robots) {
-            output += `\n<meta name="robots" content="${robots}">`
-        }
-        return output;
-    }
-
-    const link = `<a href="${URL}" target="_self">`;
-    const meta = '<meta property=';
-    const htmlContent = '<!DOCTYPE html>' + `<html${htmlLang}>` +
-    '<head>' +
-        `<meta http-equiv="refresh" content="0;url=${URL}">` +
-        `<meta charset="${charset}">` +
-        `<meta name="viewport" content="${viewport}">` +
-        `<title>${title}</title>` +
-        `<link rel="stylesheet" href="/_just/style.css">` +
-        `${description ? `<meta name="description" content="${description}">` : ''}${keywords}` +
-        `${meta}"og:type" content="website">` +
-        `${meta}"twitter:card" content="${twitterCard}">` +
-        `${meta}"og:title" content="${ogTitle}">` +
-        `${ogDescription ? `${meta}"og:description" content="${ogDescription}">` : ''}` +
-        `${meta}"og:url" content="${URL}">${optionalstuff()}` +
-        `<meta name="generator" content="Just an Ultimate Site Tool (Redirector) ${vrsn}">` +
-    '</head>' +
-    '<body>' +
-        `<h1>${title}</h1>` +
-        '<div>' +
-            `<span class="r">${text1 || `Redirecting...<br><small>to ${link}${URL}</a></small>`}</span>` +
-            `<span class="d">${text2 || "Didn’t get redirected?"} ${link}${text3 || 'Click here!'}</a></span>` +
-        '</div>' +
-        `<script>window.location.replace('${URL}')</script><script>window.location.href='${URL}'</script><script>window.location.assign('${URL}')</script>` +
-    '</body>' +
-'</html>';
-    
-    fs.writeFileSync(`deploy/${page}.html`, htmlContent);
-};
-
-generatePage(redirectConfig.url, redirectConfig.params);
-
-if (redirectConfig.paths) {
-    redirectConfig.paths.forEach(({ path_, url, params }) => {
-        generatePage(url, params, path_);
-    });
-}
-
-/*
-
-EXAMPLE just.config.js FILE for redirect(s):
-
-module.exports = {
-    type: "redirect", 
-    redirect_config: {
-        url: "https://justdeveloper.is-a.dev/", 
-        params: {
-            title: "JustDeveloper",
-            description: "the one who created this shi-",
-            keywords: "Just, an, Ultimate, Site, Tool",
-            htmlLang: "en",
-            og: {
-                title: "Redirect",
-                description: "Hello, World!"
-            },
-            twitter: {
-                card: "summary_large_image"
-            }
-        },
-        paths: [
-            {
-                path_: "github",
-                url: "https://github.com/JustDeveloper1", 
-                params: {
-                    title: "JustDeveloper",
-                    description: "GitHub Profile",
-                    keywords: "Just, Developer",
-                    htmlLang: "en",
-                    og: {
-                        title: "Redirect2",
-                        description: "Hello, GitHub!"
-                    },
-                    twitter: {
-                        card: "summary_large_image"
-                    }
-                }
-            }
-        ]
-    }
-}
-
-
-------------------------
-
-everything combined:
-
-module.exports = {
-    type: "redirect", 
-    redirect_config: {
-        url: "https://justdeveloper.is-a.dev/", 
-        params: {
-            title: "JustDeveloper",
-            description: "the one who created this shi-",
-            keywords: "Just, an, Ultimate, Site, Tool",
-            htmlLang: "en",
-            robots: "index",
-            charset: "UTF-8",
-            viewport: "width=device-width",
-            yandex: "abc123",
-            google: "abc123",
-            googleAnalytics: "abc123",
-            content: {
-                text1: "Hello, World!",
-                text2: "do not click anywhere.",
-                text3: "click here!"
-            },
-            og: {
-                title: "Redirect",
-                description: "Hello, World!"
-            },
-            twitter: {
-                card: "summary_large_image"
-            }
-        }
-    }
-}
-
-*/
-
-```
-```css
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
-html {
-    background-color: #111111;
-    padding: 10px;
-    display: block;
-    font-family: 'Rubik';
-    color: #dddddd;
-}
-
-a {
-    color: #dddddd;
-}
-
-body {
-    width: calc( 100% - 44px );
-    height: calc( 100% - 44px );
-    position: fixed;
-    margin: 0px;
-    padding: 10px;
-    display: block;
-    border-radius: 15px;
-    background-color: #222222;
-    background-image: linear-gradient(83deg, #353535, #232323);
-    filter: drop-shadow(2px 4px 6px #000000);
-    border-width: 2px;
-    border-style: solid;
-    border-color: #5f5f5f;
-    -webkit-filter: drop-shadow(2px 4px 6px #000000);
-}
-
-div {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-h1 {
-    display: block;
-    font-size: 20px;
-    margin: 0px;
-    color: #dddddd;
-    text-align: center;
-}
-
-.r {
-    text-align: center;
-    font-size: 18px;
-}
-.r small {
-    font-size: 14px;
-    opacity: 0.5;
-}
-
-.d a {
-    filter: drop-shadow(0px 0px 7px #dddddd99);
-    -webkit-filter: drop-shadow(0px 0px 7px #dddddd99);
-}
-```
-```sh
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/bin/bash
-ERRORS_FILE="$GITHUB_ACTION_PATH/data/codes.json"
-CONFIG_FILE="just.config.js"
-CONFIG_DATA="just.config.json"
-source $GITHUB_ACTION_PATH/lib/errmsg.sh
-source $GITHUB_ACTION_PATH/lib/color.sh
-source $GITHUB_ACTION_PATH/lib/runts.sh
-if [ "$INPUT_PATH" == ""]; then
-    INPUT_PATH="."
-elif [ -z "$INPUT_PATH" ]; then
-    INPUT_PATH="."
-fi
-
-chmod +x "$GITHUB_ACTION_PATH/src/last-commit.py"
-chmod +x "$GITHUB_ACTION_PATH/src/latest.py"
-LAST_COMMIT=$(python3 "$GITHUB_ACTION_PATH/src/last-commit.py")
-LATEST_VER=$(python3 "$GITHUB_ACTION_PATH/src/latest.py")
-COMMIT_SHA=$(cat "$GITHUB_ACTION_PATH/data/generated/sha.txt")
-VERSION=$(echo "$GITHUB_ACTION_PATH" | grep -oP '(?<=/v)[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?' || echo "$COMMIT_SHA")
-checkPermissions() {
-    chmod +x "$GITHUB_ACTION_PATH/src/current-commit.py" && \
-    local ACCESS=$(python3 "$GITHUB_ACTION_PATH/src/current-commit.py" "$COMMIT_SHA") && \
-    if [ "$ACCESS" != "Y" ]; then
-        local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0129")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-}
-if [[ "$VERSION" != "$COMMIT_SHA" && "$VERSION" != v* ]]; then
-    VERSION="v$VERSION"
-elif [[ "$VERSION" == "$COMMIT_SHA" && "$COMMIT_SHA" == "$LAST_COMMIT" ]]; then
-    VERSION="@main $VERSION"
-    chmod +x "$GITHUB_ACTION_PATH/src/check-last-commit.py" && \
-    CLC_OUTPUT=$(python3 "$GITHUB_ACTION_PATH/src/check-last-commit.py") && \
-    if [ "$CLC_OUTPUT" != "Y" ]; then
-        checkPermissions
-    fi
-elif [[ "$VERSION" == "$COMMIT_SHA" ]]; then
-    checkPermissions
-fi
-if [[ "$VERSION" == v* && "$VERSION" == "$LATEST_VER" ]]; then
-    VERSION="/latest $VERSION"
-fi
-msg1=$(_justMessage "$_BLUE Running$_LIGHTPURPLE Just an Ultimate Site Tool$_RESET $VERSION")
-msg2=$(_justMessage "$_BLUE Installing Node.js$_RESET...")
-msg3=$(_justMessage "$_BLUE Installed Node.js$_RESET")
-msg4=$(_justMessage "$_BLUE Redirecting...$_RESET")
-msg5=$(_justMessage "$_GREEN Generating completed$_RESET")
-msg6=$(_justMessage "$_GREEN Compressing completed$_RESET")
-msg9=$(_justMessage "$_GREEN Generating completed$_RESET")
-msg10=$(_justMessage "$_BLUE Installing TypeScript compiler$_RESET...")
-msg11=$(_justMessage "$_BLUE Installed TypeScript compiler$_RESET")
-msg12=$(_justMessage "$_BLUE Installing Homebrew$_RESET...")
-msg13=$(_justMessage "$_BLUE Installed Homebrew$_RESET")
-msg14=$(_justMessage "$_BLUE Installing Dart Sass$_RESET...")
-msg15=$(_justMessage "$_BLUE Installed Dart Sass$_RESET")
-echo -e "$msg1"
-
-chmod +x "$GITHUB_ACTION_PATH/src/time.py" # use python to get current time in ms cuz yes
-TIME0=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-NODEJSINSTALLED="n"
-installNodejs() {
-    if [ "$NODEJSINSTALLED" != "y" ]; then
-        echo -e "$msg2"
-        local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-        if ! command -v node > /dev/null; then # attempt 0: nodejs installed before running _just
-            # attempt 1: install via curl
-            sudo apt-get remove -y nodejs npm > /dev/null 2>&1 || true
-            sudo apt-get update -qq > /dev/null 2>&1
-            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - > /dev/null 2>&1
-            sudo apt-get install -y nodejs > /dev/null 2>&1
-            if ! command -v node > /dev/null; then
-                # attempt 2: install via curl with logs
-                local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0207")
-                echo -e "$ERROR_MESSAGE"
-                sudo apt-get remove -y nodejs npm || true
-                sudo apt-get update -qq
-                curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-                sudo apt-get install -y nodejs
-                if ! command -v node > /dev/null; then
-                    # attempt 3: install via sudo apt install
-                    local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0208")
-                    echo -e "$ERROR_MESSAGE"
-                    sudo apt update -qq && sudo apt install -y nodejs npm > /dev/null 2>&1
-                    if [ $? -ne 0 ]; then
-                        # attempt 4: install via sudo apt install with logs
-                        local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0205")
-                        echo -e "::error::$ERROR_MESSAGE"
-                        sudo apt update
-                        sudo apt install -y nodejs npm
-                    fi
-                fi
-            fi
-        fi
-        NODEJSINSTALLED="y"
-        local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-        NODEVERSION=$(node --version)
-        NODESECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2") # use js to get nodejs installing duration cuz yes
-        echo -e "$msg3 $NODEVERSION ($NODESECONDS)"
-    fi
-}
-installTypeScriptCompiler() {
-    echo -e "$msg10"
-    local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-    if ! command -v tsc > /dev/null; then # attempt 0: tsc installed before running _just
-        # attempt 1: install without logs
-        sudo apt remove -y typescript > /dev/null 2>&1 || true
-        sudo apt update -qq > /dev/null 2>&1 || true
-        sudo apt install -y typescript > /dev/null 2>&1
-        if ! command -v tsc > /dev/null; then
-            # attempt 2: install with logs
-            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0210")
-            echo -e "$ERROR_MESSAGE"
-            sudo apt remove -y typescript || true
-            sudo apt update -qq || true
-            sudo apt install -y typescript
-        fi
-    fi
-    local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-    TSCVERSION=$(tsc --version 2>/dev/null)
-    TSCSECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2")
-    echo -e "$msg11 $TSCVERSION ($TSCSECONDS)"
-}
-installHomebrew() {
-    installNodejs
-    echo -e "$msg12"
-    local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-    if ! command -v brew &> /dev/null; then # attempt 0: homebrew installed before running _just
-        # attempt 1: install without logs
-        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null 2>&1
-        if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc 2>/dev/null
-            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" 2>/dev/null
-        fi
-        if ! command -v brew &> /dev/null; then
-            # attempt 2: install with logs
-            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0211")
-            echo -e "$ERROR_MESSAGE"
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        fi
-    fi
-    local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-    HBVERSION=$(brew --version)
-    HBSECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2")
-    echo -e "$msg13 $HBVERSION ($HBSECONDS)"
-}
-installDartSass() {
-    echo -e "$msg14"
-    local TIME1=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-    if ! command -v sass &> /dev/null; then # attempt 0: dart sass installed before running _just
-        # attempt 1: install without logs
-        brew install sass/sass/sass > /dev/null 2>&1
-        if ! command -v sass &> /dev/null; then
-            # attempt 2: install with logs
-            local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0212")
-            echo -e "$ERROR_MESSAGE"
-            brew install sass/sass/sass
-        fi
-    fi
-    local TIME2=$(python3 "$GITHUB_ACTION_PATH/src/time.py")
-    DSSECONDS=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME1" "$TIME2")
-    echo -e "$msg15 ($DSSECONDS)"
-}
-
-if [ -f "$CONFIG_DATA" ]; then
-    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0113")
-    echo -e "::error::$ERROR_MESSAGE" && exit 1
-fi
-
-if [ ! -f "$CONFIG_FILE" ]; then
-    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0108")
-    echo -e "::error::$ERROR_MESSAGE" && exit 1
-fi
-
-CONFIG_JSON=$(node -e "console.log(JSON.stringify(require('./just.config.js')));")
-if [ $? -ne 0 ]; then
-    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0109")
-    echo -e "::error::$ERROR_MESSAGE" && exit 1
-fi
-echo "Parsed just.config.js module.exports: $CONFIG_JSON" # debug
-echo "$CONFIG_JSON" > "$CONFIG_DATA"
-
-if [ -z "$(echo "$CONFIG_JSON" | jq -r '.module.exports')" ]; then
-    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0112")
-    echo -e "::error::$ERROR_MESSAGE" && exit 1
-fi
-
-checkForDartSass() {
-    if ! command -v sass &> /dev/null; then
-        local ERROR_MESSAGE=$(ErrorMessage "run.sh" "0134")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-}
-TYPE=$(echo "$CONFIG_JSON" | jq -r '.type')
-USE_TSC=$(echo "$CONFIG_JSON" | jq -r '.install.typescript_compiler')
-USE_SASS=$(echo "$CONFIG_JSON" | jq -r '.install.dart_sass')
-COMPILE_TS=$(echo "$CONFIG_JSON" | jq -r '.compile.ts')
-COMPILE_SASS=$(echo "$CONFIG_JSON" | jq -r '.compile.sass')
-COMPILE_SCSS=$(echo "$CONFIG_JSON" | jq -r '.compile.scss')
-Y="true"
-if [ -z "$TYPE" ]; then
-    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0110")
-    echo -e "::error::$ERROR_MESSAGE" && exit 1
-fi
-if [[ "${USE_TSC,,}" == "$Y" ]]; then
-    installTypeScriptCompiler
-fi
-if [[ "${USE_SASS,,}" == "$Y" ]]; then
-    if [ -d "_just_temp" ]; then
-        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0130")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-    installHomebrew && installDartSass
-fi
-if [[ "${COMPILE_TS,,}" == "$Y" ]]; then
-    if ! command -v tsc > /dev/null; then
-        ERROR_MESSAGE=$(ErrorMessage "run.sh" "0133")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-    source $GITHUB_ACTION_PATH/lib/compile.sh
-    tojs "$INPUT_PATH"
-fi
-if [[ "${COMPILE_SASS,,}" == "$Y" ]]; then
-    checkForDartSass
-    source $GITHUB_ACTION_PATH/lib/compile.sh
-    tocss "$INPUT_PATH" "sass"
-fi
-if [[ "${COMPILE_SCSS,,}" == "$Y" ]]; then
-    checkForDartSass
-    source $GITHUB_ACTION_PATH/lib/compile.sh
-    tocss "$INPUT_PATH" "scss"
-fi
-
-if [[ "$TYPE" != "postprocessor" && "$TYPE" != "redirect" && "$TYPE" != "compress" && "$TYPE" != "docs" ]]; then
-    ERROR_MESSAGE=$(ErrorMessage "run.sh" "0111")
-    echo -e "::error::$ERROR_MESSAGE" && exit 1
-fi
-
-_just_d="no" && \
-if [[ "$TYPE" != "compress" && ! ( "$TYPE" == "docs" && "$INPUT_PATH" != "." ) ]]; then
-    if [ -d "deploy" ]; then
-        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0106")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-    if [ -d "_just_data" ]; then
-        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0107")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-    mkdir -p deploy
-    mkdir -p _just_data
-elif [ "$TYPE" == "docs" ]; then
-    JDD=$(echo "$INPUT_PATH/_just_data" | sed 's#//*#/#g')
-    _just_dir=$(echo "$INPUT_PATH/_just" | sed 's#//*#/#g')
-    if [ -d "$JDD" ]; then
-        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0125")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-    if [ -d "$_just_dir" ]; then
-        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0125")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi
-    mkdir -p "$JDD"
-    mkdir -p "$_just_dir"
-    _just_d="yes"
-fi
-
-jserr() {
-    echo -e "::error::$(cat "_just_data/e.txt")" && exit 1
-}
-HLJSCSS="$GITHUB_ACTION_PATH/src/documentation/templates/hljs-themes"
-hljsstyles() {
-    echo "$(node $GITHUB_ACTION_PATH/src/documentation/hljscss.js "$(cat "$HLJSCSS/_just_default_light.css")")"
-}
-
-if [ "$TYPE" != "postprocessor" ]; then
-    echo "postprocessor=0" >> "$GITHUB_OUTPUT"
-fi
-
-if [ "$TYPE" == "postprocessor" ]; then
-    rm -f just.config.json && \
-    rm -rf deploy _just_data && \
-    echo "postprocessor=1" >> "$GITHUB_OUTPUT" && \
-    echo -e "$msg4"
-elif [ "$TYPE" == "redirect" ]; then
-    mkdir -p deploy/_just && \
-    installNodejs && \
-    bash $GITHUB_ACTION_PATH/src/redirect/checks.sh && \
-    node $GITHUB_ACTION_PATH/src/redirect/index.js "$VERSION" && \
-    TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
-    DONEIN=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME0" "$TIME3") && \
-    echo -e "$msg5 ($DONEIN)"
-elif [ "$TYPE" == "compress" ]; then
-    mkdir -p deploy && \
-    installNodejs && \
-    node $GITHUB_ACTION_PATH/src/compress.js "$INPUT_PATH" && \
-    TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
-    DONEIN=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME0" "$TIME3") && \
-    echo -e "$msg6 ($DONEIN)"
-elif [ "$TYPE" == "docs" ]; then
-    HTML=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/page.html") && \
-    CSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/base.css") && \
-    JS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/page.js") && \
-    JST=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/themePart.js") && \
-    JSIT=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/theme.js") && \
-    JSIN=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/navbar.js") && \
-    JSTC=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/themeClass.js") && \
-    HIGHLIGHTCSS=$(cat "$HLJSCSS/_just_default_dark.css") && \
-    HIGHLIGHTJSON=$(hljsstyles) && \
-    BUTTONSCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/buttons.css") && \
-    SEARCHCSS=$(cat "$GITHUB_ACTION_PATH/src/documentation/templates/search.css") && \
-    CUSTOMCSS=false && \
-    CUSTOMCSSPATH="just.config.css" && \
-    if [ -f "$CUSTOMCSSPATH" ]; then
-        CUSTOMCSS=$(cat "$CUSTOMCSSPATH")
-    fi && \
-    if [[ -d "_just" && "$_just_d" == "no" ]]; then
-        ERROR_MESSAGE=$(ErrorMessage "important_dirs" "0121")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi && \
-    if [ -f "_just_error" ]; then 
-        ERROR_MESSAGE=$(ErrorMessage "run.sh" "0127")
-        echo -e "::error::$ERROR_MESSAGE" && exit 1
-    fi && \
-    mkdir -p _just && \
-    mkdir -p deploy && \
-    installNodejs && \
-    bash $GITHUB_ACTION_PATH/src/documentation/checks.sh && \
-    INDEXJS0="$GITHUB_ACTION_PATH/src/documentation/index.js"
-    INDEXJS1=$(cat "$INDEXJS0") && \
-    INDEXJS2=$(cat "$GITHUB_ACTION_PATH/src/line.js") && \
-    echo "$INDEXJS2" > "$INDEXJS0" && \
-    INDEXJS3=$(node "$INDEXJS0" "$INDEXJS1") && \
-    echo "$INDEXJS3" > "$INDEXJS0" && \
-    HLJSLANGS=$(cat "$GITHUB_ACTION_PATH/data/hljslangs.json") && \
-    LANGS=$(cat "$GITHUB_ACTION_PATH/data/langs.json") && \
-    LANGSTEXT=$(cat "$GITHUB_ACTION_PATH/data/langstext.json") && \
-    node "$INDEXJS0" "$HTML" "$CSS" "$JS" "$INPUT_PATH" "$GITHUB_REPOSITORY" "$GITHUB_REPOSITORY_OWNER" "$CUSTOMCSS" "$HLJSLANGS" "$LANGS" "$HIGHLIGHTCSS" "$LANGSTEXT" "$VERSION" "$BUTTONSCSS" "$SEARCHCSS" "$HIGHLIGHTJSON" "$INPUT_FIXPATH" "$JST" "$JSIT" "$JSIN" "$JSTC" || jserr && \
-    node $GITHUB_ACTION_PATH/src/compress.js "$INPUT_PATH" && \
-    node "$GITHUB_ACTION_PATH/src/documentation/logs.js" "$INPUT_PATH" && \
-    TIME3=$(python3 "$GITHUB_ACTION_PATH/src/time.py") && \
-    DONEIN=$(node "$GITHUB_ACTION_PATH/src/time.js" "$TIME0" "$TIME3") && \
-    echo -e "$msg9 ($DONEIN)"
-fi
-
-```
-## test
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const [time1, time2] = process.argv.slice(2);
-const diff = Math.ceil(Math.ceil(parseInt(time2, 10)) - Math.ceil(parseInt(time1, 10)));
-function time(ms) {
-    const s_ = Math.ceil(ms/1000);
-    if (ms < 0) {
-        return "0ms";
-    } else if (ms < 1000) {
-        return `${ms}ms`;
-    } else if (s_ > 60) {
-        return `${Math.ceil(s_/60*100)/100}m`;
-    } else {
-        return `${Math.ceil(ms/100)/10}s`;
-    }
-}
-console.log(time(diff));
-```
-```py
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-#!/usr/bin/env python3
-import time
-out = int(time.time() * 1000)
-print(out)
-```
-## test
-### test
-## test
-### test
-```html
-<!-- 
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-\-->
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>_just</title>
-        <meta name="description" content="A GitHub action to enhance your static website.">
-        <meta property="og:title" content="Just an Ultimate Site Tool">
-        <meta property="og:description" content="A GitHub action to enhance your static website.">
-        <meta property="og:type" content="website">
-        <meta name="keywords" content="Just, an, Ultimate, Site, Tool, Static, Website, GitHub, Action, Postprocessor, Compressor, Generator, Redirector, Compress, Markdown, Redirect, Generate, Documentation, Docs">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-        <link href="https://just.js.org/css.css" rel="stylesheet">
-        <link rel="apple-touch-icon" sizes="180x180" href="https://just.js.org/img/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="https://just.js.org/img/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="https://just.js.org/img/favicon-16x16.png">
-        <link rel="manifest" href="https://just.js.org/site.webmanifest">
-        <meta name="color-scheme" content="dark light">
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="og:site_name" content="_just">
-        <meta property="og:url" content="https://just.js.org/">
-        <meta property="og:image" content="https://just.js.org/img/ogImage.png">
-        <script>const a=[]["filter"]["constructor"]("return globalThis")()||[]["filter"]["constructor"]("return this")();if(a.location.hostname==='just.js.org'){a.location.replace('https://just.js.org/')}</script>
-    </head>
-    <body class="bgb xh rd jse">
-        <h1 class="bg lz cw beta agt t z" style="position:relative">Just an Ultimate Site Tool</h1><h1 class="bg lz cw beta agt t b" style="position:absolute">Beta</h1>
-
-        <h2 class="lz u0">A GitHub action to <span class="lz">enhance</span> your static website.</h2>
-
-        <div class="btns u2">
-            <a href="https://just.js.org/" target="_self" class="bg">Visit <span>just.js.org</span></a>
-        </div>
-
-        <small class="copy"><span onclick="javascript:window.open('https://github.com/js-just/_just/blob/main/LICENSE','_blank')">Copyright &copy; 2025 &#171;<a href="https://juststudio.is-a.dev/" target="_blank" class="jslink" style="color:#fff;text-decoration:none">JustStudio.</a>&#187;</span></small>
-    </body>
-</html>
-
-```
-```html
-<!-- 
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-\-->
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Just an Ultimate Site Tool - Helper terminal</title>
-        <meta property="og:title" content="Just an Ultimate Site Tool - Helper terminal">
-        <meta property="og:type" content="website">
-        <meta name="keywords" content="Just, an, Ultimate, Site, Tool, Static, Website, GitHub, Action, Postprocessor, Compressor, Generator, Redirector, Markdown, Generate, Documentation, Docs, Exit, Code, OK, Warning, Error, Helper, Terminal">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-        <link href="/css.css" rel="stylesheet">
-        <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
-        <meta name="color-scheme" content="dark">
-        <meta property="twitter:card" content="summary">
-        <meta property="og:site_name" content="_just">
-        <meta name="robots" content="noindex, nofollow">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL1YYL2EX0"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-EL1YYL2EX0');
-        </script>
-        <!-- End Google tag -->
-        <meta property="og:url" content="https://just.js.org/code">
-        <meta property="og:image" content="https://just.js.org/img/ogImage.png">
-    </head>
-    <body class="s">
-        <pre>
-            <noscript><style>#e{display:none}</style><span class="fatal">Please enable JavaScript in your browser settings to run Just an Ultimate Site Tool helper terminal</span></noscript>
-            <span id="loader"></span>
-            <span id="a" class="rmo"></span>
-            <span id="b" class="scp"></span>
-            <span id="c"></span>
-            <div id="d"></div>
-            <span id="e">|</span>
-        </pre>
-        <script src="/js/t.js"></script>
-    </body>
-</html>
-
-```
-```css
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-:root {
-    --a: 5s ease-in-out infinite; /* Animation */
-    --g: 0px 0px 12px rgba(255,255,255,0.4); /* Glow */
-    --scp: "Source Code Pro", monospace; /* Source Code Pro */
-}
-
-html {
-    font-family: "Rubik", monospace;
-}
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.rmo { /* Rubik Mono One */
-    font-family: "Rubik Mono One", "Rubik", monospace;
-}
-.scp { /* Source Code Pro */
-    font-family: var(--scp);
-}
-.lz { /* Lexend Zetta */
-    font-family: "Lexend Zetta", sans-serif;
-}
-
-h1 {
-    margin: 0;
-    padding: 50px 10px;
-    text-align: center;
-    animation: gt var(--a);
-    -webkit-animation: gt var(--a);
-    -moz-animation: gt var(--a);
-    -o-animation: gt var(--a);
-}
-
-.demo::after, .beta::after, .code::after, .exit::after {
-    margin-left: 20px;
-    padding: 0px 10px;
-    background-color: #fff;
-    color: #000;
-    border-radius: 15px;
-    animation: g var(--a);
-    -webkit-animation: g var(--a);
-    -moz-animation: g var(--a);
-    -o-animation: g var(--a);
-    animation-delay: 0.2s;
-    -webkit-animation-delay: 0.2s;
-    -moz-animation-delay: 0.2s;
-    -o-animation-delay: 0.2s;
-    white-space: nowrap;
-}
-.demo::after {
-    content: 'Demo';
-}
-.beta::after {
-    content: 'Beta';
-}
-.code::after {
-    content: 'Code';
-}
-.exit::after {
-    content: 'Exit code';
-}
-
-.cw { /* Color - White */
-    color: #fff;
-}
-.bb { /* Background - Black */
-    background-color: #000;
-}
-.fi { /* Filter - Invert */
-    filter: invert(1);
-    -webkit-filter: invert(1);
-}
-
-.ag { /* Animation Glow */
-    animation: g var(--a);
-    -webkit-animation: g var(--a);
-    -moz-animation: g var(--a);
-    -o-animation: g var(--a);
-}
-.agt { /* Animation Glow (Text) */
-    animation: gt var(--a);
-    -webkit-animation: gt var(--a);
-    -moz-animation: gt var(--a);
-    -o-animation: gt var(--a);
-}
-
-@keyframes g { /* Glow */
-    0%, 100% {
-        filter: none;
-        -webkit-filter: none;
-    }
-    40% {
-        filter: drop-shadow(var(--g));
-        -webkit-filter: drop-shadow(var(--g));
-    }
-}
-@-webkit-keyframes g {
-    0%, 100% {
-        filter: none;
-        -webkit-filter: none;
-    }
-    40% {
-        filter: drop-shadow(var(--g));
-        -webkit-filter: drop-shadow(var(--g));
-    }
-}
-@-moz-keyframes g {
-    0%, 100% {
-        filter: none;
-        -webkit-filter: none;
-    }
-    40% {
-        filter: drop-shadow(var(--g));
-        -webkit-filter: drop-shadow(var(--g));
-    }
-}
-@-o-keyframes g {
-    0%, 100% {
-        filter: none;
-        -webkit-filter: none;
-    }
-    40% {
-        filter: drop-shadow(var(--g));
-        -webkit-filter: drop-shadow(var(--g));
-    }
-}
-@keyframes gt { /* Glow (Text) */
-    0%, 100% {
-        text-shadow: none;
-    }
-    40% {
-        text-shadow: var(--g);
-    }
-}
-@-webkit-keyframes gt {
-    0%, 100% {
-        text-shadow: none;
-    }
-    40% {
-        text-shadow: var(--g);
-    }
-}
-@-moz-keyframes gt {
-    0%, 100% {
-        text-shadow: none;
-    }
-    40% {
-        text-shadow: var(--g);
-    }
-}
-@-o-keyframes gt {
-    0%, 100% {
-        text-shadow: none;
-    }
-    40% {
-        text-shadow: var(--g);
-    }
-}
-
-.bg, .btns a::after, .btns a.bg:hover::after, .btns a:not(.bg):hover {
-    background: #b2e3f7;
-    background: -webkit-linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
-    background: -moz-linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
-    background: linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#B2E3F7", endColorstr="#6B36D6", GradientType=0);
-}
-
-#a,#b,#c {
-    display: block;
-    padding-inline: 1rem;
-    width: calc(100% - 2rem);
-}
-#c {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-}
-.ok::before,.warn::before,.error::before,.tip::before,.info::before,.fatal::before {
-    font-family: var(--scp);
-    padding-inline: 5px;
-    margin-right: 5px;
-    border-radius: 6px;
-    color: #fff;
-}
-.ok::before {
-    content: 'OK';
-    background-color: #63ff9b;
-    color: #000;
-}
-.warn::before {
-    content: 'Warning';
-    background-color: #ed9b45f5;
-}
-.error::before {
-    content: 'Error';
-    background-color: #ff6e63;
-}
-.tip::before, .info::before {
-    font-family: inherit;
-}
-.tip::before {
-    content: 'Tip';
-    background-color: #5e9dee;
-}
-.info::before {
-    content: 'Info';
-    background-color: #6367ff;
-}
-
-code {
-    background-color: #dbdbdb;
-    color: #000;
-    font-family: var(--scp);
-    padding-inline: 5px;
-    border-radius: 10px;
-}
-pre {
-    margin-inline: 1rem;
-    padding-inline: 1rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    font-family: var(--scp);
-    color: #fff;
-    background-color: #000;
-    height: 100%;
-    overflow: auto;
-    margin: 0;
-}
-pre span {
-    margin-left: 4px;
-    white-space: normal;
-}
-pre div {
-    margin-inline: 1rem;
-}
-
-.s { /* Screen */
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-pre #text {
-    margin-right: -7px;
-    padding-left: 3px;
-}
-
-::-webkit-scrollbar {
-    width: 7px;
-    height: 7px
-}
-
-::-webkit-scrollbar-button {
-    width: 0;
-    height: 0
-}
-
-::-webkit-scrollbar-track {
-    background: rgb(0 0 0) !important
-}
-
-::-webkit-scrollbar-thumb {
-    background: #f0f0f0;
-    border: 2px solid #121212;
-    border-radius: 10px
-}
-
-.fatal::before {
-    content: 'Fatal';
-    background-color: #ff2b1b
-}
-
-pre a {
-    color: #2ad2ff;
-    text-decoration-color: #000;
-}
-
-
-.t { /* Transition */
-    padding-bottom: 100px;
-    box-shadow: inset 0px -50px 50px #00000082;
-    width: calc(100%);
-    position: fixed;
-    translate: -50px 0px;
-    padding-inline: 50px;
-}
-@property --1 {
-    syntax: '<percentage>';
-    initial-value: -60%;
-    inherits: false
-}
-@property --2 {
-    syntax: '<percentage>';
-    initial-value: -50%;
-    inherits: false
-}
-@property --3 {
-    syntax: '<percentage>';
-    initial-value: 0%;
-    inherits: false
-}
-.t::before {
-    content: '';
-    position: fixed;
-    top: calc(100% - 50px);
-    left: 0px;
-    width: 100%;
-    height: 3px;
-    background-color: #ffffff14;
-        background: RGBA(255, 255, 255, 20);
-        background: -webkit-linear-gradient(148deg, rgba(255, 255, 255, 0.2) var(--1), rgba(255, 255, 255, 1) var(--2), rgba(255, 255, 255, 0.2) var(--3));
-        background: -moz-linear-gradient(148deg, rgba(255, 255, 255, 0.2) var(--1), rgba(255, 255, 255, 1) var(--2), rgba(255, 255, 255, 0.2) var(--3));
-        background: linear-gradient(148deg, rgba(255, 255, 255, 0.2) var(--1), rgba(255, 255, 255, 1) var(--2), rgba(255, 255, 255, 0.2) var(--3));
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#FFFFFF", endColorstr="#FFFFFF14", GradientType=0);
-    animation: t var(--a);
-    animation-timing-function: linear;
-    animation-duration: 2s;
-    -webkit-animation: t var(--a);
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-duration: 2s;
-    -moz-animation: t var(--a);
-    -moz-animation-timing-function: linear;
-    -moz-animation-duration: 2s;
-    -o-animation: t var(--a);
-    -o-animation-timing-function: linear;
-    -o-animation-duration: 2s;
-    opacity: 0.5;
-}
-@keyframes t {
-    0% {
-        --1: -60%;
-        --2: -50%;
-        --3: 0%;
-    }
-    25% {
-        --1: -50%;
-        --2: 0%;
-        --3: 50%;
-    }
-    50% {
-        --1: 0%;
-        --2: 50%;
-        --3: 100%;
-    }
-    75% {
-        --1: 50%;
-        --2: 100%;
-        --3: 110%;
-    }
-    100% {
-        --1: 100%;
-        --2: 150%;
-        --3: 160%;
-    }
-}
-
-.b { /* Blur */
-    z-index: 1;
-    filter: blur(50px);
-    -webkit-filter: blur(50px);
-    top: 19px;
-}
-
-.z { /* idk */
-    z-index: 2;
-    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
-    mask-image: linear-gradient(to bottom, #000 70%, transparent);
-}
-
-.bgb { /* bg - black */
-    background-color: #000;
-    background: radial-gradient(circle at 10% 65%, rgb(21 12 41) 0%, #000 30%);
-}
-.xh {
-    overflow-x: hidden;
-}
-.h { /* Home */
-    padding-top: 50px;
-    padding-bottom: 25px;
-}
-
-.p { /* Processor */
-    margin-top: -10px;
-    margin-bottom: 50px;
-}
-.p .l, .p::before { /* Logo */
-    left: 50%;
-    translate: -50% 0%;
-    position: relative;
-    background-color: #47474770;
-    border-radius: 20px;
-    border: 2px solid #3f3f3f;
-    z-index: 0;
-    transition: 300ms;
-}
-.p .l, .jslogo {
-    -webkit-user-drag: none;
-}
-.p .l {
-    backdrop-filter: url(#glass) brightness(50%) blur(8px);
-    -webkit-backdrop-filter: url(#glass) brightness(50%) blur(8px);
-}
-
-.p .top, .p .btm {
-    position: absolute;
-    right: calc(50% + 52px);
-    width: 515px;
-}
-.p .top {
-    top: 0px;
-    transform: rotateX(60deg);
-}
-.p .btm {
-    top: -50px;
-    transform: rotateX(240deg);
-}
-
-.p div {
-    width: calc(50% - 52px);
-    height: 2px;
-    background-color: #3f3f3f;
-}
-.p .c {
-    position: relative;
-    translate: 0px -56.5px;
-    overflow: hidden;
-    mask-image: linear-gradient(to left, #000 70%, transparent);
-    -webkit-mask-image: linear-gradient(to left, #000 70%, transparent);
-}
-.p .r {
-    position: absolute;
-    translate: 0px -58.5px;
-    right: 0px;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, #000 70%, transparent);
-    -webkit-mask-image: linear-gradient(to right, #000 70%, transparent);
-}
-
-.p .tl {
-    translate: 0px -125px;
-}
-.p .bl {
-    translate: 0px 11px;
-}
-.p .tl, .p .bl {
-    position: absolute;
-    width: calc(50% - 52px - 515px);
-}
-
-.p .d {
-    width: 2px !important;
-    height: 20px !important;
-    position: absolute;
-    left: 50%;
-    translate: -50% -6px;
-}
-.p span {
-    font-family: var(--scp);
-    padding-inline: 5px;
-    background-color: #47474770;
-    border-radius: 5px;
-    border: 2px solid #3f3f3f;
-    left: 50%;
-    translate: -50% 13px;
-    display: block;
-    width: max-content;
-    position: absolute;
-    color: #fff;
-    height: 25px;
-    min-width: 300px;
-    text-align: center;
-}
-
-.p *:not(.l) {
-    z-index: -2;
-}
-
-.pjs { /* Processor - JavaScript */
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-.pjs div, .p .c div, .p .r div {
-    height: 5px;
-    width: 5px;
-    border-radius: 50%;
-    transition: 500ms;
-    transition-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
-    top: 0px;
-    left: 0px;
-    position: absolute;
-    z-index: -1;
-}
-.pjs span {
-    transition: 200ms;
-    color: #fff;
-    font-family: var(--scp);
-    translate: -50% 10px;
-    left: 50%;
-    position: relative;
-    display: block;
-    width: max-content;
-}
-
-@media (max-width: 900px) {
-    .p, .pjs, h2 {
-        display: none !important;
-    }
-}
-
-h2 {
-    background-image: linear-gradient(148deg, rgba(178, 227, 247, 1) 0%, rgba(87, 115, 199, 1) 50%, rgba(107, 54, 214, 1) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    text-align: center;
-    height: 30px;
-    white-space: nowrap;
-}
-h2 span {
-    background-image: linear-gradient(148deg, rgba(255, 255, 255, 0) var(--1), rgba(255, 255, 255, 0.4) var(--2), rgba(255, 255, 255, 0) var(--3));
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: t var(--a);
-    animation-timing-function: linear;
-    animation-duration: 2s;
-    animation-delay: 1s;
-    -webkit-animation: t var(--a);
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-duration: 2s;
-    -webkit-animation-delay: 1s;
-    -moz-animation: t var(--a);
-    -moz-animation-timing-function: linear;
-    -moz-animation-duration: 2s;
-    -moz-animation-delay: 1s;
-    -o-animation: t var(--a);
-    -o-animation-timing-function: linear;
-    -o-animation-duration: 2s;
-    -o-animation-delay: 1s;
-}
-
-.btns {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 1rem;
-}
-.btns a {
-    color: #fff;
-    text-decoration: none;
-    padding: 0.5rem;
-    border-radius: 10px;
-    transition: 300ms;
-    outline: 2px solid transparent;
-    transition-timing-function: ease-in-out;
-    font-weight: 500;
-    stroke: #0000006b;
-    stroke-width: .5px;
-    stroke-linejoin: round;
-    -webkit-text-stroke: #0000006b .5px;
-    font-size: 18px;
-}
-.btns a:hover {
-    outline: 2px solid #000;
-}
-.btns a.bg:hover {
-    outline: 2px solid #00000085;
-    box-shadow: 0px 0px 20px 0px #ffffffad;
-}
-.btns a.bg:not(:hover), .btns a:not(.bg):hover {
-    text-shadow: 2px 3px 4px #434343;
-}
-.btns a::after, btns a::before {
-    content: '';
-    width: calc(100% + 1rem + 4px);
-    height: calc(100% + 1rem + 4px);
-    display: block;
-    position: relative;
-    top: calc(-100% - 0.5rem - 2px);
-    left: calc(-0.5rem - 2px);
-    z-index: -1;
-    border-radius: 11px;
-    transition: 300ms;
-    transition-timing-function: ease-in-out;
-}
-.btns a:hover::after {
-    width: calc(100% + 1rem + 8px);
-    height: calc(100% + 1rem + 8px);
-    top: calc(-100% - 0.5rem - 4px);
-    left: calc(-0.5rem - 4px);
-    border-radius: 13px;
-}
-.btns a.bg:not(:hover)::after, .btns a.bg:hover {
-    background: #f6f6f6 !important;
-    color: #000;
-}
-.btns a:not(.bg):hover::after, .btns a:not(.bg):not(:hover) {
-    background: #f6f6f6 !important;
-    color: #000;
-}
-
-.copy { /* Copyright */
-    opacity: 1;
-    position: fixed;
-    bottom: 0px;
-    display: block;
-    width: 100%;
-    text-align: center;
-    backdrop-filter: blur(8px) brightness(0.25);
-    -webkit-backdrop-filter: blur(8px) brightness(0.25);
-    z-index: 2;
-    padding-block: 5px;
-}
-.copy span {
-    opacity: 0.5;
-    cursor: default;
-}
-
-/* Updates */
-.u0 {
-    position: absolute;
-    top: calc(50vh - 110px - 2rem);
-}
-.u1 {
-    position: absolute;
-    top: 50vh;
-    translate: 0% 50%;
-}
-.u2 {
-    position: absolute;
-    top: calc(100vh - 50px);
-    translate: 0% -100%;
-}
-.u3 {
-    margin-top: 100vh;
-}
-.u4 {
-    margin-bottom: 40vh;
-}
-
-h2, .p, .p *, .btns, .copy, h2 span {
-    outline: none !important;
-}
-
-.p .c div, .p .r div {
-    filter: drop-shadow(0px 0px 5px #fff);
-    -webkit-filter: drop-shadow(0px 0px 5px #fff);
-}
-
-.jslogo {
-    border-radius: 25px;
-    height: 100px;
-    width: 100px;
-}
-.js {
-    margin-bottom: -100px;
-    z-index: 1;
-}
-.jsblur {
-    margin-bottom: 10vh;
-    filter: blur(50px);
-    -webkit-filter: blur(50px);
-    opacity: 0.5;
-}
-
-h1, h2, h3, a, strong, span, .p .l, .jslogo {
-    user-select: none;
-}
-
-.jslink {
-    background-clip: text;
-    transition: 500ms;
-}
-.jslink:hover {
-    color: transparent !important;
-    filter: drop-shadow(0px 0px 6px #6e3bf385);
-    -webkit-filter: drop-shadow(0px 0px 6px #6e3bf385);
-    background-image: linear-gradient(45deg, #6e3bf3, #1437f3);
-}
-
-.copy span:has(.jslink:hover) {
-    opacity: 1;
-    color: #ffffff85;
-}
-.copy span {
-    transition: none;
-}
-
-.p::before {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #6c3cf4;
-    animation: processor var(--a);
-    -webkit-animation: processor var(--a);
-    -moz-animation: processor var(--a);
-    -o-animation: processor var(--a);
-    border: none;
-    animation-timing-function: linear;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-timing-function: linear;
-    -o-animation-timing-function: linear;
-}
-@keyframes processor {
-    0%, 100% {
-        top: 20px;
-        left: calc(50% - 20px);
-    }
-    15%, 65% {
-        top: 30px;
-    }
-    35%, 85% {
-        left: calc(50%);
-    }
-    50% {
-        top: 40px;
-        left: calc(50% + 20px);
-    }
-}
-@-webkit-keyframes processor {
-    0%, 100% {
-        top: 20px;
-        left: calc(50% - 20px);
-    }
-    15%, 65% {
-        top: 30px;
-    }
-    35%, 85% {
-        left: calc(50%);
-    }
-    50% {
-        top: 40px;
-        left: calc(50% + 20px);
-    }
-}
-@-moz-keyframes processor {
-    0%, 100% {
-        top: 20px;
-        left: calc(50% - 20px);
-    }
-    15%, 65% {
-        top: 30px;
-    }
-    35%, 85% {
-        left: calc(50%);
-    }
-    50% {
-        top: 40px;
-        left: calc(50% + 20px);
-    }
-}
-@-o-keyframes processor {
-    0%, 100% {
-        top: 20px;
-        left: calc(50% - 20px);
-    }
-    15%, 65% {
-        top: 30px;
-    }
-    35%, 85% {
-        left: calc(50%);
-    }
-    50% {
-        top: 40px;
-        left: calc(50% + 20px);
-    }
-}
-
-._just_theme_light .bgb {
-    background-color: #f3f3f3;
-    background: radial-gradient(circle at 10% 65%, rgb(230 219 255) 0%, #f3f3f3 30%);
-}
-._just_theme_light .p .l, ._just_theme_light .p span {
-    background-color: #ffffff4a;
-}
-._just_theme_light .p span, ._just_theme_light .copy span:has(.jslink:hover), ._just_theme_light .pjs * {
-    color: #000 !important;
-}
-._just_theme_light .copy {
-    background-color: #ffffffeb;
-}
-._just_theme_light .u0 {
-    text-shadow: 0 0 10px #00000038;
-}
-._just_theme_light .pjs div {
-    border: 1px solid #000;
-}
-
-@media (max-width: 900px) {
-    html {
-        overflow-x: hidden;
-    }
-    .btns.u2 {
-        top: 382px;
-    }
-    .u3 {
-        margin-top: 20vh;
-    }
-    .u4 {
-        margin-bottom: 15vh;
-    }
-}
-
-.rd { /* Redirect */
-    padding-top: 0% !important;
-}
-.rd .u0, .rd .u2, body:not(.jse) .u0, body:not(.jse) .u2 {
-    width: 100%;
-}
-.rd .u0 {
-    top: 50%;
-    translate: 0% -50%;
-}
-.rd .u2 a span {
-    text-decoration: underline;
-    text-decoration-color: #ffffffa6;
-    text-decoration-thickness: 1px;
-    transition: 300ms;
-}
-.rd .u2 a:hover span {
-    text-decoration-color: #000000a6;
-}
-
-.rd, body:not(.jse) { /* JavaScript Disabled */
-    background: #000 !important;
-}
-body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslogo, body:not(.jse) h3 {
-    display: none;
-}
-
-```
-### test
-```json
-{
-    "README": {
-        " CODES ": {
-            "                OK ": "               0000 - 0099               ",
-            "             CRASH ": "               0100 - 0199               ",
-            "           WARNING ": "               0200 - 0299               ",
-            " CLIENT-SIDE CRASH ": "               0300 - 0399               ",
-            "          RESERVED ": "               0400 - 9999               "
-        },
-        " DATA  ": {
-            "                MG ": " Message generated when throwing an error",
-            "                 I ": "        Information / How to fix         "
-        }
-    },
-    "important_dirs": [
-        {
-            "code": "0106",
-            "message": "Your repository has a deploy directory in the root directory. Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>deploy</code> directory from the root directory"
-            }
-        },
-        {
-            "code": "0107",
-            "message": "Your repository has a _just_data directory in the root directory. Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_just_data</code> directory from the root directory"
-            }
-        },
-        {
-            "code": "0121",
-            "message": "Your repository has a _just directory in the root directory. Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_just</code> directory from the root directory"
-            }
-        },
-        {
-            "code": "0124",
-            "message": "Your repository has a _just directory in the selected directory (inputs.path). Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_just</code> directory from the directory that you've selected in your workflow file, in a step that uses the Just an Ultimate Site tool, in the <code>inputs.path</code>"
-            }
-        },
-        {
-            "code": "0125",
-            "message": "Your repository has a _just_data directory in the selected directory (inputs.path). Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_just_data</code> directory from the directory that you've selected in your workflow file, in a step that uses the Just an Ultimate Site tool, in the <code>inputs.path</code>"
-            }
-        },
-        {
-            "code": "0130",
-            "message": "Your repository has a _just_temp directory in the root directory. Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_just_temp</code> directory from the root directory"
-            }
-        }
-    ],
-    "global": [
-        {
-            "code": "0209",
-            "message": "( UNSTABLE CONFIG )",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "Your configuration file contains an unstable configuration."
-            }
-        },
-        {
-            "code": "0126",
-            "message": "( UNKNOWN TLD )",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "Invalid domain name: Invalid TLD. \nPlease check your <code>module.exports</code> of the <code>just.config.js</code> file."
-            }
-        }
-    ],
-    "index.sh": [
-        {
-            "code": "0204",
-            "message": "Attempt to use \"Just an Ultimate Site Tool\" as a postprocessor in the wrond way. This may not work correctly. Please read the documentation (coming soon).",
-            "crashed": false,
-            "link": ""
-        }
-    ],
-    "run.sh": [
-        {
-            "code": "0108",
-            "message": "The just.config.js file in the root directory is missing.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "create the <code>just.config.js</code> file in the root directory and please read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>"
-            }
-        },
-        {
-            "code": "0109",
-            "message": "The just.config.js file cannot be parsed.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Just an Ultimate Site Tool is unable to parse your <code>just.config.js</code> file in the root directory."
-            }
-        },
-        {
-            "code": "0110",
-            "message": "Unable to get value of property \"type\" in just.config.js.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "The <code>module.exports</code> is missing or the property <code>type</code> either has an invalid value or is missing. \nPlease read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>."
-            }
-        },
-        {
-            "code": "0111",
-            "message": "Invalid value of property \"type\" in just.config.js. It must be one of: \"postprocessor\", \"redirect\", \"compress\", \"docs\".",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "The <code>module.exports</code> is missing or the property <code>type</code> either has an invalid value or is missing. \nPlease read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>."
-            }
-        },
-        {
-            "code": "0112",
-            "message": "The just.config.js' \"module.exports\" cannot be parsed as json.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Just an Ultimate Site Tool is unable to parse <code>module.exports</code> of the <code>just.config.js</code> file in the root directory. \nPlease check your <code>module.exports</code> of the <code>just.config.js</code> file."
-            }
-        },
-        {
-            "code": "0113",
-            "message": "Your repository has a just.config.json file in the root directory. Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>just.config.json</code> file from the root directory"
-            }
-        },
-        {
-            "code": "0127",
-            "message": "Your repository has a _just_error file in the root directory. Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_just_error</code> file from the root directory"
-            }
-        },
-        {
-            "code": "0129",
-            "message": "Commit access denied.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Please use @version or /latest."
-            }
-        },
-        {
-            "code": "0133",
-            "message": "TypeScript compiler is not installed. Unable to compile TypeScript.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "install TypeScript compiler via <code>just.config.js</code> or manually before running Just an Ultimate Site Tool"
-            }
-        },
-        {
-            "code": "0134",
-            "message": "Dart Sass is not installed. Unable to compile SCSS/SASS.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "install Dart Sass via <code>just.config.js</code> or manually before running Just an Ultimate Site Tool"
-            }
-        },
-        {
-            "code": "0205",
-            "message": "Error occurred during Node.js installation. Retrying to install Node.js with console output enabled... (Attempt #4)",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Just an Ultimate Site Tool is unable to install Node.js."
-            }
-        },
-        {
-            "code": "0207",
-            "message": "Error occurred during Node.js installation. Retrying to install Node.js with console output enabled... (Attempt #2)",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Just an Ultimate Site Tool is unable to install Node.js."
-            }
-        },
-        {
-            "code": "0208",
-            "message": "Error occurred during Node.js installation. Retrying to install Node.js... (Attempt #3)",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Just an Ultimate Site Tool is unable to install Node.js."
-            }
-        },
-        {
-            "code": "0210",
-            "message": "Error occurred during TypeScript compiler installation. Retrying to install TypeScript compiler... (Attempt #2)",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Just an Ultimate Site Tool is unable to install TypeScript compiler."
-            }
-        },
-        {
-            "code": "0211",
-            "message": "Error occurred during Homebrew installation. Retrying to install Homebrew... (Attempt #2)",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Just an Ultimate Site Tool is unable to install Homebrew."
-            }
-        },
-        {
-            "code": "0212",
-            "message": "Error occurred during Dart Sass installation. Retrying to install Dart Sass... (Attempt #2)",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "Just an Ultimate Site Tool is unable to install Dart Sass."
-            }
-        }
-    ],
-    "postprocessor/checks.sh": [
-        {
-            "code": "0100",
-            "message": "( DIRECTORY IS MISSING )",
-            "crashed": true,
-            "link": ""
-        },
-        {
-            "code": "0101",
-            "message": "The _just/404.html file is missing.",
-            "crashed": true,
-            "link": ""
-        },
-        {
-            "code": "0200",
-            "message": "The _just/404.html file is missing. So, the 404 page will be an \"Just an Ultimate Site Tool\" postprocessor's error 404 template page.",
-            "crashed": false,
-            "link": ""
-        }
-    ],
-    "postprocessor/create_api_endpoints.sh": [
-        {
-            "code": "0102",
-            "message": "Your website has an API directory in the root directory. Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>API</code> directory from the root directory"
-            }
-        }
-    ],
-    "postprocessor/modify_deployment.sh": [
-        {
-            "code": "0103",
-            "message": "Your website has a _just directory in the root directory. Please remove it.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_just</code> directory from the root directory"
-            }
-        },
-        {
-            "code": "0104",
-            "message": "Inserting files in _just directory is not allowed.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_just</code> directory from the <code>_just/dangerously-insert-files</code> directory"
-            }
-        },
-        {
-            "code": "0105",
-            "message": "Inserting files in _next directory is not allowed.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "remove the <code>_next</code> directory from the <code>_just/dangerously-insert-files</code> directory"
-            }
-        },
-        {
-            "code": "0201",
-            "message": "( FAILED TO INSERT A FILE )",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "Just an Ultimate Site Tool is unable to insert a file."
-            }
-        }
-    ],
-    "postprocessor/override_deployment.sh": [
-        {
-            "code": "0202",
-            "message": "Your website already has a 404.html file, _just/404.html won't be inserted.",
-            "crashed": false,
-            "link": ""
-        },
-        {
-            "code": "0203",
-            "message": "Your website already has a 404.html file, \"Just an Ultimate Site Tool\" postprocessor's error 404 template page file won't be inserted.",
-            "crashed": false,
-            "link": ""
-        }
-    ],
-    "redirect/checks.sh": [
-        {
-            "code": "0114",
-            "message": "Missing \"url\" in \"redirect_config\" in \"module.exports\" of \"just.config.js\" file.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "add the <code>url</code> to the <code>redirect_config</code> in the <code>module.exports</code> of the <code>just.config.js</code> file"
-            }
-        },
-        {
-            "code": "0115",
-            "message": "( MISSING URL IN {} IN PATHS[] IN REDIRECT_CONFIG{} IN MODULE.EXPORTS AT JUST.CONFIG.JS )",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "add the <code>url</code> to your redirect path in the <code>redirect_config</code> in the <code>module.exports</code> of the <code>just.config.js</code> file"
-            }
-        },
-        {
-            "code": "0116",
-            "message": "( MISSING PATH_ IN {} IN PATHS[] IN REDIRECT_CONFIG{} IN MODULE.EXPORTS AT JUST.CONFIG.JS )",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "add the <code>path_</code> to your redirect path in the <code>redirect_config</code> in the <code>module.exports</code> of the <code>just.config.js</code> file"
-            }
-        },
-        {
-            "code": "0117",
-            "message": "Missing \"redirect_config\" in \"module.exports\" of \"just.config.js\" file.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "add the <code>redirect_config</code> to the <code>module.exports</code> of the <code>just.config.js</code> file and please read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>"
-            }
-        }
-    ],
-    "docs/checks.sh": [
-        {
-            "code": "0118",
-            "message": "Missing \"docs_config\" in \"module.exports\" of \"just.config.js\" file.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "add the <code>docs_config</code> to the <code>module.exports</code> of the <code>just.config.js</code> file and please read the <a href=\"https://just.is-a.dev/docs\" target=\"_self\">documentation</a>"
-            }
-        },
-        {
-            "code": "0119",
-            "message": "Missing \"metatitle\" in \"docs_config\" in \"module.exports\" of \"just.config.js\" file.",
-            "crashed": true,
-            "link": ""
-        },
-        {
-            "code": "0120",
-            "message": "Missing \"domain\" in \"docs_config\" in \"module.exports\" of \"just.config.js\" file.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "add the <code>domain</code> to the <code>docs_config</code> in the <code>module.exports</code> of the <code>just.config.js</code> file"
-            }
-        }
-    ],
-    "docs/index.js": [
-        {
-            "code": "0122",
-            "message": "( WRONG DOMAIN NAME )",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "Invalid domain name. \nPlease check your <code>module.exports</code> of the <code>just.config.js</code> file."
-            }
-        },
-        {
-            "code": "0123",
-            "message": "( .IS-A.DEV SUBDOMAIN DOES NOT EXIST )",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "Invalid domain name: Invalid <a href=\"https://is-a.dev/\" target=\"_blank\"><code>.is-a.dev</code></a> subdomain. \nThe subdomain you specified does not exist. Please register it first."
-            }
-        },
-        {
-            "code": "0128",
-            "message": "( UNKNOWN CODEID )",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "Invalid CODEID. This error can be caused either by an internal Just an Ultimate Site Tool error or by a Markdown fenced code block with the \"CODEID\" language."
-            }
-        },
-        {
-            "code": "0206",
-            "message": "( FAILED TO FETCH RAW.IS-A.DEV/V2.JSON )",
-            "crashed": false,
-            "link": "",
-            "data": {
-                "mg": true,
-                "i": "Just an Ultimate Site Tool is unable to fetch <a href=\"https://raw.is-a.dev/v2.json\" target=\"_blank\"><code>https://raw.is-a.dev/v2.json</code></a>."
-            }
-        }
-    ],
-    "ast/css.js": [
-        {
-            "code": "0131",
-            "message": "Invalid value of property \"css\" in \"parser\" in module.exports of just.config.js. It must be one of: \"CSS\", \"SCSS\", \"SASS\".",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "The CSS parser you choose does not exist."
-            }
-        },
-        {
-            "code": "0132",
-            "message": "Dart Sass compilation error.",
-            "crashed": true,
-            "link": "",
-            "data": {
-                "mg": false,
-                "i": "look up for Dart Sass error in your terminal/console output and fix your .scss or .sass file"
-            }
-        }
-    ]
-}
-```
-```json
-{
-    "plaintext": "",
-    "1c": "1C",
-    "abnf": "ABNF",
-    "accesslog": "Access logs",
-    "actionscript": "ActionScript",
-    "ada": "Ada",
-    "angelscript": "AngelScript",
-    "apache": "Apache",
-    "applescript": "AppleScript",
-    "arcade": "Arcade",
-    "arduino": "Arduino",
-    "armasm": "ARM assembler",
-    "asciidoc": "AsciiDoc",
-    "aspectj": "AspectJ",
-    "autohotkey": "AutoHotkey",
-    "autoit": "AutoIt",
-    "avrasm": "AVR assembler",
-    "awk": "Awk",
-    "bash": "Bash",
-    "basic": "BASIC",
-    "bnf": "BNF",
-    "brainfuck": "Brainfuck",
-    "c": "C",
-    "cal": "C/AL",
-    "csharp": "C#",
-    "cpp": "C++",
-    "cos": "Cache Object Script",
-    "capnproto": "Cap’n Proto",
-    "ceylon": "Ceylon",
-    "clean": "Clean",
-    "clojure": "Clojure",
-    "clojure-repl": "Clojure REPL",
-    "cmake": "CMake",
-    "coffeescript": "CoffeeScript",
-    "coq": "Coq",
-    "crmsh": "Crmsh",
-    "crystal": "Crystal",
-    "csp": "CSP",
-    "css": "CSS",
-    "d": "D",
-    "dart": "Dart",
-    "delphi": "Delphi",
-    "dts": "Device Tree",
-    "diff": "Diff",
-    "django": "Django",
-    "dns": "DNS Zone",
-    "dockerfile": "Dockerfile",
-    "dos": "DOS",
-    "dsconfig": "dsconfig",
-    "dust": "Dust",
-    "ebnf": "EBNF",
-    "elixir": "Elixir",
-    "elm": "Elm",
-    "erb": "Embedded Ruby",
-    "erlang": "Erlang",
-    "erlang-repl": "Erlang REPL",
-    "excel": "Excel",
-    "fsharp": "F#",
-    "fix": "FIX",
-    "flix": "Flix",
-    "fortran": "Fortran",
-    "gcode": "G-Code",
-    "gams": "Gams",
-    "gauss": "GAUSS",
-    "gherkin": "Gherkin",
-    "gml": "gml",
-    "go": "Go",
-    "golo": "Golo",
-    "gradle": "Gradle",
-    "graphql": "GraphQL",
-    "groovy": "Groovy",
-    "haml": "Haml",
-    "handlebars": "Handlebars",
-    "haskell": "Haskell",
-    "haxe": "Haxe",
-    "hsp": "hsp",
-    "http": "HTTP",
-    "hy": "Hy",
-    "inform7": "Inform7",
-    "ini": "INI",
-    "irpf90": "IRPF90",
-    "isbl": "ISBL",
-    "java": "Java",
-    "javascript": "JavaScript",
-    "jboss-cli": "JBoss CLI",
-    "json": "JSON",
-    "julia": "Julia",
-    "julia-repl": "Julia REPL",
-    "kotlin": "Kotlin",
-    "lasso": "Lasso",
-    "latex": "LaTeX",
-    "ldif": "LDIF",
-    "leaf": "Leaf",
-    "less": "LESS",
-    "lisp": "Lisp",
-    "livecodeserver": "LiveCode Server",
-    "livescript": "LiveScript",
-    "llvm": "LLVM",
-    "lsl": "LSL",
-    "lua": "Lua",
-    "makefile": "Makefile",
-    "markdown": "Markdown",
-    "mathematica": "Mathematica",
-    "matlab": "Matlab",
-    "maxima": "Maxima",
-    "mel": "Maya Embedded Language",
-    "mercury": "Mercury",
-    "mipsasm": "MIPS Assembler",
-    "mizar": "Mizar",
-    "mojolicious": "Mojolicious",
-    "monkey": "Monkey",
-    "moonscript": "Moonscript",
-    "n1ql": "N1QL",
-    "nestedtext": "NestedText",
-    "nginx": "Nginx",
-    "nim": "Nim",
-    "nix": "Nix",
-    "node-repl": "Node.js REPL",
-    "nsis": "NSIS",
-    "objectivec": "Objective-C",
-    "ocaml": "OCaml",
-    "glsl": "OpenGL Shading Language",
-    "openscad": "OpenSCAD",
-    "ruleslanguage": "Oracle Rules Language",
-    "oxygene": "Oxygene",
-    "parser3": "Parser3",
-    "perl": "Perl",
-    "pf": "PF",
-    "php-template": "PHP",
-    "php": "PHP",
-    "pony": "Pony",
-    "pgsql": "PostgreSQL",
-    "powershell": "PowerShell",
-    "processing": "Processing",
-    "prolog": "Prolog",
-    "properties": "Properties",
-    "protobuf": "Protocol Buffers",
-    "puppet": "Puppet",
-    "purebasic": "PureBasic",
-    "python": "Python",
-    "profile": "Python profiler results",
-    "python-repl": "Python REPL",
-    "q": "Q",
-    "qml": "QML",
-    "r": "R",
-    "reasonml": "ReasonML",
-    "rib": "RenderMan RIB",
-    "rsl": "RenderMan RSL",
-    "roboconf": "Roboconf",
-    "routeros": "RouterOS",
-    "ruby": "Ruby",
-    "rust": "Rust",
-    "sas": "SAS",
-    "scala": "Scala",
-    "scheme": "Scheme",
-    "scilab": "Scilab",
-    "scss": "SCSS",
-    "shell": "Shell",
-    "smali": "Smali",
-    "smalltalk": "Smalltalk",
-    "sml": "SML",
-    "sqf": "SQF",
-    "sql": "SQL",
-    "stan": "Stan",
-    "stata": "Stata",
-    "step21": "step21",
-    "stylus": "Stylus",
-    "subunit": "SubUnit",
-    "swift": "Swift",
-    "taggerscript": "Tagger Script",
-    "tcl": "Tcl",
-    "tap": "Test Anything Protocol",
-    "thrift": "Thrift",
-    "tp": "TP",
-    "twig": "Twig",
-    "typescript": "TypeScript",
-    "vala": "Vala",
-    "vbnet": "VB.Net",
-    "vbscript-html": "VBScript",
-    "vbscript": "VBScript",
-    "verilog": "Verilog",
-    "vhdl": "VHDL",
-    "vim": "Vim Script",
-    "wasm": "WebAssembly",
-    "wren": "Wren",
-    "axapta": "X++",
-    "x86asm": "x86 Assembly",
-    "xl": "XL",
-    "xml": "XML",
-    "xquery": "XQuery",
-    "yaml": "YAML",
-    "zephir": "Zephir"
-}
-```
-## test
-### test
-```md
-_just: title: Advanced usage
-# Advanced usage
-## Markdown files
-You can specify the page title by adding `_just: title: ...` in the first line of the Markdown file.
--# Example:
-\`\`\`md
-_just: title: This is text will be page title
-\`\`\`
-
-You can also specify the previous and next pages:
-\`\`\`
-_just: prev: /path/to/previous/page
-_just: next: /path/to/next/page
-\`\`\`
-> The path to the page should start with a slash (/). <br>This path is a relative path from the root directory of your website, which you’ve specified in the workflow file. <br>The path to the page should not end with a file extension name (e.g., `.md` ).
-This will add buttons to the end of the page.
-Just an Ultimate Site Tool will automatically get the title of the previous and/or next pages and insert it into the generated button output.
-The output should look like this:
-![Output](/img/docs/generator-adv-prevnext.png)
-
-## The `just.config.js` file
-You can change search key: (slash (/) by default)
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    searchKey: '/'
-  }
-}
-\`\`\`
-
-You can allow web archive: (disallowed ( `true` ) by default)
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  noWebarchive: false
-}
-\`\`\`
-
-You can insert custom HTML code in `<head>`:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    insertInHTMLHead: '<!--   Your HTML code here   /-->'
-  }
-}
-\`\`\`
-
-You can enable debug logs:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  debug: true
-}
-\`\`\`
-
-## Custom HTML, CSS, JavaScript files
-### Theme
-Just an Ultimate Site Tool saves some data in `localStorage`. Please do not modify any variable with key that starts with `sp`, as these variables store scroll information in BASE-64.
-You can use the `t` (theme) variable to synchronize the theme between your custom pages and the generated documentation pages.
-\`\`\`js
-localStorage.getItem('t');
-\`\`\`
-You can set the `t` variable to update the theme, but the value must be one of: `l` (light), `d` (dark), `a` (auto / sync with device).
-\`\`\`js
-localStorage.setItem('t', 'a');
-\`\`\`
-
-### Search
-You can make custom documentation search in your custom pages:
-1. Fetch `/_just/` or `/_just/index.json`, it’ll return a JSON that has a `"json"` key.
-2. Fetch `/_just/( put the "json" value here ).json`, this will return a JSON, where the key is the page URL and the value is the content of the page.
--# Example:
-\`\`\`js
-const _just_data = await fetch('/_just/').then(r=>r.json());
-const docssearch = await fetch(`/_just/${_just_data.json}.json`).then(r=>r.json());
-\`\`\`
-
-_just: prev: /docs/generator/syntax
-_just: next: /docs/generator/troubleshooting
-```
-```md
-_just: title: Supported markdown syntax
-# Markdown support
-### Supported elements
-- [Headings](https://www.markdownguide.org/basic-syntax/#headings) (Alternate headings aren’t supported.)
-- [Line Breaks](https://www.markdownguide.org/basic-syntax/#line-breaks)
-- [Bold](https://www.markdownguide.org/basic-syntax/#bold) (Use asterisks. Underscores aren’t supported.)
-- [Italic](https://www.markdownguide.org/basic-syntax/#italic)
-- [Blockquotes](https://www.markdownguide.org/basic-syntax/#blockquotes-1)
-- [Ordered Lists](https://www.markdownguide.org/basic-syntax/#ordered-lists) (Nested lists aren’t supported.)
-- [Unordered Lists](https://www.markdownguide.org/basic-syntax/#unordered-lists) (Nested lists aren’t supported.)
-- [Code](https://www.markdownguide.org/basic-syntax/#code) (To escape backticks (\`) use backslash (\\). Double backticks (\`\`) aren’t supported.)
-- [Horizontal Rules](https://www.markdownguide.org/basic-syntax/#horizontal-rules)
-- [Links](https://www.markdownguide.org/basic-syntax/#links)
-- [Images](https://www.markdownguide.org/basic-syntax/#images-1)
-- [Fenced Code Blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) (Use triple backticks (\`\`\`). Spaces/Tabs aren’t supported.)
-- [Syntax Highlighting](https://www.markdownguide.org/extended-syntax/#syntax-highlighting)
-- [Heading IDs](https://www.markdownguide.org/extended-syntax/#heading-ids) (Automatically generated.)
-- [Strikethrough](https://www.markdownguide.org/extended-syntax/#strikethrough)
-- [Task Lists](https://www.markdownguide.org/extended-syntax/#task-lists)
-- [Emoji (copy and paste)](https://www.markdownguide.org/extended-syntax/#copying-and-pasting-emoji)
-- [Highlight](https://www.markdownguide.org/extended-syntax/#highlight)
-- [Subscript](https://www.markdownguide.org/extended-syntax/#subscript)
-- [Superscript](https://www.markdownguide.org/extended-syntax/#superscript)
-- [Automatic URL Linking](https://www.markdownguide.org/extended-syntax/#automatic-url-linking)
-- [Disabling Automatic URL Linking](https://www.markdownguide.org/extended-syntax/#disabling-automatic-url-linking) (You can also use backslash (\\) before protocol to disable Automatic URL Linking)
-- [HTML](https://www.markdownguide.org/basic-syntax/#html)
-
-### Not supported elements
-- [Paragraphs](https://www.markdownguide.org/basic-syntax/#paragraphs-1)
-- [Footnotes](https://www.markdownguide.org/extended-syntax/#footnotes)
-- [Definition Lists](https://www.markdownguide.org/extended-syntax/#definition-lists)
-- Abbreviation
-- [Tables](https://www.markdownguide.org/extended-syntax/#tables)
-
-### Planned
-- [Emoji (shortcodes)](https://www.markdownguide.org/extended-syntax/#using-emoji-shortcodes)
-
-## Support for Additional Syntax Elements
-- Note, tip, important, warning, caution blockquotes:
-\`\`\`md
-> [!NOTE] A note!
-> [!TIP] A tip!
-> [!IMPORTANT] Something important.
-> [!WARNING] A warning!
-> [!CAUTION] Caution!
-\`\`\`
-
-- Underline:
-__Underline example__
-\`\`\`md
-__This text will be underlined.__
-\`\`\`
-
-- Subtext:
--# Subtext example
-\`\`\`md
--# This line will be made smaller and greyed out.
-\`\`\`
-
-## Escaping
-To escape any element or character, use a backslash (\\).
-To insert a backslash in your text, use two backslashes (\\\\).
-
-_just: prev: /docs/modes/generator
-_just: next: /docs/generator/advanced-usage
-```
-```md
-_just: title: Troubleshooting
-# Troubleshooting
-
-## `Node.js` errors
-### Invalid string length error at `logs.js`
-The error looks like this:
-\`\`\`
-RangeError: Invalid string length
-  at /home/runner/work/_actions/js-just/_just/main/src/documentation/logs.js:XX:XXX
-  at FSReqCallback.oncomplete (node:fs:XXX:XX)
-\`\`\`
--# Note that after an error, there may be some Just an Ultimate Site Tool logs, so the error may not be at the end of the logs.
-
-To fix that error you can disable debug lods in `module.exports` of the `just.config.js` file.
-\`\`\`js
-module.exports = {
-  // ...
-  debug: false
-}
-\`\`\`
-
-## Generated content errors
-### Couldn’t load the website. (0302)
-<div id="0302"></div>
-This error looks like this:
-![Error](/img/code/0302.png)
-
-This error can be caused by various reasons:
-- Poor Internet connection.
-- Other reasons that are not related to Just an Ultimate Site Tool.
-- Just an Ultimate Site Tool paths/directories error - this means that Just an Ultimate Site Tool did not determine the file paths correctly, and browsers are unable to load scripts and styles.
-
-**To fix the paths/directories error:**
-- If you are inserting generated website into another directory, for example you have made the website in the root of the repository and then moved it to another directory in a different repository, try adding the `fix-path` input in your workflow file:
-\`\`\`yml
-      - name: Generate with _just
-        uses: js-just/_just@main
-        with:
-          # ...
-          fix-path: example # path to directory that your generated website will be moved to
-\`\`\`
--# If that doesn’t help, you can also try adding these options:
-- Otherwise, you can try adding these options in the `docs_config` in `module.exports` of the `just.config.js` file:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    usePathInput: true,
-    usePathInputInHTML: true,
-    usePathInputInJS: true
-    /*
-      Try different configurations by setting these options to true or false until the problem is fixed.
-    */
-  }
-}
-\`\`\`
-
-_just: prev: /docs/generator/advanced-usage
-```
-```md
-_just: title: Getting Started
-# Getting Started
-### Necessary knowledge
-This documentation assumes some familiarity with
-- GitHub
-- GitHub Actions
-- GitHub Pages
-And some familiarity with these languages
-- JavaScript and JSON
-- YAML
-- HTML
-- CSS
-- Markdown
-## Installation
-### Making your first project
-- Create new repository, and create `/.github/workflows/publish.yml` file, template:
-\`\`\`yml
-name: Website
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Generate with _just
-        uses: js-just/latest@main
-        with: # Remove "with" and "path" here if you are not using compressor or generator modes!
-          path: . # Root directory, or you can replace the dot with the path to your website/docs directory to be generated/compressed. (Only for compressor and generator modes)
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: . # Root directory, or you can replace the dot with the path to your entire website to be deployed to GitHub Pages.
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-\`\`\`
-You can change name of workflow file and workflow name:
-\`\`\`yml
-name: Workflow name
-\`\`\`
-You can also choose _just version:
-\`\`\`yml
-        uses: js-just/_just@(put version name here)
-\`\`\`
-**If you know what exactly you are doing, you may change anything.**
-- Create `just.config.js` file in the root directory:
-Choose what mode you want to use.
- 
-Using `Postprocessor` mode:
-\`\`\`js
-module.exports = {
-  type: "postprocessor"
-}
-\`\`\`
-Using `Redirector` mode: 
-\`\`\`js
-module.exports = {
-    type: "redirect", 
-    redirect_config: {
-        url: "https://example.com/", // Required. Replace with destination URL.
-    }
-}
-\`\`\`
-Using `Compressor` mode:
-\`\`\`js
-module.exports = {
-    type: "compress"
-}
-\`\`\`
-Using `Generator` mode:
-\`\`\`js
-module.exports = {
-    type: "docs",
-    docs_config: {
-        title: "Documentation title", // Required. Replace with your documentation title.
-        domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
-    }
-}
-\`\`\`
-- Read the documentation for the mode that you’ve chosen.
----
-### Pro installation
-- Create or modify your `.github/workflows/github_pages_workflow_name.yml`:
-Make sure that permissions allow writing `pages` and `id-token`, but do not allow writing `contents`, only read.
-\`\`\`yml
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-\`\`\`
-Make a job for building your website using _just:
-\`\`\`yml
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Generate with _just
-        uses: js-just/_just@ # version name (recommended) (example: v0.0.29) / main branch (latest commit) (unstable, not recommended) / commit SHA (not recommended)
-        with:
-          path: # Path to your website directory to be generated/compressed. (Only for compressor and generator modes)
-\`\`\`
-- Create `just.config.js` file:
-Basic usage:
-\`\`\`js
-module.exports = {
-  type: "(postprocessor/redirect/compress/docs)"
-}
-\`\`\`
-
-- Read the documentation for the mode that you’ve chosen.
-
-## Modes documentation
-- [Postprocessor](/docs/modes/postprocessor)
-- [Redirector](/docs/modes/redirector)
-- [Compressor](/docs/modes/compressor)
-- [Generator](/docs/modes/generator)
-
-## Reserved directories
-Your repository should not have these directories:
-- _just_data
-- deploy
-If your repository has any of these, _just will throw an error.
-
-_just: prev: /docs
-```
-### test
-```md
-_just: title: Compressor Mode
-# Compressor mode
-**- Compresses your website.**
-
-> This mode compresses your static website's `.html`, `.js`, `.css`, `.xml`, `.svg`, `.json` and `.webmanifest` files.<br> It removes every comments, tabs and newlines. <br><br>For JavaScript it also compresses booleans and undefined: <br><ul style="margin-bottom: -19px"><li> `true` -> `!0` </li><li> `false` -> `!1` </li><li> `undefined` -> `[][[]]` </li></ul>
-
-> [!WARNING] This mode is under development, and it may cause JavaScript and HTML errors! <br>To fix JavaScript, do not forget semicolons. <br>To fix HTML newlines, use `<br>` instead. <br>Please [report any bugs](https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md) you find.
-<br><br>
-This mode requires only the `just.config.js` file and the workflow file.
--# `just.config.js`
-\`\`\`js
-module.exports = {
-  type: "compress"
-}
-\`\`\`
-
--# `.github/workflows/WORKFLOW_NAME.yml`
-\`\`\`yml
-name: Website
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Generate with _just
-        uses: js-just/latest@main
-        with:
-          path: . # Root directory, or you can replace the dot with the path to your website directory to be compressed.
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: . # Root directory, or you can replace the dot with the path to your entire website to be deployed to GitHub Pages.
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-\`\`\`
-
-## How it works?
-It compresses files by removing tabs, newlines and comments.
-Also it compresses booleans and undefined in JavaScript:
-\`\`\`js
-!0     // true
-!1     // false
-[][[]] // undefined
-\`\`\`
--# `[][[]]` ( `undefined` ) by [JSFuck](https://jsfuck.com/)
-
-_just: prev: /docs/getting-started
-```
-```md
-_just: title: Generator Mode
-# Generator mode
-**- Generates documentation website using Markdown.**
-
-> This website is generated using this mode.
-
-This mode requires the `just.config.js` file and the workflow file.
--# `just.config.js`
-\`\`\`js
-module.exports = {
-  type: "docs",
-  docs_config: {
-    title: "Documentation title", // Required. Replace with your documentation title.
-    domain: "example.com" // Required. Replace with your domain name. Domain name should be valid.
-  }
-}
-\`\`\`
-
--# `.github/workflows/WORKFLOW_NAME.yml`
-\`\`\`yml
-name: Website
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Generate with _just
-        uses: js-just/latest@main
-        with:
-          path: . # Root directory, or you can replace the dot with the path to your docs directory to be generated.
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: . # Root directory, or you can replace the dot with the path to your entire website to be deployed to GitHub Pages.
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-\`\`\`
-
-After generating the documentation, this mode uses the [Compressor mode](/docs/modes/compressor) to compress the generated website.
-Use Markdown ( `.md` ) files for documentation. You can also use HTML/CSS/JavaScript for custom pages, but remember that they will be compressed using the [Compressor mode](/docs/modes/compressor)!
-
-## How it works?
-It processes every Markdown file and generates HTML page for each of them.
-
-## Customizing your documentation website
-You can customize your documentation website with the `just.config.js` file.
-
-You can make the HTML title tag and `<meta property="og:title">` differ from `title` by adding the `metatitle`:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    metatitle: 'This text will be inserted in HTML <title> and <meta property="og:title"> tags'
-  }
-}
-\`\`\`
-You can also make the `<meta property="og:title">` differ from `metatitle` by adding the `og` and `og.title`:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    og: {
-      title: 'This text will be inserted in HTML <meta property="og:title"> tag'
-    }
-  }
-}
-\`\`\`
-
-You can add a description to your documentation website:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    description: 'This text will be inserted in HTML <meta name="description"> and <meta name="og:description"> tags'
-  }
-}
-\`\`\`
-You can make the `<meta name="og:description">` differ from `description` by adding the `og` and `og.description`:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    og: {
-      // ...
-      description: 'This text will be inserted in HTML <meta name="og:description"> tag'
-    }
-  }
-}
-\`\`\`
-
-You can add `<meta name="keywords">` HTML tag by adding the `keywords`:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    keywords: 'Your,website,keywords,here'
-  }
-}
-\`\`\`
-
-You can add footer text by adding the `footer`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    footer: 'This text will be footer text'
-  }
-}
-\`\`\`
-
-You can change the `<meta property="twitter:card">` by adding the `twitter` and the `twitter.card` in `docs_config`. `summary_large_image` by default.
-
-You can add buttons and links to header/navbar:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    links: [
-      ["a link", "https://example.com/", "_blank"] // [ " link title " , " URL " , " HTML <a> target " ]
-    ],
-    buttons: [
-      ["a button", "https://example.com/", "_blank"] // [ " button title " , " URL " , " HTML <a> target " ]
-    ]
-  }
-}
-\`\`\`
-
-### Icon
-To add an icon to your documentation pages, you can insert your custom HTML in `<head>` by adding the `insertInHTMLHead`:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    insertInHTMLHead: '<!--   Your HTML code here   /-->'
-  }
-}
-\`\`\`
-To add an icon to header/navbar in generated documentation pages, you can specify image URL by adding the `logo`:
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    logo: 'http://example.com/logo.png'
-  }
-}
-\`\`\`
-
-### Third-party services
-Currently, Just an Ultimate Site Tool supports only adding these third-party services:
-- Google Analytics
-- Google Site Verification
-- Yandex Site Verification
--# `just.config.js`:
-\`\`\`js
-module.exports = {
-  // ...
-  docs_config: {
-    // ...
-    google: 'google site verification',
-    googleAnalytics: 'google analytics', // example: 'G-..........'
-    yandex: 'yandex site verification'
-  }
-}
-\`\`\`
-
-_just: prev: /docs/getting-started
-_just: next: /docs/generator/syntax
-```
-```md
-_just: title: Postprocessor Mode
-# Postprocessor mode
-**- Add your own files to generated Next.js website.**
-
-> With this mode you can add your own files to generated Next.js website. <br>This mode creates the `deploy` directory and outputs files into it.<br> If your Next.js website outputs an `en.html` file, it will be copied into the `index.html` file.
-
-This mode requires the `just.config.js` file, the workflow file, some directories and `_just/404.html`.
-Next.js website should be generated **before** running this mode.
-Generated Next.js website should be in `.next/server/pages/` and `.next/static/` directories.
-Required directories are:
-- `_just`
-- `_just/dangerously-insert-files`
-- `_just/js`
-- `_just/style`
-
--# `just.config.js`
-\`\`\`js
-module.exports = {
-  type: "postprocessor"
-}
-\`\`\`
--# `.github/workflows/WORKFLOW_NAME.yml`
-\`\`\`yaml
-name: Website
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: npm
-        id: install-npm
-        run: npm i
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: next
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
-      - name: Override with _just
-        uses: js-just/latest@main
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: deploy
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-\`\`\`
-
-## Required directories
--# Required only directories, not files within them (except for the `_just/404.html` file).
-
-In **`_just/js`** you can put your JavaScript files to be inserted into the `deploy/_just` directory and into every HTML page.
-In **`_just/style`** you can place your CSS files to be inserted into the `deploy/_just` directory and into every HTML page as well.
-Within **`_just/dangerously-insert-files`**, you may include any files that you wish to insert into the `deploy` directory.
-
-> [!CAUTION] Inserting files via the **`_just/dangerously-insert-files`** directory may cause website errors or files may not be inserted if there is already a file with the same name in the `deploy` directory.
-
-The **`_just/404.html` file** is required and it’ll become the `deploy/404.html` file (if the `deploy/404.html` file already exists, it will be overwritten).
-
-## How it works?
-1. It creates a `deploy` directory and copies every file from the `.next/server/pages` and `.next/static` directories to it.
-2. If there is a `deploy/en.html` file, it will copies to the `deploy/index.html`.
-3. It copies `_just/404.html` to `deploy/404.html` (if it exists, it’ll be overwritten).
-4. Every `_just/js/*.js` copies into `deploy/_just`; Every `_just/style/*.css` copies into `deploy/_just`; Every `_just/dangerously-insert-files/*` copies into `deploy`.
-5. Every JavaScript and CSS file in `deploy/_just` are inserted into every HTML page as HTML tags.
-
-## Troubleshooting
-This mode may cause website issues.
-You can try fixing them by switching the postprocessor version in your workflow file.
-\`\`\`yaml
-      - name: Override with _just
-        uses: js-just/latest@main
-        with:
-          postprocessor-version: "26"
-\`\`\`
-Available postprocessor versions are: `"24"`, `"26"` (default), `"32"`.
-
----
-
--# You can support Just an Ultimate Site Tool by setting the `watermark` to `true` in the `module.exports` of the `just.config.js` file. This will add two comments about the Just an Ultimate Site Tool to every HTML file. Thank you.
-
-_just: prev: /docs/getting-started
-```
-```md
-_just: title: Redirector Mode
-# Redirector mode
-**- Client-side redirect.**
-
-> This mode redirects your static website, such as your `.github.io` website, to a specified URL. <br>This mode creates the `deploy` directory and outputs files into it.
-
-This mode requires only the `just.config.js` file, (except for the workflow file).
-`just.config.js`
-\`\`\`js
-module.exports = {
-  type: "redirect", 
-  redirect_config: {
-    url: "https://example.com/" // Required. Replace with destination URL.
-  }
-}
-\`\`\`
-> [!TIP] Do not use this mode if you can make server-side `HTTP 3XX` redirects.
-
-You can add `params{}`:
-\`\`\`js
-module.exports = {
-  type: "redirect", 
-  redirect_config: {
-    url: "https://example.com/", // Required. Replace with destination URL.
-    params: { // Optional.
-      title: "redirect website title here", // Optional. Replace with any title you want. Recommended.
-      description: "redirect website description here", // Optional. Replace with any description you want.
-      keywords: "some, keywords, here", // Optional. Replace with any keywords you want. Separate keywords by commas.
-      htmlLang: "en", // Optional. <html lang="${htmlLang}">
-      robots: "index", // Optional. <meta name="robots" content="${robots}">
-      charset: "utf-8", // Optional. "utf-8" by default. <meta charset="${charset}"> and file charset.
-      viewport: "width=device-width, initial-scale=1.0", // Optional. "width=device-width, initial-scale=1.0" by default. <meta name="viewport" content="${viewport}">
-      yandex: "", // Optional. Put your Yandex verification string here. <meta name="yandex-verification" content="${yandex}">
-      google: "", // Optional. Put your Google verification string here. <meta name="google-site-verification" content="${google}">
-      googleAnalytics: "" // Optional. Put your Google Analytics ID here.
-    }
-  }
-}
-\`\`\`
-You can also add `content{}` in `params{}` if you want to modify HTML content.
-\`\`\`js
-module.exports = {
-  type: "redirect", 
-  redirect_config: {
-    url: "https://example.com/", // Required. Replace with destination URL.
-    params: { // Optional.
-      content: { // Optional.
-        text1: "Redirecting...", // Optional. "Redirecting...<br>" + generated content ("<small>to <a ...>...</a></small>") by default.
-        text2: "Didn’t get redirected?", // Optional. "Didn’t get redirected?" by default.
-        text3: "Click here!" // Optional. "Click here!" by default. <a ...>${text3}</a>
-      }
-    }
-  }
-}
-\`\`\`
-> [!NOTE] `\\n` and tabs/4 spaces will be removed. Use `<br>` instead of `\\n`.
-
-Remember that your repository should have a `.github/workflows/WORKFLOW_NAME.yml` file.
--# Template:
-\`\`\`yml
-name: Website
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Generate with _just
-        uses: js-just/latest@main
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: deploy
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-\`\`\`
-
-### Redirect paths
-You may add `paths[]` in `redirect_config{}` to create custom redirect paths.
-\`\`\`js
-module.exports = {
-  type: "redirect", 
-  redirect_config: {
-    url: "https://example.com/", // Required. Replace with destination URL.
-    paths: [ // Optional
-      {
-        path_: "example", // Required. Replace with path.
-        url: "https://example.com/", // Required. Replace with path destination URL.
-        params: { // Optional.
-          title: "redirect website title here", // Optional. Replace with any title you want. Recommended.
-          description: "redirect website description here", // Optional. Replace with any description you want.
-          keywords: "some, keywords, here", // Optional. Replace with any keywords you want. Separate keywords by commas.
-          htmlLang: "en", // Optional. <html lang="${htmlLang}">
-          robots: "index", // Optional. <meta name="robots" content="${robots}">
-          charset: "utf-8", // Optional. "utf-8" by default. <meta charset="${charset}"> and file charset.
-          viewport: "width=device-width, initial-scale=1.0", // Optional. "width=device-width, initial-scale=1.0" by default. <meta name="viewport" content="${viewport}">
-          yandex: "", // Optional. Put your Yandex verification string here. <meta name="yandex-verification" content="${yandex}">
-          google: "", // Optional. Put your Google verification string here. <meta name="google-site-verification" content="${google}">
-          googleAnalytics: "" // Optional. Put your Google Analytics ID here.
-        }
-      }
-    ]
-  }
-}
-\`\`\`
-
-## How it works?
-It generates HTML pages based on your `module.exports` input.
-Every generated HTML page has:
-- `<meta http-equiv="refresh" content="0;url=...">` in `<head>`. This means that the user will be redirected to the destination URL in 0 seconds after the page has loaded.
-- Fallback #1 - `<script>...</script>` in `<body>` redirects the user to the destination URL.
-- Fallback #2 - Other elements in `<body>` ("Redirecting... <...>", "Didn’t get redirected? `<a ...>` Click here! `</a>` ").
-That means that users should be redirected, even if they have disabled JavaScript in their browser settings.
-
-## Why is `HTTP 3XX` better?
-A response with an `HTTP 3XX` status code and with the `location` header makes a real redirect.
-This mode generates client-side redirects that only support browsers!
-
----
-
-## `module.exports` JSON Schema
-\`\`\`json
-{
-  "$id": "https://just.is-a.dev/schema/r.json",
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "_just just.config.js module.exports Redirector mode",
-  "type": "object",
-  "properties": {
-    "type": {
-      "type": "string"
-    },
-    "redirect_config": {
-      "type": "object",
-      "properties": {
-        "url": {
-          "type": "string"
-        },
-        "params": {
-          "type": "object",
-          "properties": {
-            "title": {
-              "type": "string"
-            },
-            "description": {
-              "type": "string"
-            },
-            "keywords": {
-              "type": "string"
-            },
-            "htmlLang": {
-              "type": "string"
-            },
-            "robots": {
-              "type": "string"
-            },
-            "charset": {
-              "type": "string"
-            },
-            "viewport": {
-              "type": "string"
-            },
-            "yandex": {
-              "type": "string"
-            },
-            "google": {
-              "type": "string"
-            },
-            "googleAnalytics": {
-              "type": "string"
-            },
-            "content": {
-              "type": "object",
-              "properties": {
-                "text1": {
-                  "type": "string"
-                },
-                "text2": {
-                  "type": "string"
-                },
-                "text3": {
-                  "type": "string"
-                }
-              },
-              "required": []
-            },
-            "og": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                }
-              },
-              "required": []
-            },
-            "twitter": {
-              "type": "object",
-              "properties": {
-                "card": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "card"
-              ]
-            }
-          },
-          "required": []
-        },
-        "paths": {
-          "type": "array",
-          "items": [
-            {
-              "type": "object",
-              "properties": {
-                "path_": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "params": {
-                  "type": "object",
-                  "properties": {
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "keywords": {
-                      "type": "string"
-                    },
-                    "htmlLang": {
-                      "type": "string"
-                    },
-                    "og": {
-                      "type": "object",
-                      "properties": {
-                        "title": {
-                          "type": "string"
-                        },
-                        "description": {
-                          "type": "string"
-                        }
-                      },
-                      "required": []
-                    },
-                    "twitter": {
-                      "type": "object",
-                      "properties": {
-                        "card": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "card"
-                      ]
-                    }
-                  },
-                  "required": []
-                }
-              },
-              "required": [
-                  "path_",
-                  "url"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "url"
-      ]
-    }
-  },
-  "required": [
-    "type",
-    "redirect_config"
-  ]
-}
-\`\`\`
-
-_just: prev: /docs/getting-started
-```
-```md
-_just: title: Docs
-# _just Docs
-Welcome to Just an Ultimate Site Tool documentation!
--# "**`_just`**" is an abbreviation of **Just an Ultimate Site Tool**.
----
-## What is _just?
-Just an Ultimate Site Tool is a GitHub Action for building static websites. 
-Currently it have 4 modes: 
-- `Postprocessor`: Add your own files to generated Next.js website.
-- `Redirector`: Client-side redirect using JavaScript.
-- `Compressor`: Compresses your website.
-- `Generator`: Generates documentation website using Markdown.
-
-> [!WARNING] Just an Ultimate Site Tool is still in development at the **beta** stage. Expect regular updates, possible bugs, and changes. If you have found a bug, please [report it here](https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md).
-> [!NOTE] Just an Ultimate Site Tool assumes that a modern browser and a modern operating system are used.
-> [!TIP] Do not use `Redirector` if you can make server-side `HTTP 3XX` redirects.
-
-## Why _just?
-1. __No packages.__
-2. __Fast build.__
-3. __**No watermarks.**__
--# _just uses Node.js, but _just does not require you to use Node.js/npm/pnpm/Yarn/related packages stuff.
-
-_just: next: /docs/getting-started
-```
-```ico
-         h  6          (  �  00     h&  �  (                                                                                                                                                                                                                                                         �=lP�<l��<l��<l��:lm�<k&�:lm�;ky�;kE� �                    �;k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k��7m            �9iP�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��=lG            �;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;k��3f
-            �<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                        �<l��<l��<l��<l��<l��<l��<l��<l��<l��;l�            �.]�=l��;k��<l��<l��<l��<l��<l��<l��<l��<l��<l��;l�            �=lG�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��:kO            �7m�<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                    � ��;kE�;ky�=lm�;i'�=lm�<l��<l��<l��9iP                                                                                                                                                                                                                                                                                    (       @                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          �@`�;j[�;l��=l��<l��<l��<ms�7d                                                                                            �=mT�;k��<l��<l��<l��<l��<l��<l��<l��<l��<k&�;lt�;l��;k��<l��<l��<l��:j`�@`                                            �  �;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;jR                                        �;k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;i8                                �:lS�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k�                            �9U	�;k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k�                            �:l\�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;k��=m*                            �<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k��;l��;l4                                �<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��                                              �<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                                                �<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                                            � ��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;l�                                �;l4�<l��<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k�                            �;k+�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��:l\                            �;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��Im                            �=l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;jR                                �>n:�;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                                        �;mR�;k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k�                                                �@`�:m`�<l��;k��<l��<k��<l��;ku�<k&�<l��<l��<l��<l��<l��<l��<l��<l��;k��:lS                                                                                            �>j�:lv�<l��<l��;k��;k��:i\�@`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            (   0   `                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  �3f�;l�;j<�=ku�<m��;l��<l��<l��=lP�@j$�7m�                                                                                                                                          � ��;k+�:k��<k��<l��<l��<l��<l��<l��<l��<k��<l��<k��<m^�<i        �;b�;j<�:m`�;lt�=mz�=lv�;kd�<l@�6k                                                                                        �;j[�<l��<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��=k��=nC�;mg�<l��<l��;l��<l��<l��<l��<l��<l��<l��<k��:h                                                                        �7m�<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;lq�6k                                                            �7m�;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;l��9c                                                        �=k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k��:k�                                                � ��:kX�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;l��;b                                            �=m*�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k��=f                                        �3f�<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k��@`                                        �;l�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;jl                                            �;nA�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��Im                                            �<j��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;l��;k��<k��;n<�@`                                                �;k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<m��UU                                                                    �;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k�                                                                        �<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                                                                        �<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                                                                        �<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                                                                    �@��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l�                                                �9U	�:k>�<m��<k��<l��<m��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k�                                            �Im�;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;l��;nA                                            �;ml�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k��;l                                        �@`�;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��@�                                        �9h�<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k��8j)                                            �3f�<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<k��;lW� �                                                �<m��<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��=k�                                                        �@f�;l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;k��7m                                                            �6k�:kr�<k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��;b                                                                        �7o�<m��<m��<l��<l��<l��<l��<l��<l��<l��<l��;lh�;kE�=k��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<l��<jY                                                                                        �6k�<l@�;kd�:lv�;l}�<kw�:j`�>j:�@j        �@p�;k_�<m��;l��<l��<l��<l��<l��<l��<l��<l��<k��;l��=m*� �                                                                                                                                        �  �3f�<k&�<kQ�;l��;k��<l��<k��:lv�;j<�;l�@�                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-```
-## test
-```png
-�PNG
-
-   IHDR   �   �   R�l   IDATx�|e�ǟgf�&�����`�p�=8+b�IRz�� �BK�Mi�+�-���BkK7�B�V��U�4$���U�?�G�J��4��I�;�����Mg��fgf����οw�y����f����Yd%L@P/�� ��4@I�8/�:P�JX %]���>"�} dV�D �Y���>"�} dV�D �Y���>"�} Jj&��' ؏BJ���K]|�O@��,�"@)������`?
-Y(C}%"�%E@PR�-�% JD�K�����[�J@0�����@I��8k���&(I�O" ��xe���&(I�O" ��xe���&(O'�% ��("�R(e�qX"�a�ȎR  (�R�% ���+D V�d��	� |]���!��k" _�8gE@`E���	cө|E���5�3�h6ըm";����#�|�k��9p��S�Y�X �*OUٿ�@S�ԥgDk3_j��[�I}}�!��L���M������4ob���p"�O�e���Ѻ̪�H��H��e��~zь�������bh�˜���z4�~j���ց4�D���z��l��#�� �.�Ky������ 7 �:D�{���z+��ƺ�3E0�I0*l>��h����='Z��oW.�:���+�*D8��#�B��9"Ǒ�*��I�����X�Q�,�����}�����T���K�  � dg��s(�O��gր�L�! � ��s�Ci�Y烆��i���T�>�q�[a���e6"�1��'����\�M�dn�&�����+|Q�"�i1m�I�����%ͧӄ1���C�ZP�S%Tmث�B-���Ds�����Wq���FRw7ץo���������ۛ�S{�v߫b�.�fs}�eng?������%u}�Ow���G�Oz�:#��TI51�u�F�~�s�N�� \��ӻ& ���G}�dS$=W�0�Py� �U���$��+<W��͑Tӄ��[�2|H�|'��s ���tW��	�4BR�쓼<	j�JE>�T"8��z�x�rnv|C�� |&��?��	m��L�b��_<���^����/C-�3�D	>�4�^	�E��S�.{����{��B�9����Hs}��u��*��g&�����+�\�"쬪T��1��,�-N��3��������������#��l5&��}C��� � xxs��s��ۧ�����vo����" 5"�|f��\�V�ʧ�#�+<Е��b���}��N��\�G�l���5Uj�OǗ��Ԫ
-��5��%��yYLo�G9���\��
-�p���M��U'������4��.ua^��&�ܬ�o��ӹ"��|�@4����in�h�ۣ�����]��?�~���wf>�i�5z�Es����M�O�F��g3��r��o��� qp<��wA��~�����^ŕ^�[۱i��L�L�pCYE��Mu�g�c�i����/�1e�*��J���:�^wt��;( ��3{&Eg��xxz+�v' ��W�* @p�Da�U�f"�1/@5����Au���N�#�׹��������,�A���9]�t�>�r<G	�# �555�ؒ::�{���1��P�y��9��ӟ���Z>���r��Y��wDv��wAOV��G-��
-7���(��\�OcG��Sx&�&p�� V>���Yn
-����0*4����S�5MWW�#��l����nܶ��ޣ��́|� �>�;Y#ZK���@�g��� t�sv�L�7I���ꯠ�ĝƆ��X�q�=����H���%��q�g m^zR?�Wsȶ b�|� x!�TzN����\��~r޶ v�2s���O΋/# ���lҌ{������-��y	���� �� p}������ھ��������B�j�s�SJ���"�,]�Uj(|�O���4[9"-�۟��ۂ��D�ܧA�R��'xy���ȏF�x�I��(�]]�>��#C��r�/����$>H ��n������{i�R �T�%���q'p<�x�j)���8�� L �f��}�?-Ƌ��P_�zNK ��c=��{���x��.a) n�Y��}�v|�;�ߌ��vN�t��RN�T��'D���>}*������Z ����+be�	pq27�/m>i�g~Hc) �C�����A�/��L�*=�K�D�v'~�ʝ0l���E3�oӰ d;��ǝ��*7�����`f�mj�� Z9u��=C�u!p�I�5�b⃤q�.K(+�H?B��,Q�#@O�_���x�l	@���I���3S��5P��/k|I�kͷ%��S�[��6�bG	�&���#�a0� �^~n�l	 ؗ�z叀��%p��3>g#aђ� @��D+����Y+'���p�Ѷ��X��ꭼf,!��Z�(l8��_�� ���uԼ��:PF��'PZ���')��@���^�R�A���إ�I� }�S�I6�9F�cTP�R�!�}�<�;Ǐ�m��0>9u{�ǆ�W�ͣ��:�8�wUw�t���7����Yo` �
-܏�<��qTs�΋�J�[	U��߹ѿ1	���$�0�3���Q�d1��M�i��k���^��x�p\��;��#����9J�.�0}ҍNiN��>5���Nt��Jt��5��n ��(�(D�E�P���/���7s\��\�
-�Pf������� �	L ģ��QG��Cjۆ9�����OE���~�j��O���mm��֎�-d������@$���
-P���*�
-(����Vw���O�>R�z� �ὔ�t����"r'�m�Ğ1 :L�Ɯ���J �����E��MX)!��� yq?�D}�Q�6�]w@���8d�n��Q��r,�	��� �1�=��_F����: �zB�6Nb�������,\' ~j��Q%3� �>�ea�#s�[R�j�?{��uw �#} ���@���/
- ?�U	�{�D`���l�: ~Uچ��kA �)� ����Y�;  �0��j�C����%�&e�
-�w�����������F �D ��Ҿ�Qk}E���m��������VK�A�; XLD�Id�G	���������d9J��U��� �d���[���,m�J���>u�����������V��kn�K�q��ԧ�����\'� ��4����mh��|~ь�51����?_�|&U^r܎��7�ʄАtΑ)Xƣ5���ПP~���'�X^Y�qW䫱�HjYs}zI4�Z�ˬ�:�țsz:^]n�R��#�V�d�3黠)��󧓣�\' U��*�)�GQ0�?������]����}�p) ,�헡�w�( � ���;lr��H�+�p�{E��a�/`��w���cԜW��T=��#y��,B�c�'>���bl�w�1���֖ͯ���.����h��]����n�����J< �|�{l�N�q%C�pD��T�����i��ڕP� ���[�|3T��8,��N��-�Hz�"p� ❸���s�!��%�ل�-��}���lk�Z(�M���\��$��#��%2�;ͧ��ҝ� ;�{;x#?�O	B���HgA_�\D�����-ń\f{u{S4#��#��\_.ZR�Ƥ�HS�$ꯓu�P�hFȉ=H OLg�pW`��|���Qȇ]T���d'���F��0a�I#>@��e�X6�\/ ����]D�[��$~� �sF�4��=!�X;��* T_����-&~�*�'��(;̟�2w��S�� �!n�<#�u���mB�w����B@ B�/�yF �O8��#���LB���J�! p_ o������KV��~o(���`��YO	@�j���+�N�Q���p����.,�y  %IDAT15������:��Oh�������	h��w��Փ��uh�I��<����ȒB��7C��ͪ'��H$'��h6��#�C �=����!ۇ�zV ��B-��]<�7 �� C��>�MmۦY֋"
-�}cǲT�ӻ����y�{���A;t��\��� V���4�7�?�_ewi�@���eX�� ��g���eC_�g ��(�d	�k��ߵ�m�b�Peݶ{2.����mK��A@��:*����7Po�z��S��u��F o��M�� m����	R<~���l�J�m�����L��'�y |����V}B�?�L �:��Q�"p%y���!�7`���w���5�g����K(-ݡ�0i1/���x����3Z~���?��E�
-  �����2�8�!�!���|���\��ѩ�dh��.�+4},�w�zmw�n-rs�N�"?�d��Ov����L��DW՘��{�¾��A��!ҕ �b(�4�S����`йZ:��y�ۑ;zI@A��o�-]��H�z��P�c�^bgO'�3�ų0�&?.�m���|�q�ݡ������n��CS��=^뻪���}���2\G�"���¹	���]45��D2�c=g�ߋp#���?#|���5XhB�Ԗd�b/�寻؟�� ��xw�7�5j�+#���B}�@v�Q�4�٪9ؚ߻7��l�0��_U�ޢFe��,�k��7d��[:�z��_8�JN ?�����5�l�C P��/���������tc�0���O�m�t��ZS_n��m�+��vg�$��@���o����x^��y~W�->���L:y �����������6>wxyo�C�
-�=��;*^�/ 0�#��N2��q��0/��Zy'�~�ͩ����'N)�� �86��@?$_G%,�d �W;�{,G�����pSbKUW�qo��� ƈ���+��dՏ���&�y|��8z p5x �H��Y���:ÿ�QN�v�se|���ޜZ9��-0���D�	�<n�\����a7 �
-�:^c�lW����۟�J��;��Nn�+�4��g!��Ȇ�Ż�m�Ϊ��ګwqz�"M"����ֵ�������,4�m@��\��u�k
-��v���X�OA?ے��v_��z�c?
-z�4T��֭��1����B��&�kXy4mnKW���{"/�%>2������q�~lK�jfKW�y-��u���Ė��Ɋ?�;q'_p�y3(ޢ�T'(
-C���#������FW �z;5_���HI>>�<
-���q4�5�B''����S��1��g�|����M?�*���v"�����[{/��#p�������Ȅ�e��U�Vķ�����OC(���m��x{��87���~a�,|�f�9�&>�9����-Y�7�6'n�p@>� �_�n�*ϻ ��sh2<=�#5���Sk���㏣c��	D ��J뷄I$�L	�>G`�
-�_&¥\�o �u��&��;�#�f^W�G���!|���!�w��N�LC���,���)�ଖΪU�-��A�]�������Bz���Dg��DW�D2tc�?�b �j��W�y�]Zf��l�?����Ueƞe{�/}��+|#Ӷ�3���dh7�vƤ���>���C8�Y�Q��L��ɽ��٣�f�o���Yi����h�m�,�{sߙ�J.�  49�?D �)K�dD ��&��'���" ����WP"�����N@���
-J@PP����	� �^Bb_A	P �[2�8�Q2�*�WKN�v������W	� �Zrb�#D �`���z���3E%����T%O�x����B����" ��7���" �����(��8%3�x���^G	� �)�y���k%&�:J�A8j�d&ƅ�`\0�I�J@�֒�ƅ�`\0�I�J@�֒�ƅ��	̒�g	� <[tb�D NP�<<K@�٢Ý  p����Y" ��;��  ��E�mP   IDAT \�8�ߣ23    IEND�B`�
-```
-```png
-�PNG
-
-   IHDR         �x��   IDATx��	|\u����9I�d&�TP�
-^TD+"�I�+�W�*���K�*4������(
-%�"\6�׋^k3��"
-��
-�LJ��������m�9�g^�4��9��y���w�L&�pB @ ��	 27�4�  ����@ 2(@ ���2 �@��� �
-� � dL� ��	�]@ ��<�?�Q�E @ S�LM7�"� d]��	 �I�@ �	 24ٴ�  �u��O ���@ Ȍ  3SM� � Yش���G @ #��L4m"� d]`��	 �{p	@ �L 21�4�  �u�-�' l)�e@ 2 @ ��$�" �@���?��&\�  �@� ��bD Ⱥ�x� �S�:@ R.@ H�� �@��� 0��"�  �j@����@ �.���	 [��z@ R,@ H��� �@���?`�6܂  �@j ��ZC Ⱥ���' lK��@ H�  �K[ � Y�v��m�p+ � �  �rZi
-@ ��� �=!nG @ ��N*-!� d]`�� �o� � �N� ��)�!@ ��L��D��@ ��	 R6���  �u���O ��[!�  �*@���f@ �.0��	 �b;@ R$@ H�d�
- �@�&�?`�Vl�  �@j ��JA Ⱥ�d�' LF�m@ H�  %I � Y�\���y�5 � �  �bi@ ��� 0Y1�G @ �L"- � d]`�� &o�=@ H�  �SH � Y�J����q@ .@ H�R> �@���?`jn�@ �D =}�  �u���O ���C @ ��O�#� d]`�� �n�=@ H�  �SG� � Y�N����q_@ *@ H��Q6 �@���?`z~�@ �D
- 9m�  �u���O �� �G @ ��N%#� d]`�� �o�@ H�  qSF� � YhE��V(�@ &@ H؄Q. �@�Z�?�5��@ �D	 5]�  �u�V�O h�$�A @ A�M�"� d]�u� Zgɞ@ H�  1SE� � Yhe��Vj�/@ "@ H�DQ& �@�Z�?����@ �D 1M�  �u�V�O h�(�C @ �L%"� d]��� Zo�@ ��  �SD� � Y�@��@ �� b>A��  �u�`�' ��^@ ��  ��Cq � Y�@P��@ � b<9��  �u���' g˞@ ��  �SCa � Y�@���@ ��
- b:1��  �u�`�' ���@ ��  ��BQ � Y�@���@ �
- b8)��  �u���' o� � �N� �)� �X���QZ�~��C�K��������b��R�������ե��7{�K7]����k�(�g4W��}ݵEK������\*����{/����w�$W ��	 a(3	Wگ�{���b�̾b��ݵ����kw�o�q��{U���ιU�Vf�DV��Pq�HUY��*"�'���e�ն��sr��ɥ��E�g��;w�����{z�Ã}��r_�����PwvN �  fA X���rK�̷ԥ}�����u�=�nS�Vu�U�'�ur�����8,��hщ�:u�s���Z���Ra�{�B�%��+���b����� �3� �R��k؃}�=���=����z}����=�.w��c�u�h^�y�MT��3�ԕ3Ƽ�,��[��{�#�[�soR�J�lPuj��Wj{�1R#����i�����`�{࿧��7�`_�g�ǈ辢v�]R|R}���U��u�g+�H�G{���i-�a�M K�q����=��X;�T������Ɵ��B{��M�}�%�/�#Ri��T��m��B[.�q�\ ��� `bNl�@�}�u��-��oh�����T�3"��������v�w���cu��j'�<��pB q�L Ϛ�x�����}������mN:~�*���^d+����n��T��;�?���?�?|܉���v=l"@ ����!�|0ZR>Ԟ����8�>.��N-�#(m�ܫ���m��ّ���,��o-��!�b�0wG S��2-p�����u���`t��z�=�?�@:le	^`'�d��Ŏ��da��]�h�]͂@6 ٜw�Q`ɂ���g��6��7��t����%2}�����__*u�!#O��,�@ � �z3ZF���[~�=�|��g�i��?!*�g����y��~������Ky�`R��:[%@ h�$�A��
-#/��˟x�~��~�`���9�lq]�L��,r�7��R:d��q����-vw��ŧ8��y�cqw�ɽ���?��~H��=м�^S>���(�~�z�K�B�v�J[��嚾b���B����ڝ���}ݵ�z��W������E��,��t����w���A�g�S,;3w������~��_cM��V�B�j�&�������7쟰�)�I	 &���o9��\�8ܳ�X{�=�/�+Կk*�����g8���ߪ�?�6�;V�%���3�Dy����Q�*����6����Nd?U�����-"�;'����Qy�]w�]^�yzy�s�ٳٚձ�j���O�������������3l��.K��e?T'?1���}aI�����opn�f��//-��pB p��  �o�ȈͿz�䐡�}��	��z�����Is�։��lR�V��N�kEd_���Q/;��~N�eV����
-�ɏ���G��-Ծd�ۚox��S�4�=�[��������b�n+K:��շ�h������7�9Ǚ��k2�{�������������B�w:�[�y����k�ϰ�X�%�W�,<YU���2ϟ�3w���o,)�����z\{���x���B����Q����XD_"�2 �f����X��R�H�(SA�QI H�d{�_���C{��؃��uJ�n;<�=q�X;̞�7�aaf��ޙN�Uk�j����KJ�����9i����ߎr��c�~�������E�w��8�<o��ϥB�}'�W>]0�S�� -���k��b�����u#R�o�������`�J{��l�P	ە�h���5�9�7V��~�~����	��'�m�]����vW�&'�y�'��RX�;�ʧG�v�ui���a�Xi��/�4�{�#ۃ�Y���|m�j�;E�d? �5��9�|Ntv}̹�ߏ�GN<䡝��>��z�C��kWZ��k���QLB���W|��������Y�/�
-�\���=&t����~���'z�;U�k�N'����+�a
-����Ѷ�{,\�[~CT�W�TۣT�/Q�5���b
-�p�L	��s����-_���i�eQ� 0A����[:�T���P�Vqr��4�N8�J��7�ZU�n�W�.j_��~�?���&���z������7{�b@Tf��+��7WŻ¾g����	�x	�1�O�q;������m2v���	+�1��9��f�ھ�v��g���Yxq�.)�^1s����C�����ʂ��T���V{�p��v���']��q����w-�g�����.��C�ٌ��x����������z��/l�н�������^�Z�O����>��\��^���b5� �������r�/,�Y��=��^���^f;��'�^���`Ge�����S)��nf_��B}�����v�1��vS�P�v�e��
-D�x�@���z��]*�!?ֱ��?&�s�S�T�5���K��}���&Z��b}�?\�ŉM��"   IDAT;n��a;�!�Q��}zfO��R�XӰ�1�l 8�%���g��G���ٝ.�ό��P��^��x_q�l?d߾���
-�S|q�*�Ͽ-&nF�����zG��M�^�-;s���~�š/��w�QE�����F�=ؒѝh���?\R>tQϝ��뒞{�v��E�Lۆ7�K�����cc��K����s�`���q|���R��"[�٦ޭ*�[D�CH�r��zu~t�_�u���Im�h��������f�ˌ�1��z)e0깈|��H} X2�~P�X��^����GF��!	�>�9])~�{� �Q��
-<��Ƶ}��_0�;��Hm (|Qoa����3���ʂ �I`�&��
-��O�S]��@�. ,�i~�k���_��k�'�@`k.�T��[����-���R �+>�c�P���ɝ��v[Y@ �D��gJ��ϻ�#S�ⰃT�����<i��^�=��#=��o� $F@Ϙ��O�풘�)4�� ��y���;J��%��e����D+R<�j��1]}\��}�H�@<z��Q��h&�����T��vO��E@��&ckJ�����}�S Q���B�3Ƽ�����IJU ���vu?��������A��RPb@i��s�p퇢�f��C|�R-�i/m~�T>*�]�\d� K��g��~���'@ 3�CT��W��'3-����4� P:d��v��.�� � �
-�9u�+��9*{����b������Qq��Z#u!� �	�}��g������>c �
-����QyR����R���T*�>e������B��z��F?C`A 6P9���v�f�q!!�*3V��l�J�[��D5 �@|��	�����J�(� �[>����DDjF �Pѥ}�zYĞ6�=8�MI nw�E (�V��C= �@���޾�H?! γ��" ���E�G�KDe �@|�!�T9/�R٣��7� ��=�F��pB ����R_�_�:`6�Y X����5.�&;]#� �p"'���n�^�[�⸟����z���N � -P���[���D"	 ����E�S)�m@ &.�"�-j���=�2x�x�z ���SU�-���IBU �@�TN��wA�� ܘo��]>��= �m�O�
-C��6B<��k���b��N�qŠ.@ U�]P:d�R�ʹL � `��קliY��@`�m��}u����֍�%����*�w��!6��ʂ  ��,����-�ސ�������$�@ ��	���]T�~��⡝��[���s}����7<ש�&�Ԇ �Z��g��NO����TO�ě% ��X���X6 ������ƋO�&�@ ޻�A����Q�{s��Ȇ�s��K��y��.�%x �\�]�ҹ�"�@ ,����%=��y,��}�� ��#P �%�O�r_Y�еe�oz�\ � �w��s|�{6�K � Q����qW��Qב����Y�@f�:JE���@� �@���J���뜎�� ���7aE ������G��Z]R�JB�� ���@� �@fTvvc����fd� �� N.�.u�����6 �$��c��$�Z�Q]``��v����  �:վ�b�Olm�h������b�="� l"�.Y�]�&Wpv
-I�K`@E�O
-u"� �8�]f89�2 ��6���R%�K��{�Z
-���X �FJ���"� �h4.ᣂ�ő�s� uOJ+}!� �Py��v~4�=�\�vX p�f%	�Z@ 6P�[2�v�&�p6e� q��H�7� �@vT���Ӌ�����t=�N�u�����EA� � �
-ؑ�ykG����:ΧG � `G 6���N@ ��
-�~�T�?%��O���mX P�z�0�@`K��#����Z.'_ � `��J> � 8���z	�H�m� ���V@ �4xm祡z��@`�9wￆ� �@�������7%�� kO� ��[Y@ R"�D?�x��)i'�m T��y] @ �T	�g�w�(U-���d�$�  ޝ�$�j@ ��	x��в�݌�����, x��}r�@`�O����'�m&6Kj������
-d, �@����-���$}N �V꘨�&�@ԏ  ��'���K�pm&�HnӁ�&�:Wi~eE H���|?���JWW��&� ���<[�t� dD@u�9)#�n��$�h ��;��'��@ �&��.�q������4 ��F׫�Y�&�:@ �)
-�c��)�7wKv��&M�˟'�#�	@ u�$�侃��2�P��SU�_�KZD �(���1��,6��� � yz�#_�@ }NNX�����X�;
-% 8�7݌t� dZ��kGkGfK �݆ *s��
-���s� ��xNe�x�s]|B	 ���|�p�++ �@�Tt����n��l���pmh`���/�ɗҀF � Oh��x�\W��@@�6�j_��ʂ  �>����4^G�.� ����� L] � l!�o_ᡗlqc*j h�R�-q�4ϳ"� �K�i�����ݤ���2Q�����V@ �t	�<�S�ZJg7��&�U]��pz�<+ �@�f�n��IUG�5����&�.�]g�K+��Y@ �#�Nߖ�n��Id���6蛌�.[Y@ R"�D�-9��g�����HӅ�@q�/�w�k;�Ώ�ʂ  �m=:%����H@S��:{о.'�}eA H��:}}
-�آ�t]�< 49˕�W��c��Y@ R!��҂�sS�IJ��E h����ǩk�'`�y�@ ��o�!�l^}�.�& 4a��&�/��|F�!� � IP�7&����� ��.�����2;��, � �8pɂ���[�����|�@��<�Y�vo�8wu�2+ �@2�F�?�Yy���e h�����[���2'���eV@ �
-�wx�~B�i�"��1�J�U}�]~�V@ �$	8w��-I%g�����D��~�>��;�}[Y@ �"����1������ǩ3�W%" 4�Ͻf��ʕ�kD��o'@ �������2 ��re��r%w�6f�PEW?v=_@ b*����&TVZ7J\ xl"����U%���:Ʈ�
- G':?�ue�����&�^�ʬ�ڳ|uU�'�]�W@ �x����z�{z<��l��>��95g߸G}�`�7�+���7ځ�~։��y+ �@��6�7F?�U�� �iG~c�{*�=�o���g��wE�����:��[���}]���r������� Ұ�Y@ ��?��%ik��M] �t��WϺ��:�%��+�����٥���>�6���|'����qι�8q8'�m��s��O�z�k~ �zE�=��@57���o��n�z���`��r�k_o�]+�{��;�W�8WVэ���y@ +*R�J�I�3�`�IX&�7�p`��5�9�)Ws��v�a��T�o�t��v��.�l���%͏(^�Rk��w���_��r�k��9�S�v�Y�h�i�[n�e@ ��$j��מ�>�]m�@��ia�z;��;*`/EDY	c#� �̾����Ge��
- �J��!�{���.�@ �	8�D��O �n����&N�`x�D "P��E20��+@ �%�+��p�~$F@ b"���1�de�@�s���"��@ �P��}C���)@ �&O�7�_��7Y�(�����>1�d�eda@Գ�rg�%0> ������]C�a�#@ �P�7�!�{���#� �h��Z�VI6�' D?��&@�s@ ��/^�z{� �'��I   IDAT���d���` @ _c �8�A �x�s#��� �@x�Oo0Fږ `[:!ܦ*�0C � �Pq{Ǣ���� ϵ:�B`�S�� ��# ����� ��	�V'2� � �D@��Kb|�Ri��g۩�q	� �(�:�����V`B�z4ı
-�\`憶���&� �r?q0U� �D�A �4�d����� O��{ "��G �p<�?5�'6Zֶ" D=�NQ��� �@��<%��l\��,�]��A ���@ Nv�C�א�K�����<@�s�� ���!��p� �A	�*�%�0�b ���_�K�% B'�|@����@ �*nǴ���� ϒ:���0<�+�Dvw�퍖��	 ϻ/�����@ \;�6� `<��s�q8�B �p�7?GM�h�7��O�D�� �~g� ��e�;$ D<G�mΏ��G 2,���	 �}��PX�s�� ��:�cO����$��ޕ�� 7#!�@Tb��#>1	O����c@��#�@�<��N����'��z��'���` /&�=q���&!:�GFmw���� �@��2�kl[% D<5���� "��G ��\,@�]�m<@�3� "��G ����I�!��7`<�������c(@ z��oH�O���n&G "��G ��.�e���7� ��G�fv�������'Q����a���	Ƅ �0>�/�)��>���7�# �q���u�ǀ�ggD�X`�}� ��c2< �h��F �x���@�웍H ،#�O��' |vFD ���Ջ, D�zl�' D<�Vj�M�.�2U�Ѯ���# <�$�k�! �q�D`��qF$�>&@ xL"ү�!��Y`��_�|�� [�Dq�9@ �	�I4����L �Ť��bQE � !	8��zk� �&���s8�B ��$ D�u��' �`>�skcP% � �	p 4�D �*Mx7�* <nFB �X��@,ڎQ�L�@��@ D�k�k�!z�7`<���S����d<@ J�6�_���x�M ���h����A	 �@h�S� ��=�@��]B��ױ{B��@ ��|�5 D�n,�' �aZ|wwʠ@ ,�# aQou�Vi»a��=��	�^@UB<}�q���cQY��5{����4@C`A �l4|73�ƷK@l����R(X�� � n%��' �f�[bS
-� � �꬀�`��  l(���m��H �@��w!�h������̎ʭq)�:@ ������`��  l�'�[���~�`� D.���Qcl]� �u�Po9w��?���Pe0@ "'nADC3�? �������q��@ ��Td����8�}[�m�|���  �l�p ��F}et�32 F�*�@8!�@f�Iϒ����'fr�� ��ݜ�C�e� �@<t��wzZ<kKU�ͱ��|@��R@ ]\*�����k��v4��=���B��������V@ K�lt�m���I'���!K�G�+ J�-ƾ�rm�ʍ[\�E@ sT�3cc��
-�����%��8����Y}���_;�T>��X_�[�}�T�����W����][�d�Т���k{�#/�?y2c�a[@�f�w�W1+�r@ �0�E��m���u��T�=�[��Yꮯ��+������b�%{頷X�-�n��������y�#Q�����B�'EܲMW�r�sr��y��s�U���?J��_K�ڗ{���[z�C�
-��(�" D���1��y37"� ��iGF����W�����-����^��vy?;����\����i�<Z���;�n{$x�߲������R� b6���kcV� � �x$x�{��/̘��_����z��W/�ߥ�W	 1��޹��ɒ�P�ʢ@ 1�|=Î8\q�N��J��g��� ��i���V�U� � <&�Dv�z{_���E=w�z�$}% �p�<�~ò(	H�@�%�����访[ڽ�ea�܊� �Pl�>|i Zl��@ �����]�'�b��%=.�8��/�բ-��@��fYۂ]�@ S�6����o\Z�ϋ����N ��S�[9�U�ʀ � ���TK��;�����O Zx��w�� S��~ �Q����f���z������T�e�-EbrY�( &sA ��T�ܥ{�5�����3��}@��S���nw"|*���dO �;q�p3�q�� @�c��ɗ;�W@ ��
-<����,�+N �4[��:r�U�ʂ  �M��ߨ��|�ria���R) .31N+Vj�9��qn�*@ ��	�}|�v�!#O�C��8��6j�V�q37!� �Hr�>������]��� �lg|�����l�� � IPy������]��@ ��7My��;�ɭ1/��@ �8�ʁ����e�"{�l�NWt%{��gd@ ��_[�}0�}ow���E��?�}T� �S �U����0|h= �P��+������J[Y@ �%��~a�<�v[��ŧ8���iS�+wC R,�����];)�N a�Oq���nњpB H����R*ԟfc�0��1֧�:��.��.�+ �:�5�S���� ��4����i#� �T��[�" ��a��ί̺Cԭ�6�C �'���g6:$�� ����%�d�E ���9���Ķ��V����~o��Kl�1[Y@ �L��y�j���Fo�0�[8ƊU�u*_o�.� �@�|��e!|D0 F�>�R�E>5�m�H�@z�Ru{�WyE� �`���7��U�]"� �@����A�A Z8��;uh����@���t���������U���ʂ  �2٥���=�l� �n��V���Q���@ �	
-dc3��xW�� ��x����kD��	@ �zd�M ��a��3B�!@ ��d�'�%=.T���dC�����"��!�0 � !	��z�#ϖ�N��`�ܭ�ɇl<;`�� � ��XsN�T���dC��U]��+B��@ BPm<9�a AɆ�����2q�P��2 �@�s"��3 (ِ�{�'=�T�yX�C P�~�?)�� ���`�����۰��H�@�Z��� �7�����sq��=� �@<�5�x�K�*W�.��cX%!� ���}'���O��1�W�l����# �@,TdVP����d#�oy͜[��OEXC#� -���T{�l��)R�+�1+�6[Y@ *�Ď�T;  بw��np�������-���7ջԎ�o��;ר��_��*@ ���֦p�	݅ 0!��n4���t��n[Y@ ��
-d�l]P� ����~ϾJ����Ĥ�@ ������|�[ &n��-�ծ���E�m��@ �Yn^���]	 ����> N��H��� �B��{P� ����~�cAzF�ʢ@`;پycc�A	 ����~w�t���%�@  �#Vw�KP� ����~������S��+meA b/������? Hݘ�۹�_ԇcZe!� <"��K@� ���n�]7���s�Ԇ �dݠ�GA
- �ԍ�˕�V�Ŷ� � �L����g�r- f�f9�\��}�c2 0Q�,o��߹le�/� 2�v�]߮�#�MؾY@ &+��O�.�ݞ 0Y��m�|0���[Y@ �	d�wsyU��A �N��˕�run �R" �z�_�vT   IDAT��c@꿕&�`��d�9}xb[� �@���n�C�/��? 儌�_�}L�\��r)H��=����7�Q�1@�	�9'N �@dY��F��φ�= ,鄌�be�nߓ׊hM8!� �&`O�λp圵aH K:A�?���9�zݘ��)R"��6�q���w@��	k�����[���)H���~x���B=�J H�K���W�_�CR�?# � �	d����'��	 a�'l<;`��\��$�r�E  ��~�;�E��(�6�.�|�8�z�ʦ\H�@�J�E��_=��(�& D���1�����-N䊄�N� �@���)��EU  *���{�/�����i�J�\H�@�
-տ;����/�FT] ��Oท�������kE�5	,��@ ���y^ۡ��VEY J��}�UZoH�UV�oleA Z&��9��y�f�!�~	 Q�@�?��ú��\��!��S2 ��srn���hdl20`�N\�ܕ��l��{��V@`�Y��^<P͟�N	 q���1pݜ�G��十	�=JF �0<��J�]a������m��lK����;?�{���ﶶ�6@`[��͉/�-=���[����H�Yv�n���΅V��meA xT`}���,v�?z1^� �5���6�Ͻ^��Vb��p�H }�:qw8���k�|7�� �:3	���t���䏲o�X>%#� �p"z�z�?p`0�7I �S+��j5P�:VD?$�@ �	�e{������f�K�:�� q����g�>��-Ih��� LF`�8=}��ܼ�?�o2E &�Ŷ��:_E��;��ʂ �#�૜�N�72���}��Ա$uC H�l%���J����N\��%���@ ";��3Uy������wDTƴ�% L��;OD`E%�Cm���'�=� �@v�韝�k*��'8���(�~�%���9�6�苭���ʂ $O��9�u�6Pɥ�3O ��Ll�v�l�.�S�o$�	
-G �
-$aWn���z���[��O:g�^�P�Dj$ LD�mZ&��� ;lv�:����!� �U��������B�|o�[$ �Z��MH���u�����[Y@ ��l��F��e'�s���w�X��;�u��(@���V����^O{�������F��^��{��!�U���6�h�������*snK{����p��k��6PɿՉ�WD�;��)�v�������k�+�+ʕ\�}������eqّ>,N�}�{�@%wl��οť���  -��'$`!೾�׈��&t6B���T��v��[�\�_���=�99�n{�V���k-|�~�<�\�-]���v9S S��fWT�?���?�*�@�N��hx�����ֆ=g�����ܸ~h/_�B;j��m����jU�����{��^�N����! �wK|��w���XUmeA 0{��= ,)W󇟳������2�b��v��0;l�4Q�QY;���Md�m䋝���܋����oyN�� 컂%^�D��`�S�C���,+�N3^rT3I�u�s����'y��7o6.v��h��U���+^�z\g[g¹�~~�m�ʱۘk>���`��'��{���,���cϲ�=r4���jn�\�=(�~c���=����0���Z��>���\��蟅S�?����}מ�ծ3����,&�c �:3���@َx�v���>��+9���F-L�=�~����!��+��^N�d���[���J���օ�fA\��7��S=��tw//W�����gmb��� ���Ly�Ug�Ŏ�b���*�#�	������g��\��o��?�N}�r5w�=�i����<�bNW��O}��s����Okc������j��͟�l�U� �A��
-��/��3����[%��E���pν��o���	�ɯյ�}�u_����H�\q�Q#�E���2��^oszF���\X��8'����W��kw@ ��'�����=0�_��k�^��~�? �5���0{�?b��us #Li��g�vd�t{�:P��Y8݉�0��e�NCN�
-y�xm���A6�9�����`:% ��^CX�:��ap���v����d��4���w�s������/���"���G*����쵁�E�bI���m/N��濢N�u���yrn�f���?S^5��mߙ['#@ ����R�u�2���뚿�%��")*h��Ĺ�vn�=c���(��Z������VT�_-Wr�P���FcgQy�9�B�O��í36�s�!�y�+�ɢ]����.h����k#6���/e��NF������Teqr���
-��k����r��s�V���I\��I��?�g�g�3��p�2�O�	����U�D~��i>��d=\���kSy�����l���6�o�}��%@��@�T��?�I�*�_�>�����r�]U��r�������f�柤��s˕��l}^%7��~�l{8=�9wT�臈�p�V��8�W�]#"_�������������l}G���|0����  "x�V`�2�6{���惄8�*���{HC�z�s�7�u���3�o �l�܇�k�7T��Q����A�@���纚�)�`�\{�=T�w�s�nq�~]���D��,4�#AY�-"?�u�6����߳ۿj_/r���3m��ڑ��K�sr���C�r%�{��Y��?�\��P������M�f�?KL���A"�|�(W�;���6@��}aI�@�]�'4dl��`ճ��&�	L^�H���˕���L����E����-$��c�@%�y�\�=0�ծ;�\ɿ��C���_����~�}}�@��x{��4��'�󗕛�{`�$��Y� �lG� � nN����٫��+��:���p::Ko*z�=�}���sm]~~e�u��6��c� q��	T�U�W�ܱ���}��G�	����vn���:'�z^���:��J���[#��D �b�T	|f圵v���`A@N��H�V�h~c��v} �ԁj���V��C4e0jP�7~���	�(���C��s�����n�>�r�=�=�2<��#0��_(W��<|~�-����O"�'X� ��ɣ��
-\X��/�75T�{:�����6�,�p2b����;wd�}���j�]+V�Yݪݳ��
-PW q�j�\``0�S[�\k��n�#�b���Vc|'��������:P�:jE��ۗ���p|��2�/@ H���4.[���鯔+]����vT�#���˻leW@�����\�xr�=�ߣ<�[d��_x�#��{/�L� ��S� �y��
-��R�䮰g�ǖ+��<�+��}DD������-�|_^�q}����jW��*���׌��>�  �s^�*��_)�v�Q��^Ґ�g����k�!��&����7qr�S�����*�WT�V���ڞ��w������L\ q��J�����(W�\<P�z�=�}�����z��㭑��s�ϫ���'lњ�^c�⻥����K!��^vh�e����;\/�@ q��M'A`�9��v�ܞ�g�G��]ͿX�������R'��>~"����[�\��ia�*r��ܱ��ai����[�S^���_�=�|)ĶgA`Bl_@|��R(���r5wq5�����3��,��nv8}���Z���|�ֳ��2c���~GD�'W�hUD����R�����!"���K׼�'N��v�r��v�<;�Q;�=����Q�hG(�Ӑ�N6���γ�����?eE�낁j���Wf5�kwcA �4
- �8���8��A�����0��reΥ����l}�=����dA����U�j�ev�h����+W�����L=��r%?�\�j���J�5v��9�o��Ǘ�]��+��� ���9W��T��-�W���O�wK�
-��8 �<;Ԇ  �@@��`�- �u���  ��qR��  �IDATCu � "@ ���"� Y��� �>Cԇ  �@ � P�% �u���  �sD� � �\� �rRv� d]��� @ H�,Q# � -  ���!� Y��d �1OT�  �@K -�dg �@��?)���u"�  �B@1� �u�O�  9sE� � �L� �2Jv� d]���$@ H�lQ+ � -  ��� � Y��d	 �5_T�  �@K -ad' �@��?i����"�  �@� �u�O�  ysF� � L[� 0mBv� d]���(@ H�Q3 � �  L��#� Y��d
- �9oT�  ��� ���� �@��?����u#�  0�4�+ �u�O�  �sG� � LY� 0e:� d]���,@ H��Q; � S  L��!� Y��d �=T�  ��� Sb�N �@��?���� �#�  0�и �u�O�  �sH � LZ� 0i2� d]��� @ H�,� � �  L��@ ���: �G�@ @`R�Iq�1 �u�O�  -3I � LB� 0	,6E �.@��  �g.�@ �	 &Lņ �@��?M�4�&� �  0A���Ⱥ ��K� ����@ &$@ �!� Y���	 �6��  �� @b@ ���>@�攎@ خ `�Dl� d]���(@ H�� � �  l��@ ���: �W�B @`��m�p# �u�O�  �3K_ � lC� �nB �.@��  �wn�@ ��
- �J� �@��?��4�.�!�  ��V`�Ⱥ ��[� ����;@ �  �� �@��?����0�!�  0� `�B �.@��  ���@ �' �@� �@��?�,�2="�  �� `."� Y��l �1�t�  ��f��8�� d]���"@ ��L�' � � 6��, �u�ώ  ;sM� � <.@ x��3 �@��?K�,�6�"�  �O�?!�� d]���%@ ��|�- � � a�@ ���5@�f�~@ 0�!� � Y���	 �7�t�  �� �&@ 2/ @ Y�uzF ȼ  ��  �@��?��l�;]#� d\� ��o �G ���V Y�y�F ȴ  ��O� �u�Ϯ  �sO� �   dx�i�.@�Y  dy��@ ���N=�#�@��?��  ��p���   IDAT ��a�*�    IEND�B`�
-```
-```png
-�PNG
-
-   IHDR   �   �   =�2   IDATx�]	x[Օ>�>Ɏ-�I �P�vXJ)m
-����0L��2�LX���R�Hi'.(�8^�Ne�����b)� m�����ŖdǒޙsI�Ȳ-%��w�w��{W��{�~�{�}O�I���B�șb
-�ZX�*�Юr�#��
-!��ܙ�o�'����=c��3����Bho��3V
-�=�jo*����=c� <�m*�����d��K����Bh8�K&
-���m�*�����db��b�B���b×���Bv܀��^�D@�%����n�b>lpIBh�8R�؍�z7����.q���!�n��%�]�H1c7B��8d{�����A�U�F@�7FR�A��,Q�o��}c$5���A�U�F`p��}��4ԒorզuU�3#�;��*'���+\�~Jx̎�Չ����!|�� B�l�M���qY8�X��mM'�>U�A)x�,k�W�^o�R� �{�>	�����;��FB�+&�j?$匀:g����qOY�k;������ԇ:~��ȧp���F>�4�żo�V�oF����� '#��UQ���m�1�����v�5�M��+��R)̊ a]ughĆ~�Ng^��Ǚ�s���c9#�|�� �����R�s���᪎ȵ����KB�� 9�a�iT��qO.�����JD���k눙Os����K+�������áĜH(������{��M8���XZk�AWD�;��ꎟ���<�/
-���	%��d�_�k��s�������9��z�ʑ�}��N��:y�a�E�|�G�Ǹ��r>�X�S���<���?�L�](����!!t_�GFSy�6yL]u�*�z���6f>�	�W������L� ��W�d�	@0���H�8�Tԇ�1R�x�ۺ3R�^3���=�$ �s�-�N[WTW�������������� ���H��
-[�k���qj�65f�y��O��Hh�����1�Wo�$�?���7£�x �?�������ӹ�٨^�J�7�ʃ����H��Yg��@.ijU��G?�Q��$�*�sL��,0�T�Ku��Mz�2A����*tg:BN%Gׇ�O!��D�%@T�C�9U+D�܇v���������*O����m�xI��{�ky�#�]�µL�I�px�/$���=���C�<��p�+�93��P��HM���+�_� CYw=d3�x����K/��wt)|3\�K�x��"Pq�&q	���|+�r���ơ�����@�^_�~������)��Z�:��^`��r4�[}u�#d$���}��X�I�m�'�r�2��L���5B $��t������&��z3$/�7�,=?�C��3o b����C���2A]Md�e]���$J�8�����}�b�&��a��вm_ʠ	=�<z��T���C:�̋AҠ@�@��>�� 4�l`��ր�W����+�����T�"�#p6�!>g�,2_��i8 B�y�ȍ�{�I���@�u��ĝu�䪩V�	��l��0�}8���3(�*�X8q�UgZ����"��P׉��<�k�UHr8{�!��w�:�O��L�ɕɣ-H=�Րc�j�@�o��*.r��#GBZ��x �Hr#~@�B�w�LN60'B�U����n }��7"�C�, �D��<���C��Eo�"^�t�s��'u� @C�ϳ�C��!'n�9Ӕm�J�W%+IṦ(,zD��54sL�{�}�g10�]K�#p$�z��-#s�јjY	�y9�e����AD�N��K�"G�k�Jh��Ht�ADQ�2"8ע�$�T�S���VV:��9�g+R�� �m�U��	j*�'Ҡ||��VG�s;De?9�r�#���J�"�������� :��k�x.d%tʦ v���#��3*�ab�V�W=���S��<� �ZD�������d���t#D��#�s��B7M�n?������N��8 |<���L7!@@EZ3M��KVB/�Ut�6�q�SĖA#�����t+j +�u�<��Fo%����R���7�OBWĂo���.M:�p�?�c�	}���`�:&�fӔ}ÿ�J�p�z��q����.�� �~���  �t��Q��rmN�@�S��P.ARD'�A��i=����Hh����?�15�o�,�u�)[�hq΄N�����*ث���x�>/7�^�~Z��l(��!����L�7 P�4�sb�&�v�}m����X�,�iH<�9��m��~�e@���[���R-�ҵͱ�߱aWr�����	H?�D|���"��$ ��x#�d�����	��M���;���,��Z�:/�)D4�~j̶ǃR�m_ �	싀�f"�$9B��I���ڠeo�L4Ɔ�y���UM���x���%Vv{s���5��.m^Q�Ue+��%m-��g9��K����$�"�'N?���F�Ժ��m�a�?Xڊs�s��XR�����!'�v�e�u����P���(�`�1��l���(Àtrq��TF����Ahk�!�s"FP��J ��
-t��N)�P] '�Y^�:B��N��ɥ}#�S:@����R�<x�1��Ow��š��B_[�O�C���+�X����s�_�zF���AK���s�ۦ��߲
-�IN�Ah'_Y蕎���J�!`�z@1B�]����h$/�C���,f�m����Dh38�-�V�4��FZ#��/��d�!��ʡ|�j��L#�3� ��G�̦86�����{@�'�/
-A��mm�ʀz�ߺ�E!�<ϱ�H�B��l��+�Yݙ� '}���,����lx���}���IH���[�;!���<�ޠ��w�+�R%��ֈU���C�w���0 �U$s诐C@�N�O�D֢�	���hDp4B	�@e���	�e��[u��I���=`l�)�g PQl�b���Dh+S�"�f�&��l�?Ӏ�5���V�6��z��?��i��Ke^	����B�֏�3uL�*ꨍ�և:&օ�3���Y�5�)���K��+'������(o_0�л�C�wo�աT����3h��m�?�rz`��ˋ{�@�VD�ID\����+*I,���/�`���dy<�x*��IS��-@	 ��e��r��/�C�4 ���c���~;R�^�PK>>�E�tן� �9 W��$���o?K��9�o�Q�ֿh�e�ۋ���=g ��m�cSB;���0�ݣ<�s�Mq�(Ԑ�X�M����#4Q�M6fg����D@�5�8?�*w����ZeR�ؐ�r5@�lH�X�_\�a߶G覵�����������A��U]��b�q��Jo�|�dڡ���� �����}Fi#	��z�[-ՖHz �$\��N�~�#	���K�RW֤� ���wJQ'۾�/��%twW�z"z�/�}� @�g��>�Yl,���I��y�<q�'�'�;�Y� Kh����JWs�^��BjA�u�Tq6�&�V��������ޗ�u�į0�7c�'t늒O�Ƈؕ6gO#�>�AV�f}�쐊��%<z�?�H]7"@v:Y�� 4�}m�[)�E|�_E<� &l����R� ��^����`.���,�I��?�O�9���6QL�K�$Ie�l�;�������=�$7e3J�s+�+�m�f���y���O��� �@�w �y����O����o��=�w�ޗ��h�����ZGZU�����&�\$j@\��ϟXi�)K�6L��� | ���FA�n��Ƶ�-���XBk㚖��~�����v!��e����.x 9PC��ф��-��n�K���eBjF�EB��ЯƷ��yU�����߆;����!��Dj�G��B��˙������_�w�
-B�����v�15���c�Pd�)��ɶ.]���C�gr���z���m�����X���C�"�  �IDATh\�'���ZV��,\Eh��_��Ѕ�7�F����3�"#�s-"�[�,pBk��Ŷ���� R6s\Ghmlӻ�ص V�s�x#�|A�uE.[�`����[F�׫V��ޕ�֠ /�,Xx�V�l Z�e���<��<��9�EDϰ�&�L}�=�>��h�絮(���1�zZ\K�=�h��4�C���*�y��[z�G�˻�s�c�W���ed�#�<��L1�L7 �7�/������h�͍�ܜo�\OhX����h�O8z����T�s�����������_Þ��]�ղ�|uS������(�x+�O�n7�˻�z�D�d' >mc��ye���hpټ���� �x���E�y���B�o<�ѫ �~�]�6� h!�8U<\�n �ԑ^�d�Mے��%Dp/ �ĹPr�uق�QjA��
-�3�������:�[p�w�)�ayÂh�
-|�2�apH�G�LftwgpzS4�f�J��g��W��&��B+��m����9�q�|̣�C�0}jT	���������X�� �nrM�#�`tK�l�"U<$ ;v�~�V�+|�Y�v�Zs4p}����^���@{I��CO��*�G�	���H_��0�ی�e��t&���'���i=�����l�Z�]ӕ�����<���S�G����=1�hhC�;W?��IB�qS�tMwg鵨��������@�_�����^�ٺ���������7��h\|��:�b�729oo�k��hp&���xrs�lJK48�ߟ�ۻ�W]+�>��' Ȱ��	m�ZW	�xɦ��eGݚ�E@� p�U��W��2�; =�����2ugLs���Ek�8��$����L�TK�l1�����|�5�!�����Rng�l�ж#`�?��9*^�-]���l���� x�Vͼ�۴*�˦h`"��!]A6^��kd"��. ��:o�Ϻ\g�u�*>��?(�[� �=�G�D��������W6��A! ��|s�ö��
-<���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
-���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
-```
-### test
-```png
-�PNG
-
-   IHDR  &   �   ���;   IDATx�y��E��g��]X�@Qlq#�
--
-YA����1AM�T��$".��B#� "���lZ�-P�Mi�.�A~�L;����s�������;����|�����9�nBx�$��|��=�{����~��$ 	H@�'`�#%�0)1�% 	H@h�I��ڰ$ ��0"	���¤Մm_��$ ��	(L�F��$P>F$	t�I����H@�����¤����G��$ 	�:�I����K@��JD@aR��,_(F$	H@�F@a�o#n���$ �.&�0i��ؕ$ 	H@CP���R	H@���H�a�F/�J��$ �� �0�a6H	H@�9}�¤Oް% 	H@�H@aҍ��O���G��$P�I]�4��$ 	H�&��l�@��$�
-��`�Q	H@��FC@a2j֑@��$ �� �0�a�		H@�� �0���|�H��z��¤'�M�% 	H@�$�0�q�K	H@�@_P���0�$ 	H�7tF�����$ 	H��&mnw��$ �V���&�<z�.	H@(�I��p$ 	�����I?���J@�����¤�H�$ ��0"	H�6�Im6�H@��$�f
-�6�;	���I@h�I�Xڒ$ 	H@P�4���#`D��$�9
-�α�g	H@��*(L*���ш$ 	H@�C@a�;c����$ ���9aR�1@	H@�@P�����$ 	H��@�&��$ 	H P�d^% 	H�|���(Lzn�tX��$P^
-�򎭑I@�#`D(=�I�� % 	H@�C@a�;c��(#��$PA@aR�G	H@��:G@a�9��\>F$	H@P�4����$ 	4��¤y,�גI@���L@a�f�v'	H@�@m�$LjS�D��$ �� �0�a�		H@�@�h��
-��p�	H@���@@a��6!	H@�#`D�!�0�w{��$ 	H�
-�I(fI@(#�@oP���8�$ 	H�/(L�b�R�#`D�@9	(L�9�F%	H@�I
-��6�.#��$ (L�`��$ 	H�+(L�b��I@��FC@a2j֑�$ 	H�%&ua�H��$ �vP����}H@��$P�@�DaR��$ 	H@�%�0�,{��$ ��0�(L�gU	H@���K@a�\��&	H�|�Hm$�0i#l���$ 	H`h
-���X*	���I@]L@a�Ń�k��$ �~#�0�7��0"	H@%"�0)�`�$ 	H��	(Lz}��I@�@P�����$ 	H��(LZ="�/	H@�@�&u��P��$ �V�0i�?�/	H@�@P�����$ 	t�Q����$ 	H�k(L�f(tD�@��FJ@a2Rb�K@��$�2
-����a	H�|�Hh5�I�	۾$ 	H@uP�ԍJC	t����^{-�뮻nD��V֝6mZX�bEjwÆaƌ#j��ĐY̛7o�.+17��Q;aE	H (L|H@��$�5&]3:�8[��$ �^'�0���	H@�@�(L�x0uM��$�o&�6��+	T%�nݺ��/V-3Sh�6
-��eO�@��m�Gy$<�����:�����������N:餦tt�QG�[n�%�������A,<��#�v�~��~򓟄U�V�W^y%�E�˖-W_}u3fLU�����fJ@m#�0ij;�@�8��3_�}׻�v�u�@�1�;6s�1a�ܹa���)�/���7��w�>�я�׿��a�vHM�øq��ԩS�7��뮀�H�5^v�m�p����3g�}��7l���ɒ68��p�E%A5y��_|A��UᜇP��^%�J�¤$ih6VN;�����a�ڵ��;�s��	?�px饗Rw��K�ԧ>�DE���7�����}.	�����}��?�E, ,N>���ӟ����Yy9�C��/��x�p��7'�r�ʴrco{���W\����
-�c�3׬Y�o�J@m$�0i#l��@�x��Wï��p�A�SN9%�{��裏���gºu�R8��{8���H^X!��'?v�y�$}��0}���>���"F1����_>d7l�\x���xG���?�8�𖷼%�s�=��c8���ñ�;d;v���)�I��aK���|��7nd���(p���c8����Q���>��c�Tg�ҥ����O�%)c��"2n���$*ؚ��?X�j2���˕W^~��ʧNSlM�8q����?��λ�_$ ��P����I�w�J�y&�j^/^�8.�l�}��Rw��
-[*T������-Z�cՄ��[+�������\ �
-���?���_�h�wx`�/�p�7?�s^CW+K@uP�ԅI#	��M�6�%K���� y�f%��a�΁�D��?�8�5�w��j[?�VhX�%�������:�1��9'|�s-&�M�@{	(L����$PŁ��b����w@P��3�<�Lb��oxC�o�K^�a��駟nv�'	�A@aR$M$��^���u�{U}�|�)U���k�u�i"	� �I�.��@�5�z�����k����n�M�6��\�*�a���5��� �J���+V����X��/~�Sl�t�B	��I�!�� ��0h���H^a�����p��]���Ud����~������_��mY>3�|�d�mYO���u{-�+9��AN~��sΩ+b~��NØC���_�m{�P�s�=��e[�#�H��^�:�0aT��y��'�}�_8�S�۶=	H�>
-��8i%��"��C�<��?>�[#Yp�r�m~=u��������k��.��[�Ϗ����N]𫮧�zj��3��`�ˇ?�ᐿ��*����͹��磌�J?��������% ��l�j8�N�ۿ$0��o��0����c1����w_�?������8tJClS��W��c�?���Ϧ�'M�~���m��i��믿>�~��!�X��\��T�	H�t&�R�_���ÂR�1��v�o~��wm��oŰ*�~�����s�Q��}�ǎ�_���_�ek&���5D�A7�tSZ�yꩧ�j���l�c�=���o��gV�8TK?�y�浤�@7�&�&�4�"���R�Yw&P�U�m�=��3v�a�ս�Mo
-.�1R֯_�����??=w���_�r'�'|�u�]ӪɌ3?=�7�b��f-lY7�&	H��&�W��L��}�{��g����.��Z��
-����VVN~����S���|�+]E�?����/����l�� �#�|��p��$^�L����L@a�ˣ���J`�ܹ�3�H�����;��1��AW��r衇�Y�f��h���q����1�0v��0gΜ͹�����K�N;���2eJu�:s93��_�0l�1�>~����w�{H?fΜ�|�1�O<1�?��1&��h[�=���*��^h��ה-I@�@+ئ���¤�F�X% 	H@]N@a���{(#��$P��¤6K$ 	H@h3�I���]��$ 	4��¤y,mI��$ �	(LX��F$	H@��a�	?rdz-�M9�������|��=0�0�1�xQ��w�>�(�e�b�A�2�Q1v/�a�I�s�Y��$ �.'�t�&MGj���$ 	����d��'	H@�#`D'�0���$ 	H@���$��*	H�|�H=G@a�sC����$ ��P��wl�L�#`D�@�	(LJ?��.��G����f4ݴ6{�p�e���f̘6l���2l�M�J���,,Ñ@�	(LJ?���iӦ�+V�q�ƅ�ӧ	��   IDAT����ٳ��y�i�iu�v؈ڛ9sf;vl�3gΈ���1�v���w޹��G	H�@@aR��*	��i��½��;P|饗���?y�I�x#	H@P�4��ʃ���o|c�i���Fv�'&�R\q`��w4xΕYaa����oO�,َm�\��X����-�iӦ��$�O��/�0���K.	<�O�g�}��|}�}�����<�V���Q�}N�],��'S�J;��%��3���<�������}p�W�I�K�js�m��&L�&O���e9�<���2_I�P�cŧ�O��C�{�C����rRe?��e$ʱ�Z�;��N@aR�6��̟??09TN��e�:��c�<1�t噉�h�I'�k��&m�s�=i�dR*�1��	���_�Vhb�iK��%&;&u���_^~���'Ϲ�b_�0Q�W.��N�:5�}���7��{�×���3b�Ｍ�~��p�A�W�<���)�CIW��>b/�! �RZ�lY����?�-�A~2��R+6��駟V�\-Z��x�zW�'Ϥ}��7����}]�z5�)��ŋ�)S��3=�\�|yʋ1��A+i�8~��d�5k���胆i�s���XPf�@�P��qK$��_̚5+lܸ1	>͒*?#&M������j�=K�.�a�č����GY� �<���D��o}�촥����s�Iy�^���|��i�>��k�����'��z衁	����@�y[�+�Hl����,Y���${��[��{9��;.� ���+��<�Oy2��Be�oC=�a���1�,h��%�y�ĉ�,�����/��x㍛�����ӟ����ͯ0�|	�w�����a��c���'�|r�9� Q�*�"�>#�0�7ܑ��+��c��UZ3fL�馛+<�IvժU<$&5V��KA�87�t^-����0|JgB�e��w_+y����Z�V���o9/_����V�s�5��A��'eQ��gl�/�a�S~Ϋ,�46��K��z�0�]�ʂBb�K�s=�5<S����y$� ��y�z<��R�C=T4�^%$P=$�Iu.�J�*>��Ӓ<�hY%a%cFq�&�Y��Vjrb��f���v�`W�,D�<&u��}�ger�\�JC�d�f\;N�"䥗^
-p��"�/E�Q�_⩖o�$0:
-��q��­�ޚ(�
-����/&K�JJ���{&����w-�'���N������w���"ȃ+$���olm�1�/V��VG�m�E$�A�<�BLU�bT돺��+WR�٘W.F�
-��p���`�&2�bybe�+��I��<�q?�Ķ� ��+�shr$�5b���~Q|�8��[!�z�)�$�����*e�QX�#qbG�5#�-�w�j3��t�1�/� �k��J
-⃺l�d|�I�+)����m9V�r�^%�O&�4��:b���������|�,��IeR�[;\�v�#�<��n�@L~6e˨���/|��k�������#��M���a���j�ϖ�ha���,
-��s�@yԥ�9r��g�F8�v��*	�6�!���X�Z���&���\+�'�ay���!�7�I�8�ڟ�Q�!�0�w{�L�����/�r֡�����h�{&U�C`Ǖ����|���+���~��o��?�O���*y�HĈak	?胳6\�JyKfَ�m�JL·W�#��%�g��y�ϓ{��+�B���P^�W�%ƆsG�����ذ���W�S-�6�g�h!v�w2%V��*�A%#�0)ـN�	0a���~��k�q��dR��g��m�x8O�M���m1ٱ�Q-/�-m�~�v�'/����6�S����\V�li�r�I�Ÿ��&�D�Ƞ�V��c��m�8�7��+e1n�#�x�e���Ŷ�?�-�QcL?�G9�x%���z\����}�?1n�ҦZ=ڦ_��m��6�o�]wM�b��`�-�\y6I���+k`�%	4� �|��[�wT��\���^�'�V+!ŕ.��ݖ�J��-i!�rP��c����?`>ѳ����#PHL�l3�)~�����5�\8GS�h��F�5%�]&�5z#��&��D�[�b�Cn�tu ]������]��H�-�kK/v"�aX,	H@���
-&	H@�����¤%�`���$ 	����d4Ԭ#	H@�@K�%LZҳ�J@��$ �
-
-�
- >J@���L��
-&�J@��$�Y
-���w	H@�#`Dh��¤xV�Mx`��g?�������/~1���oo(�Y�f��^e#�K���zje��36�����	'����l������]2�j>�G_4�߰�v����Ā��{�G�h_��8�������C>y$ƌ�&�r���	��2�|��Q��'�&	��I���q&����}(lڴ)�&�F�>����I�������k?��,GN=������ߞ�#GuTx�'7ޘ~�6��c�9&�^�=E9v�*c�/�R�Xv�ǆ�kצ�"eؒ����c����y&	��I?��1x�[ߚ&��ϙL8��<�I�O�L0|��|z-~�e��Smn'_?�Q���9;P��e�A_����χ�v�-0��We�Jԣ>�}�3�"��������:+��dJ�x�A�0���|�U���$����J=X���}��/X�7���z��<�_���G>W���'� �p�˰'�<�k%�"-Z�(�����W_�����O?�D�^{��A�^r��y̘1ɖ:��w�$�Ee����g�`o�@�P���Hg"�����?%�?�)c��
-� �Ƀ�р�`��j:�Q����.]���$D1�2���ɓ�G�w�ygx���/������:�i(��'L��Ν�>�?�쳁>h���?�?ws٣�>:�/�IL�O=�TX�fM�'�ä�Ϭ4�2@>��U����&Z��,'8rO$�w�e.����h�?�xZ��B�z�=�\�������O��C9����Ɠ8���z��\m�'NL�˖-KW|~�W�{��u��%���sN��~���ܼu'l)'b?~<���So
-�/_v�}�$|x6I�(L�a��q��7z.>�	�O�Lt��I�I%OP���$� arY�`��$F=&&k��4L�H�P>",.���4a�n1V&��+W������i��f�T�g��=1Kn�r�e�}&j�ƞ����D&^�;������<�q<XY:���)Hĝ��@f����P%���#��WL�ê�G2kb�=T��v��ö����A��_��y(#�IG��bq�L6�*Q�D�˙*�y�+�P��l���k�V�P>扑U��C�P~aS+�3���m|+�Ä�aBG��j�қ��洕TNL�s�y�8R�����J�=���L��S��N�4�����9��}�+�^}����	B�Uƛ���<D	��,�r�W	��I��x��˧r&=&�"
-&eQ��)�(T�u*'a�Ꙅ�k$�c>8ɶ6��ń9���H�.��S�U��}C��_|1��D_y��l�v������1��y<��YC��l���/��T)D�a��A���q�u�f���ﱥ��Ĕ�F� �X�a�	����¤�F_ZJ�m&�)䎘�j`e���/�-`�'P��֡�	&���LB�L�4)��m5�l?��p>�6�1 �g�9���"4�2N�d�qW���mܸqi�?���� 0غ�5u�ì��L����d��Yl�'1N��}e"�8.C�[���+N���!�Uڥ�-��3�3��J�`K�ǖ���Zg�#D[��z&	���¤�#l|�0Aq0�ɎO�$&�����$�r:�eL.lP�O�LL�w\�&����p����;�$(L�)���d�}��Ve()#6���L����ץ9���3�Tk>�I�m��R�`k&+���M�&ok��舉  
-IDAT��C|pO��:�IC&f��9|���2��ʰ��v8D�-�L�!�ń `���o�Q�_bŦX�{�qE�r�_��������}��Θ����:ԥ�Bh��#!p���(��C�<�$�Z-L���1���� � i���Q����<��*`�elU������\!���b�����~70A�x�;��}N�E�$�s>Wl��}-�C���-���}�F.���m感�`�}�>��g[�%q��+�����ǫ��js������?���\F��i�|����R�5��L<�ن�苔Ws�/��y$���&U��-���h�:9���r�VYh[����¤_F�8% �Q@Q�m��Jl7��.�I���j?��[aR�15"	H��X����M�l�}�t�	���¤���J���&`�&�$ 	H@�
-��
-���G��$ ��P�������$ 	���¤ehmX�#`D��ZM@a�j¶/	H@�@�&u�Ұ|�H�����¤�FD$ 	H@}L@aR��7	H@�@�P����$ 	H�D�X�����H@��$P�I]�4��$ 	��@���0�ҁ�-	H@�@?P����$ ��0��P��d C��$P
-�2��1H@�#`D�S
-�>xÖ�$ 	t#�I7��>I�|�H�@]&ua�H��$ �vP����}���I@�@K(LZ��F% 	H@��h����I@�����¤+�A'$ 	H@�@9�	��$ 	H@�9
-��2��$ 	t�@+{W����mK@��$0"
-���X���G�����¤�FC_$ 	H@}N@a��o ×��G��$��&�<z�.	H@(�I��p$P>F$	��I?���J@�����¤�H��G��$ 	H�6�Im6�H@��$�f
-�6/_wF$	H@h�I�Xڒ$ 	H@P�T �Q��$ ��P�t��=K@�������*L�E��$ 	H@�"�0ii���$ ��0��P�4�J@��$0Z
-�ђ��$ ��0"	t��¤�C���$ 	d
-�L«$P>F$	��I��K@���K@aRޱ5��0"	H@�'�0)��$ 	H�w(Lzg���I@��*(L*��(	H@�@�(L��ޖ$ 	H@h��¤A�V��$ 	H�yj���aK��$ 	H�.
-��0i$	H@h.[�N@aR�����$ 	t��¤��R�@���C@a���"	H@�@(L� �&$ ��0"	H�3&��n���$ 	T!�0��,	���I@�
-��'���$ 	��I_s��4"	H@('�I9�ը$ 	H@=I@a�æ��$ 	@@a�$ 	H@]A�%¤+"�		H@��z��¤�L�% 	H��	�:|�I����$ 	H@�E@a�[㥷���G��$P �0)��V��$ ���0�6mZX�bE�7o^G<���^{-���ǉ��/6�I����iV	H@��'	4@`�¤���^v�eaÆ��@f7�y�a���)qO�PU�'O�$ D���p��믿>�}��aƌCֱP��$ ���0���{�~��N<���{3L�S�NM�����^ziX�|y �Z5��g�}�	k׮�f2�w��G���̙n�����q�7P�����K@h#���V�L�\�9�V x���iӦMi���.�(�3&\|��)ۜX� �g��}��a���q��������|�;�#�H��ʲ�L<�ƍ�W��Y�:q��t�E��$ ���0��5�i����\b��Ո.� �\�2\s�5a�ƍ��+�L+�6z���
-��gEa�*	�EQ������_�j1k��e˖�rD�'=�RF�$	H@]L�e�w�i�p�grfΜ�����SF������RX�8��C��w�=h�$�"	H@�@��L��b1k֬���V��ES�$�y����	&$�,Vx(n��)k$��[;���ֺv&	H@(��	!2Ǝb�iKgҤI�0��|����ճ�:+�)��m�T�ö��
-N�����So;�I@��$�8���ɒ%K�����r_<��3��Y�j��R��<	VO:�p뭷�<^,�?�m��Q�H�\_=�\�9�S�U�Fڶ�$ 	H@�hH���������[5'�pB:�J�|�����e��KR�M7��x�t��H��o�`_L�b,^�8�Y�&`��h���G�<��#Xx*U�r�����^�؆j�2	H@�@��~��k�E~�$Ƙ�k>��t����v�Ƹ�,�8��'~%Ƙ�b[�hl�e�Ǹ�M�sBb��N�'�q�>�g;eʔC��}�=�$ 	H@�#0ja����-K@�@}�*�m�	[!��`k�Z���~����H��$��&����Gbܲ]�����o��	[']�NH@(���&"��$ 	H@�"�0�y��@0D	H@#%�0)1�% 	H@h�I���p��$ 	����  ���d�   IDAT ��(L�RR    IEND�B`�
-```
-### test
-```png
-�PNG
-
-   IHDR     X   ���   sRGB ���   gAMA  ���a   	pHYs  �  ��o�d   IDATx^��yp������ϳǓ���&�+B����(��Tk+j������(ұ�
-���)�c�J��3hՎ�t�t �"PL9!6�&�#{?��?��Lvɱ�*��k�qx��}�}��~���)8�$������F�ɾ@DDDDD4DDDDD�DDDDD�DDDDD�DDDDD�a�ݖ���/���/j��������(�Ӗ�����('�����('�����('�����('�����('�����('�����('�����('�����('�����('�����('�����('�����('�����('�����('�����('���Hf_<Q�$A�e�t:h�Zh4���������NR2�D"�@,C4E8F(B<��zJ����d2�l6#///;������ΰ`0�ߏ@ ��tRN*x0�L�����t�`0�P(�H$�X,EQ�L��#�����h� @Eh�Z��zȲ�ѡ�F���{ʂ�
-$I����d �b1x�^��~$���DDDDDt�h4��fX�Vh�Z @ ���9��L�dYFaa!DQD"�@OO�^ov6"""""��Z�p8�h4Pn��P(;[�F<�L&��I]]]'���#I�����Ln����1�U��hT�׋�G�2p """":���q=zT�-TXX�ј�-'9z�^�����ݝ��������b������R�^���2������|� ���Ǔ�LDDDDD� ����A�����<����	�^�h4�����d""""":�tuu!�B����tf'k��A���f��a""""":����6�-�̶�<X�V ���;�-��������
-�����m�\<�����vW"""""��#�ƷX,E1;yPC�ӣ�� ��hv2�1����0�IDD4E�Q�A`@�$C�C$N� 	""""":������H�dYR#DDDDD4������H�z=A@,��(��D���j���R��:��+�Á���S~_"":9:�v�=c�,�p89���&�2�N�v�!:�(��X,Ar:4n��A���yPDgڸq�PYY���
-TTT`�ĉ����9"�,˰��9��љSXX���ǣ��L��r�PQQ�ݞ�7W.�����&0Dt�t�?g��A�$ @<�N":#�~?v�܉�;w���z������T鞥\F�9�={�d��n��G�3e2��t:Gj�V��6�L�������9hE����t:G��ѹD�\�a�J��':�m�r7}}�gW��N":����`8���Hf_t8������EOOOv2�iU[[�X,���: �����B__��EJ&�EEE����j�������CII	�=������K.�D�U��� mmm���7n�:
-�H$p��1����=&L� �V��{����
-��X:��MMM�;��3R�� Pmmm���FUU�N'b�$I���CCCl6***��?�C�Ѡ���$����d��H���<��N�����ttt g'�veee(,,D"�@$A}}=JJJ�2���������H$���H$(++Cww7:�q����r!
-�d2A�� �H b߾}�+**B"��F��F�A @SS***�����5�L�СCj���� ���uuu�=�I�4p:����/ʲ�T�EY�!�2��0&tƥG��$����t:�����Q����#G�����������F}}=��8�� t:$I���AAA�v;zzz �F#�^/dYFcc#���`6�a�X��z�t:�H$����!�"��0�����x�g
-��q��`P��������v���pv�]]]8x� DQ��fC8����`@cc#Z[[�S�� 
-��ߏ}��!��rAE5�":Y�$�l6���s��'�V+�F#<,$IB2�T�삂��ա��V�&�	����e.�Z�.����hll�F��,�hmmEkk�q�3����������(
-�N'��$t:4<������C�$$	����|�E��fC4E<�NBjD��l5����Ӗ��׌F����l6����R�����@j[1�F�^���*X,��^�yyy��l�X,���S������x0�(�0��
-��(((�ĉ���p�ر�l@�'*�"
-!�B��"����,������E�(f|EQ����JL�$����Z`;#�K����N��Ӆ��$JJJP^^A���`�ZՑ���b�A���g�s(�����B!$	h�Z=z^�UUU�����`�$I괎t�Qww�:_|�:�g��X����J�<�ٳmmm�Y��4#��Ȧ�����׫��F�>��L�PuuuhjjB4EAA����\9���c�����tp�����T��e�D"�N�J�z�#-���9���˾d2s�u8Fww7���ɒL&!I�q��F뢋.Bqq1�~?��ڎ��^��$��������0�EASS|>DQ���E0��� �����8b�l6DQ��l��(��(�j��e&�I]a�Z1a�u8���Z�v��
-�ɔ��H$���uvv���@�euNm:��p@���b�@��qu�lkk+<��FD4�B!��n�t:�1�D �"<Z[[�^~ (//�$I8t�t:JJJ�T9�a����"5�-"��:R|��!���#��Y,�����B�;W'�\�@g��b��Z��l6dYFoo/"���0DQ���Bii)�v;��(�n7��8$I��fC ��#G�T�o2���ׇ���l6����(���^���EEEp�\@��ȑ#����g�s�;::�^�t ��hP\\���|$	�������f���� ���j���ׇ��^��f����e ���Dii������Hd�O���q�����<���!
-! //z�^]�i�XP\\����t:���fCGG�;I��r���h����I��3�L��t(++��jE @[[�Z-���q��;��b1������\���<$	�����$���h���m���ٌ`0xB;ZȲI�]�6�}EQ��dB 8.m�Q��������;//�d2���/�(�hiiRg^8477���f��H���)g�nKt��e� �'㞨��2u'�`0x\�,�6�X~�L&������===0������3v��� :����iK4f���.�C��q�����(
-�^�iE��A�����\.&L����j8�N�����~�����B��I�+������q��z�7��ը���(��봡��s�������������I�jooG[[A��`@OOOFO�:n�����5��������Y��L&��ֆ����Dc�-�iKDD�Ѵ�9�@DDDDD9���h��ٰX,��|��ϲ�ϸ��j̙3������x�����ؘ��3��9s&�n7�oߞ���Ƒ	���i4m籩S���g�Eaaav�����UW]�����������1u�T���(**-[�h�" �ҥK��  ���?⥗^ʺ��[�p!~��_�n��SHW�X����o�Yϸ�ӧc͚5(,,�_|�{�';�Y����������o����@ O<�>����,Dg�Ѵ�9m�<&I�F��z=ZZZP__�n*I�z`���oDQ� ��3w�\u��-[���?���3���������?k�Q.X����j4�gA4���X�����V�������$���	��׿P__�;v`׮]طov���ٌI�&aڴi0�p�݈�b���(--�W\ صk���K U�/Y����wQVV��'tf����O~��~����꫁ԉ�F��_=�O���������+���[�ٳG�_mm-�O����r���cɒ%�7o4��k��ٳq饗�����.,Z�s�΅��ľ}���O�4	:�n����<x�����믱g�����N??~�x�|>L�>W\qEƵ�{�B!�л���f��q�5�`ѢE���+��ёѓP[[������ǕW^���>�� ��+����ߏy��!����J����z��1�|L�6��gй��ĝ��r}0~�x,Y���r�Z��aɒ%X�p�q����"]G��UVV���
-�&M��������؈����N;�e�p�C4�Ѵ�9m�  ��z+�~�i����|���0��={p�wd| ����ڵ?��� ���֭[�^x�]w�z�2R���U��y��w��0��%K`4�k�x~�!�nݪ~���n7�-[��/x��p�w@Q�b1���,_�\}���V���������y\v�ej�Q2��޽{��/�7��*++��~�r�- ��>�'NDss3֮]�_��Ӗ�{��˗����ƌ32�۳��F<�裰�l�=��(��}��׿V�a��U$�(��W�^����q�}������_�u�Y�˖-�}�ݧ��b1$�I�t������~�٬ޣ���ӟN��:38m�0�X,�x<Y����|��/_��b������W�3�|ݰa���D"���� ��z:�۷oGuu�qS��>u���އh(�i�s��JKKԆ���A}}=��볳��?�1���jh4lڴ	/��|>��ˏ[0y�d,\�F�]]]x������I�0o�<�����o����R�PWW�cǎe��a侾>l޼����$	�^{-f͚��1�͐$	����B���{Q[[�X,���z6l@4EMM���zl߾�D����?>�ϟ���R$	l߾G���#�ӽ�ޛ�(s�΅�fCOO�y�l޼�HS�LAmmmvv Ճ��ЀݻwCQ�l6|�����_�Y�fAQl۶�=�>����n�	3g��M7����h4�/����V�U�=y�d��?��lFcc#V�X��h4b��<yr�w!���\��Z-�^�Z���ٳgc����{������N�\�;v�V�ży�0�|���8v�/^�ŋ�`0���x�7PWW����XMMM���o3F:�e��h�}�N4*���V�Z��x��Ѐ�n�	�����&L��`@,�$I7n�:v�Ee4|kjj�p8  ;v��3�<��?��h�,C����;�DCC�:�m�ʕX�x�:�<P8Ɔ�x�bu��h4��/T�x<,]�555���[q�%�@E�B!8�\.��ah4\v�eؾ};|>,f̘�3f�b�������?<��Fz��/�8�#�J�&m�������x�'p�7b�޽�� G���?�U�V�[AAzzz0g�<��Chnn���߮.64������j |��7��{�f͚��kjj�r���	�S�LA? ��tbڴij^"�Ε� �b�ƍX�x1>��s �N�CMMJJJ�TYV[[EQ�(
-�f3�L���۷cݺu�Bp:�p:��z�����͛7c���زe���W^yw�y琻�β�����}�Ntڤ�^�9s�`����$I���j^�ө.�� �D" '��NQ��'�;%�"�N��'�g�� `�Zq��7��oVkI��������ӦMôi� ZZZ�r�)|��_�|�EAyy9,X�5k�`�ƍ����� �Bػw/��ݫV���_~96n܈7�x��{/jjj2z������  �H ���� Y�5y�d,X�@m!�ߕ���� >���$I())Q� UUUa���1c��"��Ԣm۶e�hnn����}4Ng�l6�sz��5h��%�hM&R�PL�B!<��S����}�݇e˖��G�Ν;ռ---�"�t��,��h4H$ja�+�N��'������ꂲ����ǃ%K����>� �-[��{ �)Ceee����D��;���$I(..��hT���ر���ǵ�^��+W���� `	�;wnF�4�Á�s�b֬Yj�U ��ɓq饗"�����ԩS3v'���VG***0}�tL�>=c�E{{������;*++q뭷bٲex�G��o�y���q��C	�Bjy�k�.TVVb�ܹx�G����kV�X���*$	$�I���b�ʕYw�o�)�	5��Y6�3��&��O� �4:H7��`��݋��n ��_���flڴ);���+�|>Ȳ�����ذa֮]�5k��������_�#W_}5����?�!$I����W_}��$Z��-�����?����a���ܹ�h�?�06l؀�_~�W���ŋ �|�	�9�n�w��|��'ٷr|���6D"��z,]�����q�e�e�gӦMhnnƧ�~��F�<݋���t�^�ڵk�r��L&�����EQ��j��}��.�����544`߾}H&�(..�;＃x@��B������ �뮻�֭����f��Z�
-S�NU���v.�C9t�z�ܤI��~�z�_������bΜ9X�|�:sǎؿ?DQ�7܀�� �r\�e<��S����ҥK3��v:��[���>DCI��s�io��!�������d�=�����ߏ��ף��Eͫ�h�(
-��$��$E��ﾋ��z^��ƍ�̙3!�"��ك�{.�---x�W���
-�N���*�Fx<���+�裏��-�L�?x8FGGA@WW֮]��{���}�u������G$�ĉ1e�(���?�\��---ضm�:�t۶m��x<�d򿛗)���;���غu+��8�z=4�L&�^�u�֡��&�	7�pƍ�ߏ�7⭷�R��@�(���d2����?������{�w� L�8��G�������9�^/�^/���K�q���`���hnnV���n����K/�4�H�{��� �;��|Y�z5���I�0k�,����k���q�m�A�ף��O>�$֬Y�cǎ�b����Cmm-�|�MlڴI��nj��,��>C�D��j��ݪ *++!Z[[���#��ӧ�j�b˖-��P���1q�D���� x(���[��nȲ��>�,;�fϞ ���PFz���j\t�Eؽ{����`�=:;;�\�7p��n�3g�DGG�qϬ��Fyy9�oߞ��QQQ�+V������x�G0o�<<��0�L'Ȧ�3a���թ=^t�2p�V:�T}0EEE�T���3]6�����EE���#�L���9;�8C������Cgg'�~v2�Y);x����``u�7f'�dCj_s��7��f�l6D"���x���?Bc��Ӄe3���f3
-
-
-��v~0�N[	L&Sv�Y������8p� |>_v���҂��zu*Չx�駱u�V�b1����f�����/�+'"�����f��P�(�9�� �ÇglFDDcG���/:�eee@���\�*9�(��s��랈�Ʈp8���fDD�t����8`���S�:<+{�y""""":7ɲ��M2��ܑ<D�Q���j!""""�s[�m���7��	�H���D��鐟���LDDDDD���|�t:D"x<���a�< u2o2���b����N&""""�s����bA2�DWWWv�r
-"��zT��f�&""""�s����f ��nD"��,#�)x@��t a�ZQ\\I����YD�$��+���Oxʐ�<E�eBE$	���j�6�V�������v#
-eg�٨����ө�H����z����H$�����h`6�a�Z��j �@ ��x<;���P�f2�`�ۡ���k�`�P�H�X�� �<�G�A�(��j�����eyyyjz4Eoo/�@��N�Ii&�	f�9���F0���?eAC�)	�$I�,�0��t�j��h4!;+��d2�D"�X,�h4�p8�P(t�ӓ�rJ�"""""�rު�������o�����('�����('�����('�����('�����('�yN��ې�    IEND�B`�
-```
-```png
-�PNG
-
-   IHDR         ��a  \IDATx̑�J�P�ϹU���"�C�;:��)蠃�K�i7��A�(����:(��T�I\���M��9���hK�.^�㞜�O�����D>�]av�l��˸	yz�ɴ��\������0O�WݻE���G!���g�B!qj�}����^����,��U�����D�
-�jD��j��a�3o���O�OUPϩ�1һ*��4�4 ���g�н'v��$-`��������9��	����U��0�?z���\��h	���f��&�T$K�/�D�'�:m�S���ˀ�S��vd��e�z�jٓOf]�ZN��r"�e@_��5��_��  ���b�   IDAT ��u!�{�    IEND�B`�
-```
-```png
-�PNG
-
-   IHDR           szz�  �IDATx��Kaǿϴ���V���~@t��ڝ�k�Ad��rg��/�� p�.�4%���̚ ]�C!u��E��J����� �9�n�D���̼?��}?<��;�r����������uf,�e���O$��L"��˵�6|���`��@k�&c�V1}.�3��+$��,dK�3a�����[�nt�Dt���hx�vM���&TX���l�^�O��~1=+���#D�(@q��&h� �I�$V����J���
-J=�k��1z���K@�dK�T��p�/�$��tuHf˹z pi��h=sѽ����� Ki,HlD���|����r�o�T�0�3 ^KVY��~f���}Ҳ�������q�~ �BLG���~���ة#-���U�2.߁<}�_ I��@��LHN��,y��m��D��n�i�O&������Ǌv� �ҳ�$�'#�!���z�<�=��}f��Sf|R���a�}ە�/��x�1_W��	m���P�V&��pG��%���(ϲ J�r�n0zT;��vY�x���J��	 �5��$Қ�� uo�3���	�q��P��H�p]��B_�9�a�j ��c��V���h�@4Є�A��X���iO���p��Dc)'�Ӳ#�$�H���D���}+��@Jz����cˉ\�����;NJ4���&��"��VP�{l��Xk�  ����g=   IDAT �,�AI�!5    IEND�B`�
-```
-```svg
-<!-- 
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-\-->
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><path xmlns="http://www.w3.org/2000/svg" d="M0,200 s248.9-.13 300-70" fill="none" stroke="#3f3f3f" stroke-width="2" stroke-linecap="round"/></svg>
-```
-```svg
-<!-- 
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-\-->
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" version="1.1">
-    <path d="M 518.656 198.677 C 518.404 198.929, 516.016 199.317, 513.349 199.538 C 506.674 200.092, 500.971 200.830, 498 201.525 C 496.625 201.847, 494.375 202.255, 493 202.432 C 488.792 202.974, 483.782 203.983, 477.500 205.555 C 469.302 207.605, 468.500 207.823, 468.500 208.006 C 468.500 208.093, 467.237 208.371, 465.694 208.624 C 463.331 209.011, 452.219 212.639, 447 214.727 C 446.175 215.057, 445.275 215.388, 445 215.463 C 442.343 216.183, 439.406 217.396, 439 217.941 C 438.725 218.310, 435.575 219.648, 432 220.915 C 423.517 223.922, 418.676 226.144, 417.765 227.448 C 417.361 228.027, 417.024 228.151, 417.015 227.724 C 416.995 226.714, 395.745 237.805, 394.773 239.333 C 394.365 239.975, 394.024 240.146, 394.015 239.714 C 394.007 239.282, 392.321 240.069, 390.268 241.464 C 388.215 242.859, 386.212 244, 385.816 244 C 384.771 244, 372.505 252.686, 371.016 254.480 C 369.412 256.413, 367.274 256.417, 365.348 254.491 C 364.518 253.661, 363.476 253.206, 363.033 253.480 C 362.589 253.754, 361.671 253.308, 360.991 252.489 C 360.311 251.670, 358.910 251, 357.878 251 C 356.845 251, 356 250.550, 356 250 C 356 249.450, 355.525 249, 354.944 249 C 354.363 249, 351.326 247.729, 348.194 246.175 C 345.062 244.621, 342.050 243.217, 341.500 243.055 C 340.950 242.893, 339.375 242.318, 338 241.778 C 327.899 237.809, 317.310 234.344, 316.342 234.691 C 315.705 234.919, 314.890 234.632, 314.533 234.053 C 314.175 233.474, 312.634 233, 311.108 233 C 309.582 233, 308.024 232.691, 307.646 232.313 C 307.268 231.935, 306.181 231.516, 305.230 231.382 C 304.278 231.248, 299.675 230.236, 295 229.133 C 290.325 228.031, 284.025 226.868, 281 226.548 C 277.975 226.228, 273.025 225.659, 270 225.283 C 252.363 223.091, 209.932 224.968, 197 228.513 C 196.725 228.588, 194.250 228.986, 191.500 229.397 C 188.750 229.808, 185.375 230.568, 184 231.086 C 182.625 231.603, 180.488 232.246, 179.250 232.513 C 170.497 234.407, 167.510 235.268, 166.250 236.260 C 165.563 236.802, 165 236.989, 165 236.676 C 165 236.363, 161.963 237.233, 158.250 238.609 C 154.538 239.986, 150.825 241.267, 150 241.457 C 147.263 242.086, 139.530 245.318, 137.527 246.669 C 136.443 247.401, 134.789 248, 133.852 248 C 131.586 248, 98 264.963, 98 266.107 C 98 266.598, 97.155 267, 96.122 267 C 95.090 267, 93.685 267.675, 93 268.500 C 92.315 269.325, 91.205 270, 90.533 270 C 89.860 270, 88.495 270.900, 87.500 272 C 86.505 273.100, 85.085 274, 84.345 274 C 83.605 274, 83 274.450, 83 275 C 83 275.550, 82.501 276, 81.891 276 C 79.879 276, 62 293.252, 62 295.193 C 62 295.715, 61.437 296.770, 60.750 297.537 C 60.062 298.303, 58.985 299.552, 58.355 300.311 C 56.590 302.438, 49.052 318.249, 48.729 320.500 C 48.571 321.600, 48.137 322.988, 47.765 323.584 C 47.392 324.180, 46.818 326.205, 46.488 328.084 C 46.159 329.963, 45.500 333.300, 45.022 335.500 C 42.724 346.102, 45.051 371.259, 49.057 379.112 C 50.126 381.207, 51 383.664, 51 384.572 C 51 388.475, 62.719 406.730, 69.448 413.306 C 74.672 418.413, 79.015 422, 79.973 422 C 80.538 422, 81 422.360, 81 422.801 C 81 423.640, 89.638 429.408, 90.185 428.933 C 90.358 428.783, 92.483 429.911, 94.907 431.441 C 97.330 432.971, 99.805 434.298, 100.407 434.390 C 101.008 434.481, 101.950 434.821, 102.500 435.145 C 110.803 440.033, 138.482 442.831, 152.255 440.174 C 156.691 439.318, 169.650 439.457, 176.500 440.434 C 178.150 440.670, 179.982 440.893, 180.570 440.931 C 182.470 441.053, 190.132 448.217, 191.108 450.783 C 192.858 455.388, 193.088 459.655, 193.517 495.642 C 193.752 515.364, 194.165 534.200, 194.434 537.500 C 194.703 540.800, 195.137 546.200, 195.400 549.500 C 195.662 552.800, 196.123 556.886, 196.423 558.581 C 196.723 560.276, 197.185 563.201, 197.450 565.081 C 197.714 566.961, 198.170 569.625, 198.464 571 C 198.757 572.375, 199.257 575.525, 199.576 578 C 200.060 581.763, 201.684 589.358, 203.424 596 C 203.640 596.825, 204.374 599.750, 205.054 602.500 C 205.735 605.250, 206.910 608.733, 207.666 610.240 C 208.422 611.746, 209.038 613.321, 209.035 613.740 C 209.020 615.802, 212.551 626, 213.281 626 C 213.741 626, 213.890 626.370, 213.610 626.822 C 213.331 627.274, 213.795 628.961, 214.641 630.572 C 215.487 632.182, 216.353 634.366, 216.566 635.424 C 217.569 640.418, 233.042 669.497, 240.107 679.663 C 241.698 681.953, 243 684.316, 243 684.913 C 243 685.511, 243.367 686, 243.815 686 C 244.263 686, 245.381 687.575, 246.299 689.500 C 247.217 691.425, 248.395 693, 248.916 693 C 249.438 693, 250.126 693.821, 250.444 694.824 C 250.762 695.827, 251.824 697.514, 252.803 698.574 C 253.782 699.633, 256.069 702.668, 257.886 705.318 C 259.703 707.967, 261.822 710.378, 262.595 710.675 C 263.368 710.971, 264 711.579, 264 712.025 C 264 713.441, 280.782 731.865, 289.877 740.434 C 292.834 743.220, 297.359 747.525, 299.932 750 C 306.218 756.047, 315.475 763.938, 319.874 767 C 321.850 768.375, 324.316 770.260, 325.355 771.188 C 328.588 774.077, 341.899 783, 342.977 783 C 343.539 783, 344 783.348, 344 783.773 C 344 784.198, 345.688 785.416, 347.750 786.481 C 349.813 787.545, 352.713 789.236, 354.196 790.238 C 356.992 792.127, 378.500 803.373, 378.500 802.946 C 378.500 802.813, 380.525 803.737, 383 805 C 385.475 806.263, 387.500 807.198, 387.500 807.078 C 387.500 806.958, 388.850 807.388, 390.500 808.034 C 398.667 811.233, 405.577 813.805, 406.250 813.897 C 406.663 813.954, 407.225 814.056, 407.500 814.125 C 407.775 814.194, 408.337 814.335, 408.750 814.438 C 409.163 814.542, 412.450 815.569, 416.056 816.721 C 419.661 817.872, 424.161 819.071, 426.056 819.383 C 427.950 819.696, 430.850 820.324, 432.500 820.778 C 434.150 821.232, 436.175 821.551, 437 821.486 C 437.825 821.421, 439.175 821.690, 440 822.083 C 440.825 822.477, 443.975 823.106, 447 823.482 C 479.004 827.453, 509.300 826.187, 542.500 819.491 C 543.600 819.269, 544.950 819.023, 545.500 818.945 C 546.050 818.867, 547.343 818.351, 548.374 817.800 C 549.405 817.248, 551.205 816.676, 552.374 816.528 C 558.106 815.803, 574.895 810.501, 583 806.857 C 584.375 806.238, 586.400 805.403, 587.500 805.001 C 592.414 803.203, 609.632 795.547, 610.851 794.617 C 611.594 794.051, 612.755 793.506, 613.432 793.407 C 614.108 793.308, 618 791.301, 622.081 788.947 C 626.161 786.593, 630.962 783.973, 632.750 783.125 C 634.538 782.277, 636 781.227, 636 780.792 C 636 780.356, 636.873 780, 637.941 780 C 639.009 780, 640.171 779.532, 640.525 778.959 C 640.879 778.387, 643.043 776.746, 645.334 775.312 C 647.625 773.879, 650.574 771.647, 651.886 770.353 C 654.887 767.394, 656.038 767.408, 660.531 770.456 C 662.521 771.807, 666.479 773.789, 669.325 774.860 C 672.171 775.931, 676.750 777.923, 679.500 779.288 C 682.250 780.652, 687.425 782.758, 691 783.967 C 694.575 785.176, 698.897 786.793, 700.604 787.560 C 703.908 789.045, 714.204 791.756, 720 792.666 C 721.925 792.968, 724.276 793.627, 725.224 794.129 C 726.172 794.631, 730.447 795.511, 734.724 796.083 C 739.001 796.655, 743.625 797.340, 745 797.606 C 750.749 798.715, 759.518 799.235, 776.500 799.471 C 799.268 799.789, 812.128 798.661, 831.500 794.650 C 832.600 794.422, 835.410 793.919, 837.745 793.531 C 840.079 793.143, 842.248 792.408, 842.564 791.897 C 842.880 791.386, 843.489 791.184, 843.918 791.449 C 844.582 791.860, 858.409 788.125, 863 786.296 C 863.825 785.967, 864.950 785.597, 865.500 785.474 C 867.450 785.037, 876.544 781.836, 879.500 780.546 C 882.252 779.345, 887.500 777.118, 892.500 775.029 C 900.922 771.510, 917 763.451, 917 762.749 C 917 762.272, 917.414 762.138, 917.919 762.450 C 918.425 762.763, 919.438 762.451, 920.169 761.758 C 920.901 761.065, 923.975 759.200, 927 757.612 C 932.504 754.724, 941.704 748.953, 945.440 746.046 C 949.684 742.744, 957.972 734.449, 957.985 733.491 C 957.993 732.935, 958.900 731.919, 960 731.232 C 961.100 730.545, 962 729.378, 962 728.638 C 962 727.898, 963.090 726.116, 964.422 724.678 C 968.304 720.490, 976.276 702.756, 977.539 695.500 C 979.207 685.914, 979.659 680.484, 979.480 672.167 C 979.246 661.296, 978.304 653.436, 976.926 650.863 C 976.417 649.910, 976 648.387, 976 647.478 C 976 644.894, 969.226 630.091, 965.256 624 C 955.874 609.605, 929.667 589, 920.742 589 C 920.004 589, 918.973 588.575, 918.450 588.055 C 917.928 587.536, 916.061 586.859, 914.301 586.550 C 912.542 586.242, 909.998 585.570, 908.648 585.056 C 902.810 582.837, 884.480 582.241, 872.620 583.885 C 851.766 586.777, 834.628 581.777, 832.550 572.194 C 832.229 570.712, 831.721 568.375, 831.422 567 C 830.965 564.900, 829.683 500.778, 829.913 491.500 C 830.055 485.772, 825.439 448.343, 823.873 442.529 C 823.279 440.324, 822.649 437.390, 822.472 436.010 C 822.114 433.212, 818.282 418.339, 817.317 416 C 816.977 415.175, 816.591 414.050, 816.460 413.500 C 815.768 410.596, 811.657 399.237, 810.461 396.925 C 809.701 395.456, 809.362 393.972, 809.707 393.627 C 810.051 393.282, 809.883 393, 809.333 393 C 808.783 393, 808.333 392.367, 808.333 391.594 C 808.333 390.304, 805.895 384.797, 800.765 374.500 C 793.332 359.580, 789.947 353.455, 784.817 345.646 C 781.617 340.776, 779 336.581, 779 336.323 C 779 335.758, 768.812 322.352, 766.164 319.431 C 765.132 318.294, 764.110 316.876, 763.894 316.282 C 762.158 311.520, 729.615 278.189, 714 265.182 C 709.325 261.288, 703.870 256.728, 701.878 255.051 C 699.887 253.373, 697.787 252, 697.212 252 C 696.637 252, 696.017 251.606, 695.833 251.126 C 695.430 250.069, 680.296 239.716, 675.746 237.384 C 673.961 236.469, 672.275 235.413, 672 235.036 C 671.725 234.659, 669.475 233.316, 667 232.050 C 664.525 230.785, 661.825 229.374, 661 228.914 C 655.177 225.668, 642 219.151, 642 219.517 C 642 219.764, 640.399 219.067, 638.443 217.968 C 636.486 216.869, 634.124 215.842, 633.193 215.686 C 632.262 215.530, 630.600 214.928, 629.500 214.349 C 624.814 211.881, 597.497 204.064, 587.500 202.332 C 578.874 200.836, 571.669 199.787, 567 199.347 C 559.665 198.655, 519.238 198.095, 518.656 198.677" stroke="none" fill="#6c3cf4" fill-rule="evenodd"/>
-</svg>
-```
-```png
-�PNG
-
-   IHDR  �  s   ��W�   sRGB ���   gAMA  ���a   	pHYs  �  ��o�d  �fIDATx^��u�%wa�����w�=��ݍ�'��H�@pi	-�(Җb���"m��K�$%B1�nYI��]����1r�|F�\�}=�����?�9�|��9ֵ��[�,Y�lْ��B���ǧ��J�+*6Il�[�[���t�jC;��1��
-0�cSǵ/&>,�=��7 Ծ��"�&�m�*�PΘ�>7>����B;<�
-Ėk�MgD���;�1Iʓ:���Ŵ/E�{��M��\F9i�glvL|i��h��3������&?{l��x%I�6�4;$�}�,ٶ���X��ǖQ^L����!"c��bbK����_�	#w���Ð�NCZ|HZ���)6֏p��̇���،�P|q{B�+��'Kh�[`l�ɢ*NRn������F�.NB���Q�ƅ�т��ly��ݎ�^R{ƫ_��*��J��J�[B~3�̖��PoA ����l��m˲��|�|Q�Jk���+i���lhI�g�nE��Uf}�bJ�����Q5ń��.�("UlX6� �L��(����,8"��Y�ՍR��/�ٌ���z͂��a��/�_����΢��E0+.��@�R��+��@R��$�#_�'I\-c���2��s��@D��H���Џw��`L�Wl�E����
-%7��3�*όq��-/��D~�F�܂��+�}i�fL�O���V�a�;%��?�@�q�;q�S�B��)6�.�M������wRX��܉ww�9���~�猚�[��e��O.�\�=y',�-�?*ދ�唛��v95x��*zg4=�>��yaQ�@�FQE��ioq���p�]�?����x7�3�~�n��8w���+��y��=�����כ�E�	G������1�c
-5����LY��d�)"�7N����Ϩ|^�mo�Tq9�qt��-�
-����
-�%�?�8�ܒy�Y��*7�"n�%ca��?o����8EƇۛ�?��B3����u�W^2�_lT���`�����~��,*ޙ/���;��'f0޸��N[�[D\��2����MB�E�'">t�ʩ�.\���;4�n���r���Gx�y�j�Wr����yl��$,v���r�����q8�P�S����q���EW�Ν��/���e+'Ky74�_^�#ƣ�u�8�B�U��D+a�Wtd���'7_(>�q�u��Dv����'Lٲd�Nx���\�|��T�?6&>X����*VN7s9K���\�}�,�J1��̣�����������c���������O�������H�_��x�x8mf*> ~��4޶����y���N�됷�0���>3Y`ے�7����?�>����{{��㌋���̟�m��q����`���:���J.����%Yf{�7��v�9��®�z���/���(�p-�������������k�}s��y����p=�x�����)?�|�u*�����7���n��8�����
-�߽�����+��/O���Bsl�xݲ����$���?��1��p�Ţs��ᎎ��)�0�����7���M)�i2g��)c����~�H)�痗�!c|�� ��(Y�M�
-�w$et�����b�e�.>a��N;C{�2f��Y��4?,-A(��wv�e�7���rø��_ۣ*�{c����ի�\v��n���C��ߎ�n\�q,�,j_��P�fKC	���d{�f��y_�6Ø�nd�Gd�&��9��
-2E����{�b���G�u'��z罁K(֫>��̌0�5��5��Ś�9݄QE��^��a�BG�-��6�G��bߞ��W�	"�]NT��B�,���v�p������N��g���P^$!*1.%:)N��S���)�\(2Cg�ΌqK����8�ƈ�O�8����A*䏎u�[PB=������Ĕ=V��W��+I��`TB��o8_!A����H7:���j��L�J��Ut�F3+.���k7>��_�#�=Gh��#/���"��n�[в�s��bnG2��������v(bA�8�Yj8���܎�%��1��o`a�b��)�t���X�\��	�A�u{��d�;��lkR��P��-���G`���AE����_�̺=nƨhs_(�]T��+�m68��l�9�����q0���b��*NdG�1J����ߴ-˹���<p���	�/��̲r�g^;��6|�n��
-��{�n�S_q����	t��@����m�N���,*}>8^��t�h<b���x�ʽ3�ϟK8�N���p�N�����K�/~��/H���i��>��,/i~���|`��r<����:�+7N����3�';���G�O�7W�x;��g�OIۡ��kg.��_�WW��v�|0�G��
-�Ġ���!o����v�|m�gE�O3ƛ��y�"��b�u?z���R8�ü������Ny�l�#���-+z����|���wVE�+p<��kA|$�^�q��닉�"�h��s�D3�Onoa�x��/Xn���������
-�8���_��z�b�w<D�w�5w�M���Ql!]7_���88wHW�/�7�Q���_s���-�'��i�(��I���%��wG����{�����?8N�vg�7.ފ����_�b�G����$y^ś�ב�Ns�S��B�c���yn�E��/6:6"��qr�?�=�0N	�I��r���;�خ,�5���6%yE��١;�0�\[����!�݅����+7��\Q�:�9�_�w�¸;h�V�E�8�K�_hGP��x���b�M���/�ߤy�v~%̛���O~���0G?\�)�;1��X�h��%0�����3�-�������tF{���ˏSO�\?������/n��s��¿#����+�1nf��Z��խ�k���������`!����j����7��/0n��R��@�ݎ�Q8������q��J�������6����(����>޸f�FNs���>�x�z�=��e�*�8��v�*�kVdFc��9�bْmY�:�,�K��7P��߭����w;d��o��K��7��m^\�����D}�6�ތPܱ�3đ^^Fi�zS�E����=���Fdjp��4(nWl����� E�"�1����L)ѩ���d��W3�U�� �q���G�lGἌ==c�]`��&L�fJː6���v���^_�ś%Kɟ��߈qL�I�	f(a~�FD��Q�]�>s3���b��h_d:�� %��}�1�_�H���VlZ���x�Fpw�Ė�//�����l�9�|�����cn��,6��f���ߙ&�;R5�2+*%���?pą�̄��]��j�٬~����le<c���oTsJQB>3�YmRX5f������y]�z�y���hoUu���]���F�
-���~��f$��?��e����f�-/�����d��{��:nq��J�g��,�ނ�������^s;U�vG�F����;3)?�לº���ݒd]�W_(���3����B܈�t�%J�ov4�<��C
-�&'K�O՞�#6#R���'F|GZ�+c�xi�(�`���o�Ҋ	��G�/X�ɂ�؉�� ���q9B����v��
-4��e�/F(]����P�/d�Ki����i��[c@�U,e�G�HKя��s�Ss�DW<_����$L-/-���#4_K=^�����f�)�}�dO��g-�x!:� ���^�+��@C#�'I���z�E��̈
-�/K�^�I��7�%YCW��.7_D�Q�����4��*�U�y����*��o�Bn\X6sK�@>3�YlR8`̊+���P�٭�033cB���̂#����Uio���Ɔ^���j���_s�Bf5��W��K`V��2ۛ��I�C;������v!�R�\�#��OFE%ԟ�$j [��m�}�)6��gG� E	�����4Y?��2�+�}���Yǯ�hO�@�4���8n���F���������ŅvT�Sc�wl�������)��b����������ي�|,.'��p�d͞z}0"b�����3$J���2ވE���03���M����C;)�)�	����-/���CJ�-H��iBE�/���ݥs�-ψ5;����_�20ˍ��_�����-ET�R�����O
-�fT���$�USn{#��ҬaFf�r�QLRX���Ri���O5RY�f�~iw�@�f��n�����é��G���[U�2SJk��Tj �߈qNo3� �������Un{3�׌�jE\�<P޳�J0C�����f$�W���,��k��]���(����ڼ�G�4�x��67��1��.�(�n���K��Y�Ih?���kt�V��-/�Wb��������!Iz�R�?b3"U����^��w$4̔�,ki��"/�����N�JX�����Ϛ!��~���#���KI��TEV8�~�b*�̖ %:]��Yܿr,�6���G��Q���c���b�Y���т�ݾ2�J�L����
-툨&fw�܂
-���1_K('���� CE�Q�T�~���71GL�1�˔�)����̂2����e��J{�WDo��I)Gy�7� �;4��:�f¢v���aQ��B��R��D�w �����0fN�����6T�_3�YLR�MD����a��\q�/Q�r�6s Jm �YLR8h̆D�7j_Y�
-��ks�����Y���Z��=�h��0�1!i��b�C����]�~;��II�׿����2�f�STQ�H�Z~Z|�BŅ8�xS��JQq�b���C;�[��V~Z�!�<��QhMr�R�e3�ӒG�W|���v%���g�ifz/�i����)1y�����h?A��튓�^L��[LlD�l�T��݈�	Y\��)�)Ѿp��,�����J��=���B;w�+9C��bb"��3�|KS�+���*�"�A
-����$E��&����%!�YlR�)�l�K	c$��_��J��LXJ�7.L���̊�	̌I����T�bv��v��Ϭ&)���U���f��◃��T��2.�=0�Kd�0ޑ��7X�M�fX��q��)>,^�2c��kn��,�����o�f��㉨��FR�?�j2���]���VWz�f�Qϡ���P����P�W�ޯ"f3���e�����VT��7�o ���U��
-Ȓz�<qd�$��tF�Py%��#YJj��-c5%�ϓ־��ߏ4F?cN�Pu��
-����1B�Kl�)5[�D�2�Ϛ͏/�G�|�X`8YLy�����Sq5��F�b�'fwA�bJ߾���}Q�e�-���*jp���o��S���1^IR�ӤfOMP,���ѻү��p���4E̅}�!Ia�D����*���=��qa��Jmw�����>���f��BG���m�S�x��K��~;�fD�����?L�a��el���1��D	���I�Y\�1+.���*��l�ٰ��cnW�Ym��UB~3�̖V]��V.�'��V����E�z��P�Rǫ��m���T�l�z,����>���K� ��
-�%Y��c�H�)Mf��
-M�*TJJ��h�=i@���j�!-ޕ1Y�`?K/�Џ��4�ܸ���
-0���U��b�*����Z������*S����/�\��VG���48v:��s� cƸd1�(m�B�B;i�����'<2������s����䩌��R
-��U`$�MW���+��B��vd�fL}�sd�&6]h�!-~��v������]�'�^s��	�Q��/���0�kn?���	��J��L�"1�aV�z��xQ��¡0?��r��e����?d�:`&2�z�������n��o�C�}V�������%��ߎ�aDo�M�����R�]n��0+6;1���f/z�o?Ϗ,�W��5��wz[���Cs�����pif�V KT|("2A��茹ӥ`ė^orS?����ˉ��<f��Ϟ�ΐ�	�����R��Uj1�����2��I��.-AZ|�����bv�b�K)>���Y�kZ|���̽~j3���}�;?���*s��)b*��_�r���
-�O��R~jS���c(j_R�xC�da�3�ӟ�ۙ/���TZ��)�"s����B��fdfKkwZ|V��;T�K{��&�:o���֧|0�ۡ�U�~4X���e6,�������a��M^����
-T�t>���}���A��.7_?��š���;�">���E�WT-qaQ1�2�]D�3)7�`�v�:�^'��9>f}���^La����,*�zՕ*J]Tb?��e��7�NV�"�`��)������I�N�?c�Q�*����(*6IZ�+u&N��M)��
-��y���O�-y��f��ʠ�~��sl��%�sWZ��?�e3�-�?Ut���n�	#?��+-u��������%��%v?�͘:�eM�7/-CZ|Ɋ�+�Y�/5]j�)�cvW.��~c����dIa�3+Lhw�r��J�;�
-���Zx�N��<�v�J'3YT��ª1NjwT\�|��R�+JE�͌��s;�YLI�-f��0�3��f��(�v��TQ�Pꀙ E��[�kCd�8?�f¤�خbߢ�;��F!�{ �`&2����`�	n'V�M�v����KDF�	,Y��}��s��!Rl�怄d��NɞZK("5G&E����0�<����)�3Ƥ.�-�W`%Pb��=��&L��#�1w��	��Q,fw��\���dK+%����)����x�Ƅ_�dd� �|�ڝ���������
-t���y2����("rw��K�_"�gDY��_�|�/�$���F��~f�)6�[l�|���:��U���a��"���Vɰ/��◁�щ�9���7jA7.�X��B��+�ݩ��TI�r�u0ڐ����G��B�rσ��[n��2��w����g~D�9=8�Λϑ�=���oBh&b�t{���>�S���ym�2����k��0�x\��q.o�KhDD�`W�s/}��m6)"g���g�SlL��ETWRye(d�*�����Ư7��P7[��J�4+%:BL�
-���K^��j"L1�K�NK�+�]�V�v$��?i�4(�7��xgo>26 :{�
-ź�\�ѿ�	�(�;���.�h_D�"�yb��vTYh�c[R�*�9��)�Ϸ0'�N����i���1<%7���������>�Y�9|���o���"fQ5a��!*�����BEa��Ian��knWIU�o�nt�����Ð���]�Ҩ��tCM�q��G�b��Wf��bB`&����ګ.|��~�a��bJ�o��ڠ�׬�lHqX�
-�<����*u̬�J�)�̌�2&�.�����7\�?4�f"KV䀗�<�����+s�ԂS��S��6���]�P\��"����,[l�.7���*�W��)���ʏ���	����u�U�B�;;
-/h�͎��?B�,���DZQ��`��,�
-卐%M��ք��c3�E�ʑ�����~�.�)�H��1�����b��f�9[��$O3YR8`2�;���C�9����!	ah�cn���'f5I��ܮ��o�0�����oX�^�5��/�Q�*3,�Eu�����@H�/�>s��p��w ��g32"�s��l%��Lu$�B��=�J�':qT/�²�E7%����,6),�(�b����E��:㒷�I�bC;i�2��֋���^�3(1yAZ��;T�P��Ϭ�&K./zoA��U��7-�!����-A�eN�o��,!����(Y��*8\r��T��˩1�'i�*kX,��*�_L|L���4�������r�𞒔�-M��Ў���gKvB�)��x%gHfe�ސ3��k������X5�-�z���g�Y]�2�׌6������D�+.�Q5e]%�W�HWj��f�piw&3������b�ي�a ���aF�lÁ��Al�ٌ��7��-�ّ��o`�2u��F	�e�72Ș�e�6RZaQ��:;m�~�UQ%���38�	B,a`2Ș�n��W��R���t�
-��3XS񟎔���M�r�ͷ�SgN�M�ֺ)S*{y)J,��z3'�aT..����9Bي˫�|�T@I�%�N_����DLq~m1�JI�)'O@z���a�(��Tb�3���:���d�[&����Sfȑ�̋p)�ff0�!)�����~Gt���f1I���ά
-�
-2�=��Q�������SN�f��)c0D��l�٭�033㠎�ِ�0�y�?U���Q���Y� ��"������lfR��_��F��5��L�ͪ*�dS�vW����XB��I�cL֩���Im��(sC�[^�O������#;\������f��b���+Wd�����3:⳻-�����_�qL��`H�߾~^ЌQt<�S�|����8Iq��q��ы)8�;xSZ�b�����>����W��
-.a����ё�-0N�X�v���)љ��!2t��*��jw�^s��Qsp��~>�-�l���@�<j���.3c��ؚ�F��i��lVԳ[���f�pX%f�:^�cP�;��K�2q؆���&�>��Ĭv(ͯ�����0�9)��o�ΛgȒ�S�Yp)a9�h|D��]�{�#p���Ǭ��.NJ':{�b���&�t1�˕R[X���a
-6���eL�]��
-
-�+��2��TK��E�������_%q�CU�6���RƫT%ׯ��"�
-0�g�,�\\V)V\olF��{+P����W��c�ڿ0�;��[a�VC<�L�,i$s��fdfKh��,)��9$e8>C�%ca%��R�rd=�� 3�9��ɬ6)�5��66P�Vj���h�9��a�	0$\R|�1�+t�ae�;j���r~��13�%�s�������TU)$Z���agV�Ј�]�$C���}C���	����	��<$n�����~�.�7y��ȽUTa���KMP���U.?M�[��b̏����gfKPr�bi��ѿ�b���9a�bTy��x���FgL]��+����Rۗ��<�b�����~�-^�
-���"fwVI�ͳ�R��K�(��!)���2rd�p�����17�7��s�7 ���[�;��h���c�N�Pl��2���0��ho�B񡙽D՜5�a&.��3��mcd\�lц� #�f�R�*1��1���`���5�%.tT�!����Ϲ���p����}� 4(c�1Õ.-CJ�)�~
-a4NJt����7�L�������2����T"�����R��Qe�KO�q��$O�NW���*.���Kc��2��_�������X\�d�J��1��70ZՋ�*�_��Rd��*9Ci,sGV�ǐa6;)1$��L`fL
-=�v��b�;���V��k���<�
-[)�s{�T:���,��:*qᠩh�+my�Hd=�v���4TD��*��Cx���p�o����`g��Ect�1��'H!j���Y���e*���3..=W5��3Q��(�'��{JL^�le'�2�/c���+;c�`��+�@2����_ܿ��Dg̝�j�(ZQW�w�d�w�j|������X��2�O�w/z@������en_愥	ڑU��nW^ڀ��U�l� �۬>)���%+��񨚳��Ĭ&�ܡl���R�5[R8h̆T�xU��J�w+`6+)��2k�1��dCh�"��V�0�yX,���٘,�Ča��b��xW� ��,ެ6))��v��Yem���j����	0��-���~'X�J8�I*.����wR�I�l����+��R�1fw�J,(�Y�x��H�.U�8�U*?N���Tf��1�7#��LSavO�Ŕ�1s��	�Wj�)�p(U٥��1�[pQ?��z��(()K�}�/D�s�ܑ�ُ��Ͳ*Q[l���
-����j���RE��<`�L
-=�v�"[3\��,�a�:���j�kF�z��*�l��5jq���pm�`	�W�<����6?́��.n��7��ف�0�>�j�u
-��-6�bK��>�Uv\����_�,�<�Ͽ搅�&������ĊJo_��Vf�4%����~�bC;Wls��R�#�+u�R$FeW�B�U�Qm�@/ė �q��2�#���P?Wy�^L��o�����2�\l�ل��q��v��4D��l�w>'-�vB`&����$���m��Q9�B��]"��~�!e��w�mN��p��8����aF���2��n�/U�k�z��ʘ��9k�L�n(�j{3dΐ�c6+)LSq��4^6k��Y� �=��ІHYR�FTGՊ�Z;�G$�����	�Ta�e?r�L���o�fTj���OMP,��x���|4(����WJΪ�����X`Ls*[`i�![�
-�[�.��B[����HHI��vTY?ޑ��@�]�ipX2���8�F�,.t�y=��8MQ�"����� �	�ِR�2$Ʃ�0�v��L
-c�	�p��#m����E=�8.2��+��eN���r��#�Ě{���JKR�+Wq�eg����^�Le4#o�W̭ ��!2������vTWl�����]5�$U�<F0e����1�}�T��*1̕���Q�ʫ.��Ϟ���*�[|���oG�������rK	]���f���;<��O
-��q:��[.s�)㕩�fs������^s�=]����i�#GZ�`)�/\����b�)���cn��9lq�S���6T����cnWG��6?��WN�Nk��g�����C�Ҝ�d)��U\@eR��ZG=N�����������L��,8C12�NM�,5{\C��X��US��� fw�VP�
-���g�W�Sd;���R��������B;J�1at�<^U*�lU�1����蓻��K7�E�:6��۾#m^i���qaȀ�WTK��1����<��5���ag����:r	�m�_9��+��N8�!6�����$ɐ�Htzk�1�E�D�-�ӣ���*a�������X)��2���W��6���*,-��F�B٩E�Tg�+�P��*�Ҏ�耴���M�^���Wb�3&(�͉�jR�?b3����KiN�����f&�ѢRf���q>"����ב��JU0^f��p�����f�T�8�Is���Q���×[���Ӭ� �lw?H����N�Q�E�^��C��QFM)Y��ONI:f���[�Z*7�������|U+��635A��4�n�*�V�UkX���,���gU�b�V����JMXr�U��:8�W_J����)�3fw�*)�����GV��c���s6'�>3�_�mV`V�z��6 ��a���G�jsA���}�׀ 3�32"��L�3|`Duc�2��VE�������p2��*��ťU�l�5}�	U����Qv��Qvs2g̜�*B��v3)×m�HNY�*[�b��Rh)i3I�:s;$��AWr�J�0H�V^���W؀���Ԋ�ZZ~�K�]r��Qr�2'B�l�9K�B�Qf�H�8��_��,���tQ�ą��_��06��k8��d�ñ��K�l��?�ہ�/3�cn̏l���xU(~ -E�>�~�l���_��s����Tq��VP�2V�F��p8�r�3�b�����LM���l%�|>;ZA��Ubu���~���G.T���O����
-������${9y2
-ځL2_s%����8Q3��>Q3�<Q�8D��L
-=����j �>�u�t�����e�����u8\?Ҡ��@4 ����Ėd١J�)����v�yB���|ZQ�g�������?��U�g�
-��)-s�ʕUU��Dg��[�`��_��~�����ZE�G���\�������gN�����,��������Ђ]\x�3�#j��,�&��8>�<0�w�����`d�v�cn��3J�!�9�%�(�\���+{��)+�\�5i�7Eʙܴ".����!�=e�ni���*����!��`��Ct*hF�Y��BrliRƿ�U%��=]������= R�E�R��Z�g��Z}(��-1�����������qJfCRX�#x|��@s��W�8ژ�����E�S?��e\�*��<�1^�*u��ǹ�#�K #�'��Sk�Yg�˞�b&`��+���!*��w�X����R�k̯���ܕ��0p2ϔ���@|w���bP�f�{3�V���̵y	�fʒy��p�sZ`�E_�'��D��B�>N��s��Q�2я�oV�����y\�1�S�����=,0^��>,��H�s|��ӎJ�5 ���y��q�2Ș�p�n�<lU�����m��SJ�P���.K?[�~�g�`ť7��\	�V��۝؈�-<R�9���.exp���q60N
-=�������-)�����<>�~g��i���<��GQG.%���q:�U��������qXc'�.?�pb�*��_à*�[%&|C��ZsJ��O��x�?�^qÛ���p�
-�U���G���3c�**e���f���cl'U�a���|)��,�?�/���8A�.Ԗe�|i��ʻ1'27����{d8�o�>gJT�u��@[�5f�������"�1LG®n�ܸ����`�3Gz+�=�;#�zځ�T8�f/C��7eLVm�Tm���6/��d+�_��&�^�ʿm��F��y�2p�П����z�5�Jz��3�y�� _$���X~bd�y�J
-��VO�k�镗V�&U�@M��1yt�C��(K��Xa�A�m�	&���J(��4H3�Kѭ�ê��Pj�iH?;R���5�/;�o�T�9�,�m�����h�YB�Òy��^8��Wѱ��\g��K�t�F��b��h��d��ä�CW?��9.��2�UKI�gJ�φB�������P-�OUU~�~��/��27�<�'��cxb~�?T�m�YLR)TwTά!U��@Ƞͫ��_$�"96��b�����wG$*������R��Z���8�7���R�lts�zx0����:�*,���I1�����e��(U��<�BQG&kX��P*��,,��a��:X��)���1�J�P��>zBBtvU)���O�1���\��Q���n^�"S`��g��De���l����W� C�
-���f�ͫR8��ŝ�#��cncH1�x^;�x�ge���{P�k��(*�L�V��u且$Õ9�ü�6�0���0��Ͱ�����E�px��1d�sXJ�P�����7wÏyUM
-�8� �DGQ��08x]C�2]�s84S���-����y��9%Z������#��sNC��t�tt�q�ǀ���p74�gq��ʝ������60�yU���|,�9P��s{�D�2.���{X�Ù��ɬ涑�>����pX(s����z��+�]������G���&�8���6�j\��ḓ�����'�0$���G�4.���8���"��#s�10�)���I�����I%��E͌��C����6�p���@��{`�_�8�� R����#�p��+�-ɲb�K%*��ۨ������u��B ƉiCo�L�J����VCs[	���b/��[�P �_gK�:H�� x)��~� �f4!�|7��?0�G�j�>T� P]���NH%%�V�QK	Y��Ɩ��r��%��ӕ�lL�!�O?]5,���ìG�����p4�S �5�/>�ۺ2K/1�U��Tb��Ԑ^�+�hU�İ6L&0��~1����3���(�p���ޯb����?-���2�[�u�edC"Ft�1�@��;;��:��ǡf� Rǋ;�(��q)! �U�Uy	!ei��֖�>Fp�������_�a�c( ��w �a�����reVA񖕫� ; Dંa�	 ��W  `�����v������1���j�a�� ���1  ,g��c ��
-�a�� ��c  П��wG�Ǽ�;���c �q��������Ed  P���w1���`ZI��˥�A�a      ��ko�ө,����";�Q       P��n�����ʂq��
-      �3tY0���q\     ���a���)��       �UV�R=      ��6�p�ߑRk`��ZJy       �;l����#����q5�3�       Jsج��Gʭ��J��<      �l�u���H�5X�eU��:&$�a�    `X��c��� ,    �����c	�� � .X    �a-��-�t�S �.X    �a-��-�        �c���i ��    0�e�`˂1M�)
- C ,    �����-�        �c��� �A�    0�����c�Ҧ( ".X    �a���,c@�>E`�p�    k�}�e���)
- ��    `X+���UQn       �a�;�       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       �ǒd�;`���j4�S4b�xm۰Z�V-�ms9�a²4~��5~��ۡ�������  � kn�q���m�y����=h&�4׏����V^��<���f t,v,��[��g]��I�E�w������fR`X:邷�5�|�ݲ�̽����M�"  �F�ן�#5Տ�-iϾ����Rg�.3) I�2Go:��j�)Y�vX��}@�� C�� 0`�Z��>f��Z�ͨ��76kʜcd۶sW�mk��S�d�����>������?���֟5q��f�ɳOt�lٶ4n�|��7�ɀ!k�	W��ܢ�?r�.��͚0�43	 {m�S�X7�?��<Y�M�d�'M��u��?�5�ߥkοK�u����K#����v�lI�m��a�Z&�� `�q�1p����]����?�bI�lٺ��_�C���L��,�����uΥ�ԩ�~�FO�*�.���߽C�����o�v���g��{��W]�A�o��Y=|�/���ij�׼�o��6R��}�j=x����e&��:r����j��)�,�ں^?�����f�"�N<Oo��7�X�����>���Cf�u��~S'��-�m���C?���ڸ�E32:��5�������~������x����w~Q�sS�3���rÿs�q��]��ӏ�$��t���~���7��0@�q�N8�:����>��+6�8M�t�fL���^�����rQ����y����.��4H���zQ����L���c[ڳ�;�Rs�8���_��q�$i����g?����}o�dT��餟��n��9�`iwO}�f����^���q`YQ ��0#���s/}�F���Q&k��)z�;�Z#F�5���	ӎ�g�w����G��w\�Q��b�v�l[��֑ct�e���������Gt���ʲ,��۶����g��'���_����C�?^o&�UWߤ�/|��z�5:������_�\M��,V.�Өq��>v���N��qS�˥_Nk�>n��o��F������;����k�ʌ�z�N8�*�x���6���F�����o՟~���7ޥ�n�:��)&�:YN�RN�R�O�R���/�0H�k�s�w�� ��G�ռ�W�?-�C�ۆ�v͛y��ͼRGϼRƖ��j����-y��{곺��O���b� �������ЍO]�{Fw��q��쵙�%iL�\-��V�������� �B��V��ê�k�,�N^I�<{��9�p�G�,K�\x����4�S�F�q�U��i�ɳ��oݨ7����ո���z{����ĝ��ƕ�K��;�=Va�4�=ʪ���
-LTȜ륱�}ںn�^z�fmX�_x�Q��7a@y��� G��^�Ux�l�Y�آU�����������a�F�@���v�Vo���/�+�n2<z`�b�8L�Zx�N~��g�9��ߋ���Z�G�Y����ߨ~������u۶d����g�]����?���=�����.j���+�����h��ym+���h����`��rǨs#`�c���y�S8�4<n3:�������Ґy��l�Pn+�9��}�9"��>�� ���0��jj��/O���
-������U���Ma�G_����E��i��Y���ܢ�1d��*����G���n���"��[S[�cϼXW~�j1J���۵f�sf�H�^�n��������O/?�`Q��+��K:�K%K��j4b�����o�6�v^�t��>]���yu���F����6�7E��k�F���w����f&-������_��l�������/�O]��w��yɻt�Us/ֶn��Ok�����s¹��c�����GOܙ�����7u�o�-[=]���ߦ{w��K߯�ϹLm��?%��ym\����O���;���iUUuM:�7�׿_�Ε��,I��Բ��ҳ��N;7��e�WM�{�l�ڻc�n���ྜྷfq��ZG��s����\��S�(g�����l_����[��A�����2n�<]��o���U���2RuM��k��}�㗟��yq���%����������5�Ū�oҬc�ױg�Eg���~�;���e�h�c���˟T�����s�֩���$���~����j�֕:긋t����i�Ȳr�����^����c�]���snU�Թg�·~���ֱΣe�w����}�c��~�%O�,"�e�}�t}ʛ5k��:j�,����m�{�*�x�v�|��:�w���_�?Kǟy�f/|��FM�9�:�i�����#��测�kX�����7���Ze�ҋ��T/?s�����q�|@S末�Z�K��ݬ��ݤ����z��U��_��������֖͟Տk�3��k5fұ��&i���z�k���2����خ��^���{�Z۝k�$ܷE�^�[+_�E��u��]�meKڹ�E=q�W���QT�i�qW�S�#�Rw�~=v��w�jM�}��r�F�_����_Ԓg~��k+����:As��B3�F��S�y���j�5Z���Z��.:�}��շh��4g�5z�|�rΣ���^�ڱL��t�֯�_����P�9G_��O����qp���t���tAV�F'��7�1�b���?������3y����4gޛ5}ƫ��6ս�Βm�i��Z��OZ��N<�}�&M>]g��E��ҋ/�D��|��L�4j��{��M���k���O�Lr꩟���˖t��f�����յGS������F�r����s�֬�[Ͽ�Cuv�6��HCC��̺LGͺT#G�v��F���m��V��K��<���;!G����g�����dI�����&���%uu�+�gk6ܣ'}���0K#G�ұG�G3&�J�#��ݼv�^�WVߤ��ָQ���S���}aُ�lU�����I��E�}�$�&נƆQ~|>߫����뽥�6��'>�������z���T[��ݭ���C�~I�}�Ϋ\�VSǟ�3ߦ�cN*�¶���ڼ�)���ڼ�)���_��XVNg,��fM,<��%_ך-��Kg鬅�Ѭ	����X��Z��3����U�&�V��EcF,P�U+[�m�jǾ�Z��7Z�������0No>=��gt碿Ѩ�9:i�5e���5ʒ������^Xw���}��eK�Zf�ة����窵��K��v��ulІ]�hŖ?i��%���ǩ�~�^w���q�$i��E������yt�\]��몯m�$5ֶ;��=�:{����w�j去��ʯ��D�4�u�N|�f��P-������۴v��za�/��Ъ�
-��Fҗ̝ ���Ǟ��~��r9ɲ�j�3������\,�y�;f�d={����~3R	˲������r��ǖ����/~H�v��z�?������[�G��K=t��ڶa��$��'���}�����ܦEޖ��������Pcs�[�#-K�ͭjhnUc�545��{nҾ]�,�Zt�%ר���`�yp����7��H^L7e�N<�M������[b�G��p��;��N�����ҎM���0}�N�;��k�>��˞6��,<�u�8s��ПӸi����}A�瞤��V�M�F���cθDǝs�ֿ����J�Zx�����븳/S��I��o������W�]Sf��qS�}��7:o�=xC�	�jju�%��;>�#�>�<�����aY��Gj꜓u�E�j�io����h��𗨍5Q���}jj���6�5�lY�TSW���V54����U�����E���;y�N8�jջ�6�xFW>k&�r5���u�����]��c�;����$˒jj4f�-8�2�?��ڹy���
-�+ʴygh��QCc���[�a哺�m_�I�z�Z��˲,wa�R�I�w�4z�QZ�����6��Ȩ	s����T�ت���П���5���Uu��ohՖ5��e���4��t��_�9���&L?QM��s՝��-5��֔��бg�S��#�u�"�����J������w]p�g4q���o�,��R޶e��i䘙�ʛ4u�Yڴ�)uu�7�	i1^O�F�M���k����5e�9:��}��`�}4�kh�ę�k��K�mݳ�<��1㦜�	3N�/{���ɯ���>��jn�P�����Q�6��1f���}R��,s���o�EWO�f������S�Тq�Oм�V�ȩ3�56�V]}����j��w�.�L�v��u���[TW߬���N�O�F�-�>��͖�	�9������������I'��q������'9�b��SS�hM�z���M�~��m^��νE�r�Z�?�]���hڬ��2A�垟�rV��Z�i��u��Wk��ڿw�YLEڦ�_��SU_ת��q������ϘI}������{g���UV�V�<�-<��L�kn�����N?�?��7�˒�jY��Ʀњ4�-8�56�Զmϧ,@;F�<J�~���ZUWߪm[i����d����	Z��]jl����۷N���o&�5�M����%��ݫ3��{�x�_��i�sݖ���F56�Ҋ��Tm�?���1�ߥ�\�M�t�������Ư��Y#�gk洋u������]�v,
-�_K�3�Z5֏T]]�r9�GMM�3���X�ۿN�6�W�&���Ig��9�s��5f������='Z�i��Wi��UWת�c�W]]���Z�u�"m�}������YoѨ�y��ku�
-o/dY9�׶�����,-_{�zz��S�׵��9�VK�$�ն��k�Vm�#4FQ&�9E����Z8�m�2M9���=�5M�v��L�T���廵c��~)U�VM�N�_����U�mk�����j.gժ�a��k�������8^g�I�4NR}m�zz鹕�Wwo�u(g��Y���O�_��Z���mY5ji����/�1�ߡ�Vh�uf1!u�-�?�J1ղ,͝t�N���7�P�*|GI.W�Q�s4��z�6�~B}��/�n����Ν��7���9N��Sc�H�q��O~����.�ڬ݇V�.��״�i�QK�D5Զ��{�Vl�Sh|=�u´���v��kZ�yP�kp�c�s,�v���ɋ�#�f����N�~�Ƶ����g#[��mѸ�ct�k4�y�6�M+ �Is�g�˲�{j���z���j�3�Di�t�Y�;	��e�(-8��K��ߏ�������tu���l�A������y[�=�x�_��1&��8�kj��:r�F������|�ߒ�&;,I�M��)u�S~��F3���+
-�vH��	3����BS�8w�Tӂ�.ѵ��s5����O'��p�1똳5j�t'��:Y��V�\�%]t�g�;R-�X�5K3i�ι�:54>(��(+���'���9�!I�^9��������gU���f�������\�c�r�{B�iju���Sg���)�_p��9�5:�U�-���y�*��k�%i��F�b�,ԕ��fsaLS��/<�m��?U����F�2v�\]�џk���dI��B�����r�-g{��cu�G�����J�g���N8�CZxƵ�b�7 ����6A�����������=�?�5~���P���%M�w��;�C���҂Sߥ3_����'p>{�q�Q�R}�s�Uң��cmY��m�yo���N<��gy�W��is.҂�ޙ�R]}���h��osR��߁�`9���	�i����6��5��?����[��jc�Sw ��u�-z�%�҂����:;v���~��˩o��oRۈ�fR�]�Yp�5����V�|�f�ؾ�HY0f�B]��_i������;�����dY:z����K���l�QJ
-/EzJ��,Y�T[Ө�O��fL�8�x�ڵL�]�((���o֩'~�s�!�;u�c�ڦ���B_���u�?wL��?����Qq���2Iu�ѯ��u�������Yorr97P�S�%���U���6tēy=ph��k��a��w]���{�+���/�����[�a�s�
-�鶨��Q'���ƌ�oU�m{^Ԟ����Τ1'������L�J��>�����g�H�u�_&;�m�Z�&��g�����#��ښ&]p�?댣?��\�?��q����i�m�%'G��|w�#�pJlk��Q�s�2����e�	��k����k��Kjs:��4k\��m��@��ܢ�����>���Pۦ���I��ޟ{�S�KZ8�?��ik������K���<KW��[�o=�-��c����%5�]q�/���������07��S���>�QܦU�t�����ۭΎ�:�����#�N�3�ݪ�����x�̹�調R��V����^��{_Ѯ���Y������ڮ���؟��V��z�����cO��'�缿��g���;��G����۵~�ڶ~�&L��������v�oӺW�׆/jÊ������v�ɽ���׽C���^6��7\������a]p�Gt��?����9���y͕$�޶Aϥ�a<s�i�s¹Άm���n���x��:����G�|��Lw/8�u�8c�g�d��]z�Ͽ�}7���r�j��'�qp��O��/T���kڼS���;�S�;�[F�ћ>�u��돔m����7���}C���?���Ԟ4z�56��w�8w�tڟz���{��~�G�7���{�:=�������Oݡ�˞TK���t]�yh�n�ѧ�w�Ƣ�$���^5��ھ�em]�|ck�8�@�Y���.}\[�-��u��i��ڴ���gu�?K�O}��aK�^~,��/|�N��qs�cǁ�Z����ğ������6,R]��i��9��'[ӎ>K�W/�ޝ��i��4m�~����۫����/j��k���8��Nk']��iZ�����uT�ںFY���o\������]��m�B��5K�ז��j�ƥڱq���[����3�2b�.��[jm�菟m�ڴ�	-z�'z������n��-/��m��Z��y�Gi���Z�쾪}9ac�]r��4z��y[�mi��'���_�C�}]������_j�w���I��ϑ�ϫ��I�cfh��{�znn���]*Y���K[�<����=��w�m�3j5U���L����qڽ���}
-7�M����ɑ���g�'��g��̯�o��?_�u�?�nn�+POW�\i3[�]��N>����۩/ܤ���^x�{ڴ�auڥ�c�(W[_t���}[2�a<n��8��{Z��z��ś��_����F����؉'�&W�|�m��OӆU��;�V�F'��	M?�b�l�$���^z�'Z��Z���ޱ\M-����,��۳FO��՘�--8��?�g\,K�o֢'���z��z����g~��KoQG���jr��%��x�6�L�v�������5z�F�ϐm۪�o��6mx�L�q�׉�^'K5�%طQO>�����sg�.�5�L,�M���K/�T����V-��v�zYM����8gG��m�֯�_�Ύh���3_�Vm������a��<Ns���}ܽ{y�;��M�P�F͓l[�u�jku����J0\��m�]�jk�t�q�֖)�$����n������h�˿Ғ����DK^����_�Q�Gɲrz�������5����i���ڹ{�$���}��M[��Oj��ڵ{���|I�w�9�sg^�s�^�o��zn������_����|^���m����@I��={��eYj��7i瞥:رE#[g��G:ph�Vo�[;w/Վ=K�c�Kڴ�Iu�D�CI��mּW�w��:xh�V��a<�}�.>훪�5�/�}}]ze��zq�/�z�Z��>��^��̐����̲����w�ŕ���C͍�4q�ɒ{���Oj��5����1:������k���ڵ�[���f�S�ڏ�^5����j_�`K��z���q��}�c��\��zdɿ�W��gW~_�6��u�������˒4��dm���uE��w���+C�;�/�3���gW}O/���v�[��\�ښ
-��jk��ښF���hQ^Ϩ�9:m�u�uR��~�[�{�^X����z���zf���-7˶��:_��>��W~C}���2��iтIW���U������0���)g�kׁW�}�ɒ���׆]�i�'���m?�D[�?����ϯ��)z��o��~������������_�m���z����Z�'hD�4���~��r-Z������`�c��r5���c_Դ���ovo�����s��};�i�)�j�8�N�Q�&k���ڴ*zѤ\�c'��7�C���QOw���/�wg��
-�Z��������ꢫ���y��������EW;?k�>�mV��}�:�����g�9q�xÊ������f��:�UoRc���_y^����ꅇ���Oܭ�O��X,o���k��\���}s�*�����,;٬��qSf��.���W��H�ㅧ�N�g.prYҢ�n�Ͼr�^y�~�ںN�j�ƕz�ٿ�o��c�Vۨq�,���ͫk��W�b�2���ꔋ���Aaiז��ɗ��sܨ][ת����ުu/?�g���Z��i��c��,uuТ~�`�6j�^�ޯ��y�\��[������W�ҎM+�c�Jm^�=�{=�Ѝj9^���Z�,��!I]��ꥇ��������ҮY�vc-���������V�p�V�p�6�|.q�X�FOt��aкe���mct�՟Ss�(�=~���?���f�Cڻc���Ӯ���z�Z��5b�$��<ϝ���[�h��w'�m��4m�Y�vW����k��7���.uګ��^����������V��Q��a~�,_ǁ�Z��A�g�3i�,I}�]���/j�7i���vك��Œ4�K5��K�-K�wo��?��^|�z�ܼL�w����ڱq��=�ھ�M;�<��6H��>z���{^�wU�����Z�p�;ܵPK���?����Y{w�Uo����|_�ء5K�����h������ں�y�Kh��`����-�.�������ڿ{�z�j��uZ���ji���/=]�q�Cf�!㦜�	3��V����M�U/ݪ��}��:��[�i���4e�yjhh�%Ku�-ڲ�q��ˋ�Oz�&�t�eiۆgt��>�+��}���sH�m��uOi�K7k�ąj1ٿ#�����'j�ӝ�[����[�V+߬�����ܧ�[k�ʿh�s��0B���a�'�0z��:���v��z����釾�]ۖh���ڻ{��o^�W^�A�Vޫ�S����־�΂���m�N?�T_�"˲�u�S��ֿ��-ϫ���l;/�Ϋ����oyAkVޥ)3�UCc���W��=f[6;ߧC�i֜K�_j����M�Vgg�9��\�N:�o4z�\g�%-z��ڼ��@i�f�}���s�{��tp�F�u�_i�K�k�Η�ٹ[�m��K���?h��5u�y��i�%iD�tm�����?F#�gh���I��ߜ�`<�M��jeY�v�~%ӂ�ij��yEwC�صX=��z����/|_���Ym�֭O�����Ɗ���i��K��2U�,55�Vmm�ڪ���BS_�[����e+~��oվ�k͢$I�=��qˣZ��A�����Ghʄ3�s�ғ���ů\������j���#���G��?����\s�}�t����^Tg�.u�О}��f��ڴ�q͚r�j��jY���Ohk̂�m�i���~˃Z��A�?�NGM��-����~�K~��m�$.�]0>z�[�P�*K��.[:m��j�����ni�t�#�j����{�
-�9�J��/ך���U?WO�A�ٿJ���@�*}EAo�K�\*˪q^;��Z�ՙ�3'�Z��ջ�T�,�6MԚ-��7ߩ��1:e�ujl%K���yI�V�(�P��4E�.��j�G|l�������u�"u����l���{@[�,Ҋ-whƸ��X׮�\��v�����y�S�TC������K����}U�����]��ѽK;�/��-�i��%:j�k��j�>5N����D>F��~��O��_0nk�����:ԽS����ݽ��aףzq��Z��.u�F?���,�Uum�ei�f��v{�qw�~������_kwݯ���6�,�5�ѕ_����oٷ(������[��\,����k�'���@�����u�k�^��G��;5u���u�q���_=���px��06k�I:�7�oXlm\�L���G?���]��w?���ޖ����5�?#�r��i�Nsb~��C��;�
-齻ܼ]���͸��y�0c3��v��}�_�~��b2T�5�+?I9�K���߽M������^pݷs����ה����c�����\pfa��y���v�p.Bow���[ڱie`.%�y줣�>j��^�ֽ�������;C��ޢ[~�I���]fT<�-NKҎZ� ��+�����i��~��K�Sw��_\4uwЃ��vmY�O��ӏшх/��MH��y��ymxeώuZ���z��X�QqZU|dQS[��s���;��#���vm��2ض6�xL���]�ܑ-ے��=�LY�is�p�,�����u����ݟ�C�~��zק��;?u���ww�O�I�|�O:�u��l)o���gk���8���ܽlkז���y�����.�|�V��=�.ܙ��{l�Z���ڱ�%3��۬u��.�/��/.F��kҘI�x-uw��3�Kݝ�̤����}z��o��k��������/ݬ�_4i���Z��]�ܳmɲ�� I��/PmM��ek��?i�{
-�fػ{���ڹ-�#F�TS�sטm�;�X]z�ot�;o�\s�^{��G3�U�uT���հm�"���&�x54����ouv&���3^��-m��V��������zM�rv�D��Ǿ�ݻc�Y�ڴ�1-z�{�lt�<%���y�]CJ� ��Sɦ�O��{>��۞S__�l;�C��j��h����bV�z{;�i��~�,�҂�oӛ.�����q���t�o�٧���M>_u��%/V�^�J�֦�jo���<����*tm�l����]���qr��x�䌾R^���5��}t�-��v��%�VWw��Fz�������_O�2�R�޷\[�<����ǫ�a��k[u��w����'�7�M�7c��kd��Vl�c�B�ȖYji������g���9��ȟ�O���ep��2Gu�/�d{睭���Պ��=�kw<�%�
-_���0^#�g����X����mi����}A�:�}�U���?�+N��N�y�Ƶ�|�'rb��}\[c��J�>I��i�Ķ���lY���fNמz��=�����)�����5mј�>�a�c`�r�W�a������w㏵w񟓾���Z�Ի��ҬcNѱgV�Y��w�С�]K��M�}̩F��^o�ߟ�1^�������3Q�B�z{���7��;�'������7���'������7Z�����RkNK_S[�����d�ҎM�upo�$o]��������}�[5�Ըw�I�8�[��%ߑ��uH���g<'����QrEbIڻss��xeJ�(��PRm}��/I���˟ToO�g�ߩ-�_�σ��g|Rμͫ��]��<H�އ�)��\�V��M�s���iז�m^t����⟃X���f��O�?GZ����Qjn����ji����<b�Z�'��m��Z�:w
-+�̼�cR�(K��+���X���x�Ei��'ܱ����=�)3��³��ߢ΃�׬�ν�s�H/=�{���������}ȿ�+CT_�~I�;>����-;���3��,K�uMjn���	N����NTs���M��udhx�l��������˜y�i�X�9�55������rN��׋�~����E+W�>�֙3nKX,.ر�E��v���R}�9�'���b)������䍉�N�e/�V�=�}������os���8A�F#ڦi�QW����S�\��.<�kji����;��A4�#Y��7��{�
-��%��8�ٯ�R�\�����6�3*%g.W�ںfw|���=:Ե�L6 z�i��{�k��Q�35v�|Mw�Ə<޹6Z����`K��|��Fj��������6�z�,^�4�u�?���h��4��i���$�//J���5X��}�K���]밵iw�_/�/���z�+�ӱ������R]M�&�8A���k�������?���O��4&�fN�>�ǫ����6׬��iE�~�Z&��q��&��!NTs�h������10Lyw{wVڶ�w~�������G��n��;�i����]tuu�2>�w��/_�,p�����-��	�_n��qP���+t݅u݅��WO��^=Q_��tmߴ�o_���ڽ-�ϑ%�7�>��1���
-���ڪ�~������|V7�����E�÷��hs���y&N?ڌ��7���=������g۶F���>F ��qS�2���v;��T	�ohjw�e/WS���&�X�-���zc�<�!�"ii�u�'p3�s���(���R?d�54�m�{��m�/ߗ��p��YE}KhWq��tU㮰��e�Җ]4/�����>�7As�8�n�|_u�����С;���ʻw�y�a-{�f-}�-}�f-}�-{��������ެe��A/?w�vo[a8�Iǧp��L��v�LK��!�\��_jl��X_S� +W�'�1EmJ����͖�yFa�6�N(}��p`�f�۶�=;Vh�қ�b��Z��ο���|��bYa{�ڇe�<�����ג鎋���F͛�Y���x�&O=�j�\�'m���YD1������v57���M��TS�����s�m�7�F��{�Ǝ=F����|�0���=�=�:th�{{;��_���~���m����!o���;�fL}�^{���Ҕm�عn����p������r����
-��%(�1�:� xޥ�m[v�{�qO�`|��@Z��!������I�h�����Y��v�����s`�d;wϛ�&M}�3n��~���sp�Y�$i_�&���mk�W�t��Z��&-�p��y�/���m�I�?�� ���������gl����J�4���O\�?.���n�Q{�s�;g?5V�Θ�I�5�3��V�ڭ��#�mw���mo�S����=�����wh���x����F����u�k�Y,����0���չ��SuuΗB��_�z��ww���qi�1'W�.��.=y�~����Sg�#��3M�����g�Ӈ��S���}鈥�K�N|q��ޯ�)�iY�9[Yŭ͖g���qu�/<�jne&�Qǝ��λ"p䳕�s�9n�N<���?	�oh�yor��Ыb���;��ھ����\M�.��o��TxVt�ұg^�I��?��`��;�gs��:4�Ɩv�֕��\�1(RڭR���ց����N�\�N|]�<�r9�p�5�2�� ���Ծ]�/3�������*V���﷑z�;�um�0j�u��>����_��=M���E�6�~�h�|���y^���Mn����]��n����+z��C�~E��=���#�U���_���_գ�UV�?��W�q��F��;��;�b��[Y�]oO���䦕��h����l̔��j��W��e�ߞ�*
-��ٮ��Ryvn[,;�w3X�9�u3~���HC���~J�����;s-Yjn��U/�QO<��z����k��C��%/\����/j�ĪW��]ۗ��4��iܸ�4�ۜ��%uw��җ�O}�too��o[�N��8�����!��mk��SO�D�hZڼ9����ܡ|_��ڒ&N<Mmmſ����YZ��N�V���=^ʴy�_jj��ѱC�^�_�~ϻ�����7��n{��z�:�����9��Kjo����O1��T8��ߚ�ѹS]]��1�1�՚>�Uf2_K�7�=%�{&��Ѳr;�;ĳ��սG;�.�ǧ�n���}M�][Ӡ��vswU�جͻ���3oʛ4y̩�,ut���M���{�Vm���3���F���I�7��������p^d��i�^�t�Z�e=���z0!|pɗ�����/�|����ܛ5�"Mh?�L��z�Ny��z�:�TO�jk��i��z��/�7��A߿�8�졳��'.սK>����r���o�؋���|L"�Z�>oL���e�9z�i�W���RΪUo�!=������/違_�+��+��/j���� p�a����=F���J�&�������]�o���<{wVy����ꏨ��ҷjx�ѻ������eKS�����}�����N��R�t��:��7�ʿ��>������<��s�w2��}z�֟��+�٫A~O�J��U��I��n:m�Z�w��%׶+th�n�n i�Q'���3�?�b�����G����ͷ��/\������^����Z���O5c�i�#O���f�?�b}�˿Ӽ/��ܷ[�<����-_t�::�"�mi�³�����|��sm]�&L���?�5��]_,G����cώZ�ԟ$o(�+���t���)G����qjm��Q5�u�����	]��t�KP��3��4{wm����rrڒ��^�����M�}�[F*��QS�h�>�B���~����qw�K��Eݝ�
-�My��8~�¿��7�e����������)M�y����u�9�Q��I���W]}�F����_�I]q�j=�?�vo[�ͫӿ`2�UK��=;7�v�2�0�$����������\�xXS[��SO�9�}Y�^���E_�d�a�1Ti�1�P����Z����[nK��}�ο�[7�D���uM7�D���t�Io��Q�\t+p��Lnt�X%ص}�6�{�m����6����s�N#G���jj�����9��zݕ?�[�{�����Ņ�{�h�����y��k��#�}�4j�ܢ�aY9����cO|�^�/�6bZ��~�յW/,���|^�-��4��s?�IS��˒ſҞ��w)�֮�G]�k�li��St�[o�1Ǿ[-��TSS�ںf����SO��.����朳��{�*mٜ|��߿I�otӖ���⋾����T--�4r�Q:��O�K���)��YR��PC}�^s�������f�A55�{��u�࡭ڴ�1=��酥?s������$�^`/4)ul׺M:����N�w�~��iD�t���Fk����~����
-�g�'�{�H�J%�x�KR��Ӳ�7*o���l=�J]~�4k�k��8A�c��0V�F�3������u�9�TkS�E���>��t�?���m��|��r�򕍷�`��e�^m[�����}��V�sp�Vm��/���M���]x�W5����AXVN#���Yԕg�V#����k���M����5���4M�������:q��u��?Sc�(�xm���v����	�'�gݩ7�|�ƴ�w˓�z�ko�Z��v��[�m���;���"fIJ�7Q�㕽[˶�A��?��	o�;N�M�ǿY���w���4k��s����iӮ�}���Z�1����3��G�\����N����G~ ���.S Z��V�~�:�w�'�o���ˍ?2Rki����o5s�I��7U�����n7��m����~�I3���_n�U�m��~U�����>��:]���%K�m�_|�?~��,҈����oߦQ�H������/�G]ͤ�F�����j�|�Þ���O�I�v%�)��.�{��'n�-�Z��~�����z�������N���������v�2���_~M����i#��o�������/[��W��GoO�{%�,���ꢷ}&XM�?�ow.�/�۹I?��U:�7�n���6]y�w4s�YRQv�����n�֭?�;-u������+��/����Q�|�]��h�q�����[�����qQSCS�.��j��3%���w`�q+~��K�ݨ�o�j�h������78w�ڒn���h͒�d���^�~���������j�����~EsO�T���Po����c�R3Y��/ҫ���³��q+l:�(���ܯ�~�1�������y�.��_$����w?����x���K�%=|뗴���y:z�|]���UM]�lIk�I����d��Q�뢷}O5�]�k�ܡ'�N��ku�y����-���U�w>/8�Z�p�u��C�Ƨ�{��~ZG�&w�;�-o^{�'��֏��m|V��I��t�#,<��:��B���Sڸ��Y���'�['�奵�����k��zZ�&�՗��F�O3[[`����N�{�G�c[��y�뿭�Q��}�����Ы`��{��}�O����\��}�W4c�kB�i����Vg�.3[�3_��.�w�r9����z�;~��ݽ_���1�ؑ~�{�{t��댟ee�ǒV���~�flȹg}YG;Tr�����v��~�*WK�]x�75v���ic�{�*�ܵXy�O���#�k�h�K&%uv���H{��/�I�q�ߧS��[��G>����]�[�'���W#Zǳ���z������4� �ؑ���~�����g>o&K��8V���K�6M�$m����z�o�ӛ������^����/U�����[���\�/�kj�K���F�����g�n}�=�}�{đ��|F��p>Xr���������Eim��ן�������%_��ק�[��_^�lb����~���,6��ݻ_�=���"�s�^s̷T[�}_���ס�{�׾N��y5V���:S-��|kw>��R�1wF7׏�[N��Z&ɒ�q�Ӻ㥏��/i��4�:s�'��;_�5��/J��	Sޣsf~ڌ(���ݣ[@���?2h��7�s�Q�rl��-K?�{3���f��=F�_|�l�7�׼���r��,������?����[҅o���Z̤e۵u����Ku�~��Y�����~��١��{2-Kއ��bI����Ke�/k#�1���H���ս7��vlZ�8~��=z����˹k��6y?�އ�wZz?��q���_��wd�P��m��?�T���Em�1�޿W����mx�h_�������>��O�a�8>E�v���'�N����J�?����z��#�����G�В'o)�s��3����w2-K�9�χ�v�Yy�i)
-�1K���,����c�8����`����w��5�����b�$�Z|�n��uڻs�����ܻ�����q>/��R��W>�פ��w��
-��鐙 �wMɒ��w'Sb6wN:�NL)���}��h�����N��?�|X�����㖝^~�W�3Vfl�[�Wo�o�_n���o}�h��]{�/��>���墿l���ͺ���i���mr��]��0зQc穭��2��{���POO�?+����¢��X,Ik�ܧ{����:��x��BI{���z��bIz�围�}t�3��6���e���C���,)�7-K�S�C۵r����{
-s��iԈ9�3�M�7�J͝u�ƌZ�]O_�z򋩋Œ[���сC����?�}7��p�?T�=�ʚ?����w�y?f|�2���ʟ뱗���|O��.�=�N�sϖ&�9M��昅U��k��l��h�Wo�[{��Klk����ճ_rǪ�w�VmI�Y�@�&��̇�z�~^�xy����=��mkl��jo�a�����/j����?�=�����:v�X���{^kw>��SGM�Q�G����ޢ��ޢy/Ss�8�_���{I��ϱ��g
-a���䞟��z~��u�˟RW��@��C��hcNu��~���g3�״:m��w�0l�`#5�uz�[?���&�}���7�T�v��M���j��³:�p���l�rtگ��s���Oѝ��/�ݹ�yn����8�$K=��������}�m'���v�`d��'�.�N��q��*�Q��W[�y�lߨ���z�Q�A�ir�?s������Ӌ�&+��E���>�f�������?=�c%�y-_��ߧ_�G�����Ϭ���H���W�Ҋ��S{�pm\�H���{��~B��4��vܫ������6�z��v�L"K���ܤo�O}�^�����L�lpdfc��uw�]���~�j铷�_bg>᮫c��{�z��K��Sw� �b��9��N���+ST~9�ٶ6�|B��������;�
-
-�ߒ�o|Q������߻Z{wd��rlZ��n����/7��vl^�~�s?ع�%uܭ���A�~��z��/��9���M��(��p��p���iƋjO�=v�����[��^k�ڴ�1��7��s�|G��Β��)|;|�|N�li�.������;>����}�F�0��v��S��n��k������� ���N=x�gu���h�ʻe��iK��Y��>mZ������_��Q�];�i�K�.:^�?��4�f`k�'t�o�#I���-:^~�v�xI���	�v��ڻ7{?�{���NK���]=qKt�U�i�c������K?���B�٧@)ӥjl;����F���zzѷ�g�*��������s@K^�����˵as�]�>��_�'�]{_�-��]O��_���*��g�^|�g���7j���ݶ�V��=���YN	EJ(���Z����ݽ��U�TOρ¬�_o�C�7ܪ[y�~w��s_�<Cvݶݿ0������=�x���Z��nwܤ����Y��P����'u��oժ-V^^�ޠ9�'��Ӻ��g?��=vy��"<�Q�%K+�ޡ�=~��m�I���b��w����~���u��E嘺z���ş��z��n�A�ݻ��
-�=ku߲��E�������Q�.i���׉��eekŎ;�/�ë���kܒ��@˒�woғ��K?{�Uzr�wd�<�Z���~@�..:"��ޠM��2�&,�� ����:5�����%I���;�����kPS���'�|�:���E[Oc���;������@����ը�u��\Nv�V��=%.pf`YjjnWM�sמm��qpo��uͪo(�%A�}�����²rjh����-)�ף��}����RC��j
-�c_�>F`���jU�8B�����SW���_u��SCc��mW�/�uͪ�k��{z��'۟?WS.W�s/���ϼX���|����uڶ�93iY,+������|�G]]�9gs�Z�׻s�Ϋ��p;�,5ԏ(�{���PʣF]m��j����ץ��f��B]m��j�i����RWӬ������ރ�ː�e��X7R���io�Sݽ�͝�U���vY�}w����ٛ�،���j�X[���ٻ7q�8�_�jԗ�TW_e�`p�`   ��M�~�^u�7�;(e镥7��'���  ���GR    �W�:�Ȓ��q�k��_�X  0�`   �_͘u�Ǝ]�>{SZ��ڿ/��O  0�X0   �o�FL��'|�ٰm�ٳJ+��f&  ��3�   ��i�_�)���׬�[[6?Y�   C�        �GR        <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        �`       �`       �X0       xX0       H,       <,       $�       �       �        �        �c       ��c       �Ă1       �Â1       @b�       �a�        I�$��N   ���j�Q#Ǩ��E�����QM-�1HRoo���{t�P�8�={vk���f2   �߰`  �~��4B�'M���#U�PcF#AWW��m۩͛7���   T�   �7��͚5c��O�������ѧz{l�����+�4:?�z1�������{�r��������Iq�\N��5���UCC���TWW�޴i�֮]����@   @��`  �~1u�l�<j�����yu�Swga����Z �s�m��E/�g�;XrE�a���ڤ��FIRoo�V�\�-[6��  ���`  ��[8��s�*�:���=y�v�o;��v��\(.��w��xoḐ��o/��9��4NZ0ιo�-IR}}�F�lVss���m�|�#   P�  PU's�F�m�$��ѫ������ނ����_����GR8���s��Q?�c3h9I����������6h����;�h����$   @�X0  @�̩5�E�>i��>�t捻g�������|Ѳo�j��o���c)�;���+�5_���;�K_0����:�7B559�  PUQ�   ���'���{�����6��-~C��_��Wa��+����SH[s���?�!Xo�O�|�]C_gg��nݫ���Ǝ��s�I   ���`  ��M�8[�g����>�8�\�5��o�8��W�� �-�����d,{,7OM`�PlgXww��o�'I�<y�&N�j&   JƂ1   *�Pߤ�GM�$����>��[�Uh���n���qf����'}a�9.��hܟ�P;�����٣;�E㣎����F3	   P�  P��3檦6��Cyu���E�����-�:��=�Ώ�Љ�¯���Yl)��T+K��TS��}�h<��4��؁]:t�K��5�1c�   ��c   ����M'��$��cF�
-˝��e�k���s,Y���cɲ,���悱��|�qԝƅE��Ecs�P߮={I�)��Z�h    3�  P�ɓ�K�:����6�%�3�.�K���c�?�m/�ɪ����1\��8j�8�S�Y(�QM�Nc/��7\D����WtJ�&Mr   ��c   �m�x���3b��O�%��b�b+����?�¿s���;����~�E��ⴳ ��ػ�8|��y�q�����tH�ƏcF   ��`  ���j���Z������g,n:�������bwp�6�p��\�=�p���`�BZ���N�⻌���!�,c[R>f��2�%�Vgg�zzz��P��v�1!   @�X0  @YF�t�d��0��9]��;��;��}��⻋?ŏ�(�s����
-�q���v	.��E���_����%I9�c   ��c   ����Y���e>�"+sq8n��6t�ҙ�)6�����;��ܟ�Ec/M�'o�H]]ݒ���V�    ���   Ȣ��Q����,VF����p��?�?˒���?��;���ql.k4aam4���'o�7j��w�==���f��    �b�   e����$��z��K��=2dË��=��w�ײ�����u~,�G�9秦P�x��� 
-sѸ�&m�"wg�����]__gF   ��`  ����:o%�|�ٲS�<�����zS����\���;�?Nڜ��/�S�Y4.,(�t��������;�����R}m���   ��c   T(�X�`�u�3jq6��[�u��S��)W��y��}l�8����a�?��T~�1   P.�w�   (�\ Iڴf��P	g������l�}��%7]�._g_q��|�w���{�m�������۲�W޶e����kƫ�v�F7��nO,Z���ۨC��u�w�vv=x؆Yw�Y�/�ˢ��3�J�x���   @,  �,��=�TSt���`�,>�c�K��c�_���R���޿%[y;/;���g˶�jo8V������;ԻI}�����Z�ft��2A�fΜ!�`  �2�`  ��x���Q��1�Rq�ƹ���;�s�%I]����b�OK����	l+��l5Zc5��B�l�&��|�z7jg�SZ�f��zʌT3gΔX0  @�X0  @Y
-ƻ#��I^0n�MPc�8�l8F�uǨ!7N�5������,��Y���v��Z��=Kw�m5��jz�՚�x�_N��?x�^��]��hF
-�  P	�  P�����(�GR8_5g,��0�iV��4��X��;�,:�ξ��׳T[;�ޞ%�Ǎ�q��|��7_ef��z7já�����Q�c   T�c   �%~�����X�-K95�NԤkf����*�ٷ]����j�i^�_���P�F=��}�z�1�   ��   (��`�aͮ�W�y�ÅGS�Ss�$Mj�X3G��,�3�w�`  �J��   @)�d~�w#زekV�;u���Œ�\;ES�߬��?jF   C�   ��-[y�ʻ�.�6��=�ڢ�G���)�7�:�  0�`  �*��m�6�[�p����¢1   ��  P�wOn��_,��h  ��c   T�yE�'��F��LtD�7�:Mky��   rX0  @8ŶlMjy��j'�	�x�F|T�5S��   ��1   ��Y4�p������Ss7   0��`  �
-�_l�c����)<�   C�   �P>�c}�¦6��GS   `�b�   UP�һ��Mf$�k�h^�G%Yf   0�X0  @�8�0����Ø��4��4s7   0�X0  @������ѻو���v����ٽ˘;�  0t�`  ��:ԷI������1���f��   T,  �B�/�[��:�˳��4�Nִ�7q�1   ��  PE�s��m�c��Z�x<E�1���   �Ał1   *�,;?�s�%[��6�m���{wlW]������s���T��EADqD!����[���Zu�"�0V�T���ku*X��G~�H�yn!��!$IҐ�<?q���c�kﵮ�]�{�}�9�����}����g�_��~�_-͆�=ǘ��   {4�  Х��ǚ�͑Ən�L?Y�^���#F̛~��a?   ��C�   �K�,�$�\�22��j~EF�����4�)j�њ6sx�^;�:p�1�mMOm�ZOn�V�پ�5��?�/Z�H�t���Y   @.F  �fɑ���֙�s�=�����:��f�1   �c   Ԩ�������iT���Jk�YYg2���<�   c��1   ���4ޫQ�uM��h��?	   34�  ��Q��i6¸����~T��1k�B7�؞��Hc   �c   �H�Y�6��L��H��9¸)�Gy�1   �N#k(G�QnTC��Ua��˛��]^�)��*��
-��zyU\G�+�<  (����$i�ʕ~VD������OohHs����#���q�"�u�r��c:-Z$Iz��G�,  P����VZP��M��ʮ���M��ʮSvyUX����ze�W�u��o��i4�T�浯����e_���}��׾N{��~���X�  ��7��jG�F�n���f�S~?������ю����[�]�  �m���k_���^����}݋׾.����|�몯b�qP��Ua��˫�:��^��W�uTa��� �b��067Ҹ�F7�{��794ƿ�4�G�n3� ����<e�7U�+�N��7U�+�N��Ua��˛��]^��Z����Q   ��%K�H��r#���Rw��0~02m������F�mM��a|���Y   @.��   �`��c�����#k����o�[�-  ���a  �>������M�{'k��?����=�   z��1   �(4��ϛ|fN9$0�8�@   ���1   �Hr���ǖ�,^���y���'   }ט��8   Еr�.�=z�9�v��7������4v��֬)ݴ�a�CZ��?�a�C�y!��;   t��   c���;GV����o7���f�G'οV'οV����    ��a  �1���k����B˼�o�[���1   z��1   Ds�������5�P�e�w�d   �4�  0 :#�7��N�d7kʡz�A��'   ]�a  ���c�*m����g��7�h
-   Ԏ�1   Hs��.�3�̚r�f�H   ��   8;��֪�?���6�=~   ��   @�zj���   �c   �{W�э�'   �!�   @�go��K� ^��{���   ���0  ��ڱ�y� ^����   ���0  � Վ�������Ϙ�v�<��i  �^4�  0�6�~XOm���<�=����   �c   ��zr���iܲa�C<�   =A�   ��^=�����i�a�ú�9~2   P�   F[?�&�H�#��Ԗ�u��s[�?$���   �A�   �Ls��?�gLXOm�Z?Y�'zr�խ)Ií   �>4�  0�tF��~�~��]�1��/�7Ol�g=���ڴ�7~V�v���S[�U��z����/~v�il#��?   @u��?q   �,Y�D��r�J?��1C�5|������?��g�ܠ�o�M�9�r-��Gz���^֎�5�������k"�f�<���6�iѢC%I��{od   ��   �$�0������f�����0�Y����a���_�6/�����Wh�����f�\3��׬)�����h攗������$I;G�j�޵ڸ�WZ��Q���I�4�n+�46�k�h���1   *�a  �J��f�6n���=�GNߨnh��az��O��gE��n��Z��q���v�v�]ۚ�����4�9���6�M��O�<����Z#�L|���4�  ��   ���0~.�0��є���~z��#�ռo�a��Ҽ���3�Y��;�j���h�����P#vn��OQ��o�<�Q��h�el���:����(c   t��1   *�4���q���^�<���س�Jjhތf�x֔f=sx�v�]-���#k�cd�6�~4q54���Դfq�t�Ư\�sF[�m5��|�89Ѣ�K4�  Pc   T�i��
-m5����S#���h#�њ盻��͆q��5k
-7����vɑ�&�Κn#��a�i����,�h�|��1   *��   ����~F��Ji�����x��~�����^�Ո�E~���7��#u{�M^��5x}��$G%[�z��4EC����ě�   @�h  ��������!߬�61���F��YkЦ5n��B��?ͦ����孙�|���<��S���Ґ�"u�ś�CC����   (��1   *ٳg�$iʔ�(�h�	��n�a����8.;�8�T�7��#��ut�>��/���.���͑����M�2E��g�K�-   E�0  @%;v�$M�:5���M��g�O� �S���	5��4??9���לjK�����q��5�4n�6��4�5$M��l��{   �E�   �l۶M�4}�4���l�qֈ�FG{݌<��g߄��y<�q��Mc�lw�m����<�>}�$i۶�~   @!4�  PɦM/J�fΜ���n?YM�y��5�l��eB��:�mwZ�6��&.�0V�i�_���3g6���    e�0  @%�7��ݻ_�ԩS4cF�Q���yM�ARe�q��l��]��[&���S5u�v�~I�7o��   ��a  ��֭[/I�3gFdj���6}�D���4�.���P�aZ��Y7$͙3M��º�n>   Pc   T�f��R�a<mڔ��P�s"��&�BMck2G�	���2i׳SO�6�٭��5��,   �C�   ��ܹ]�W� I:���n�=vb"5�}84Z�7���5F5�}�g�׋�κn�y���v�����c�   @4�  Е���Y���լY�ܣ)��贉 ��c?��7��i��v]��͜3U3fM�ޑ}Z���~!   ��   �ʞ=��|�JI���	�<��Lk��'6Z�ȳ����lN�_F��۴�:��f�����i���~   ��   ��ڵ�o?��e/��iӆ#s�����.��ƾ����.�w�O�6�_6]��v�F�^���<   �*�   ���O?���7kxxH/�~�1cJ�	:Q�Ʈ�����x6-��4mƐz�t7����z�����   �j�	   ���_���+IZ�~��m��GNk������Ő�)�q���ϐ���jD�rD��lu��9�:������oӯ����   @7h  �v���.|�$iǎ=ڴi���i͵Ѳ����cB�ƃ��a���L�44��V㸹�_��z�a�9`�f�j>�c����ӿ�,   t��1   z�C^�#�X�)S��m�vi۶�ڵkw�?�N���Z�����f=�����fø�t���\~ڌa͚3E3�4���ޑ}zv�*�^��C�   @�h  �g�M���U{��$��҈v�ܭݻ�襗F42�W���?�����id�4��q����CC�2�)S�4m�M�9ES�v�������w�h����i   @�h  ��fΜ����k���HY�g��֯{Q�׬���[�l   �V4�  �Ws��8Ps��ѬY34mڴ�c+&����zi�^�ڱK۶m׋�6�����b   @��0  ���d�Iҽ���g   �J�h       �I��1       @�a       04�       c       ��a       �h       c       �D�       `h       $�        C�        �0       �        ��1       ��0       H4�       ��1       @�Ԑ4�'  ����k��o��44Ŀ�0>�۷O[�n��ի�n�:?  ``�0  �#��+^�
-? Ƶ����Z�|��  0h ��4�|��5��$mذA۶m��(��`|j4�3g��͛'Iz�'i  �]'  H.�Z��[��,0����j�֭ڰa��  0hh ����~�I��m��g��e���w  ���a  ���;F�H�w�  *�a  Ғ%K$I+W����c��v�N?�tK�6mڤ�~��Z�b�_������:���u뭷�����=��|��:�3���\��v��=�}����!�Ү��~}��ߏ-S��ٳ����kƌ~V��ڵK[�l�������E�I���^?  `��0  �H���c�Յ^��>86}������'-[�,6�N'�x�f̘�����hW_}�$���x{ک���O}�S���{�������>���>[S�N����g��������#[�(s-�.]���:JK�.�'>�	?�V,���=��Sz�����͞=[�w�N>�dM�2E�7o�������������~��:餓�l�2�������v���Ϝ9�ϒ$���K�����믿�����W_��?\S�N������袋�b�t�A�;w��<f6oެ�7��m4� � 㿃  ����u�Gj���~V��;�<}�s��ޫ^�*��U��M;����W�Z,�$]��:묳t�g�'��-R�Z|���׃>��o��Ϫ�[��]~��:묳���͞=[W_}��=�\͘1C/���.\��/�\_��W�⒤�n�I>��n��V?K���G͟?_�-j?2aʔ):���b]���?�3�8C���7�{�n?��ٳgT�X��Ν���A   �B�  �[˖-�>��q��"�:̛7�O���\�k��Fg�}�n��f?�v�v��M��'�ęg��׿����;�G�G��?��N:I_|�������%I7�|��>�l]s�5~����뮻������ЦM�t饗�3�Йg�����ʯ60��?i �q  �a  &���:K���/u�e�Ŧ_v�e�뮻t�	'���s�9���~��˗kŊz��G��o|C�w�$�N�]wݥ�{LGy����@�=�X�'��f�����Ku���k���Z�|�x�}��-w�-��k���?�y=��Z�b��-[�������̵��[b�y��w�y���r�-�ַ���zHO?�����
-�v�mZ�|�n��6-^�X*x�.��2=��c��'>�Y�f�c�X{߿��/c#v�>�l-]�T�<�/_�|P�sN{~Q�g���o�1���k��&v-{�����/㓟��|�A�X�BO=��~����O�-s�q����דO>�+V�W���.��Ҟ��M{f��^��ﾻ������r�/����!i�  0�%]�'  �5{��M���L�{��t�A���oתU���׾V���g�}Vw�yg{�3�8C�/�wܡU�V��o�.��b�^�Z�\r����Z�ݻW�{�֬Y����7ڴi���y�w�}:ꨣ�e�}�K_j7���>�Z�*v<Y�=�\�������s}���ֲe�t��G뤓N�SO=�~~�G?�Qy�Z�h����z�y�Z�x��;�8�\�R˗/��N��}Hj=?׼�5�ѩ�����z*v����̵X�n�x��}��ڼy�^����׿��x����>�я�c���7߬��a�|��Z�|�{�1��ڼy�|��B�l�ƍz��G�i�&y䑺馛�o��o�c{�ᇵm�6��_������N[�l���E�x�:ꨣt�gj�֭��o~�>�<[�l����6��Mo����6mٲ%���_�^=����n=��3:�����XT�{�V#�����x�	}��_�O<�����z�;ޡ�˗k�ʕZ�x����
--Z�H���wt�M7i���׻��.-\�P?��c�̺��H{\�{��=��z��߯_���:餓4}���gqG���oա����Ok׮��K��u�H�~����Y   c.9  `:蠃4s�L�������-[�L_��t�g�n�$m߾]������n�I###�M7���)҈����+��7�I\p�n��&}�[���C͜9Sox�b�nݺU�w����������n��6M�6MG}tl�~)s-�����?�����K/ՓO>��7�[�����N�����/�T�-[�,���7��뭷j͚5�={�����k�ƍ���?�[n�E��s����A۶m�����ر�Y�b���o�F?��Ou��������}�c�-w������7c�X�{����w���%�\�o�Q_�����o~S�￿����J�>�����ƕW^�o�Q�w��-[�%K���؊x饗�~��v}�W����v�N?�t�~�������w�S|����J�}�ݺ��k�����^xa{  �D@�  @���߮_��:��Ӵl�2��?�\�~B�,^�X�_~��.]�e˖�s�	>�v���z�G���}�b�'�]�v�_�۷O{��$5���fY�=�X͛7Os���UW]��K�j�ҥ���G͝;W�v�_%��O?��|�#��?��|�͚?�.��"]q�~Ѯ����q�:����c�iŊ���կ��/����G�-[�衇j/�}�v=���5k��:���^{�ޠ��[W^y�֬Y��|�;Rk���y�t�)��SN�=�ܣ�������w��]�я~���������)������m~��n�w�u������   ���1  @���я~T�s��.]����_�{�n��&}�3����3���n��f��-o�=�ܣO~��⋵u�V�(Z�f/������Ϗ�c�z�~�~�i���������L�>��N<��س��ԋ��322��l٢��M�>�=-��7�w�V��ЬY�b�{�W���N9����z�+_�n�}��:���ۣ����wj��م�ё��Ї4w�\��e/�  �[4� ��u�q�餓N�M�1c�FGG�M�ݻw륗^�A[n������{��E]��N;M��6謳����:�3�z�j����֗���ҏ��b��ݚ5kV�1v�!�httT/��Bl�AT�5[�f�v�ءF�����J�~�����_%ӂ�џ~�i����6mZ��VU��_�ڵk�u�Vy䑱��s�<���3���y������q�Gh���z��'c���G�s�=�y�浧��G?j�>�S����Q�!�����:J�]w]{��K/��  �h �q��/�W��}���$}�S�ҫ_�j�Z�J���/��sq7mڤ׾��:��Ӵ`�}�+_ѩ����\��o�Y��ٞ6w�\͜9S;w�����c˯Z�J�r�>�H�������2E̙3G�{��$Ig�}�>��OkΜ9~��������O|�Z�`�N>�d��}�Ӷmۂ��_|Q�g�n?n��NH4��E�f˗/��Ȉ���7k����7��Z�`�V�X���K�z����������ŋu�%���Ot[�v������������}�cz��^��>������q�������G�/|����s�$�;�$��'?�Ν;��}H'�|�$鳟�����7�7���n����v�l٢]�v����ٳ�x���[q�q�镯|�6l� Iڰa��������O��J�?N8u�����>Xj5�%iɒ%�:ujl  ��1  ���_�E۶m�e�]��+W�����/��o~��eV�X�[o�Ux���_�U����9��p�ڳgO{9{��e�]���zJ�=������ڵK�����˙뮻N[�l�����뷿����>}����e��w��Y�f�n�o�[}�s��C=�u���Ek�կ~U?����w�C<�����:t�A���k�����ڲe�.��r=��3��kt�gƖ��ZU��r�-���;u�������o�[]w�uz�{�#I����n�A�{��.]��\K�.�i���W��~s����/��?����w�;��ʕ+u��������Ŀp(���_�E]����g:����o��ꪫt�7J����_֜9st����g�ѹ瞫GyD�]v�ߤ��N�s�=:��l�2�~����K�b��Ͼ���0~��t�H�A��/�s��\���gM�;�ѦM������y�ڱcG{��={�cǎ�zQY�  0��F�D  ���d�Ij�g�Y�=�Xq�Z�vm��Ȩ�6�.#I�g���'���3gj���Z�l�_$��SO�Ph����ݻu�]w��=�x�b�����nݚ�_;�)S���֚5k�"Rע�����uϞ=��Ol��u�vlӦM��?���~�/RZ?��(�<m߾=�=8�������е(�9�={��ϟ�'��u���+IZ�h�$��{���   �c  0��4�Lnt��Ν�'��͛7k�ƍ~rc  0�x$   �qm�ƍZ�nݘ?b׮]Z�n]f�  `�1�  $F��a  #�       c       ��a  Ҿ}�$I�F���q�~���8  �AC�  ��[�J��̙�g��e���w  ���a  ��ի%I����~���Hc �Z���~���y��I��q   ��!i�O  Gq�^�W�� 0����������d  ��@�  ����k��o��44�`|ڷo��nݪիWkݺu~6  ���a       �x�1       ��0       H4�       ��1       @�a       04�       c       ��a       �h       c       �D�       `h       $�        C�        �0       �        ��1       ��0       H4�       ��1       @�a       04�       c       ��a       �h       c       �D�       `h       $�        C�        �0       �        ��1       ��0       H4�       ��1       @�a       04�       c       ��a       �h       c       �D�       `h       $�        C�        �0��~���w[      dI�~"       `�a�qW�Z����n�緳5?\7&X�ϯ�������4�      &�#�       b�q���S?2���G����8��S���̛___      K��        M��~Dh|��Z�n�Ʈ�62���g��ɞy���/U7�d�r�G���      �#�'2����      @/M����N�l����ڦ���lH����i󩻫{��*��&     ���#U��\iu?Ҕ������۾�_��g_      ��w���㍹��ʹ���l%��!������J����]�m.X��;�9h44:�9��K��      ��Aꊿ|��c���]�-o�~~պ�i�j      `|㎗߽o�eg���5�����/Q��Ȏ
-�O��ɼ��󃵿~�zT��W��'i�|������p�      �&x�7κI�������������ヿ�}S%��     ���#�W�7���~>��v�W�m�x�>���^�̛K}���g���:3m�B���u(��<p      LT���7��I����_]�����_�}U%��     �zuف�x��1�\+����j�a������f������I��O�m�ܟ�;�Ϋ��>#�     0ލq��7�ʤ�u}��)Z�+��[�����ˤ�5      &�VǨ~�a�ш<��ׁ�~ddF�n|���ҙv@e�v_c���˿��Զ�H�o��2��@���x�N�~�%��N     `P�q�7�ʤ�����hM֛��V������$      �:H����3�����E�zs�`��P�L�a/����i�������-�����:�����i�K�upw�.��ͧ� �K      �.;8�T&��O&��_��S��:��Dݵϼ��μ���U�x�\_�M��3����%      &����f�,0�0���|]oV8�Ժ%Q�������v�f����?G�3���L;���@�����     @�����FN��?r���7��U?��x�zW7��sF���^�㫷.����{�&��;_�I      L�1��?��׶5?"�\���J�v}�JSw��ſ�U������U2��bi�K�zT����P&��'      z�Ձ��PvϷ{���ҏM����O��ls������Rk�F�:���
-�V��7i|]Mhyi|     ���a��9�3mHbd����a���y=�U����_w�H��I�'���[��Sv����-�P�ȣj4<     �f���o�����w|�'tT�2��,���N���~^������ߧ���ս:��     ���?ø� ��	,��_��)[�+v�e뉞�|���N��:5��J��N[-V[�W��i֡%�      E5�F厊o��6M��5�7\w����\�k��̻�~~պ;_�����#�}]-M^]Mh�>     �/��%?�0ma��E_�k�5�lzZ]-m+y5O}���i[J���K��R?��H�u�n�g����      %��p�.����;9�]���}�=P����:;�oK�4��Gh�y	     �^q#��н�����[i��}�P�1��~�bvmSmzZM�6����~������� ��̫����v�i��j+��`v^��      &����:;#m���3��o�&}ǫhMf��^i�8I���A�!_��^��_��4�.ƶ��     @Q���� �7����h�:?m-_ד�����W��/�����dڒ���׃�]Qk���`�p�2��|��it4r���3�;	     0qŞa��!�M���W(m�N=��.H�u;[���`+P���קh���T����}�?_i���_��4��Gh�y	     ��:#�C}��4��Ёu�33T�T_��4����7p�^��e���:��]�f������3���:%M�-�     `��y�qֈ`�F��R��Y��odՙ�__����i�'{��=�_ߴ�δ��u��t[َ|�L�� >"��ղ;�-�     �i4C}��5i#��iK��Z�����fc]�?��(Zח�s�L[��y��Ո����ܜO[�׭��$     `�p#�����Fd���o)ZN��n���kr�ҿ?iu7i�˫S���iu_؁Y�}��i���u5����'     ���hh����	߀�7f���xmSm�_��i|=X���>���:�����gg�W�/�[���N_���6�ng��Ӗ�u2m�X��������L     ���G���ӛ|��hݳ�.�$����j/2��T��z3����iu�m�r�r�ʔ�+M�Z�l����V��Z�ڂO     ����3��E?�1�����������Б�*M^=���K������gG�WO�y���ΜN=H����P�N.V4�����v�     �d�z�q�O�k�����i������=����������?K���T�{�3����jH/[F�+��      W����I<�#�l��{�&�����c��l=���O����������w�y�GĦg�n|����z"C�3���erJ2     G�޵+׿H�+�oܔI�=S�����(��#6;��_��l���d�w|���Sv�&Pۂ�t�?�sS$S�j��������a��     `�h�0n66��ix4�m�2i|�[�#���ט�����*i|]����~�7:s:�����ƹg��R�k(��q}     ��a��~E�:�	�EҶ��2��Ru_ӏ�,Z秭��k~���W��C���^������?_Y�k��5(v?�\_������|     ����ڦ��d�L���ߐ	��j_Y����*i|]^/�.���Er�d������5�}��k�-���uJ�f��     @�5����kf�h�.:ӭ.���h��c�H�c�R�N�}��E_��hu}i|�8}��j���pm?������U5�{���=�סi��|�v���`�����>�J�YJ�O^=*i�~�4�}��s^�v�T����Lnխmd��ؔ�Z	     �?�FcxԏgkD�u���Б���u���y~~]��������߷̻�~~պ/B'����ݳ������9as:u?�#�R\>ms�i�7�3�    @�şa�����dd����2�y_׷{�LT�����5�ֱ�
-ԓ����_ߪuv��#�n���?��Nf][ ��u4S���5(���3-�ڢO     ���:�8/�����О�����o���|T�?E��:��t��ճ���~�d�(��Br����i��j+}���Yg-     н��D$��Oa2j���m���3����GO�k ��iu8����Z���Y0�n���Q$C�)�&��o��ɾm�'     @��GW��ё���5J;�n��h44i�u�f�,���7�7i����߿��/Y��V���u_؁�:+����[vZ#�S۫��=d�i׭��ft� ���]���      (.c�q��Q8�Ա���T��i#4���K�膿�����õ���V�����:p���^	eh�H�������>,�{_W��     �ޫi�q�|�&Q�^�ukE�(K�]K[��ڧ�߫:=��)]��'Q����������"Y�m��ճ�/#�sO �	dh�f�b��J_39%�      �7�����o;t��E?¯x_�8��i��nkt����sO�����֮���RdA_�3�`�Z��4��RV�d��yYN�[      ��jG:���5����u�L�0���_ד�]��#u~M�{�߫�g�����ߴ�x�:u��~�}���l]���4�.϶�����Ǿ�ӈ��������epu�6���1=     0�:#�C}����ץҏ�K�M� P3��i������{��#^��3����v�+g`���O��WWP��4��&k      ��ƽ��)~gN�����@_�� ���d��ۀ��N������B[+��W�#j}]�m&�ng�dh�f�l)^�,8��%      �����3®��Ĉ����|&��4�RR_OD���d����.cl���i�U_geh;i|]H|�����bYN�[      �[k�q�O���W��)�|�kxg8m1_ד�l�>��5�򮏟_���_Z]=������L~>"�Q$M^]���4�./���L>r�/�S������<����ӝ���?     �L�6�>C����L�0���������l=h��U�{�&����������u���:p82��Z/�����~�4�.&�E�      �C�)c�A��k�$��i#�}݋�>��R�n�����SwW���ֽK_wh�vB�b�n��N����T� �l=���_�V���!������}��d    �����V�� �x�����ť]��ϼ������ֽ:�i|=�Χ�6����ۼ�l-p�l�vm�V[!Ԁ����4y���@xD�_*;��~     `b��0�����`����Q��D�����H]^`�`��V�;̔�������s��vY|��&��$�ü�.��H��ɝ���7Hk�E�/�x���Ͷ�)q�     `"i�0n��F�:����H����_������&�~���J_>��!�@���u q5b;LY1-CP��|�6=x;�]�pv��-    �����0n7`Z�	ר���X�ִ~���骶��~G����7���^�NI���ս�΄��[��mE��1�raci|�T��+��)�,��&���i��x��x��u�     `"h5��-��e���8�)ZL�5�}������؞}]&��A�x;i#l���������v��>C�e�ɫ���#��R�YN�[      �[�ƭ��0��:��@�%#m�������K���$�qRg_������K/���N�ʔ�W����d�
-��E����Z������.wz&9�����}Ff�����     @�z�H��|��L_�Ƿ?�jrb����Q�\��>�gL{�����t뙼��*������-    �� <¸]�$�i#
-��(�K�W����l�8������5����Z%��3vW�n�����U���o�����h|�9(��l-��W=��{��74����[������&�      �A�#�}��7���n�V(}��D�<�Vc�ב��n落Iw�#7����+�3r8�u�m��er,������~�r�}j��|��(-�����r��t�     0�C�)�~�`�����>BZ�ߠ���2i|�����}Y%{�������W�i�a�%Nϧ�u%���.��x�9�y�C�7�uD%����g�|��     � �y���YY?ߎH���~`Zݙ�U�A�<��|߱+0?��[�_��g�oFO���������z؞}]&�R�x��U�d�r��ʙ�&�3��A���jB[�n�     `0���/�eF��|]8M��4d�N�X4���^����/Kf��P~���VW��s�y<&R.L,ӕ�܁LNIf	�(�,���l_39%�     `��0�_���������ohD��m��#���Bi�kr�ҿ?iu��_���X�j���bu1�-��X�O���jܝ���/�Z/�üZJl����Z�'     OC�����E�����}�Z��BV_O\�ݒ�����O۲�޿���[������:׷zv�6ce�����K����ǉ�ϫ+	]/�Յ����9'��������|��ff������     J+8¸H�gk�ս�N#Ʀ�����&��Ȏ�wBd��|셯��Gfݾ���uo�^�=���I�|�3|�e�����Y!�1��r�|]A����l�-��     �#�[��}�NS�m(-��d|�%~��GN��_��z2�\���˫[�_��+�Y`����V쫒��ɹ|�����?!��oPr��,�x���     ���w���·������m���w"ʤ���c��OO�O�]�3o~��ߧ�2�ȾUd��addds�uXh�>���!t<�l6j��r�]����L�pZ_�7P�|����	     Icxhj�o���~�|�}�G�Zݛ��������e~���+��/M�n�������ی��>���39"�g�p}�����|Z;����go�����E���3�~Ff��_����     ���y|{$��r�i�ؔ�:�Y�P���?@�L���budA�E��3�}�w[43/RWڣϱ��������.����K�/��K)~����$N��     @4�S��Fd��:�bZ�G��?�Έ�ru8m����N��uN�-Y�?Ƴ��e�	���:%C��ry&�3��g��s��l5_�3�����R�Up�����K.     z�1��<���_�Kg�a�FL&Y���������'Z��+ZG6��ϯZ�Y�χ��d�=yT���+f9�-����;��~jv����W����u�}�gʎ�;̨��B���o�g9�o     ��=��q�ʱ���v�Z��}],M�5��ׯh]=������5;� K^��,�VK����X&�i�3qx>��+��Ay���3���c�	v�m�E��_ܧͶ�3q>     �N��^��|ɴ/��nMIq�F� |=A�N�:"�ud�^�>�=���_��:y8�2#��Q����u�����Z�'R9�X���?���*�+��X����;3S.��K�����aV�]�[      �j�0�_�C9��?�.��-��ޤ)[#�_��u���O����I��my�%�@2��խ���Ral;�M�p��>��\�@��oE��+���Ool���V�:v�=:     �a��=R7��4Z��h�B�{}7i�֥�}]G_�'���k]���iu�i|�v8e������F(K���~$v�������|�S|��Fm��bc3�u�}�gʆ���ZJ�oH���,��-     �r�C����A�G�e��|N�WO(�0�L�7\n����7�槿���"�&Y�ލ1�<�dv�]�vն��&G �L�O��BB�Y\h�x������.�����������%�     �a���/�6�ם����)��@ãD�Ζ�|�޾��O���i���i(�ym�g��)i���ٝ�}���}�{}�E�nm0e��
-��KS�����ڂO     �Kc:�8� �7�F�5Ӧ���4y�`�3/��������Μ����N�a,����ut�@]<;r�q�)�!��BKggrJ23�byu;<��H�̎]��     �2�#����"����^�ɫcB��ݳ��������iu5�=���X^ݳ��'�����㊙-���~����̴~��:��m��.���ʟ��uX�     @�a쿮����i���X_���Iy$�#{Q��@� ~�Ϻ���?���׃����c/rubu�����[�3H��uo��=Ӹ�@�3�M^]H��+mHJ�J<;�zr?����$/�?�Xf.�z���_�z    0�F��@�Z�a���A��,���u}loek���׷j]���[���Bu���$MC���g [��b�]�.&�E���_�A�&���ש��L9}_`�?��aU�|-[      ٺa쿰�\�FH4�_�ˤ�u��E�H�J��w�<x��?ֵ<��u�i����������\v�$G���|�%� ���S�`?�Tv&t�y�8����g��ˑ��)�,!q �Ȕ��پ���    0	4��򇀅Ҕ�c��Ў��������:Mwug���%�j�y�ͼ����:~~���փ���a����d	i��u�5;���c_�dd�gڂ�^��ʈ]��ͷ��u/ڰ�� ��X�|��~     Lv��~�av��q_7�����ᑨ[GZ�n4�}	rfdB�іr�$����p����:=����"g������
-�<�YJh>���w?�ʮ��������٭�'�"     �[s�q�J~��m���#����l�y���W��3
-ם5�����Ճ����]���le��%�c֧4�:�B��Q,�vWLh�>{����_����u������'H     PF�3���}�ѷ��.������БTM�눴�������^g����^Օ��l_w������t����/����}��B��̌l�f���t/�|s�����Rl5_�3qA���dl�����r�     L@��06��І�2����=��G�x�!gur�^�)[�7����ޤ�_zl�st�:���uVfHۜ�+g�a���3�;�h�6}�WwuXh>{)���ݼ4��׍��'�w��3S|�n�'��     Lv��i�~�`������_�ݑ�G�j��k��_>�~~�����ϼ��&MC/pl��~�������$����C�G���X_���z�q����BJ��Z;����/م�nm/vA�����̶�#q�     L.�#��z�w�|Co�[;��]���Ƃ-���i|�8}��j���p���m_W�C$��7�yO.ޓ45�o3�#�;+Ty?b����dm���5h����^�7Ȭ�;]_�<e�G9�o    ��&2�8��:+����sь�~sy5)E�C~z��d+���V�6������V������;�����}�u+�����Lh�0��?`u�9����39�[���L\�����a���8^     & �G���4���_�C[��&�������J&���:���MU�(C��|]8�q�댆���.��ʯѝ��l�nxn8MC�~uh�:���L��	m�o��q�5��     `�hM�~��U{�\�x�:��д2��g��j�g��K_�-�t������>��הy�7��D����7~�fF&�}�u���|����Go%�0�%���2�����K����`>wz�����s{-��N^������\    ���=�8�M��N�ƾ8��n���ݧ5&:{�F�-���4���������ov��5�v�4yu1n���ur�Z�4�����j��b���+������}�:���n��tCf8�$N��     ���#���g��r��ОҲ�����}K�0�7V�#�յ����:���|��V�O�����������>��_��A��eu�_�d���$G�v���GK�_�⾎.^*#��'�:�t���39�[���L\���"�3;�x}    0���a� G��w��ǡ��Jۃ�(+�G�k`��������������uXh>��#��Օ3�`��_L�V�H�밬-�)����ݼ��l�z���X���_�em    �ɡ1ehz�o��t��ҩm�MO���L^d�i����|�Nۭ��������w+o�~~�����OZ�����v@��/�������h�'��X��)�K${+yD�̐v�V������Oٽ�	���ti�����U|���B��b0x@�L^�����O�    ��a\��z�6�Okt�h��d2Q^�;8V5������x�ϋ}��KWK��b�������Ȅ����U�_9�-T�R1��䞟��uj�:�����i�<~�z��     �x�3��a�_��2c���O��L�B�Q��l�nm>��b�S��������+����ڿ�)�F�����}K�WK)�i|]�m���>B�?#���g���v��:=��	쾺�y�� �tv&��b����dg���gM�    � J��we���Вi9���������n׳������������y�e����Q�|�2����I��*{�Pes�5;9:�/"|���)���Մ�Sl���f�u�:�l(-����
-E�?[h�bk    0^�F�� Ǿ���b_�)#���6r���-���Fv'j ��iuz���dZ�-�y���^*���������}����hl��JQ)�C�;���)����A�ZQJY+��*��\v�l�9�'���މ�    `|iGIῆ�/���g���N_�g�_��i&J��4y�x:�N��c��Ku��-;t�l~��RF6kx���Wls����-֡��KL��D��s(]�^��/'q~     &����Õۅ��    IEND�B`�
-```
-```justc
-
-```
-```md
-# This is a test page
-Generated using [Just an Ultimate Site Tool](https://just.is-a.dev/).
-
-Some **bold**, *italic*, ***important***, __underlined__, ~~strikethrough~~, ~sub~, ^super^, ==marked==, __***very important***__, __==***extreme important***==__, ~~***not important***~~ text.
-Some `code`; **`bold`**, *`italic`*, ***`important`***, __`underlined`__, ~~`strikethrough`~~, ~`sub`~, ^`super`^, ==`marked`==, __***`very important`***__, __==***`extreme important`***==__, ~~***`not important`***~~ code.
-
-1. List
-2. (with numbers)
-
-- List
-- (no numbers)
-
-A line:
----
-
-\`\`\`
-Some code here
-\`\`\`
-
-# Blockquotes test
-> A blockquote.
-> > Another one!
-> > > And another blockquote!
-> > > > Many nested blockquotes.
-> > > > > This line should not be another nested blockquote. (Limit: 4 nested blockqutes)
-
-> [!NOTE] A note!
-> [!TIP] A tip!
-> [!IMPORTANT] Something important.
-> [!WARNING] A warning!
-> [!CAUTION] Another warning?
-
-> [!NOTE] `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` and `[!CAUTION]` are should be in one line. You can add \<br> tags to break the line for HTML. <br> > `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` and `[!CAUTION]` cannot have nested blockquotes.
-
-
-> Multi <br>Line <br>(\<br>)
-
-> Multi
-> 
-> Line
->
-> (\\n + > + space + \\n)
-
-> Multi
->
-> Line
->
-> (\\n + > + \\n)
-
-# Headers test (h1)
-## h2
-### h3
-#### h4
-##### h5
-###### h6
-> [!IMPORTANT] Only h1, h2, h3 and h4 will be included in the "On this page" content list and will have their own unique IDs for shortlinks.
-
-# Escape test
-Not a line:
-\---
-
-\1. Not a list
-2\. (with numbers)
-
-\- Not a list
-\- (no numbers)
-
-\`\`\`
-No code here
-\`\`\`
-
-\> Not a blockquote.
-
-> \[!NOTE] A blockquote, but not a note.
-
-\https://example.com - escaped link
-`https://example.com` - disabled auto linking
-
-# Links test
-[a link](https://just.is-a.dev/ "link title")
-<https://just.is-a.dev/>
-https://just.is-a.dev
-
----
-
-## v0.0.28 bugs:
-#### blockquote link:
-> [!WARNING] Just an Ultimate Site Tool is in **beta**. Expect regular updates, possible bugs, and changes. If you have found a bug, please [report it here](https://github.com/js-just/_just/issues/new?labels=bug&template=bug.md).
-
-#### text styling:
-"**`_just`**"
-
-## v0.0.29 features:
--# small text
-
-_just: prev: /docs/getting-started
-_just: next: /docs/getting-started
-
-```
-## test
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-document.addEventListener('DOMContentLoaded', () => {
-    const liElement = document.getElementsByTagName('li');
-    Array.from(liElement).find(li => {
-        const aElement = li.getElementsByTagName('a')[0];
-        if (aElement) {
-            const spanElement = aElement.getElementsByTagName('span')[0];
-            if (
-                spanElement && (
-                spanElement.innerHTML === "Just an Ultimate Site Tool - Helper terminal" ||
-                spanElement.innerHTML === "_just"
-            )){
-                li.parentNode.removeChild(li)
-            }
-        }
-    })
-})
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const box = document.querySelector('.pjs');
-const processor = document.querySelector('.p');
-const process = processor.querySelector('.l');
-const inputs = [
-    processor.querySelector('.c'),
-    processor.querySelector('.tl'),
-    processor.querySelector('.bl'),
-];
-const outputs = [
-    processor.querySelector('.r'),
-    processor.querySelector('.d')
-];
-const label = processor.querySelector('span');
-
-const colors = {
-    "html": "#f06529",
-    "css": "#2965f1",
-    "js": "#f0db4f",
-    "just.config.js": "#6c3cf4",
-    "md": "#fff",
-};
-
-/**
- * @returns {[HTMLDivElement, {x: number, y: number}, number]}
- */
-function centerDot() {
-    return [
-        document.createElement('div'),
-        {x: window.innerWidth, y: window.innerHeight},
-        processor.offsetHeight / 2 + 4,
-    ]
-}
-
-/**
- * @param {HTMLElement} track 
- * @param {number} offset 
- * @returns {string}
- */
-function yPos(track, offset) {
-    return `${(track.offsetTop + track.offsetHeight / 2 + 1) - offset - 1.5 + processor.offsetTop + 55 + 0.5}px`;
-}
-
-/**
- * @param {String} c 
- * @param {String} t1 
- * @param {String?} t2 
- */
-function centerInput(c, t1, t2) {
-    const [element, screen, offset] = centerDot();
-    const y = yPos(inputs[0], offset);
-    element.style.backgroundColor = c;
-    element.style.boxShadow = `0px 0px 3px ${c}`;
-    element.style.translate = `-${screen.x / 4}px ${y}`;
-    box.appendChild(element);
-    const element2 = element.cloneNode();
-    element2.style.boxShadow = `0px 0px 20px 5px ${c}`;
-    inputs[0].appendChild(element2);
-    setTimeout(()=>{
-        const pos=`${screen.x / 4}px `;
-        element.style.translate = `${pos}${y}`;
-        setTimeout(()=>{
-            element2.style.translate =`${pos}-25%`
-        }, 20)
-    }, 100);
-    const span = document.createElement('span');
-    span.innerText = t1;
-    span.style.opacity = '0';
-    element.appendChild(span);
-    let time = -500;
-    setTimeout(()=>{
-        span.style.opacity = '1';
-    },1000+time);
-    setTimeout(()=>{
-        span.style.opacity = '0';
-    },3000+time);
-    if (t2) {
-        setTimeout(()=>{
-            span.innerText = t2;
-            span.style.opacity = '1';
-        },3100+time);
-        setTimeout(()=>{
-            span.style.opacity = '0';
-        },5100+time);
-        time += 2100;
-    }
-    setTimeout(()=>{
-        const pos = `${screen.x / 4 * 3}px `;
-        element.style.translate = `${pos}${y}`;
-        setTimeout(()=>{
-            element2.style.translate =`${pos}-25%`
-        }, 20)
-    },3200+time);
-    setTimeout(()=>{
-        element.remove();
-        element2.remove();
-        process.style.borderColor = '#6c3cf4';
-        process.style.filter = 'drop-shadow(0px 0px 8px #6c3cf4)';
-    },3450+time);
-}
-
-let _outputs = 0;
-/**
- * @param {String} c 
- * @param {String} t1 
- * @param {String?} t2 
- */
-function output(c, t1, t2) {
-    _outputs++;
-    const offset2 = ((_outputs % 2 == 0 ? _outputs : -_outputs) - 1) * 35 - (_outputs % 2 == 0 ? 35 : 0);
-    const [element, screen, offset] = centerDot();
-    const y = yPos(inputs[0], offset);
-    element.style.backgroundColor = 'transparent';
-    element.style.translate = `${screen.x / 4}px ${y}`;
-    box.appendChild(element);
-    const element2 = element.cloneNode();
-    element2.style.boxShadow = `0px 0px 20px 5px ${c}`;
-    outputs[0].appendChild(element2);
-    element.style.borderColor = 'transparent';
-    setTimeout(()=>{
-        const pos = screen.x / 4 * 3 + offset2;
-        element.style.translate = `${pos}px ${y}`;
-        setTimeout(()=>{
-            element2.style.translate =`${pos - screen.x / 2 - 52 + 4}px -25%`
-        },20)
-    }, 100);
-    setTimeout(()=>{
-        process.style.borderColor = '#3f3f3f';
-        process.style.filter = 'none';
-        element.style.backgroundColor = c;
-        element2.style.backgroundColor = c;
-        element.style.boxShadow = `0px 0px 3px ${c}`;
-        element.style.borderColor = '#000';
-    }, 200);
-    const span = document.createElement('span');
-    span.innerText = t1;
-    span.style.opacity = '0';
-    element.appendChild(span);
-    let time = -500;
-    setTimeout(()=>{
-        span.style.opacity = '1';
-    },1000+time);
-    setTimeout(()=>{
-        span.style.opacity = '0';
-    },3000+time);
-    if (t2) {
-        setTimeout(()=>{
-            span.innerText = t2;
-            span.style.opacity = '1';
-        },3100+time);
-        setTimeout(()=>{
-            span.style.opacity = '0';
-        },5100+time);
-        time += 2100;
-    }
-    setTimeout(()=>{
-        const pos = screen.x / 4 * 5;
-        element.style.translate = `${pos}px ${y}`;
-        setTimeout(()=>{
-            element2.style.translate =`${pos - screen.x / 2 - 52 + 4}px -25%`
-        },20)
-    },3200+time);
-    setTimeout(()=>{
-        element.remove();
-        element2.remove();
-        _outputs--;
-    },3450+time);
-}
-
-let _labelAnim;
-function labelAnim(switch_) {
-    const s = '&nbsp;';
-    const d = '.';
-    switch(switch_) {
-        case true:
-            _labelAnim = setInterval(()=>{
-                switch(label.innerHTML) {
-                    case d+s.repeat(2):
-                        label.innerHTML = d.repeat(2)+s;
-                        break;
-                    case d.repeat(2)+s:
-                        label.innerHTML = d.repeat(3);
-                        break;
-                    case d.repeat(3):
-                        label.innerHTML = s+d.repeat(2);
-                        break;
-                    case s+d.repeat(2):
-                        label.innerHTML = s.repeat(2)+d;
-                        break;
-                    case s.repeat(2)+d:
-                        label.innerHTML = s.repeat(3);
-                        break;
-                    default:
-                        label.innerHTML = d+s.repeat(2);
-                        break;
-                }
-            },200);
-            break;
-        default:
-            clearInterval(_labelAnim);
-            label.innerHTML = s.repeat(3);
-            break;
-    }
-};
-
-const shuffleArray = function (array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-};
-function animateTyping(elementId, text, speed = 100, callback = null) {
-    const element = document.getElementById(elementId);
-    if (!element) {
-        return;
-    };
-    let index = 0;
-    element.innerHTML = '';
-    function type() {
-        if (index >= text.length) {
-            if (callback) callback();
-            return;
-        };
-        if (text.charAt(index) === '<') {
-            let endIdx = -1;
-            const openTagMatch = text.substring(index).match(/^<([a-zA-Z0-9]+)[^>]*>/);
-            if (openTagMatch) {
-                const tagName = openTagMatch[1];
-                const closeTagStr = `</${tagName}>`;
-                const closeIdx = text.indexOf(closeTagStr, index);
-                if (closeIdx !== -1) {
-                    endIdx = closeIdx + closeTagStr.length;
-                    const fullTagBlock = text.substring(index, endIdx);
-                    element.innerHTML += fullTagBlock;
-                    index = endIdx;
-                } else {
-                    element.innerHTML += '<';
-                    index++;
-                }
-            } else {
-                element.innerHTML += '<';
-                index++;
-            }
-        } else {
-            element.innerHTML += text.charAt(index);
-            index++;
-        };
-        element.innerHTML = element.innerHTML.replaceAll('\n', '<br>');
-        setTimeout(type, speed);
-    };
-    if (speed === 0) {
-        index = text.length + 1;
-        element.innerHTML = text;
-    };
-    type();
-};
-
-function time(ms) {
-    return ms > 999 ? `${Math.floor(ms/100)/10}s` : `${ms}ms`;
-};
-
-let canAnimate = true;
-
-function compressor() {
-    canAnimate = false;
-    const variations = [
-        [colors.html, '.html', '2kB', '0.9kB'],
-        [colors.html, '.html', '14kB', '0.5kB'],
-        [colors.html, '.html', '25kB', '6.8kB'],
-        [colors.html, '.html', '18kB', '5.6kB'],
-        [colors.js, '.js', '7kB', '0.8kB'],
-        [colors.js, '.js', '15kB', '3.2kB'],
-        [colors.js, '.js', '25kB', '6.1kB'],
-        [colors.js, '.js', '20kB', '5.9kB'],
-        [colors.css, '.css', '10kB', '2kB'],
-        [colors.css, '.css', '22kB', '4.2kB'],
-        [colors.css, '.css', '19kB', '2.6kB'],
-        [colors.css, '.css', '24kB', '4.2kB'],
-    ];
-    const data = shuffleArray(variations)[0];
-    const offset = Math.ceil((Math.random() / 2 + 0.700) * 1000);
-    labelAnim();
-    label.id = `c${data[1]}${offset}`;
-    animateTyping(label.id, 'Compressor', 75);
-    centerInput(data[0], data[1], data[2]);
-    setTimeout(()=>{
-        labelAnim(true)
-    }, 5050);
-    setTimeout(()=>{
-        labelAnim();
-        output(data[0], data[1], data[3]);
-        animateTyping(label.id, `Compressing completed (${time(offset)})`, 50, ()=>{
-            setTimeout(()=>{
-                labelAnim();
-                setTimeout(()=>{
-                    canAnimate = true
-                },2100)
-            },1200)
-        })
-    }, 5050+offset+1200);
-}
-
-function redirector() {
-    canAnimate = false;
-    const offset = Math.ceil((Math.random() / 2 + 0.700) * 1000);
-    labelAnim();
-    label.id = `r${offset}`;
-    animateTyping(label.id, 'Redirector', 75);
-    centerInput(colors["just.config.js"], 'just.config.js');
-    setTimeout(()=>{
-        labelAnim(true)
-    }, 2950);
-    setTimeout(()=>{
-        labelAnim();
-        output(colors.css, '.css');
-        output(colors.js, '.js');
-        output(colors.html, '.html');
-        animateTyping(label.id, `Generating completed (${time(offset)})`, 50, ()=>{
-            setTimeout(()=>{
-                labelAnim();
-                canAnimate = true
-            },1200)
-        })
-    }, 2950+offset+1200);
-}
-
-function generator() {
-    canAnimate = false;
-    const offset = Math.ceil((Math.random() * 2 + 1.700) * 1000);
-    labelAnim();
-    label.id = `g${offset}`;
-    animateTyping(label.id, 'Generator', 75);
-    centerInput(colors.md, '.md');
-    setTimeout(()=>{
-        labelAnim(true)
-    }, 2950);
-    setTimeout(()=>{
-        labelAnim();
-        output(colors.css, '.css');
-        output(colors.js, '.js');
-        output(colors.html, '.html');
-        animateTyping(label.id, `Generating completed (${time(offset)})`, 50, ()=>{
-            setTimeout(()=>{
-                labelAnim();
-                canAnimate = true
-            },1200)
-        })
-    }, 2950+offset+1200);
-}
-
-let lastanimation = -1;
-const animations = [compressor, redirector, generator];
-function animate() {
-    labelAnim();
-    setInterval(()=>{
-        if (canAnimate) {
-            canAnimate = false;
-            const animation = animations[shuffleArray([0, 1, 2].filter(anim => anim != lastanimation))[0]];
-            lastanimation = animations.indexOf(animation) || -1;
-            setTimeout(animation, 500)
-        }
-    },100)
-};
-animate()
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-/*
-let itWas = window.scrollY;
-
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    
-    if (currentScrollY > itWas) {
-        window.scrollTo(0, window.innerHeight)
-    } else if (currentScrollY < itWas) {
-        window.scrollTo(0, 0)
-    };
-
-    itWas = currentScrollY;
-});
-*/
-
-```
-```js
-/*
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
-
-const APIURL = 'https://test.just.is-a.dev/data/codes.json';
-const none = 'none';
-const entr = 'Enter the code or command, or type "help" and press "Enter"...';
-let cooldown = false;
-let loadingerr = false;
-let aTerr = false;
-/**
- * @param {string} elementId 
- * @param {string} text 
- * @param {number?} speed 
- * @param {Function?} callback 
- * @returns {void}
- */
-function animateTyping(elementId, text, speed = 100, callback = null) {
-    const element = document.getElementById(elementId);
-    if (!element || (text === entr && cooldown)) {
-        return;
-    };
-    cooldown = true;
-    let index = 0;
-    element.innerHTML = '';
-    function type() {
-        if (index >= text.length) {
-            cooldown = false;
-            function filter(txt) {
-                return txt.replaceAll('\n', '<br>').replaceAll('<br>', '').replace(/\s/g, '');
-            };
-            if (filter(element.innerHTML) !== filter(text)) {
-                aTerr = true;
-                console.warn(`"${filter(element.innerHTML)}" !== "${filter(text)}"`)
-            };
-            if (callback) callback();
-            return;
-        };
-        if (text.charAt(index) === '<') {
-            let endIdx = -1;
-            const openTagMatch = text.substring(index).match(/^<([a-zA-Z0-9]+)[^>]*>/);
-            if (openTagMatch) {
-                const tagName = openTagMatch[1];
-                const closeTagStr = `</${tagName}>`;
-                const closeIdx = text.indexOf(closeTagStr, index);
-                if (closeIdx !== -1) {
-                    endIdx = closeIdx + closeTagStr.length;
-                    const fullTagBlock = text.substring(index, endIdx);
-                    element.innerHTML += fullTagBlock;
-                    index = endIdx;
-                } else {
-                    element.innerHTML += '<';
-                    index++;
-                }
-            } else {
-                element.innerHTML += '<';
-                index++;
-            }
-        } else {
-            element.innerHTML += text.charAt(index);
-            index++;
-        };
-        element.innerHTML = element.innerHTML.replaceAll('\n', '<br>');
-        setTimeout(type, speed);
-    };
-    if (speed === 0) {
-        index = text.length + 1;
-        element.innerHTML = text;
-    };
-    type();
-};
-function checkFirstLetterCase(text) {
-    if (!text || typeof text !== 'string') {
-        return undefined;
-    }
-    const firstChar = text.charAt(0);
-    if (firstChar === firstChar.toUpperCase() && firstChar !== firstChar.toLowerCase()) {
-        return true;
-    } else if (firstChar === firstChar.toLowerCase() && firstChar !== firstChar.toUpperCase()) {
-        return false;
-    } else {
-        return null;
-    }
-};
-function exitFullscreen() {
-    if (document.fullscreenElement) {
-        document.exitFullscreen().catch(e=>{console.warn(e)})
-    }
-};
-
-(async()=>{
-    /**
-     * @returns {Promise<{data:any[],nums:any[]}>}
-     */
-    async function getCodes() {
-        const responce = await fetch(APIURL).then((r)=>{
-            return r.json();
-        }).catch((_e)=>{loadingerr=true});
-        let[data,nums]=[[],[]];
-        for (const[key,val]of Object.entries(responce)) {
-            if (key !== 'README') {
-                val.forEach((item)=>{
-                    data.push(item);
-                    nums.push(item.code);
-                });
-            }
-        };
-        data = data.filter(item=>item.data);
-        return {
-            data,nums:nums.filter((item)=>{
-                let output = false;
-                data.forEach((code)=>{
-                    output=!output?code.code===item:output;
-                });
-                return output;
-            })
-        }
-    }
-    /**
-     * @param {text} code 
-     * @param {any[]} data 
-     * @returns {{code: String, message: String, crashed: Boolean, data?: {mg: boolean, i: string | null}} | null}
-     */
-    function getCodeData(code, data) {
-        let output = null;
-        data.forEach((item)=>{
-            if (item.code === code) {
-                output = item;
-            }
-        });
-        return output;
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('c');
-    const init = params.get('i') === 'y';
-    const codes = await getCodes();
-
-    const elem = (id) => document.getElementById(id);
-    elem('e').style.display = none;
-    function redirect(to) {
-        try{window.location.replace(to)}catch(e){};try{window.location.href=to}catch(e){};try{window.location.assign(to)}catch(e){}
-    }
-    const redirecting = (to) => `Redirecting to "<a href="${to}" target="_self">${to}</a>"...`;
-    function close_() {
-        const url_ = 'https://just.is-a.dev/';
-        exitFullscreen();
-        elem('d').innerHTML = redirecting(to);
-        redirect(url_)
-    };
-    const closecmds = [
-        'kill', 'exit', 'home', 'e'
-    ];
-    const yescmds = [
-        'y', 'yes', 'ye', 'yeah', 'yep', 'sure', 'ok', 'k'
-    ];
-    function disableD() {
-        const f = elem('d').cloneNode();
-        f.id = 'f';
-        elem('d').after(f);
-        elem('d').style.display = none;
-    };
-    function enableD() {
-        elem('f')?.remove();
-        elem('d').style.display = null;
-        animateTyping('d', entr);
-    };
-    async function codecmd(cmd) {
-        const codess=await getCodes();
-        if (codess.nums.includes(cmd)) {
-            const url_ = `?c=${cmd}&i=y`;
-            elem('f').innerHTML = redirecting(`https://just.is-a.dev/code${url_}`);
-            window.location.search = url_
-        } else {
-            disableD();
-            elem('f').innerText = 'No code found and unknown command.';
-            setTimeout(enableD, 1000)
-        }
-    };
-    const helpcmds = [
-        'help', 'h'
-    ];
-    const listcmds = [
-        'list', 'l'
-    ];
-    function timeoutED() {
-        setTimeout(enableD, 3000)
-    };
-    function fatal(err) {
-        elem('loader').classList.add('fatal');
-        elem('loader').innerText = err;
-        elem('a')?.remove();
-        elem('b')?.remove();
-        elem('c')?.remove();
-        animateTyping('d', 'Press any key to retry...', 25, ()=>{
-            window.addEventListener('keydown', ()=>{
-                exitFullscreen();
-                elem('d').innerHTML = 'Reloading window... <small>The window didn\'t reload? Check your internet connection and try to reload the window manually.</small>';
-                window.location.reload()
-            })
-        });
-        throw new Error(err)
-    }
-    function animErr() {
-        if (aTerr) {
-            fatal('Unexpected behavior')
-        }
-    }
-    function helpcmd() {
-        animErr();
-        disableD();
-        animateTyping('f', '<strong>Command list:</strong>\nhelp - help command / command list\nhome - redirect to home page\nlist - list of codes\nexit - exit this terminal, same as <code>home</code> command', 30, timeoutED)
-    };
-    function listcmd() {
-        animErr();
-        disableD();
-        animateTyping('f', `<strong>List of codes:</strong>\n${
-            codes.nums.sort((a,b)=>{
-                a = parseInt(a);
-                b = parseInt(b);
-                if (isNaN(a) || isNaN(b)) {
-                    return -1
-                };
-                return a > b ? 1 : -1
-            }).join('\n')
-        }`, 40, timeoutED)
-    };
-    let interval;
-    let enterKeyCooldown = false;
-    let listener;
-    let aEEid=0;
-    /**
-     * @param {Function} oncommand 
-     * @param {boolean?} onlyYorN
-     */
-    function animElemE(oncommand, onlyYorN = false) {
-        const runid = aEEid++;
-        animErr();
-        if (interval) clearInterval(interval);
-        interval = setInterval(()=>{
-            elem('e').style.display = elem('e').style.display === none ? null : none
-        }, 500);
-        let input = '';
-        function updInp() {
-            animErr();
-            if (input === '') {
-                elem('text')?.remove();
-                elem('e').insertAdjacentHTML('beforebegin', '<span id="text"></span>');
-            } else if (elem('text')) {
-                elem('text').innerText = `${input}`;
-            } else {
-                elem('e').insertAdjacentHTML('beforebegin', `<span id="text">${input}</span>`);
-            }
-        }
-        const keydownListener=(event)=>{
-            if (aTerr) {
-                animErr();
-            } else if (runid === aEEid - 1) {
-                if ((event.key.toLowerCase() === 'c' || event.key.toLowerCase() === 'd') && event.ctrlKey) {
-                    event.preventDefault();
-                    close_()
-                } else if (/^[a-zA-Z0-9]$/.test(event.key) && !event.ctrlKey) {
-                    event.preventDefault();
-                    input += event.key;
-                    updInp()
-                } else if (event.key.toLowerCase() === 'Enter'.toLowerCase() && !enterKeyCooldown) {
-                    event.preventDefault();
-                    enterKeyCooldown = true;
-                    const uncooldown=()=>{setTimeout(()=>{enterKeyCooldown=false},300)};
-                    const inpt = input.trim().toLowerCase();
-                    input = '';
-                    updInp();
-                    if (closecmds.includes(inpt) && !onlyYorN) {
-                        close_();
-                        uncooldown()
-                    } else if (onlyYorN) {
-                        if (yescmds.includes(inpt)) {
-                            oncommand();
-                            uncooldown()
-                        } else {
-                            animateTyping('d', entr, 25, () => {
-                                animElemE((cmd)=>{codecmd(cmd);uncooldown()});
-                            })
-                        }
-                    } else if (helpcmds.includes(inpt)) {
-                        helpcmd();
-                        uncooldown()
-                    } else if (listcmds.includes(inpt)) {
-                        listcmd();
-                        uncooldown()
-                    } else {
-                        oncommand(inpt);
-                        uncooldown()
-                    };
-                    return
-                } else if (event.key.toLowerCase() === 'Backspace'.toLowerCase()) {
-                    event.preventDefault();
-                    input = input.slice(0,-1);
-                    updInp()
-                }
-            }
-        };
-        window.removeEventListener('keydown',listener);
-        listener=keydownListener;
-        window.addEventListener('keydown',keydownListener)
-    };
-    animateTyping('loader', `<small>Initializing</small> Just an Ultimate Site Tool helper terminal <small>...</small>\n${' '.repeat(20)}\n${loadingerr ? 'Error' : 'Done.'}`, init ? 0 : 50, ()=>{
-        setTimeout(()=>{
-            if (code != null && codes.nums.includes(code) && !loadingerr) {
-                elem('loader').innerText = `> ${code}\n\n`;
-                const codedata = getCodeData(code, codes.data);
-                if (codedata.crashed || code.startsWith('03')) {
-                    elem('a').classList.add('error');
-                } else if (code.startsWith('02')) {
-                    elem('a').classList.add('warn');
-                } else {
-                    elem('a').classList.add('ok');
-                };
-                const info = codedata.data.i||'';
-                const check = checkFirstLetterCase(info);
-                animateTyping('a', code, 200, ()=>{
-                    animateTyping('b', !codedata.data.mg?codedata.message:'', 50, ()=>{
-                        if (codedata.data.mg) {
-                            elem('b').remove();
-                        };
-                        if (check===true) {
-                            elem('c').classList.add('info');
-                        } else {
-                            elem('c').classList.add('tip');
-                        };
-                        animateTyping('c', check===false?`To fix it, ${info}.`:check===true?info:''||'', 50, ()=>{
-                            animateTyping('d', 'Do you want to redirect to the docs? (y/n)', 25, ()=>{
-                                animElemE(()=>{
-                                    const url_ = 'https://just.is-a.dev/docs';
-                                    elem('d').innerHTML = redirecting(url_);
-                                    redirect(url_)
-                                }, true);
-                            });
-                        });
-                    });
-                });
-            } else if (loadingerr) {
-                fatal('Failed to fetch codes')
-            } else {
-                elem('loader').remove();
-                elem('a').remove();
-                elem('b').remove();
-                elem('c').remove();
-                animateTyping('d', entr, 25, ()=>{
-                    animElemE(codecmd);
-                })
-            }
-        }, init ? 0 : 234)
-    });
-    window.addEventListener('keydown',(event)=>{
-        if (event.key.toLowerCase()==='Enter'.toLowerCase()) {
-            setTimeout(()=>{enterKeyCooldown=false},350)
-        } else if (event.key.toLowerCase()==='F11'.toLowerCase()) {
-            event.preventDefault();
-        }
-    });
-    setTimeout(()=>{
-        if (document.fullscreenEnabled && document.fullscreenElement !== document.documentElement) {
-            document.documentElement.requestFullscreen().catch(e=>{console.warn(e)})
-        }
-    }, init ? 0 : 555);
-})();
-
-```
-```md
-_just: title: Syntax highlighting test
-# Syntax highlighting
-\`\`\`json
-{
-    "hello": "world",
-    "number": 1234567890,
-    "array": [null, true, false]
-}
-\`\`\`
-\`\`\`json
-[
-    "hello", "world"
-]
-\`\`\`
-\`\`\`js
-import {abc as cba} from '../test.js';
-const abc = require('../../test.js');
-
-class test {
-    constructor () {
-        return true
-    }
-}
-
-console.log('hello world');
-console.warn(1 + 1);
-alert(false);
-const abc = true;
-for (i = 1; i <= 4; i++) {
-    // do something
-};
-switch (abc) {
-    case true:
-        window.location.replace('https://juststudio.is-a.dev/');
-        break;
-    default:
-        document.body.classList.add('a');
-        break;
-}
-/**
- * @param {number} b
- * @returns {number}
- */
-function a (b) {
-    return b + 1;
-}
-let c = (d) => {
-    return a(d) / 2;
-}
-var e = (f) => f + f;
-if (typeof abc != 'boolean') {
-    throw new Error('error');
-} else if (.2 != 0.2) {
-    console.error('what');
-} else {
-    try {
-        new test();
-    } catch (_ee) {
-        const fewuhfuiwfuiweifuweiewhfiew = globalThis.localStorage.getItem('KEY');
-        console.log(fewuhfuiwfuiweifuweiewhfiew);
-    } finally {
-        fetch();
-    }
-}
-\`\`\`
-\`\`\`html
-<!DOCTYPE html>
-<span class="hw" id="abc">Hello World!</span>
-\`\`\`
-\`\`\`css
-* {
-    background-color: black;
-}
-span {
-    color: white;
-}
-.hw {
-    border: 1px solid #6e3bf3;
-}
-#abc {
-    -webkit-filter: blur(8em);
-}
-div:before {
-    content: 'hello';
-}
-:root {
-    --color: #ffffff;
-    @media(max-width: 5px) {
-        --color: #000000;
-    }
-}
-::-webkit-scrollbar {
-    width: 7px;
-    height: 7px
-}
-\`\`\`
-\`\`\`sh
-#!/bin/bash
-echo "Hello World!"
-\`\`\`
-\`\`\`py
-#!/usr/bin/env python3
-import time
-out = int(time.time() * 1000)
-print(out)
-\`\`\`
-\`\`\`lua
-print("hiii")
-warn(1 + 1)
-local abc = true
-while wait(1) do
-    -- do something
-end
-\`\`\`
-\`\`\`md
-# markdown inside markdown
-\`\`\`
-\`\`\`go
-// go
-\`\`\`
-\`\`\`golang
-// golang
-\`\`\`
-\`\`\`golo
-
-\`\`\`
-\`\`\`gololang
-
-\`\`\`
-\`\`\`diff
-  text
-+ added
-- removed
-\`\`\`
-
-```
-```md
-_just: title: Mattcone's Markdown Test
-# Markdown test
-
-This is a Markdown test for the Markdown Guide tools directory.
-
----
-
-headings
-
-# One
-
-## Two
-
-### Three
-
-#### Four
-
-##### Five
-
-###### Six
-
-Alternate One
-=============
-
-Alternate Two
--------------
-
----
-
-paragraphs
-
-first paragraph
-
-second para
-
----
-
-line breaks
-
-line one with trailing whitespace  
-line two right under
-
-line one with no trailing whitespace, just hard return
-line two right under
-
-line one with no trailing backslash \
-line two right under
-
----
-
-bold
-
-**asterisks**
-
-__underscores__
-
-in**middle**here
-
----
-
-italic
-
-*asterisk*
-
-_underscore_
-
-in*middle*here
-
----
-
-bold and italic
-
-***asterisks***
-
-___underscores___
-
-__*combo*__
-
-**_second combo_**
-
----
-
-blockquotes
-
-> single
-
-> multi
->
-> line
-
-> nested
->
->> blockquotes
-
----
-
-ordered lists
-
-1. first
-2. second
-3. third
-
-1. this
-2. is
-    1. nested
-3. now
-
----
-
-unordered lists
-
-- dashes
-- here
-  - nested
-
-* asterisks
-* here
-
-+ plus
-+ signs
-
----
-
-code
-
-`one tick mark`
-
-    <one tab>
-      <indented>
-
----
-
-horizontal rules
-
-throughout this :)
-
----
-
-links
-
-normal link => [cnn](https://cnn.com)
-
-brackets => <https://cnn.com>
-
-brackets => <me@somewhere.com>
-
-naked url (test auto link) => https://cnn.com
-
----
-
-images
-
-![test image](https://www.markdownguide.org/assets/images/tools/joplin.png)
-
----
-
-## Tables
-
-| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
-
----
-
-## Fenced code blocks
-
-\`\`\`
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
-\`\`\`
-
----
-
-## Syntax highlighting
-
-\`\`\`json
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
-\`\`\`
-
----
-
-## Footnotes
-
-Here's a simple footnote,[^1] and here's a longer one.[^bignote]
-
-[^1]: This is the first footnote.
-
-[^bignote]: Here's one with multiple paragraphs and code.
-
-    Indent paragraphs to include them in the footnote.
-
-    `{ my code }`
-
-    Add as many paragraphs as you like.
-
----
-
-## Heading IDs
-
-### My Great Heading {#custom-id}
-
----
-
-## Definition lists
-
-First Term
-: This is the definition of the first term.
-
-Second Term
-: This is one definition of the second term.
-: This is another definition of the second term.
-
----
-
-## Strikethrough
-
-~~two tilde~~
-
-~one tilde~
-
----
-
-## Task lists
-
-- [x] Write the press release
-- [ ] Update the website
-- [ ] Contact the media
-
----
-
-## Emoji
-
-copy and paste: ☕
-shortcodes: :joy:
-
----
-
-## Highlight
-
-==twoequals==
-
-::twohypens::
-
----
-
-## Subscript
-
-H~2~O
-
----
-
-## Superscript
-
-X^2^
-
----
-
-## Abbreviation
-
-*[HTML]: Hyper Text Markup Language
-
-The HTML specification is maintained by the W3C.
-
----
-
-## HTML
-
-<em>italic test</em>
-
-<strong>bold test</strong>
-```
-```md
-test
-
-```
-```txt
-# MIT License
-# 
-# Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-Sitemap: https://just.js.org/sitemap.xml
-User-agent: *
-Disallow: /api-modules/
-
-```
-## test
-```json
-{"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
-```
-```webmanifest
-{"name":"","short_name":"","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
-```
-```xml
-<!-- 
-
-MIT License
-
-Copyright (c) 2025 JustStudio. <https://juststudio.is-a.dev/>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-\-->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-    <url>
-        <loc>https://just.js.org/</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>1.00</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs/getting-started</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.80</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.70</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs/generator/advanced-usage</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.64</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs/generator/syntax</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.64</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs/generator/troubleshooting</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.64</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs/modes/compressor</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.64</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs/modes/generator</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.64</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs/modes/postprocessor</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.64</priority>
-    </url>
-    <url>
-        <loc>https://just.js.org/docs/modes/redirector</loc>
-        <lastmod>2025-08-30T18:56:04+00:00</lastmod>
-        <priority>0.64</priority>
-    </url>
-</urlset>
-```
