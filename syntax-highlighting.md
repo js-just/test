@@ -1,30 +1,30 @@
-### test
-### test
-### test
-## test
-### test
-## test
-### test
-### test
-### test
-### test
-### test
-## test
 ## test
 ### test
 ## test
 ## test
+## test
+## test
 ### test
-### test
+## test
 ### test
 ## test
 ## test
 ## test
 ### test
-### test
 ## test
 ### test
 ### test
+### test
+### test
+## test
+## test
+## test
+## test
+### test
+### test
+## test
+## test
+## test
 ```py
 # MIT License
 # 
@@ -4084,7 +4084,7 @@ for (let i = 0; i < text.length; i++) {
 };
 console.log(text.join('\n'));
 ```
-### test
+## test
 ```md
 > [!WARNING]
 > **THIS IS NOT POSTPROCESSOR SOURCE CODE!** This is post-postprocessor source code. <br>
@@ -4260,6 +4260,13 @@ const debug_ = config.debug || false;
 const debuglog = (text) => {if (debug_) console.log(`${_just.error.prefix}${esc}[0;36mDebug: ${text}`)};
 const [inputPath, inputFixPath, VERSION] = process.argv.slice(2);
 
+if (config.mode === 'void') {
+    _just.domain = require('../lib/domain.js');
+    const { psl, getTLD, checkTLD, checkdomain, domainregex } = _just.domain;
+    const domain = checkdomain(config.domain, true) || undefined;
+    checkTLD(domain).then(debuglog);
+}
+
 if (config.sitemap) {
     require('../lib/postprocessor/sitemap.js').sitemap(config, inputPath, inputFixPath)
         .then(debuglog)
@@ -4267,7 +4274,7 @@ if (config.sitemap) {
 }
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -5090,8 +5097,8 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ### test
-### test
-### test
+## test
+## test
 ## test
 ```html
 <!-- 
@@ -6095,7 +6102,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 
 ```
-### test
+## test
 ```json
 {
     "README": {
@@ -6806,7 +6813,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 ```
 ### test
-### test
+## test
 ```md
 _just: title: Advanced usage
 # Advanced usage
@@ -7177,7 +7184,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -8060,7 +8067,7 @@ B�����v�15���c�Pd�)��ɶ.]���C�gr���
 <���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
 ���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -8113,7 +8120,7 @@ p��"�/E�Q�_⩖o�$0:
 ��gEa�*	�EQ������_�j1k��e˖�rD�'=�RF�$	H@]L�e�w�i�p�grfΜ�����SF������RX�8��C��w�=h�$�"	H@�@��L��b1k֬���V��ES�$�y����	&$�,Vx(n��)k$��[;���ֺv&	H@(��	!2Ǝb�iKgҤI�0��|����ճ�:+�)��m�T�ö��
 N�����So;�I@��$�8���ɒ%K�����r_<��3��Y�j��R��<	VO:�p뭷�<^,�?�m��Q�H�\_=�\�9�S�U�Fڶ�$ 	H@�hH���������[5'�pB:�J�|�����e��KR�M7��x�t��H��o�`_L�b,^�8�Y�&`��h���G�<��#Xx*U�r�����^�؆j�2	H@�@��~��k�E~�$Ƙ�k>��t����v�Ƹ�,�8��'~%Ƙ�b[�hl�e�Ǹ�M�sBb��N�'�q�>�g;eʔC��}�=�$ 	H@�#0ja����-K@�@}�*�m�	[!��`k�Z���~����H��$��&����Gbܲ]�����o��	[']�NH@(���&"��$ 	H@�"�0�y��@0D	H@#%�0)1�% 	H@h�I���p��$ 	����  ���d�   IDAT ��(L�RR    IEND�B`�
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -8476,7 +8483,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
@@ -9800,7 +9807,7 @@ User-agent: *
 Disallow: /api-modules/
 
 ```
-## test
+### test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
