@@ -1,20 +1,4 @@
-## test
-## test
-## test
-## test
-## test
-## test
-## test
 ### test
-### test
-### test
-### test
-### test
-### test
-### test
-## test
-### test
-## test
 ## test
 ### test
 ## test
@@ -23,7 +7,23 @@
 ### test
 ### test
 ### test
+## test
+## test
 ### test
+## test
+## test
+### test
+### test
+## test
+## test
+## test
+## test
+## test
+## test
+### test
+### test
+## test
+## test
 ## test
 ```py
 # MIT License
@@ -393,7 +393,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -1133,7 +1133,8 @@ a#ext:hover:not(:focus):after {
     background-color: var(--cl);
     transition: 150ms;
     z-index: -1;
-    animation: 300ms noline ease-out 1;
+    animation: 0ms noline ease-out 1;
+    pointer-events: none;
 }
 .navbar .links a:hover:not(:focus) {
     opacity: 1;
@@ -5201,7 +5202,7 @@ print(out)
 ```
 ## test
 ## test
-### test
+## test
 ## test
 ```html
 <!-- 
@@ -8257,7 +8258,7 @@ p��"�/E�Q�_⩖o�$0:
 ��gEa�*	�EQ������_�j1k��e˖�rD�'=�RF�$	H@]L�e�w�i�p�grfΜ�����SF������RX�8��C��w�=h�$�"	H@�@��L��b1k֬���V��ES�$�y����	&$�,Vx(n��)k$��[;���ֺv&	H@(��	!2Ǝb�iKgҤI�0��|����ճ�:+�)��m�T�ö��
 N�����So;�I@��$�8���ɒ%K�����r_<��3��Y�j��R��<	VO:�p뭷�<^,�?�m��Q�H�\_=�\�9�S�U�Fڶ�$ 	H@�hH���������[5'�pB:�J�|�����e��KR�M7��x�t��H��o�`_L�b,^�8�Y�&`��h���G�<��#Xx*U�r�����^�؆j�2	H@�@��~��k�E~�$Ƙ�k>��t����v�Ƹ�,�8��'~%Ƙ�b[�hl�e�Ǹ�M�sBb��N�'�q�>�g;eʔC��}�=�$ 	H@�#0ja����-K@�@}�*�m�	[!��`k�Z���~����H��$��&����Gbܲ]�����o��	[']�NH@(���&"��$ 	H@�"�0�y��@0D	H@#%�0)1�% 	H@h�I���p��$ 	����  ���d�   IDAT ��(L�RR    IEND�B`�
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -8513,6 +8514,7 @@ In**middle**here
 A line:
 ---
 
+${ test.txt }$
 \`\`\`
 Some code here
 \`\`\`
@@ -8623,7 +8625,26 @@ $${test}$$
     Some **bold**, *italic*, ***important***, __underlined__, ~~strikethrough~~, ~sub~, ^super^, ==marked==, __***very important***__, __==***extreme important***==__, ~~***not important***~~ text.
     Some `code`; **`bold`**, *`italic`*, ***`important`***, __`underlined`__, ~~`strikethrough`~~, ~`sub`~, ^`super`^, ==`marked`==, __***`very important`***__, __==***`extreme important`***==__, ~~***`not important`***~~ code.
 </details>
+#### Tabs:
+{% TABS %}
 
+# Tab 1
+Some **bold**, *italic*, ***important***, __underlined__, ~~strikethrough~~, ~sub~, ^super^, ==marked==, __***very important***__, __==***extreme important***==__, ~~***not important***~~ text.
+
+# Tab 2
+Some `code`; **`bold`**, *`italic`*, ***`important`***, __`underlined`__, ~~`strikethrough`~~, ~`sub`~, ^`super`^, ==`marked`==, __***`very important`***__, __==***`extreme important`***==__, ~~***`not important`***~~ code.
+
+{% ENDTABS %}
+#### API Request Element
+{% API GET https://api.just.js.org/v1/latest/ %}
+
+no body/query required
+
+%{ JSON }%
+
+{"success":true,"value":"v0.1.0","message":"Latest version","code":200,"last-updated":{"time":1756491298934,"commit":"456e97ffb47fa9c06dbfca297f6768c0384a9f30","initiator":{"name":"JustDeveloper1","id":176615419}}}
+
+{% ENDAPI %}
 
 _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
@@ -9953,7 +9974,7 @@ User-agent: *
 Disallow: /api-modules/
 
 ```
-### test
+## test
 ```json
 {"$id":"https://just.is-a.dev/schema/r.json","$schema":"http://json-schema.org/draft-04/schema#","description":"_just just.config.js module.exports Redirector mode","type":"object","properties":{"type":{"type":"string"},"redirect_config":{"type":"object","properties":{"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"robots":{"type":"string"},"charset":{"type":"string"},"viewport":{"type":"string"},"yandex":{"type":"string"},"google":{"type":"string"},"googleAnalytics":{"type":"string"},"content":{"type":"object","properties":{"text1":{"type":"string"},"text2":{"type":"string"},"text3":{"type":"string"}},"required":[]},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]},"paths":{"type":"array","items":[{"type":"object","properties":{"path_":{"type":"string"},"url":{"type":"string"},"params":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"keywords":{"type":"string"},"htmlLang":{"type":"string"},"og":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"}},"required":[]},"twitter":{"type":"object","properties":{"card":{"type":"string"}},"required":["card"]}},"required":[]}},"required":["path_","url"]}]}},"required":["url"]}},"required":["type","redirect_config"]}
 ```
