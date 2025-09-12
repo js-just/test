@@ -1,28 +1,28 @@
 ## test
 ## test
 ### test
-## test
-## test
 ### test
-### test
-## test
 ## test
 ### test
 ## test
 ### test
 ### test
-### test
-### test
 ## test
-### test
-### test
 ### test
 ## test
 ## test
 ### test
 ## test
+## test
+### test
 ### test
 ## test
+## test
+### test
+### test
+## test
+### test
+### test
 ## test
 ### test
 ```py
@@ -837,7 +837,7 @@ exports.html = (data, n0, n1, n2, pid, nid, pl) => {
     }
 }
 ```
-## test
+### test
 ```css
 :root {
     --bg: #121212;
@@ -4274,7 +4274,7 @@ if (config.sitemap) {
 }
 
 ```
-### test
+## test
 ```sh
 # MIT License
 # 
@@ -5097,9 +5097,9 @@ out = int(time.time() * 1000)
 print(out)
 ```
 ## test
+### test
 ## test
-### test
-### test
+## test
 ```html
 <!-- 
 
@@ -6102,7 +6102,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
 }
 
 ```
-## test
+### test
 ```json
 {
     "README": {
@@ -6846,7 +6846,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
     "zephir": "Zephir"
 }
 ```
-### test
+## test
 ### test
 ```md
 _just: title: Advanced usage
@@ -7218,7 +7218,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -8512,6 +8512,8 @@ https://just.is-a.dev
 | Paragraph   | Text        | And more      |
 #### Emoji shortcodes:
 :right: :fog is coming: :left:
+#### Environment variables:
+$${test}
 
 _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
