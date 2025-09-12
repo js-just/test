@@ -1,13 +1,9 @@
-### test
-### test
-### test
 ## test
-### test
-### test
-### test
+## test
 ## test
 ## test
 ### test
+## test
 ## test
 ### test
 ## test
@@ -19,12 +15,16 @@
 ## test
 ## test
 ### test
+### test
 ## test
 ### test
 ## test
 ## test
+### test
 ## test
+### test
 ## test
+### test
 ```py
 # MIT License
 # 
@@ -393,7 +393,7 @@ CONTENT=$(toJSON "$DEMO_NEW_ID" "Last demo built ID") && \
 echo "$CONTENT" > demo-id/index.json
 
 ```
-## test
+### test
 ```sh
 # MIT License
 # 
@@ -2633,7 +2633,7 @@ self.addEventListener('message', event => {
 })()
 
 ```
-### test
+## test
 ```css
 .hljs-number, .hljs-bullet {
     color: #eda31b;
@@ -5053,7 +5053,7 @@ compile_assets && \
 if [[ "$PREPROCESSED" == "y" ]]; then
     TIME5=$(current_time_ms) && \
     PRESECONDS=$(calculate_duration "$TIME4" "$TIME5") && \
-    echo -e "$msg16$_BLUE$PRESECONDS$_RESET"
+    echo -e "$msg16 $_BLUE$PRESECONDS$_RESET"
 fi
 
 if [[ "$TYPE" != "postprocessor" && "$TYPE" != "redirector" && "$TYPE" != "compressor" && "$TYPE" != "generator" && "$TYPE" != "void" ]]; then
@@ -5207,7 +5207,7 @@ TIME6=$(current_time_ms) && \
 node $GITHUB_ACTION_PATH/src/postprocessor.js "$INPUT_PATH" "$INPUT_FIXPATH" "$VERSION" && \
 TIME7=$(current_time_ms) && \
 POSTSECONDS=$(calculate_duration "$TIME6" "$TIME7") && \
-echo -e "$msg17$_BLUE$POSTSECONDS$_RESET"
+echo -e "$msg17 $_BLUE$POSTSECONDS$_RESET"
 
 ```
 ### test
@@ -5242,9 +5242,9 @@ import time
 out = int(time.time() * 1000)
 print(out)
 ```
-## test
-## test
-## test
+### test
+### test
+### test
 ## test
 ```html
 <!-- 
@@ -6992,7 +6992,7 @@ body:not(.jse) .p, body:not(.jse) .u3, body:not(.jse) .u4, body:not(.jse) .jslog
     "zephir": "Zephir"
 }
 ```
-## test
+### test
 ### test
 ```md
 _just: title: Advanced usage
@@ -7364,7 +7364,7 @@ If your repository has any of these, _just will throw an error.
 
 _just: prev: /docs
 ```
-## test
+### test
 ```md
 _just: title: Compressor Mode
 # Compressor mode
@@ -8247,7 +8247,7 @@ B�����v�15���c�Pd�)��ɶ.]���C�gr���
 <���D<}���~8l����,PUHv�ʨ��h��lu��8�"�T3y�y*Ѹ7��k��#*�zR��^���ֶ������u�F�*4��W.X]��96�ՖX��l5�w4 O^ziC��:�x:�57*+�v�W=l����w��Bh7z��6	�=�|7�.�v�W=l��W�K�SB;�s�w��{�E
 ���ک��{E@�+,R�T��N����+�&t��H� `BhC!j�!t~p�VA@m�#D��  ���Ҋ!�q��j8R%!�#�&J!􁐑rG" �v��D�! �>2R�H�Ўt�(} ��B&[��g,Bhc]#�!�@P�s�E@m�kD��  �jr����u�(6�M�� �yC@�7(�!B���!o���4d�  ��/���   IDAT �Z�×9�J    IEND�B`�
 ```
-### test
+## test
 ```png
 �PNG
 
@@ -8300,7 +8300,7 @@ p��"�/E�Q�_⩖o�$0:
 ��gEa�*	�EQ������_�j1k��e˖�rD�'=�RF�$	H@]L�e�w�i�p�grfΜ�����SF������RX�8��C��w�=h�$�"	H@�@��L��b1k֬���V��ES�$�y����	&$�,Vx(n��)k$��[;���ֺv&	H@(��	!2Ǝb�iKgҤI�0��|����ճ�:+�)��m�T�ö��
 N�����So;�I@��$�8���ɒ%K�����r_<��3��Y�j��R��<	VO:�p뭷�<^,�?�m��Q�H�\_=�\�9�S�U�Fڶ�$ 	H@�hH���������[5'�pB:�J�|�����e��KR�M7��x�t��H��o�`_L�b,^�8�Y�&`��h���G�<��#Xx*U�r�����^�؆j�2	H@�@��~��k�E~�$Ƙ�k>��t����v�Ƹ�,�8��'~%Ƙ�b[�hl�e�Ǹ�M�sBb��N�'�q�>�g;eʔC��}�=�$ 	H@�#0ja����-K@�@}�*�m�	[!��`k�Z���~����H��$��&����Gbܲ]�����o��	[']�NH@(���&"��$ 	H@�"�0�y��@0D	H@#%�0)1�% 	H@h�I���p��$ 	����  ���d�   IDAT ��(L�RR    IEND�B`�
 ```
-## test
+### test
 ```png
 �PNG
 
@@ -8692,7 +8692,7 @@ _just: prev: /docs/getting-started
 _just: next: /docs/getting-started
 
 ```
-### test
+## test
 ```js
 /*
 
